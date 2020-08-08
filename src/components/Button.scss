@@ -14,6 +14,11 @@
   // Rounded corners.
   border-radius: 5px;
 
+  // Background image.
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
   &:not(.disabled) {
     cursor: pointer;
 

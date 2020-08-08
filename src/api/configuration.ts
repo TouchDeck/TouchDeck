@@ -25,6 +25,7 @@ export interface FolderUpButtonConfig extends BaseButtonConfig {
 export interface NormalButtonConfig extends BaseButtonConfig {
   type: 'normal';
   uuid: string;
+  image?: string;
 }
 
 export interface ToggleButtonConfig extends BaseButtonConfig {
@@ -36,6 +37,7 @@ export interface ToggleButtonConfig extends BaseButtonConfig {
 export interface FolderButtonConfig extends BaseButtonConfig {
   type: 'folder';
   buttons: ButtonConfig[];
+  image?: string;
 }
 
 export function getButtonConfiguration(): ButtonConfig[] {
@@ -51,7 +53,8 @@ export function getButtonConfiguration(): ButtonConfig[] {
       type: 'normal',
       text: '🔥🔥🔥',
       uuid: '2',
-      backgroundColor: '#00FF00'
+      backgroundColor: '#00FF00',
+      image: 'pogchamp.png'
     },
     {
       type: 'toggle',
@@ -73,6 +76,8 @@ export function getButtonConfiguration(): ButtonConfig[] {
     {
       type: 'folder',
       text: 'folder 1',
+      image: 'pogchamp.png',
+      textColor: 'white',
       buttons: [
         {
           type: 'normal',
@@ -90,7 +95,6 @@ export function getButtonConfiguration(): ButtonConfig[] {
     },
     {
       type: 'folder',
-      text: 'folder 3',
       buttons: []
     }
   ]);

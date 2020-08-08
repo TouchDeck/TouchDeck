@@ -29,6 +29,9 @@ const ButtonGrid: React.FC<Props> = ({ rowWidth, buttons }) => {
   }, [folderStack]);
 
   const rows: Buttons[] = [[]];
+
+
+  // If we're in a folder (i.e. if the folderStack is not empty) add an 'up' button.
   if (folderStack.length > 0) {
     rows[0][0] = { type: 'up' };
   }
