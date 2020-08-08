@@ -1,23 +1,45 @@
-import React from 'react';
-import { ButtonConfig } from '../api/configuration';
-import getButtonFromConfig from '../getButtonFromConfig';
-
-export type Row = ButtonConfig[];
+import React, { useCallback, useEffect, useState } from 'react';
+import { Buttons } from '../api/configuration';
+import Button from './Button';
+import NormalButton from './NormalButton';
+import ToggleButton from './ToggleButton';
+import FolderButton from './FolderButton';
+import Icon from './Icon';
 
 export interface Props {
   rowWidth: number;
-  buttons: ButtonConfig[];
+  buttons: Buttons;
 }
 
 const ButtonGrid: React.FC<Props> = ({ rowWidth, buttons }) => {
+  const [buttonView, setButtonView] = useState<Buttons>(buttons);
+
+  // Update the button view state whenever the prop changes.
+  useEffect(() => setButtonView(buttons), [buttons]);
+
+  const [folderStack, setFolderStack] = useState<Buttons[]>([]);
+
+  const enterFolder = useCallback((folder: Buttons) => {
+    setFolderStack((prev) => [...prev, buttonView]);
+    setButtonView(folder);
+  }, [buttonView]);
+  const exitFolder = useCallback(() => {
+    setButtonView(folderStack[folderStack.length - 1]);
+    setFolderStack((prev) => prev.slice(0, prev.length - 1));
+  }, [folderStack]);
+
+  const rows: Buttons[] = [[]];
+  if (folderStack.length > 0) {
+    rows[0][0] = { type: 'up' };
+  }
+
   // Divide the buttons into rows.
-  const rows: Row[] = [[]];
-  for (let i = 0; i < buttons.length; i++) {
+  for (let i = 0; i < buttonView.length; i++) {
     const lastRow = rows[rows.length - 1];
     if (lastRow.length < rowWidth) {
-      lastRow.push(buttons[i]);
+      lastRow.push(buttonView[i]);
     } else {
-      rows.push([buttons[i]]);
+      rows.push([buttonView[i]]);
     }
   }
 
@@ -31,7 +53,26 @@ const ButtonGrid: React.FC<Props> = ({ rowWidth, buttons }) => {
     <div className="button-grid">
       {rows.map((row, r) => (
         <div key={r} className="button-row">
-          {row.map(getButtonFromConfig)}
+          {row.map((button, i) => {
+            switch (button.type) {
+              case 'filler':
+                return <Button key={i} disabled />;
+              case 'normal':
+                return <NormalButton key={i} {...button} />;
+              case 'toggle':
+                return <ToggleButton key={i} {...button} />;
+              case 'folder':
+                return <FolderButton key={i} {...button} enterFolder={enterFolder} />;
+              case 'up':
+                return (
+                  <Button key={i} onClick={exitFolder}>
+                    <Icon icon="level-up-alt fa-3x" />
+                  </Button>
+                );
+              default:
+                throw new Error('Unknown button type');
+            }
+          })}
         </div>
       ))}
     </div>

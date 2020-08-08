@@ -1,4 +1,11 @@
-export type ButtonConfig = FillerButtonConfig | NormalButtonConfig | ToggleButtonConfig | FolderButtonConfig;
+export type Buttons = ButtonConfig[];
+
+export type ButtonConfig =
+  FillerButtonConfig
+  | FolderUpButtonConfig
+  | NormalButtonConfig
+  | ToggleButtonConfig
+  | FolderButtonConfig;
 
 export interface BaseButtonConfig {
   type: string;
@@ -9,6 +16,10 @@ export interface BaseButtonConfig {
 
 export interface FillerButtonConfig extends BaseButtonConfig {
   type: 'filler';
+}
+
+export interface FolderUpButtonConfig extends BaseButtonConfig {
+  type: 'up';
 }
 
 export interface NormalButtonConfig extends BaseButtonConfig {
@@ -62,7 +73,15 @@ export function getButtonConfiguration(): ButtonConfig[] {
     {
       type: 'folder',
       text: 'folder 1',
-      buttons: []
+      buttons: [
+        {
+          type: 'normal',
+          text: 'in folder',
+          uuid: 'ffff',
+          backgroundColor: '#FF0000',
+          textColor: 'white'
+        }
+      ]
     },
     {
       type: 'folder',

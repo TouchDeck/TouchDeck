@@ -8,7 +8,7 @@ export interface Props {
   text?: string;
 }
 
-const Button: React.FC<Props> = ({ backgroundColor, textColor, disabled, text, onClick }) => {
+const Button: React.FC<Props> = ({ children, backgroundColor, textColor, disabled, text, onClick }) => {
   return (
     <div
       className={`button ${disabled ? 'disabled' : ''}`}
@@ -19,6 +19,7 @@ const Button: React.FC<Props> = ({ backgroundColor, textColor, disabled, text, o
       onClick={onClick}
     >
       {text}
+      {children}
     </div>
   );
 };

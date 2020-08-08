@@ -1,9 +1,13 @@
 import React from 'react';
 import Button from './Button';
-import { FolderButtonConfig } from '../api/configuration';
+import { Buttons, FolderButtonConfig } from '../api/configuration';
 
-const FolderButton: React.FC<FolderButtonConfig> = (button) => (
-  <Button {...button} />
+export interface Props {
+  enterFolder: (buttons: Buttons) => void;
+}
+
+const FolderButton: React.FC<Props & FolderButtonConfig> = (button) => (
+  <Button {...button} onClick={(): void => button.enterFolder(button.buttons)} />
 );
 
 export default FolderButton;
