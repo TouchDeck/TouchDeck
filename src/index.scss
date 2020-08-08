@@ -4,8 +4,10 @@
 // Variables
 
 // Component styles
-@import 'components/ButtonGrid';
 @import 'components/Button';
+@import 'components/ButtonGrid';
+@import 'components/ButtonList';
+@import 'components/SettingsCorner';
 
 // Global styling
 
@@ -14,12 +16,16 @@ body {
   font-family: 'Open Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  box-sizing: border-box;
 
   background-color: #222;
+  color: #ddd;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+* {
+  box-sizing: border-box;
 }

@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import ButtonGrid from './components/ButtonGrid';
-import { ButtonConfig, getButtonConfiguration } from './api/configuration';
+import React from 'react';
+import DeckPage from './pages/DeckPage';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import SettingsPage from './pages/SettingsPage';
 
 const App: React.FC = () => {
-  const [buttons, setButtons] = useState<ButtonConfig[]>([]);
-
-  useEffect((): void => {
-    setButtons(getButtonConfiguration());
-  }, []);
-
   return (
-    <div className="App">
-      <ButtonGrid rowWidth={4} buttons={buttons} />
-    </div>
+    <>
+      <Switch>
+        <Route exact path="/" component={DeckPage} />
+        <Route exact path="/settings" component={SettingsPage} />
+        <Redirect to="/" />
+      </Switch>
+    </>
   );
 };
 

@@ -1,0 +1,31 @@
+.button-list {
+  min-width: 200px;
+
+  .list-item {
+    height: 50px;
+    width: 200px;
+    cursor: pointer;
+    border: 1px solid #000;
+    border-radius: 5px;
+    margin-bottom: 4px;
+
+    display: flex;
+    align-items: center;
+
+    background-color: #555;
+
+    img {
+      max-height: 48px;
+      max-width: 48px;
+      border-radius: 5px;
+    }
+
+    .description {
+      margin-left: 8px;
+    }
+  }
+
+  .list-folder {
+    margin-left: 32px;
+  }
+}

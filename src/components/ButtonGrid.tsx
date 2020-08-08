@@ -19,17 +19,19 @@ const ButtonGrid: React.FC<Props> = ({ rowWidth, buttons }) => {
 
   const [folderStack, setFolderStack] = useState<Buttons[]>([]);
 
-  const enterFolder = useCallback((folder: Buttons) => {
-    setFolderStack((prev) => [...prev, buttonView]);
-    setButtonView(folder);
-  }, [buttonView]);
+  const enterFolder = useCallback(
+    (folder: Buttons) => {
+      setFolderStack((prev) => [...prev, buttonView]);
+      setButtonView(folder);
+    },
+    [buttonView]
+  );
   const exitFolder = useCallback(() => {
     setButtonView(folderStack[folderStack.length - 1]);
     setFolderStack((prev) => prev.slice(0, prev.length - 1));
   }, [folderStack]);
 
   const rows: Buttons[] = [[]];
-
 
   // If we're in a folder (i.e. if the folderStack is not empty) add an 'up' button.
   if (folderStack.length > 0) {
@@ -65,7 +67,9 @@ const ButtonGrid: React.FC<Props> = ({ rowWidth, buttons }) => {
               case 'toggle':
                 return <ToggleButton key={i} {...button} />;
               case 'folder':
-                return <FolderButton key={i} {...button} enterFolder={enterFolder} />;
+                return (
+                  <FolderButton key={i} {...button} enterFolder={enterFolder} />
+                );
               case 'up':
                 return (
                   <Button key={i} onClick={exitFolder}>

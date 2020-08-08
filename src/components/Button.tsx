@@ -9,7 +9,15 @@ export interface Props {
   image?: string;
 }
 
-const Button: React.FC<Props> = ({ children, backgroundColor, textColor, disabled, text, onClick, image }) => (
+const Button: React.FC<Props> = ({
+  children,
+  backgroundColor,
+  textColor,
+  disabled,
+  text,
+  onClick,
+  image,
+}) => (
   <div
     className={`button ${disabled ? 'disabled' : ''}`}
     style={{

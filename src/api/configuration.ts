@@ -1,7 +1,7 @@
 export type Buttons = ButtonConfig[];
 
 export type ButtonConfig =
-  FillerButtonConfig
+  | FillerButtonConfig
   | FolderUpButtonConfig
   | NormalButtonConfig
   | ToggleButtonConfig
@@ -12,6 +12,7 @@ export interface BaseButtonConfig {
   backgroundColor?: string;
   textColor?: string;
   text?: string;
+  description?: string;
 }
 
 export interface FillerButtonConfig extends BaseButtonConfig {
@@ -41,37 +42,39 @@ export interface FolderButtonConfig extends BaseButtonConfig {
 }
 
 export function getButtonConfiguration(): ButtonConfig[] {
-  return ([
+  return [
     {
       type: 'normal',
       text: 'button button button',
       uuid: '1',
       backgroundColor: '#FF0000',
-      textColor: 'white'
+      textColor: 'white',
     },
     {
       type: 'normal',
       text: '🔥🔥🔥',
       uuid: '2',
       backgroundColor: '#00FF00',
-      image: 'pogchamp.png'
+      image: 'pogchamp.png',
+      description: 'Pogchamp',
     },
     {
       type: 'toggle',
+      description: 'Toggle mute',
       state1: {
         type: 'normal',
         text: '🔇',
         uuid: 'mute',
         backgroundColor: '#0000FF',
-        textColor: 'white'
+        textColor: 'white',
       },
       state2: {
         type: 'normal',
         text: '🔊',
         uuid: 'unmute',
         backgroundColor: '#0000FF',
-        textColor: 'white'
-      }
+        textColor: 'white',
+      },
     },
     {
       type: 'folder',
@@ -84,18 +87,33 @@ export function getButtonConfiguration(): ButtonConfig[] {
           text: 'in folder',
           uuid: 'ffff',
           backgroundColor: '#FF0000',
-          textColor: 'white'
-        }
-      ]
+          textColor: 'white',
+        },
+        {
+          type: 'folder',
+          text: 'subfolder',
+          buttons: [
+            {
+              type: 'normal',
+              text: 'in subfolder',
+              uuid: 'ffff',
+              backgroundColor: '#FF0000',
+              textColor: 'white',
+              description: 'in subfolder',
+            },
+          ],
+        },
+      ],
     },
     {
       type: 'folder',
       text: 'folder 2',
-      buttons: []
+      buttons: [],
     },
     {
       type: 'folder',
-      buttons: []
-    }
-  ]);
+      description: 'Empty folder 2',
+      buttons: [],
+    },
+  ];
 }
