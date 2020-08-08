@@ -1,0 +1,9 @@
+.button {
+  background-color: aquamarine;
+  width: 80px;
+  height: 80px;
+
+  &.disabled {
+    filter: grayscale(80%);
+  }
+}
