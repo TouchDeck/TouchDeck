@@ -1,5 +1,6 @@
 export interface ButtonConfig {
-  color?: string;
+  backgroundColor?: string;
+  textColor?: string;
   text?: string;
   uuid?: string;
   disabled?: boolean;
@@ -8,19 +9,21 @@ export interface ButtonConfig {
 export function getButtonConfiguration(): ButtonConfig[] {
   return ([
     {
-      text: 'button 1',
+      text: 'button button button',
       uuid: '1',
-      color: '#FF0000'
+      backgroundColor: '#FF0000',
+      textColor: 'white'
     },
     {
-      text: 'button 2',
+      text: '🔥🔥🔥',
       uuid: '2',
-      color: '#00FF00'
+      backgroundColor: '#00FF00'
     },
     {
-      text: 'button 3',
+      text: '🔇',
       uuid: '3',
-      color: '#0000FF'
+      backgroundColor: '#0000FF',
+      textColor: 'white'
     },
     {
       text: 'folder 1'

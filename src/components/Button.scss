@@ -1,13 +1,28 @@
 .button {
-  background-color: aquamarine;
+  background-color: #FFF;
   width: 80px;
   height: 80px;
+  overflow: hidden;
+
+  // Center the text (horizontally and vertically).
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  // Rounded corners.
+  border-radius: 5px;
 
   &:not(.disabled) {
     cursor: pointer;
+
+    &:active {
+      filter: grayscale(40%);
+    }
   }
 
   &.disabled {
+    background-color: #CCC;
     filter: grayscale(80%);
   }
 }
