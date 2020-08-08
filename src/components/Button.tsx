@@ -1,11 +1,13 @@
 import React from 'react';
+import { triggerAction } from '../api/actions';
+import { ButtonConfig } from '../api/configuration';
 
-export interface Props {
-  disabled?: boolean;
-}
-
-const Button: React.FC<Props> = ({ children, disabled }) => (
-  <div className={`button ${disabled ? 'disabled' : ''}`}>
+const Button: React.FC<ButtonConfig> = ({ children, disabled, uuid }) => (
+  <div className={`button ${disabled ? 'disabled' : ''}`} onClick={() => {
+    if (uuid) {
+      triggerAction(uuid);
+    }
+  }}>
     {children}
   </div>
 );

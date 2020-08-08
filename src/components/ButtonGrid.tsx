@@ -1,16 +1,12 @@
 import React from 'react';
 import Button from './Button';
+import { ButtonConfig } from '../api/configuration';
 
-export type Row = ButtonDefinition[];
-
-export interface ButtonDefinition {
-  text?: string;
-  disabled?: boolean;
-}
+export type Row = ButtonConfig[];
 
 export interface Props {
   rowWidth: number;
-  buttons: ButtonDefinition[];
+  buttons: ButtonConfig[];
 }
 
 const ButtonGrid: React.FC<Props> = ({ rowWidth, buttons }) => {
@@ -33,10 +29,10 @@ const ButtonGrid: React.FC<Props> = ({ rowWidth, buttons }) => {
 
   return (
     <div className="button-grid">
-      {rows.map((row) => (
-        <div className="button-row">
-          {row.map(button => (
-            <Button disabled={button.disabled}>{button.text}</Button>
+      {rows.map((row, r) => (
+        <div key={r} className="button-row">
+          {row.map((button, c) => (
+            <Button key={c} {...button}>{button.text}</Button>
           ))}
         </div>
       ))}

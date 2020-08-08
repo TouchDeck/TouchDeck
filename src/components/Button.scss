@@ -3,6 +3,10 @@
   width: 80px;
   height: 80px;
 
+  &:not(.disabled) {
+    cursor: pointer;
+  }
+
   &.disabled {
     filter: grayscale(80%);
   }

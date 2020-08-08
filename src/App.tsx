@@ -1,32 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ButtonGrid from './components/ButtonGrid';
+import { ButtonConfig, getButtonConfiguration } from './api/configuration';
 
-const App: React.FC = () => (
-  <div className="App">
-    <ButtonGrid
-      rowWidth={4}
-      buttons={[
-        {
-          text: 'button 1',
-        },
-        {
-          text: 'button 2',
-        },
-        {
-          text: 'button 3',
-        },
-        {
-          text: 'button 4',
-        },
-        {
-          text: 'button 1',
-        },
-        {
-          text: 'button 2',
-        },
-      ]}
-    />
-  </div>
-);
+const App: React.FC = () => {
+  const [buttons, setButtons] = useState<ButtonConfig[]>([]);
+
+  useEffect((): void => {
+    setButtons(getButtonConfiguration());
+  }, []);
+
+  return (
+    <div className="App">
+      <ButtonGrid rowWidth={4} buttons={buttons} />
+    </div>
+  );
+};
 
 export default App;
