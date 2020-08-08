@@ -1,6 +1,6 @@
 import React from 'react';
-import Button from './Button';
 import { ButtonConfig } from '../api/configuration';
+import getButtonFromConfig from '../getButtonFromConfig';
 
 export type Row = ButtonConfig[];
 
@@ -24,16 +24,14 @@ const ButtonGrid: React.FC<Props> = ({ rowWidth, buttons }) => {
   // Fill up the last row.
   const lastRow = rows[rows.length - 1];
   for (let i = lastRow.length; i < rowWidth; i++) {
-    lastRow.push({ disabled: true });
+    lastRow.push({ type: 'filler' });
   }
 
   return (
     <div className="button-grid">
       {rows.map((row, r) => (
         <div key={r} className="button-row">
-          {row.map((button, c) => (
-            <Button key={c} {...button}>{button.text}</Button>
-          ))}
+          {row.map(getButtonFromConfig)}
         </div>
       ))}
     </div>
