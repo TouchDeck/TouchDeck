@@ -25,5 +25,10 @@ export default class ObsSocket {
   public async setScene(scene: string): Promise<void> {
     return this.obs.send('SetCurrentScene', { 'scene-name': scene });
   }
+
+  public async getSceneNames(): Promise<string[]> {
+    const response = await this.obs.send('GetSceneList');
+    return response.scenes.map(scene => scene.name);
+  }
 }
 
