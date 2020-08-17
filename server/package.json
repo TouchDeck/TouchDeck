@@ -1,0 +1,16 @@
+{
+  "name": "pideck-server",
+  "version": "0.1.0",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "ts-node-dev --respawn src/index.ts",
+    "build": "rimraf build && tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^14.6.0",
+    "rimraf": "^3.0.2",
+    "ts-node": "^8.10.2",
+    "ts-node-dev": "^1.0.0-pre.57",
+    "typescript": "^3.9.7"
+  }
+}
