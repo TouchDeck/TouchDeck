@@ -1,12 +1,10 @@
-import ObsSocket from './obsSocket';
+import express from 'express';
 
 console.log('Starting server...');
 
-async function start() {
-  const obs = new ObsSocket();
-  await obs.connect();
+const app = express();
+app.post('/api/actions', (req, res) => {
+  res.send({ ok: true });
+});
 
-  console.log(await obs.getSceneNames());
-}
-
-start().catch(err => console.error('An unhandled error occurred:', err));
+app.listen(4000);

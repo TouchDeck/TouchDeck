@@ -10,8 +10,8 @@ const ToggleButton: React.FC<ToggleButtonConfig> = ({ state1, state2 }) => {
   return (
     <Button
       {...currentState}
-      onClick={(): void => {
-        triggerAction(currentState.uuid);
+      onClick={async () => {
+        await triggerAction(currentState.uuid);
         setToggleState((prevState) => !prevState);
       }}
     />

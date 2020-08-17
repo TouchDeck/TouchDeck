@@ -4,7 +4,7 @@ export interface Props {
   backgroundColor?: string;
   textColor?: string;
   disabled?: boolean;
-  onClick?: () => void;
+  onClick?: () => void | Promise<void>;
   text?: string;
   image?: string;
 }
