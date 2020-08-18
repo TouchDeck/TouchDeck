@@ -40,6 +40,9 @@
     ],
     "parserOptions": {
       "project": "./tsconfig.json"
+    },
+    "rules": {
+      "no-plusplus": "off"
     }
   },
   "prettier": {
