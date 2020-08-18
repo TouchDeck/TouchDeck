@@ -15,7 +15,9 @@ export default class ObsSocket {
   public async connect(): Promise<void> {
     await this.obs.connect();
     const version = await this.getVersion();
-    console.log(`Connected to OBS version ${version['obs-studio-version']}, websocket plugin version ${version['obs-websocket-version']}`);
+    console.log(
+      `Connected to OBS version ${version['obs-studio-version']}, websocket plugin version ${version['obs-websocket-version']}`
+    );
   }
 
   public async getVersion(): Promise<VersionResult> {
@@ -28,7 +30,6 @@ export default class ObsSocket {
 
   public async getSceneNames(): Promise<string[]> {
     const response = await this.obs.send('GetSceneList');
-    return response.scenes.map(scene => scene.name);
+    return response.scenes.map((scene) => scene.name);
   }
 }
-
