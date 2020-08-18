@@ -1,4 +1,5 @@
 import OBSWebSocket from 'obs-websocket-js';
+import Logger from './Logger';
 
 export interface VersionResult {
   'obs-websocket-version': string;
@@ -6,6 +7,8 @@ export interface VersionResult {
 }
 
 export default class ObsSocket {
+  private readonly log = new Logger(ObsSocket.name);
+
   private readonly obs: OBSWebSocket;
 
   public constructor() {
@@ -15,7 +18,7 @@ export default class ObsSocket {
   public async connect(): Promise<void> {
     await this.obs.connect();
     const version = await this.getVersion();
-    console.log(
+    this.log.debug(
       `Connected to OBS version ${version['obs-studio-version']}, websocket plugin version ${version['obs-websocket-version']}`
     );
   }

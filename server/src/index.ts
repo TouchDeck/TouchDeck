@@ -1,6 +1,8 @@
 import express from 'express';
+import Logger from './Logger';
 
-console.log('Starting server...');
+const log = new Logger('index');
+log.info('Starting server...');
 
 const app = express();
 app.post('/api/actions', (req, res) => {
