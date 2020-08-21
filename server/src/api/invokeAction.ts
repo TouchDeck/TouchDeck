@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getActionsByUuid } from '../Configuration';
+import { getActionsByUuid } from '../configuration/config';
 
 export default function invokeAction(req: Request, res: Response): void {
   const actions = getActionsByUuid();

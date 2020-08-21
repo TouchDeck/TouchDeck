@@ -1,14 +1,15 @@
 import * as fs from 'fs/promises';
-import Logger from './Logger';
-import { CONFIG_DIR, CONFIG_FILE } from './config';
+import { ActionConfig, Button } from './buttons';
+import Logger from '../Logger';
+import { CONFIG_DIR, CONFIG_FILE } from '../constants';
 
 const log = new Logger('Configuration');
+
+export type ActionsByUuid = { [uuid: string]: ActionConfig };
 
 // Cached configuration data.
 let configuration: Configuration;
 let actionsByUuid: ActionsByUuid;
-
-export type ActionsByUuid = { [uuid: string]: ActionConfig };
 
 function getActionsFromButtons(buttons: Button[]): ActionsByUuid {
   let actions: ActionsByUuid = {};
@@ -54,38 +55,4 @@ export function getActionsByUuid(): ActionsByUuid {
 
 export interface Configuration {
   buttons: Button[];
-}
-
-export interface ActionConfig {
-  uuid: string;
-  type: string;
-  args: Record<string, unknown>;
-}
-
-export type Button = NormalButton | ToggleButton | FolderButton;
-
-export interface BaseButton {
-  type: string;
-  backgroundColor?: string;
-  textColor?: string;
-  text?: string;
-  description?: string;
-}
-
-export interface NormalButton extends BaseButton {
-  type: 'normal';
-  image?: string;
-  action: ActionConfig;
-}
-
-export interface ToggleButton extends BaseButton {
-  type: 'toggle';
-  state1: NormalButton;
-  state2: NormalButton;
-}
-
-export interface FolderButton extends BaseButton {
-  type: 'folder';
-  buttons: Button[];
-  image?: string;
 }

@@ -2,9 +2,9 @@ import 'reflect-metadata';
 import express from 'express';
 import Logger from './Logger';
 import invokeAction from './api/invokeAction';
-import { loadConfiguration, saveConfiguration } from './Configuration';
 import { getActions } from './actions/actionRegistry';
-import { PORT } from './config';
+import { PORT } from './constants';
+import { loadConfiguration, saveConfiguration } from './configuration/config';
 
 const log = new Logger('index');
 log.debug('Starting server...');
