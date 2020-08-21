@@ -6,11 +6,11 @@ import 'reflect-metadata';
 
 // A list containing all available action classes.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const actionRegistry: Constructor<Action<any>>[] = [ObsSetSceneAction];
+const actionClasses: Constructor<Action<any>>[] = [ObsSetSceneAction];
 
 // Only add the debug action for development purposes.
 if (process.env.NODE_ENV !== 'production') {
-  actionRegistry.push(DebugAction);
+  actionClasses.push(DebugAction);
 }
 
 export interface ActionMeta {
@@ -20,12 +20,12 @@ export interface ActionMeta {
   constructor: Constructor<Action<any>>;
 }
 
-const actionMeta: ActionMeta[] = actionRegistry.map((action) => ({
+const actionMeta: ActionMeta[] = actionClasses.map((action) => ({
   constructor: action,
   category: Reflect.getMetadata(actionCategoryKey, action.prototype),
   name: Reflect.getMetadata(actionNameKey, action.prototype),
 }));
 
-export function getActions(): ActionMeta[] {
+export function getAvailableActions(): ActionMeta[] {
   return actionMeta;
 }

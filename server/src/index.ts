@@ -2,16 +2,17 @@ import 'reflect-metadata';
 import express from 'express';
 import Logger from './Logger';
 import invokeAction from './api/invokeAction';
-import { getActions } from './actions/actionRegistry';
+import { getAvailableActions } from './actions/actionRegistry';
 import { PORT } from './constants';
 import { loadConfiguration, saveConfiguration } from './configuration/config';
+import getActionOptions from './api/getActionOptions';
 
 const log = new Logger('index');
 log.debug('Starting server...');
 
 async function bootstrap(): Promise<void> {
   // Load and log all the action classes.
-  const availableActionClasses = getActions();
+  const availableActionClasses = getAvailableActions();
   log.debug(`Found ${availableActionClasses.length} action classes:`);
   availableActionClasses.forEach((action) =>
     log.debug(
@@ -27,7 +28,10 @@ async function bootstrap(): Promise<void> {
   log.debug('Setting up routes');
   const app = express();
   app.use(express.json());
-  app.post('/api/actions', invokeAction);
+
+  // API routes.
+  app.post('/api/actions/:action', invokeAction);
+  app.get('/api/actions/options', getActionOptions);
 
   // Done!
   app.listen(PORT);
