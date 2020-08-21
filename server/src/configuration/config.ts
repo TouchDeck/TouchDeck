@@ -2,14 +2,22 @@ import * as fs from 'fs/promises';
 import { ActionConfig, Button } from './buttons';
 import Logger from '../Logger';
 import { CONFIG_DIR, CONFIG_FILE } from '../constants';
+import { getActionRegistry } from '../actions/actionRegistry';
 
 const log = new Logger('Configuration');
 
-export type ActionsByUuid = { [uuid: string]: ActionConfig };
+export type InvokableAction = () => void | Promise<void>;
+export type ActionsByUuid = { [uuid: string]: InvokableAction };
 
 // Cached configuration data.
 let configuration: Configuration;
 let actionsByUuid: ActionsByUuid;
+
+function prepareAction(action: ActionConfig): InvokableAction {
+  const ActionCtor = getActionRegistry()[action.type].constructor;
+  const actionInst = new ActionCtor();
+  return () => actionInst.invoke(action.args);
+}
 
 function getActionsFromButtons(buttons: Button[]): ActionsByUuid {
   let actions: ActionsByUuid = {};
@@ -17,7 +25,7 @@ function getActionsFromButtons(buttons: Button[]): ActionsByUuid {
   for (let i = 0; i < buttons.length; i++) {
     const button = buttons[i];
     if (button.type === 'normal') {
-      actions[button.action.uuid] = button.action;
+      actions[button.action.uuid] = prepareAction(button.action);
     }
     if (button.type === 'folder') {
       actions = { ...actions, ...getActionsFromButtons(button.buttons) };

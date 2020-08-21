@@ -20,12 +20,22 @@ export interface ActionMeta {
   constructor: Constructor<Action<any>>;
 }
 
-const actionMeta: ActionMeta[] = actionClasses.map((action) => ({
-  constructor: action,
-  category: Reflect.getMetadata(actionCategoryKey, action.prototype),
-  name: Reflect.getMetadata(actionNameKey, action.prototype),
-}));
+// All action metadata by constructor name.
+const actionRegistry: { [ctorName: string]: ActionMeta } = {};
+
+// Put all action classes in the registry.
+actionClasses.forEach((action) => {
+  actionRegistry[action.name] = {
+    category: Reflect.getMetadata(actionCategoryKey, action.prototype),
+    name: Reflect.getMetadata(actionNameKey, action.prototype),
+    constructor: action,
+  };
+});
+
+export function getActionRegistry(): { [ctorName: string]: ActionMeta } {
+  return actionRegistry;
+}
 
 export function getAvailableActions(): ActionMeta[] {
-  return actionMeta;
+  return Object.values(actionRegistry);
 }

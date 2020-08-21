@@ -9,5 +9,16 @@ export default function invokeAction(req: Request, res: Response): void {
     throw new Error(`Unknown action uuid: ${action}`);
   }
 
-  res.send({ ok: true, action });
+  Promise.resolve(action())
+    .then(() =>
+      res.send({
+        success: true,
+      })
+    )
+    .catch((error) =>
+      res.status(500).send({
+        success: false,
+        error: error.message,
+      })
+    );
 }

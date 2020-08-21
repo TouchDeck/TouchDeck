@@ -10,6 +10,6 @@ export default class DebugAction implements Action<Args> {
   private readonly log = new Logger(DebugAction.name);
 
   public invoke(args: Args): void {
-    this.log.debug(`Invoked debug action with ${args.value}`);
+    this.log.debug(`Invoked debug action with "${args.value}"`);
   }
 }
