@@ -36,9 +36,9 @@ export function loadConfiguration(): void {
           uuid: '1',
           type: 'Debug',
           args: {
-            value: 'arg'
-          }
-        }
+            value: 'arg',
+          },
+        },
       },
       {
         type: 'folder',
@@ -49,13 +49,13 @@ export function loadConfiguration(): void {
               uuid: '2',
               type: 'Debug',
               args: {
-                value: 'in folder'
-              }
-            }
-          }
-        ]
-      }
-    ]
+                value: 'in folder',
+              },
+            },
+          },
+        ],
+      },
+    ],
   };
 
   actionsByUuid = getActionsFromButtons(configuration.buttons);

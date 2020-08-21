@@ -1,11 +1,12 @@
-import Action from '../Action';
 import ObsSocket from '../../ObsSocket';
 import Logger from '../../Logger';
+import Action, { action } from '../Action';
 
 export interface Args {
   scene: string;
 }
 
+@action('OBS', 'Set Scene')
 export default class ObsSetSceneAction implements Action<Args> {
   private readonly log = new Logger(ObsSetSceneAction.name);
 
