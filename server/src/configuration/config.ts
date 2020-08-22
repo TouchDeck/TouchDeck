@@ -1,23 +1,16 @@
 import * as fs from 'fs/promises';
-import { ActionConfig, Button } from './buttons';
+import { Button } from './buttons';
 import Logger from '../Logger';
 import { CONFIG_DIR, CONFIG_FILE } from '../constants';
-import { getActionRegistry } from '../actions/actionRegistry';
+import prepareAction, { InvokableAction } from '../actions/prepareAction';
 
 const log = new Logger('Configuration');
 
-export type InvokableAction = () => void | Promise<void>;
 export type ActionsByUuid = { [uuid: string]: InvokableAction };
 
 // Cached configuration data.
 let configuration: Configuration;
 let actionsByUuid: ActionsByUuid;
-
-function prepareAction(action: ActionConfig): InvokableAction {
-  const ActionCtor = getActionRegistry()[action.type].constructor;
-  const actionInst = new ActionCtor();
-  return () => actionInst.invoke(action.args);
-}
 
 function getActionsFromButtons(buttons: Button[]): ActionsByUuid {
   let actions: ActionsByUuid = {};

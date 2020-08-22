@@ -1,16 +1,15 @@
-import ObsSocket from '../../ObsSocket';
+import ObsSocket from './ObsSocket';
 import Action, { action } from '../Action';
-
-export interface Args {
-  source: string;
-  mute: boolean;
-}
+import param from '../param';
 
 @action('OBS', 'Set Mute')
-export default class ObsSetMuteAction implements Action<Args> {
+export default class ObsSetMuteAction implements Action {
   public constructor(private readonly obs: ObsSocket) {}
 
-  public async invoke(args: Args): Promise<void> {
-    await this.obs.setMute(args.source, args.mute);
+  public async invoke(
+    @param('source') source: string,
+    @param('mute') mute: boolean
+  ): Promise<void> {
+    await this.obs.setMute(source, mute);
   }
 }

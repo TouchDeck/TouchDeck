@@ -1,9 +1,21 @@
 import OBSWebSocket from 'obs-websocket-js';
-import Logger from './Logger';
+import Logger from '../../Logger';
 
 export interface VersionResult {
   'obs-websocket-version': string;
   'obs-studio-version': string;
+}
+
+export const obsSocketMetadataKey = Symbol('ObsSocket');
+
+export function obsSocket(
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  target: Object,
+  propertyKey: string | symbol,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  parameterIndex: number
+): void {
+  Reflect.defineMetadata(obsSocketMetadataKey, true, target, propertyKey);
 }
 
 export default class ObsSocket {
@@ -13,6 +25,8 @@ export default class ObsSocket {
 
   public constructor() {
     this.obs = new OBSWebSocket();
+
+    // TODO: Auto-connect, handle disconnect/reconnect.
   }
 
   public async connect(): Promise<void> {
