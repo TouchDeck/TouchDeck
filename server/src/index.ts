@@ -6,6 +6,7 @@ import { getAvailableActions } from './actions/actionRegistry';
 import { PORT } from './constants';
 import { loadConfiguration, saveConfiguration } from './configuration/config';
 import getActionOptions from './api/getActionOptions';
+import { getConfig, putConfig } from './api/config';
 
 const log = new Logger('index');
 log.debug('Starting server...');
@@ -32,6 +33,8 @@ async function bootstrap(): Promise<void> {
   // API routes.
   app.post('/api/actions/:action', invokeAction);
   app.get('/api/actions/options', getActionOptions);
+  app.get('/api/config', getConfig);
+  app.put('/api/config', putConfig);
 
   // Done!
   app.listen(PORT);

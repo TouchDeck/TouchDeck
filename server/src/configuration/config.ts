@@ -57,6 +57,21 @@ export async function saveConfiguration(): Promise<void> {
   await fs.writeFile(CONFIG_FILE, JSON.stringify(configuration, null, 2));
 }
 
+export async function setConfiguration(
+  newConfig: Configuration
+): Promise<void> {
+  log.debug('Updating configuration');
+
+  configuration = newConfig;
+  actionsByUuid = getActionsFromButtons(configuration.buttons);
+
+  await saveConfiguration();
+}
+
+export function getConfiguration(): Configuration {
+  return configuration;
+}
+
 export function getActionsByUuid(): ActionsByUuid {
   return actionsByUuid;
 }
