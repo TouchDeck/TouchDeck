@@ -35,4 +35,8 @@ export default class ObsSocket {
     const response = await this.obs.send('GetSceneList');
     return response.scenes.map((scene) => scene.name);
   }
+
+  public async setMute(source: string, mute: boolean): Promise<void> {
+    return this.obs.send('SetMute', { source, mute });
+  }
 }

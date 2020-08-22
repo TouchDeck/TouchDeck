@@ -3,10 +3,14 @@ import DebugAction from './DebugAction';
 import ObsSetSceneAction from './obs/ObsSetSceneAction';
 import Action, { actionCategoryKey, actionNameKey } from './Action';
 import 'reflect-metadata';
+import ObsSetMuteAction from './obs/ObsSetMuteAction';
 
 // A list containing all available action classes.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const actionClasses: Constructor<Action<any>>[] = [ObsSetSceneAction];
+const actionClasses: Constructor<Action<any>>[] = [
+  ObsSetMuteAction,
+  ObsSetSceneAction,
+];
 
 // Only add the debug action for development purposes.
 if (process.env.NODE_ENV !== 'production') {
