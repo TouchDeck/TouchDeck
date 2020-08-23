@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import ButtonGrid from '../components/ButtonGrid';
-import { ButtonConfig, getButtonConfiguration } from '../api/configuration';
 import SettingsCorner from '../components/SettingsCorner';
+import { useGlobalState } from '../state/appState';
 
 const DeckPage: React.FC = () => {
-  const [buttons, setButtons] = useState<ButtonConfig[]>([]);
+  const [state] = useGlobalState();
+  const { config } = state;
 
-  useEffect((): void => {
-    setButtons(getButtonConfiguration());
-  }, []);
+  if (config.loading) {
+    return <>Loading...</>;
+  }
 
   return (
     <>
       <SettingsCorner />
-      <ButtonGrid rowWidth={4} buttons={buttons} />
+      <ButtonGrid rowWidth={4} buttons={config.config.buttons} />
     </>
   );
 };

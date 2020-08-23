@@ -1,24 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { ButtonConfig, getButtonConfiguration } from '../api/configuration';
 import ButtonList from '../components/ButtonList';
 import { ActionOption, getActionOptions } from '../api/actions';
+import { useGlobalState } from '../state/appState';
 
 const SettingsPage: React.FC = () => {
-  const [actionOptions, setActionOptions] = useState<ActionOption[]>([]);
+  const [state] = useGlobalState();
+  const { config } = state;
 
-  const [buttons, setButtons] = useState<ButtonConfig[]>([]);
+  const [actionOptions, setActionOptions] = useState<ActionOption[]>([]);
 
   useEffect((): void => {
     getActionOptions().then((options) => setActionOptions(options));
   }, []);
 
-  useEffect((): void => {
-    setButtons(getButtonConfiguration());
-  }, []);
+  if (config.loading) {
+    return <>Loading...</>;
+  }
 
   return (
     <>
-      <ButtonList buttons={buttons} />
+      <ButtonList buttons={config.config.buttons} />
       <div className="button-settings"></div>
     </>
   );

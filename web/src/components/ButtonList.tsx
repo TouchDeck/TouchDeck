@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { ButtonConfig, Buttons } from '../api/configuration';
+import { ButtonConfig, Buttons } from '../api/buttons';
 
 export interface Props {
   buttons: Buttons;

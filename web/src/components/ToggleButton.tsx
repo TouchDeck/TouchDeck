@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Button from './Button';
-import { ToggleButtonConfig } from '../api/configuration';
+import { ToggleButtonConfig } from '../api/buttons';
 import { triggerAction } from '../api/actions';
 
 const ToggleButton: React.FC<ToggleButtonConfig> = ({ state1, state2 }) => {

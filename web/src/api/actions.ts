@@ -9,6 +9,6 @@ export async function triggerAction(uuid: string): Promise<void> {
   await fetch(`/api/actions/${uuid}`, { method: 'POST' });
 }
 
-export function getActionOptions(): Promise<ActionOption[]> {
-  return fetch(`/api/actions/options`).then((res) => res.json());
+export async function getActionOptions(): Promise<ActionOption[]> {
+  return (await fetch(`/api/actions/options`)).json();
 }

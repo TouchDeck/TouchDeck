@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from './Button';
-import { NormalButtonConfig } from '../api/configuration';
+import { NormalButtonConfig } from '../api/buttons';
 import { triggerAction } from '../api/actions';
 
 const NormalButton: React.FC<NormalButtonConfig> = (button) => (

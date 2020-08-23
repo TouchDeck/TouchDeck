@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Buttons } from '../api/configuration';
+import { Buttons } from '../api/buttons';
 import Button from './Button';
 import NormalButton from './NormalButton';
 import ToggleButton from './ToggleButton';

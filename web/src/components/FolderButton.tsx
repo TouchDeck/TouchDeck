@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from './Button';
-import { Buttons, FolderButtonConfig } from '../api/configuration';
+import { Buttons, FolderButtonConfig } from '../api/buttons';
 import Icon from './Icon';
 
 export interface Props {
