@@ -11,7 +11,7 @@ const ToggleButton: React.FC<ToggleButtonConfig> = ({ state1, state2 }) => {
     <Button
       {...currentState}
       onClick={async () => {
-        await triggerAction(currentState.uuid);
+        await triggerAction(currentState.action.id);
         setToggleState((prevState) => !prevState);
       }}
     />

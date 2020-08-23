@@ -25,8 +25,8 @@ export interface FolderUpButtonConfig extends BaseButtonConfig {
 
 export interface NormalButtonConfig extends BaseButtonConfig {
   type: 'normal';
-  uuid: string;
   image?: string;
+  action: ActionConfig;
 }
 
 export interface ToggleButtonConfig extends BaseButtonConfig {
@@ -39,4 +39,10 @@ export interface FolderButtonConfig extends BaseButtonConfig {
   type: 'folder';
   buttons: ButtonConfig[];
   image?: string;
+}
+
+export interface ActionConfig {
+  id: string;
+  type: string;
+  args: Record<string, unknown>;
 }

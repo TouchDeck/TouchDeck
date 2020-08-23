@@ -4,9 +4,9 @@ export interface ActionOption {
   name: string;
 }
 
-export async function triggerAction(uuid: string): Promise<void> {
-  console.log('Triggered:', uuid);
-  await fetch(`/api/actions/${uuid}`, { method: 'POST' });
+export async function triggerAction(id: string): Promise<void> {
+  console.log('Triggered:', id);
+  await fetch(`/api/actions/${id}`, { method: 'POST' });
 }
 
 export async function getActionOptions(): Promise<ActionOption[]> {

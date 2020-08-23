@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
-import { getActionsByUuid } from '../configuration/config';
+import { getActionsById } from '../configuration/config';
 import Logger from '../Logger';
 
 const log = new Logger('invokeAction');
 
 export default function invokeAction(req: Request, res: Response): void {
-  const actions = getActionsByUuid();
+  const actions = getActionsById();
   const actionId = req.params.action;
   const action = actions[actionId];
 

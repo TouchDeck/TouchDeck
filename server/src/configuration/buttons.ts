@@ -27,7 +27,7 @@ export interface FolderButton extends BaseButton {
 }
 
 export interface ActionConfig {
-  uuid: string;
+  id: string;
   type: string;
   args: Record<string, unknown>;
 }

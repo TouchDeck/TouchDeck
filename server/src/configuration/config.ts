@@ -6,19 +6,19 @@ import prepareAction, { InvokableAction } from '../actions/prepareAction';
 
 const log = new Logger('Configuration');
 
-export type ActionsByUuid = { [uuid: string]: InvokableAction };
+export type ActionsById = { [id: string]: InvokableAction };
 
 // Cached configuration data.
 let configuration: Configuration;
-let actionsByUuid: ActionsByUuid;
+let actionsById: ActionsById;
 
-function getActionsFromButtons(buttons: Button[]): ActionsByUuid {
-  let actions: ActionsByUuid = {};
+function getActionsFromButtons(buttons: Button[]): ActionsById {
+  let actions: ActionsById = {};
 
   for (let i = 0; i < buttons.length; i++) {
     const button = buttons[i];
     if (button.type === 'normal') {
-      actions[button.action.uuid] = prepareAction(button.action);
+      actions[button.action.id] = prepareAction(button.action);
     }
     if (button.type === 'folder') {
       actions = { ...actions, ...getActionsFromButtons(button.buttons) };
@@ -41,7 +41,7 @@ export async function loadConfiguration(): Promise<void> {
   ).toString();
   configuration = JSON.parse(configJson);
 
-  actionsByUuid = getActionsFromButtons(configuration.buttons);
+  actionsById = getActionsFromButtons(configuration.buttons);
 }
 
 export async function saveConfiguration(): Promise<void> {
@@ -56,7 +56,7 @@ export async function setConfiguration(
   log.debug('Updating configuration');
 
   configuration = newConfig;
-  actionsByUuid = getActionsFromButtons(configuration.buttons);
+  actionsById = getActionsFromButtons(configuration.buttons);
 
   await saveConfiguration();
 }
@@ -65,8 +65,8 @@ export function getConfiguration(): Configuration {
   return configuration;
 }
 
-export function getActionsByUuid(): ActionsByUuid {
-  return actionsByUuid;
+export function getActionsById(): ActionsById {
+  return actionsById;
 }
 
 export interface Configuration {
