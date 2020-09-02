@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ButtonList from '../components/ButtonList';
 import { ActionOption, getActionOptions } from '../api/actions';
 import { useGlobalState } from '../state/appState';
+import SettingsLayout from '../components/SettingsLayout';
 
 const ButtonsSettingsPage: React.FC = () => {
   const [state] = useGlobalState();
@@ -18,10 +19,10 @@ const ButtonsSettingsPage: React.FC = () => {
   }
 
   return (
-    <>
+    <SettingsLayout>
       <ButtonList buttons={config.config.buttons} />
       <div className="button-settings"></div>
-    </>
+    </SettingsLayout>
   );
 };
 
