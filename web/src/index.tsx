@@ -8,7 +8,7 @@ import { AppContextProvider } from './state/appState';
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/app">
       <AppContextProvider>
         <App />
       </AppContextProvider>
