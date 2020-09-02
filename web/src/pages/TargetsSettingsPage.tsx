@@ -15,7 +15,7 @@ const TargetsSettingsPage: React.FC = () => {
     <div className="targets-settings">
       <main>
         <div className="targets-list">
-          <TargetRow name="OBS" />
+          <TargetRow name="OBS Studio" />
         </div>
         <div className="target-settings">
           <ObsSettings

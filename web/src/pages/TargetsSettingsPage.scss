@@ -4,15 +4,16 @@
 
   main {
     margin-top: 32px;
-    width: 1000px;
+    width: 800px;
     display: flex;
 
     .targets-list {
-      width: 320px;
+      flex-basis: 300px;
     }
 
     .target-settings {
       padding-left: 32px;
+      flex-grow: 1;
     }
   }
 }

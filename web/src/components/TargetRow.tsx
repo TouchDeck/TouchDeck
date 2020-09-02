@@ -6,7 +6,7 @@ export interface Props {
 
 const TargetRow: React.FC<Props> = ({ name }) => (
   <div className="target-row">
-    <img src={`/logos/${name}.png`} alt={`${name} logo`} />
+    <img src={`/logos/${name.replace(' ', '_')}.png`} alt={`${name} logo`} />
     <span>{name}</span>
   </div>
 );
