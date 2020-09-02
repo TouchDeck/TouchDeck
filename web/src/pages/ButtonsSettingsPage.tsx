@@ -3,7 +3,7 @@ import ButtonList from '../components/ButtonList';
 import { ActionOption, getActionOptions } from '../api/actions';
 import { useGlobalState } from '../state/appState';
 
-const SettingsPage: React.FC = () => {
+const ButtonsSettingsPage: React.FC = () => {
   const [state] = useGlobalState();
   const { config } = state;
 
@@ -25,4 +25,4 @@ const SettingsPage: React.FC = () => {
   );
 };
 
-export default SettingsPage;
+export default ButtonsSettingsPage;

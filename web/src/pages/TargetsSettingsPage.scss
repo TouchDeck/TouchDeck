@@ -1,0 +1,18 @@
+.targets-settings {
+  display: flex;
+  justify-content: center;
+
+  main {
+    margin-top: 32px;
+    width: 1000px;
+    display: flex;
+
+    .targets-list {
+      width: 320px;
+    }
+
+    .target-settings {
+      padding-left: 32px;
+    }
+  }
+}

@@ -1,13 +1,20 @@
+// CSS reset
+* {
+  box-sizing: border-box;
+}
+
 // Font awesome
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
 
-// Variables
+// Page styles
+@import 'pages/TargetsSettingsPage';
 
 // Component styles
 @import 'components/Button';
 @import 'components/ButtonGrid';
 @import 'components/ButtonList';
 @import 'components/SettingsCorner';
+@import 'components/TargetRow';
 
 // Global styling
 
@@ -24,8 +31,4 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
-
-* {
-  box-sizing: border-box;
 }
