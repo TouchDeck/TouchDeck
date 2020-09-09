@@ -37,11 +37,11 @@ const ConnectAgentPage: React.FC = () => {
 
         <h3>Select an agent from the list (todo):</h3>
         <div className="agents-list">
-          {!agentsList && <Icon icon="spinner fa-3x fa-pulse" />}
+          {!agentsList && <Icon icon="spinner" size={3} pulse />}
           {agentsList &&
             agentsList.map((agent) => (
               <div key={agent} onClick={() => connectToAgent(agent)}>
-                <Icon icon="windows fa-2x" style="b" /> {agent}
+                <Icon icon="windows" iconStyle="brands" size={2} /> {agent}
               </div>
             ))}
         </div>

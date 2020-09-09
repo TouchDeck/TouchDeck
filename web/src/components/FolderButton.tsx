@@ -9,7 +9,7 @@ export interface Props {
 
 const FolderButton: React.FC<Props & FolderButtonConfig> = (button) => (
   <Button {...button} onClick={(): void => button.enterFolder(button.buttons)}>
-    {!button.image && !button.text && <Icon icon="folder-open fa-3x" />}
+    {!button.image && !button.text && <Icon icon="folder-open" size={3} />}
   </Button>
 );
 

@@ -90,7 +90,7 @@ const ButtonGrid: React.FC<Props> = ({
               case 'up':
                 return (
                   <Button key={i} onClick={exitFolder}>
-                    <Icon icon="level-up-alt fa-3x" />
+                    <Icon icon="level-up-alt" size={3} />
                   </Button>
                 );
               default:
