@@ -2,17 +2,21 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useGlobalState } from '../state/appState';
 import Icon from '../components/Icon';
 import Agent from '../api/Agent';
+import { AgentInfo, listAgents } from '../api/agents';
 
 const ConnectAgentPage: React.FC = () => {
   const [, dispatch] = useGlobalState();
 
   const [connectInput, setConnectInput] = useState('');
-  const [agentsList, setAgentsList] = useState<string[]>();
+  const [agentsList, setAgentsList] = useState<AgentInfo[]>();
 
   useEffect(() => {
-    // Load the agents from the server.
-    // TODO
-    setAgentsList(['http://localhost:3000', '127.0.0.1', '192.168.0.10']);
+    listAgents()
+      .then(setAgentsList)
+      .catch((err) => {
+        console.error('Could not list agents:', err);
+        setAgentsList([]);
+      });
   }, []);
 
   const connectToAgent = useCallback(
@@ -40,8 +44,12 @@ const ConnectAgentPage: React.FC = () => {
           {!agentsList && <Icon icon="spinner" size={3} pulse />}
           {agentsList &&
             agentsList.map((agent) => (
-              <div key={agent} onClick={() => connectToAgent(agent)}>
-                <Icon icon="windows" iconStyle="brands" size={2} /> {agent}
+              <div
+                key={agent.localAddress}
+                onClick={() => connectToAgent(agent.localAddress)}
+              >
+                <Icon icon={agent.os} iconStyle="brands" size={2} />{' '}
+                {agent.localAddress}
               </div>
             ))}
         </div>
