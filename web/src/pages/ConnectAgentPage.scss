@@ -1,0 +1,24 @@
+.connect-agent {
+  display: flex;
+  justify-content: center;
+
+  main {
+    .agents-list {
+      div {
+        cursor: pointer;
+        padding: 8px 16px;
+        border: 1px solid #000;
+        border-radius: 4px;
+        margin-bottom: 4px;
+        background-color: #555;
+
+        display: flex;
+        align-items: center;
+
+        i {
+          margin-right: 16px;
+        }
+      }
+    }
+  }
+}
