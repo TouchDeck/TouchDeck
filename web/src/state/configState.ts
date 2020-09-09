@@ -22,7 +22,7 @@ export type Action =
 export const reducer: Reducer<State, Action> = (prevState, action) => {
   switch (action.type) {
     case 'configLoading':
-      return { ...prevState, loading: true };
+      return { ...prevState, loading: true, config: undefined };
     case 'configLoaded':
       return { ...prevState, loading: false, config: action.config };
     default:

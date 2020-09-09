@@ -9,9 +9,14 @@ import Icon from './Icon';
 export interface Props {
   rowWidth: number;
   buttons: Buttons;
+  onTriggerAction: (action: string) => void;
 }
 
-const ButtonGrid: React.FC<Props> = ({ rowWidth, buttons }) => {
+const ButtonGrid: React.FC<Props> = ({
+  rowWidth,
+  buttons,
+  onTriggerAction,
+}) => {
   const [buttonView, setButtonView] = useState<Buttons>(buttons);
 
   // Update the button view state whenever the prop changes.
@@ -63,9 +68,21 @@ const ButtonGrid: React.FC<Props> = ({ rowWidth, buttons }) => {
               case 'filler':
                 return <Button key={i} disabled />;
               case 'normal':
-                return <NormalButton key={i} {...button} />;
+                return (
+                  <NormalButton
+                    key={i}
+                    {...button}
+                    onTriggerAction={onTriggerAction}
+                  />
+                );
               case 'toggle':
-                return <ToggleButton key={i} {...button} />;
+                return (
+                  <ToggleButton
+                    key={i}
+                    {...button}
+                    onTriggerAction={onTriggerAction}
+                  />
+                );
               case 'folder':
                 return (
                   <FolderButton key={i} {...button} enterFolder={enterFolder} />

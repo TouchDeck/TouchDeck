@@ -13,7 +13,3 @@ export interface ObsTargetConfig {
   authenticated: boolean;
   password: string;
 }
-
-export async function getConfiguration(): Promise<Configuration> {
-  return (await fetch('/api/config')).json();
-}

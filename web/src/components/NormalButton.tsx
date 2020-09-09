@@ -1,10 +1,14 @@
 import React from 'react';
-import Button from './Button';
-import { NormalButtonConfig } from '../api/buttons';
-import { triggerAction } from '../api/actions';
+import Button, { Props as ButtonProps } from './Button';
+import { ActionConfig } from '../api/buttons';
 
-const NormalButton: React.FC<NormalButtonConfig> = (button) => (
-  <Button {...button} onClick={() => triggerAction(button.action.id)} />
+export type Props = ButtonProps & {
+  onTriggerAction: (action: string) => void;
+  action: ActionConfig;
+};
+
+const NormalButton: React.FC<Props> = (props) => (
+  <Button {...props} onClick={() => props.onTriggerAction(props.action.id)} />
 );
 
 export default NormalButton;

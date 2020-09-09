@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
-import Button from './Button';
-import { ToggleButtonConfig } from '../api/buttons';
-import { triggerAction } from '../api/actions';
+import Button, { Props as ButtonProps } from './Button';
+import { ActionConfig } from '../api/buttons';
 
-const ToggleButton: React.FC<ToggleButtonConfig> = ({ state1, state2 }) => {
+export interface Props {
+  onTriggerAction: (action: string) => void;
+  state1: ButtonProps & { action: ActionConfig };
+  state2: ButtonProps & { action: ActionConfig };
+}
+
+const ToggleButton: React.FC<Props> = ({ state1, state2, onTriggerAction }) => {
   const [toggleState, setToggleState] = useState(false);
 
   const currentState = toggleState ? state1 : state2;
@@ -11,7 +16,7 @@ const ToggleButton: React.FC<ToggleButtonConfig> = ({ state1, state2 }) => {
     <Button
       {...currentState}
       onClick={async () => {
-        await triggerAction(currentState.action.id);
+        onTriggerAction(currentState.action.id);
         setToggleState((prevState) => !prevState);
       }}
     />

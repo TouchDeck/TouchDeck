@@ -5,21 +5,30 @@ import {
   reducer as configReducer,
   State as ConfigState,
 } from './configState';
+import {
+  Action as AgentAction,
+  getInitialState as getInitialAgentState,
+  reducer as agentReducer,
+  State as AgentState,
+} from './agentState';
 
 export interface State {
   config: ConfigState;
+  agent: AgentState;
 }
 
-export type Action = ConfigAction;
+export type Action = ConfigAction | AgentAction;
 
 const reducer: Reducer<State, Action> = (prevState, action) => {
   return {
-    config: configReducer(prevState.config, action),
+    config: configReducer(prevState.config, action as ConfigAction),
+    agent: agentReducer(prevState.agent, action as AgentAction),
   };
 };
 
 const getInitialState = (): State => ({
   config: getInitialConfigState(),
+  agent: getInitialAgentState(),
 });
 
 export const AppContext = React.createContext<[State, Dispatch<Action>]>([
@@ -33,3 +42,5 @@ export const AppContextProvider: React.FC = ({ children }) => {
 };
 
 export const useGlobalState = () => useContext(AppContext);
+
+export const useAgent = () => useGlobalState()[0].agent.agent!;
