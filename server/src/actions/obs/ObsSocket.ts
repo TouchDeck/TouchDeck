@@ -1,23 +1,13 @@
 import OBSWebSocket from 'obs-websocket-js';
 import Logger from '../../Logger';
+import { singleton } from '../../inject';
 
 export interface VersionResult {
   'obs-websocket-version': string;
   'obs-studio-version': string;
 }
 
-export const obsSocketMetadataKey = Symbol('ObsSocket');
-
-export function obsSocket(
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  target: Object,
-  propertyKey: string | symbol,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  parameterIndex: number
-): void {
-  Reflect.defineMetadata(obsSocketMetadataKey, true, target, propertyKey);
-}
-
+@singleton
 export default class ObsSocket {
   private readonly log = new Logger(ObsSocket.name);
 
