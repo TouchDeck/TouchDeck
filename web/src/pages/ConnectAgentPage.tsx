@@ -3,6 +3,7 @@ import { useGlobalState } from '../state/appState';
 import Icon from '../components/Icon';
 import Agent from '../api/Agent';
 import { AgentInfo, listAgents } from '../api/agents';
+import sanitizeAddress from '../util/sanitizeAddress';
 
 const ConnectAgentPage: React.FC = () => {
   const [, dispatch] = useGlobalState();
@@ -21,10 +22,12 @@ const ConnectAgentPage: React.FC = () => {
 
   const connectToAgent = useCallback(
     (address) => {
+      const sanitizedAddress = sanitizeAddress(address);
+      // Connect to the agent.
       dispatch({
         type: 'agentConnecting',
       });
-      const agent = new Agent(address);
+      const agent = new Agent(sanitizedAddress);
       // TODO: test if agent is valid.
       dispatch({
         type: 'agentConnected',

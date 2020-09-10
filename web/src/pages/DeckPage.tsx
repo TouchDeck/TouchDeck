@@ -18,7 +18,7 @@ const DeckPage: React.FC = () => {
       <ButtonGrid
         rowWidth={4}
         buttons={config.config.buttons}
-        onTriggerAction={agent.triggerAction}
+        onTriggerAction={(id) => agent.triggerAction(id)}
       />
     </>
   );
