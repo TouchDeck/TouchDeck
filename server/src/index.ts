@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import express from 'express';
+import cors from 'cors';
 import Logger from './Logger';
 import invokeAction from './api/invokeAction';
 import { getAvailableActions } from './actions/actionRegistry';
@@ -7,6 +8,7 @@ import { PORT } from './constants';
 import { loadConfiguration, saveConfiguration } from './configuration/config';
 import getActionOptions from './api/getActionOptions';
 import { getConfig, putConfig } from './api/config';
+import getLocalAddress from './getLocalAddress';
 
 const log = new Logger('index');
 log.debug('Starting server...');
@@ -29,6 +31,7 @@ async function bootstrap(): Promise<void> {
   log.debug('Setting up routes');
   const app = express();
   app.use(express.json());
+  app.use(cors());
 
   // API routes.
   app.post('/api/actions/:action', invokeAction);
@@ -38,7 +41,10 @@ async function bootstrap(): Promise<void> {
 
   // Done!
   app.listen(PORT);
-  log.info(`Server started on port ${PORT}`);
+
+  // Get the local IP address, report it to the discovery server.
+  // TODO
+  log.info(`Agent running on ${getLocalAddress()}:${PORT}`);
 }
 
 bootstrap().catch((err) => {

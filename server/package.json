@@ -10,6 +10,7 @@
     "format": "npm run prettier && npm run lint"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.7",
     "@types/express": "^4.17.7",
     "@types/node": "^14.6.0",
     "@typescript-eslint/eslint-plugin": "^3.9.1",
@@ -25,6 +26,7 @@
     "typescript": "^3.9.7"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "obs-websocket-js": "^4.0.1",
     "reflect-metadata": "^0.1.13"
@@ -43,7 +45,8 @@
       "project": "./tsconfig.json"
     },
     "rules": {
-      "no-plusplus": "off"
+      "no-plusplus": "off",
+      "no-restricted-syntax": "off"
     }
   },
   "prettier": {
