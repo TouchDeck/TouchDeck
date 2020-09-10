@@ -20,5 +20,19 @@
         }
       }
     }
+
+    .manual-address {
+      display: flex;
+
+      input {
+        flex-grow: 1;
+        margin-right: 16px;
+      }
+
+      input,
+      button {
+        padding: 4px;
+      }
+    }
   }
 }

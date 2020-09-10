@@ -58,17 +58,24 @@ const ConnectAgentPage: React.FC = () => {
         </div>
 
         <h3>Or enter the IP address:</h3>
-        <input
-          placeholder="localhost:3000"
-          value={connectInput}
-          onChange={(e) => setConnectInput(e.currentTarget.value)}
-        />
-        <button
-          disabled={!connectInput}
-          onClick={() => connectToAgent(connectInput)}
-        >
-          Connect
-        </button>
+        <div className="manual-address">
+          <input
+            placeholder="localhost:3000"
+            value={connectInput}
+            onChange={(e) => setConnectInput(e.currentTarget.value)}
+            onKeyDown={(e) => {
+              if (connectInput && e.key === 'Enter') {
+                connectToAgent(connectInput);
+              }
+            }}
+          />
+          <button
+            disabled={!connectInput}
+            onClick={() => connectToAgent(connectInput)}
+          >
+            Connect
+          </button>
+        </div>
       </main>
     </div>
   );
