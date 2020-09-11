@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import DeckPage from './pages/DeckPage';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { useGlobalState } from './state/appState';
@@ -7,24 +7,7 @@ import TargetsSettingsPage from './pages/TargetsSettingsPage';
 import ConnectAgentPage from './pages/ConnectAgentPage';
 
 const App: React.FC = () => {
-  const [{ agent }, dispatch] = useGlobalState();
-
-  useEffect(() => {
-    if (!agent.agent) {
-      return;
-    }
-
-    // Load the configuration from the agent, store it in global state.
-    agent.agent.getConfiguration().then((config) => {
-      dispatch({
-        type: 'configLoading',
-      });
-      dispatch({
-        type: 'configLoaded',
-        config,
-      });
-    });
-  }, [dispatch, agent]);
+  const [{ agent }] = useGlobalState();
 
   // If we are not connected to an agent, show the connect page.
   if (!agent.agent || agent.connecting) {

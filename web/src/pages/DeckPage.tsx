@@ -8,7 +8,7 @@ const DeckPage: React.FC = () => {
   const { config } = state;
   const agent = useAgent();
 
-  if (config.loading) {
+  if (!config.config) {
     return <>Loading...</>;
   }
 

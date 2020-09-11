@@ -8,7 +8,7 @@ import Dimmer from '../components/Dimmer';
 import DiscoveredAgent from '../model/DiscoveredAgent';
 
 const ConnectAgentPage: React.FC = () => {
-  const [{ agent }, dispatch] = useGlobalState();
+  const [{ agent, config }, dispatch] = useGlobalState();
 
   const [connectInput, setConnectInput] = useState('');
   const [agentsList, setAgentsList] = useState<DiscoveredAgent[]>();
@@ -34,11 +34,17 @@ const ConnectAgentPage: React.FC = () => {
       // Test if the agent is valid.
       newAgent
         .getInfo()
-        .then((info) => {
+        .then(async (info) => {
           if (info.name !== 'pideck-agent') {
             throw new Error(`unknown agent name '${info.name}'`);
           }
 
+          // Load the configuration from the agent.
+          dispatch({ type: 'configLoading' });
+          const agentConfig = await newAgent.getConfiguration();
+
+          // Dispatch the loaded and connected events.
+          dispatch({ type: 'configLoaded', config: agentConfig });
           dispatch({
             type: 'agentConnected',
             agent: newAgent,
@@ -56,7 +62,7 @@ const ConnectAgentPage: React.FC = () => {
 
   return (
     <div className="connect-agent">
-      <Dimmer active={agent.connecting}>
+      <Dimmer active={agent.connecting || config.loading}>
         <div>
           <Icon icon="spinner" size={3} pulse />
           <h2>Connecting to agent...</h2>

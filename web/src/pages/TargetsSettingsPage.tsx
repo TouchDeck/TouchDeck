@@ -5,12 +5,11 @@ import ObsSettings from '../components/settings/ObsSettings';
 import SettingsLayout from '../components/settings/SettingsLayout';
 
 const TargetsSettingsPage: React.FC = () => {
-  const [state, setState] = useGlobalState();
-  const { config } = state;
+  const [{ config }] = useGlobalState();
 
   const [settingsPane, setSettingsPane] = useState();
 
-  if (config.loading) {
+  if (!config.config) {
     return <>Loading...</>;
   }
 

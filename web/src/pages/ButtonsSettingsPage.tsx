@@ -15,7 +15,7 @@ const ButtonsSettingsPage: React.FC = () => {
     agent.getActionOptions().then((options) => setActionOptions(options));
   }, [agent]);
 
-  if (config.loading) {
+  if (!config.config) {
     return <>Loading...</>;
   }
 

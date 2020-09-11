@@ -3,7 +3,8 @@ import Configuration from '../model/configuration/Configuration';
 
 export type State =
   | {
-      loading: true;
+      loading: boolean;
+      config: undefined;
     }
   | {
       loading: false;
@@ -17,6 +18,9 @@ export type Action =
   | {
       type: 'configLoaded';
       config: Configuration;
+    }
+  | {
+      type: 'agentDisconnected';
     };
 
 export const reducer: Reducer<State, Action> = (prevState, action) => {
@@ -25,11 +29,14 @@ export const reducer: Reducer<State, Action> = (prevState, action) => {
       return { ...prevState, loading: true, config: undefined };
     case 'configLoaded':
       return { ...prevState, loading: false, config: action.config };
+    case 'agentDisconnected':
+      return { ...prevState, loading: false, config: undefined };
     default:
       return prevState;
   }
 };
 
 export const getInitialState = (): State => ({
-  loading: true,
+  loading: false,
+  config: undefined,
 });
