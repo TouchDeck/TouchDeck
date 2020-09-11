@@ -13,7 +13,7 @@ import getPlatform from './util/getPlatform';
 import getServerInfo from './api/getServerInfo';
 
 const log = new Logger('index');
-log.debug('Starting server...');
+log.debug('Starting agent...');
 
 async function bootstrap(): Promise<void> {
   // Load and log all the action classes.

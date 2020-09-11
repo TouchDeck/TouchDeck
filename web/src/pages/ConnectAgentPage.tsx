@@ -33,7 +33,7 @@ const ConnectAgentPage: React.FC = () => {
       agent
         .getInfo()
         .then((info) => {
-          if (info.name !== 'pideck-server') {
+          if (info.name !== 'pideck-agent') {
             throw new Error(`unknown agent name '${info.name}'`);
           }
 
