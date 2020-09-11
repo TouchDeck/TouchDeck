@@ -1,4 +1,4 @@
-import { Constructor } from '../Constructor';
+import { Constructor } from '../util/Constructor';
 import DebugAction from './DebugAction';
 import ObsSetSceneAction from './obs/ObsSetSceneAction';
 import Action, { actionCategoryKey, actionNameKey } from './Action';

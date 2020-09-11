@@ -1,4 +1,4 @@
-import { Constructor } from '../Constructor';
+import { Constructor } from '../util/Constructor';
 import 'reflect-metadata';
 
 export default interface Action {

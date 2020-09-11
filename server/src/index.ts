@@ -10,6 +10,7 @@ import getActionOptions from './api/getActionOptions';
 import { getConfig, putConfig } from './api/config';
 import getLocalAddress from './util/getLocalAddress';
 import getPlatform from './util/getPlatform';
+import getServerInfo from './api/getServerInfo';
 
 const log = new Logger('index');
 log.debug('Starting server...');
@@ -35,6 +36,7 @@ async function bootstrap(): Promise<void> {
   app.use(cors());
 
   // API routes.
+  app.get('/api', getServerInfo);
   app.post('/api/actions/:action', invokeAction);
   app.get('/api/actions/options', getActionOptions);
   app.get('/api/config', getConfig);

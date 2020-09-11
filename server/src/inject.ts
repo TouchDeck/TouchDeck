@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { Constructor } from './Constructor';
+import { Constructor } from './util/Constructor';
 
 export const singletonKey = Symbol('inject:singleton');
 
