@@ -28,11 +28,26 @@ const ConnectAgentPage: React.FC = () => {
         type: 'agentConnecting',
       });
       const agent = new Agent(sanitizedAddress);
-      // TODO: test if agent is valid.
-      dispatch({
-        type: 'agentConnected',
-        agent,
-      });
+
+      // Test if the agent is valid.
+      agent
+        .getInfo()
+        .then((info) => {
+          if (info.name !== 'pideck-server') {
+            throw new Error(`unknown agent name '${info.name}'`);
+          }
+
+          dispatch({
+            type: 'agentConnected',
+            agent,
+          });
+        })
+        .catch((err) => {
+          console.error('Invalid agent:', err.message);
+          dispatch({
+            type: 'agentDisconnected',
+          });
+        });
     },
     [dispatch]
   );
