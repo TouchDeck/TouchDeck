@@ -2,6 +2,23 @@
   display: flex;
   justify-content: center;
 
+  .dimmer {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    div {
+      background-color: #555;
+      border: 1px solid #000;
+      border-radius: 4px;
+      padding: 32px;
+
+      h2 {
+        margin-bottom: 0;
+      }
+    }
+  }
+
   main {
     .agents-list {
       div {

@@ -1,0 +1,11 @@
+.dimmer {
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  background-color: transparentize(#000, 0.5);
+  position: absolute;
+
+  &.active {
+    display: flex;
+  }
+}

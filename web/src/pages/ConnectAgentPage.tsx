@@ -4,9 +4,10 @@ import Icon from '../components/Icon';
 import Agent from '../api/Agent';
 import { AgentInfo, listAgents } from '../api/agents';
 import sanitizeAddress from '../util/sanitizeAddress';
+import Dimmer from '../components/Dimmer';
 
 const ConnectAgentPage: React.FC = () => {
-  const [, dispatch] = useGlobalState();
+  const [{ agent }, dispatch] = useGlobalState();
 
   const [connectInput, setConnectInput] = useState('');
   const [agentsList, setAgentsList] = useState<AgentInfo[]>();
@@ -54,6 +55,12 @@ const ConnectAgentPage: React.FC = () => {
 
   return (
     <div className="connect-agent">
+      <Dimmer active={agent.connecting}>
+        <div>
+          <Icon icon="spinner" size={3} pulse />
+          <h2>Connecting to agent...</h2>
+        </div>
+      </Dimmer>
       <main>
         <h2>Connect to an agent</h2>
 
@@ -61,13 +68,13 @@ const ConnectAgentPage: React.FC = () => {
         <div className="agents-list">
           {!agentsList && <Icon icon="spinner" size={3} pulse />}
           {agentsList &&
-            agentsList.map((agent) => (
+            agentsList.map((agentInfo) => (
               <div
-                key={agent.localAddress}
-                onClick={() => connectToAgent(agent.localAddress)}
+                key={agentInfo.localAddress}
+                onClick={() => connectToAgent(agentInfo.localAddress)}
               >
-                <Icon icon={agent.os} iconStyle="brands" size={2} />{' '}
-                {agent.localAddress}
+                <Icon icon={agentInfo.os} iconStyle="brands" size={2} />{' '}
+                {agentInfo.localAddress}
               </div>
             ))}
         </div>
