@@ -8,7 +8,8 @@ import { PORT } from './constants';
 import { loadConfiguration, saveConfiguration } from './configuration/config';
 import getActionOptions from './api/getActionOptions';
 import { getConfig, putConfig } from './api/config';
-import getLocalAddress from './getLocalAddress';
+import getLocalAddress from './util/getLocalAddress';
+import getPlatform from './util/getPlatform';
 
 const log = new Logger('index');
 log.debug('Starting server...');
@@ -44,7 +45,7 @@ async function bootstrap(): Promise<void> {
 
   // Get the local IP address, report it to the discovery server.
   // TODO
-  log.info(`Agent running on ${getLocalAddress()}:${PORT}`);
+  log.info(`Agent running on ${getPlatform()} ${getLocalAddress()}:${PORT}`);
 }
 
 bootstrap().catch((err) => {
