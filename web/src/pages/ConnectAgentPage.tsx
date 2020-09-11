@@ -5,13 +5,13 @@ import Agent from '../api/Agent';
 import listDiscoveredAgents from '../api/listDiscoveredAgents';
 import sanitizeAddress from '../util/sanitizeAddress';
 import Dimmer from '../components/Dimmer';
-import DiscoveredAgent from '../model/DiscoveredAgent';
+import AgentInfo from '../model/AgentInfo';
 
 const ConnectAgentPage: React.FC = () => {
   const [{ agent, config }, dispatch] = useGlobalState();
 
   const [connectInput, setConnectInput] = useState('');
-  const [agentsList, setAgentsList] = useState<DiscoveredAgent[]>();
+  const [agentsList, setAgentsList] = useState<AgentInfo[]>();
 
   useEffect(() => {
     listDiscoveredAgents()
@@ -30,10 +30,11 @@ const ConnectAgentPage: React.FC = () => {
       const newAgent = new Agent(sanitizedAddress);
 
       // Test if the agent is valid.
+      let agentInfo: AgentInfo;
       try {
-        const info = await newAgent.getInfo();
-        if (info.name !== 'pideck-agent') {
-          console.error('Invalid agent name:', info.name);
+        agentInfo = await newAgent.getInfo();
+        if (agentInfo.name !== 'pideck-agent') {
+          console.error('Invalid agent name:', agentInfo.name);
           dispatch({ type: 'agentDisconnected' });
           return;
         }
@@ -52,6 +53,7 @@ const ConnectAgentPage: React.FC = () => {
       dispatch({
         type: 'agentConnected',
         agent: newAgent,
+        info: agentInfo,
       });
     },
     [dispatch]

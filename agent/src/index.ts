@@ -9,9 +9,7 @@ import { DISCOVERY_SERVER, PORT } from './constants';
 import { loadConfiguration, saveConfiguration } from './configuration/config';
 import getActionOptions from './api/getActionOptions';
 import { getConfig, putConfig } from './api/config';
-import getLocalAddress from './util/getLocalAddress';
-import getPlatform from './util/getPlatform';
-import getServerInfo from './api/getServerInfo';
+import getAgentInfo, { agentInfo } from './api/getAgentInfo';
 
 const log = new Logger('index');
 log.debug('Starting agent...');
@@ -37,7 +35,7 @@ async function bootstrap(): Promise<void> {
   app.use(cors());
 
   // API routes.
-  app.get('/api', getServerInfo);
+  app.get('/api', getAgentInfo);
   app.post('/api/actions/:action', invokeAction);
   app.get('/api/actions/options', getActionOptions);
   app.get('/api/config', getConfig);
@@ -45,22 +43,17 @@ async function bootstrap(): Promise<void> {
 
   // Done!
   app.listen(PORT);
+  log.info(`Agent running on ${agentInfo.address}`);
 
-  // Get the agent info, report it to the discovery server.
-  const platform = getPlatform();
-  const address = `${getLocalAddress()}:${PORT}`;
-  log.info(`Agent running on ${platform} ${address}`);
+  // Report the agent info to the discovery server.
   await fetch(`${DISCOVERY_SERVER}/api/agents`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      platform,
-      address,
-    }),
+    body: JSON.stringify(agentInfo),
   })
-    .then(() => log.debug('Agent reported to discovery server.'))
+    .then(() => log.debug('Agent reported to discovery server'))
     .catch((err) =>
       log.error(`Failed to report agent to discovery server: ${err.message}`)
     );

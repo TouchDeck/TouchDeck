@@ -15,27 +15,25 @@ const TargetsSettingsPage: React.FC = () => {
 
   return (
     <SettingsLayout>
-      <div className="targets-settings">
-        <main>
-          <div className="targets-list">
-            <TargetRow
-              name="OBS Studio"
-              onClick={() =>
-                setSettingsPane(
-                  <ObsSettings
-                    config={config.config.targets.obs}
-                    onSaveConfig={(newConfig) => {
-                      // TODO
-                      console.log(newConfig);
-                    }}
-                  />
-                )
-              }
-            />
-          </div>
-          <div className="target-settings">{settingsPane}</div>
-        </main>
-      </div>
+      <main className="targets-settings">
+        <div className="targets-list">
+          <TargetRow
+            name="OBS Studio"
+            onClick={() =>
+              setSettingsPane(
+                <ObsSettings
+                  config={config.config.targets.obs}
+                  onSaveConfig={(newConfig) => {
+                    // TODO
+                    console.log(newConfig);
+                  }}
+                />
+              )
+            }
+          />
+        </div>
+        <div className="target-settings">{settingsPane}</div>
+      </main>
     </SettingsLayout>
   );
 };

@@ -1,5 +1,5 @@
 import os from 'os';
-import { Platform } from '../model/DiscoveredAgent';
+import { Platform } from '../model/AgentInfo';
 
 const platformMapping: { [key: string]: Platform } = {
   win32: 'windows',
@@ -8,5 +8,5 @@ const platformMapping: { [key: string]: Platform } = {
 };
 
 export default function getPlatform(): Platform {
-  return platformMapping[os.platform()] || 'other';
+  return platformMapping[os.platform()] || '';
 }

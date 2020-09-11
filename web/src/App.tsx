@@ -5,6 +5,7 @@ import { useGlobalState } from './state/appState';
 import ButtonsSettingsPage from './pages/ButtonsSettingsPage';
 import TargetsSettingsPage from './pages/TargetsSettingsPage';
 import ConnectAgentPage from './pages/ConnectAgentPage';
+import AgentSettingsPage from './pages/AgentSettingsPage';
 
 const App: React.FC = () => {
   const [{ agent }] = useGlobalState();
@@ -21,6 +22,7 @@ const App: React.FC = () => {
       <Redirect exact path="/settings" to="/settings/buttons" />
       <Route exact path="/settings/buttons" component={ButtonsSettingsPage} />
       <Route exact path="/settings/targets" component={TargetsSettingsPage} />
+      <Route exact path="/settings/agent" component={AgentSettingsPage} />
       <Redirect to="/" />
     </Switch>
   );

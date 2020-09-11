@@ -7,9 +7,6 @@
     margin-bottom: 32px;
 
     a {
-      text-decoration: none;
-      color: inherit;
-
       h2 {
         margin: 8px 16px;
       }
@@ -23,5 +20,10 @@
         color: #888;
       }
     }
+  }
+
+  .content {
+    display: flex;
+    justify-content: center;
   }
 }

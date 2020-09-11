@@ -1,18 +1,24 @@
 import { Request, Response } from 'express';
 import { KEEP_AGENT_TIME } from './constants';
 
-interface DiscoveredAgent {
+interface AgentInfo {
+  name: string;
+  version: string;
   address: string;
   platform: string;
+  hostname: string;
 }
 
-interface AgentInfo extends DiscoveredAgent {
+interface AgentWithTimeout extends AgentInfo {
   removalTimeout: NodeJS.Timeout;
 }
 
-const agents: { [publicIp: string]: AgentInfo[] } = {};
+const agents: { [publicIp: string]: AgentWithTimeout[] } = {};
 
-function removeAgent(reqIp: string, address: string): AgentInfo | undefined {
+function removeAgent(
+  reqIp: string,
+  address: string
+): AgentWithTimeout | undefined {
   const agentList = agents[reqIp] || [];
 
   for (let i = 0; i < agentList.length; i++) {
@@ -26,23 +32,22 @@ function removeAgent(reqIp: string, address: string): AgentInfo | undefined {
   return undefined;
 }
 
-export function getAgents(
-  req: Request,
-  res: Response<DiscoveredAgent[]>
-): void {
+export function getAgents(req: Request, res: Response<AgentInfo[]>): void {
   res.json(
-    (agents[req.ip] || []).map(({ address, platform }) => ({
-      address,
-      platform,
-    }))
+    (agents[req.ip] || []).map(
+      ({ name, version, address, platform, hostname }) => ({
+        name,
+        version,
+        address,
+        platform,
+        hostname,
+      })
+    )
   );
 }
 
-export function registerAgent(
-  req: Request,
-  res: Response<DiscoveredAgent[]>
-): void {
-  const info: AgentInfo = req.body;
+export function registerAgent(req: Request, res: Response<AgentInfo[]>): void {
+  const info: AgentWithTimeout = req.body;
 
   // Remove any agents with the same address and clear their removal timeout.
   const oldAgent = removeAgent(req.ip, info.address);
