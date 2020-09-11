@@ -59,9 +59,11 @@ async function bootstrap(): Promise<void> {
       platform,
       address,
     }),
-  }).catch((err) =>
-    log.error(`Failed to report agent to discovery server: ${err.message}`)
-  );
+  })
+    .then(() => log.debug('Agent reported to discovery server.'))
+    .catch((err) =>
+      log.error(`Failed to report agent to discovery server: ${err.message}`)
+    );
 }
 
 bootstrap().catch((err) => {

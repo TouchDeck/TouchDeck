@@ -23,39 +23,36 @@ const ConnectAgentPage: React.FC = () => {
   }, []);
 
   const connectToAgent = useCallback(
-    (address) => {
+    async (address) => {
       const sanitizedAddress = sanitizeAddress(address);
       // Connect to the agent.
-      dispatch({
-        type: 'agentConnecting',
-      });
+      dispatch({ type: 'agentConnecting' });
       const newAgent = new Agent(sanitizedAddress);
 
       // Test if the agent is valid.
-      newAgent
-        .getInfo()
-        .then(async (info) => {
-          if (info.name !== 'pideck-agent') {
-            throw new Error(`unknown agent name '${info.name}'`);
-          }
+      try {
+        const info = await newAgent.getInfo();
+        if (info.name !== 'pideck-agent') {
+          console.error('Invalid agent name:', info.name);
+          dispatch({ type: 'agentDisconnected' });
+          return;
+        }
+      } catch (err) {
+        console.error('Could not ping agent:', err.message);
+        dispatch({ type: 'agentDisconnected' });
+        return;
+      }
 
-          // Load the configuration from the agent.
-          dispatch({ type: 'configLoading' });
-          const agentConfig = await newAgent.getConfiguration();
+      // Load the configuration from the agent.
+      dispatch({ type: 'configLoading' });
+      const agentConfig = await newAgent.getConfiguration();
 
-          // Dispatch the loaded and connected events.
-          dispatch({ type: 'configLoaded', config: agentConfig });
-          dispatch({
-            type: 'agentConnected',
-            agent: newAgent,
-          });
-        })
-        .catch((err) => {
-          console.error('Invalid agent:', err.message);
-          dispatch({
-            type: 'agentDisconnected',
-          });
-        });
+      // Dispatch the loaded and connected events.
+      dispatch({ type: 'configLoaded', config: agentConfig });
+      dispatch({
+        type: 'agentConnected',
+        agent: newAgent,
+      });
     },
     [dispatch]
   );
