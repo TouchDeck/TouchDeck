@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { useGlobalState } from '../state/appState';
+import { useGlobalState } from '../../state/appState';
 
 const SettingsLayout: React.FC = ({ children }) => {
   const [, dispatch] = useGlobalState();

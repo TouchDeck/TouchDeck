@@ -1,10 +1,10 @@
 import React from 'react';
 import Button from './Button';
-import Icon from './Icon';
+import Icon from '../Icon';
 import {
   ButtonConfig,
   FolderButtonConfig,
-} from '../model/configuration/ButtonConfig';
+} from '../../model/configuration/ButtonConfig';
 
 export interface Props {
   enterFolder: (buttons: ButtonConfig[]) => void;

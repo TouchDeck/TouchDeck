@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { ButtonConfig } from '../model/configuration/ButtonConfig';
+import { ButtonConfig } from '../../model/configuration/ButtonConfig';
 
 export interface Props {
   buttons: ButtonConfig[];

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Button, { Props as ButtonProps } from './Button';
-import ActionConfig from '../model/configuration/ActionConfig';
+import ActionConfig from '../../model/configuration/ActionConfig';
 
 export interface Props {
   onTriggerAction: (action: string) => void;

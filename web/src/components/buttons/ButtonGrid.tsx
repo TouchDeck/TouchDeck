@@ -3,8 +3,8 @@ import Button from './Button';
 import NormalButton from './NormalButton';
 import ToggleButton from './ToggleButton';
 import FolderButton from './FolderButton';
-import Icon from './Icon';
-import { ButtonConfig } from '../model/configuration/ButtonConfig';
+import Icon from '../Icon';
+import { ButtonConfig } from '../../model/configuration/ButtonConfig';
 
 export interface Props {
   rowWidth: number;

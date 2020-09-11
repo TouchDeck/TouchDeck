@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import ButtonList from '../components/ButtonList';
+import ButtonList from '../components/buttons/ButtonList';
 import ActionOption from '../model/ActionOption';
 import { useAgent, useGlobalState } from '../state/appState';
-import SettingsLayout from '../components/SettingsLayout';
+import SettingsLayout from '../components/settings/SettingsLayout';
 
 const ButtonsSettingsPage: React.FC = () => {
   const [state] = useGlobalState();

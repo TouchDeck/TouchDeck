@@ -1,6 +1,6 @@
 import React from 'react';
-import ButtonGrid from '../components/ButtonGrid';
-import SettingsCorner from '../components/SettingsCorner';
+import ButtonGrid from '../components/buttons/ButtonGrid';
+import SettingsCorner from '../components/settings/SettingsCorner';
 import { useAgent, useGlobalState } from '../state/appState';
 
 const DeckPage: React.FC = () => {

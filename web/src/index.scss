@@ -11,13 +11,13 @@
 @import 'pages/TargetsSettingsPage';
 
 // Component styles
-@import 'components/Button';
-@import 'components/ButtonGrid';
-@import 'components/ButtonList';
 @import 'components/Dimmer';
-@import 'components/SettingsCorner';
-@import 'components/SettingsLayout';
-@import 'components/TargetRow';
+@import 'components/buttons/Button';
+@import 'components/buttons/ButtonGrid';
+@import 'components/buttons/ButtonList';
+@import 'components/settings/SettingsCorner';
+@import 'components/settings/SettingsLayout';
+@import 'components/settings/TargetRow';
 
 // Global styling
 

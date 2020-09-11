@@ -1,6 +1,6 @@
 import React from 'react';
 import Button, { Props as ButtonProps } from './Button';
-import ActionConfig from '../model/configuration/ActionConfig';
+import ActionConfig from '../../model/configuration/ActionConfig';
 
 export interface Props extends ButtonProps {
   onTriggerAction: (action: string) => void;

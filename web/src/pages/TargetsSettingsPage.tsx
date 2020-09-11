@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useGlobalState } from '../state/appState';
-import TargetRow from '../components/TargetRow';
+import TargetRow from '../components/settings/TargetRow';
 import ObsSettings from '../components/settings/ObsSettings';
-import SettingsLayout from '../components/SettingsLayout';
+import SettingsLayout from '../components/settings/SettingsLayout';
 
 const TargetsSettingsPage: React.FC = () => {
   const [state, setState] = useGlobalState();
