@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ObsTargetConfig from '../../model/configuration/ObsTargetConfig';
+import Rows from '../Rows';
 
 export interface Props {
   config: ObsTargetConfig;
@@ -11,9 +12,9 @@ const ObsSettings: React.FC<Props> = ({ config, onSaveConfig }) => {
 
   return (
     <>
-      <div className="inputs">
+      <Rows>
         <div>
-          IP Address
+          <span>IP Address</span>
           <input
             placeholder="localhost"
             value={newConfig.ip}
@@ -24,7 +25,7 @@ const ObsSettings: React.FC<Props> = ({ config, onSaveConfig }) => {
           />
         </div>
         <div>
-          Port
+          <span>Port</span>
           <input
             type="number"
             placeholder="4444"
@@ -37,7 +38,7 @@ const ObsSettings: React.FC<Props> = ({ config, onSaveConfig }) => {
           />
         </div>
         <div>
-          Authenticated
+          <span>Authenticated</span>
           <input
             type="checkbox"
             onChange={(e) => {
@@ -52,7 +53,7 @@ const ObsSettings: React.FC<Props> = ({ config, onSaveConfig }) => {
         </div>
         {newConfig.authenticated && (
           <div>
-            Password
+            <span>Password</span>
             <input
               type="password"
               placeholder="p455w0rd"
@@ -64,7 +65,7 @@ const ObsSettings: React.FC<Props> = ({ config, onSaveConfig }) => {
             />
           </div>
         )}
-      </div>
+      </Rows>
       <button onClick={() => onSaveConfig(newConfig)}>Save</button>
     </>
   );

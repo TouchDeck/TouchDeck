@@ -3,6 +3,7 @@ import { useGlobalState } from '../state/appState';
 import SettingsLayout from '../components/settings/SettingsLayout';
 import Icon from '../components/Icon';
 import { Link } from 'react-router-dom';
+import Rows from '../components/Rows';
 
 const AgentSettingsPage: React.FC = () => {
   const [
@@ -15,7 +16,7 @@ const AgentSettingsPage: React.FC = () => {
   return (
     <SettingsLayout>
       <main className="agent-settings">
-        <div className="rows">
+        <Rows>
           <div>
             <span>Address:</span>
             <span>{info?.address}</span>
@@ -32,7 +33,7 @@ const AgentSettingsPage: React.FC = () => {
             <span>Hostname:</span>
             <span>{info?.hostname}</span>
           </div>
-        </div>
+        </Rows>
         <Link
           className="disconnect"
           to="/"

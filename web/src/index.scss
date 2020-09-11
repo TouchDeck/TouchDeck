@@ -4,30 +4,6 @@
   box-sizing: border-box;
 }
 
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-// Font awesome
-@import '~@fortawesome/fontawesome-free/css/all.min.css';
-
-// Page styles
-@import 'pages/AgentSettingsPage';
-@import 'pages/ConnectAgentPage';
-@import 'pages/TargetsSettingsPage';
-
-// Component styles
-@import 'components/Dimmer';
-@import 'components/buttons/Button';
-@import 'components/buttons/ButtonGrid';
-@import 'components/buttons/ButtonList';
-@import 'components/settings/SettingsCorner';
-@import 'components/settings/SettingsLayout';
-@import 'components/settings/TargetRow';
-
-// Global styling
-
 body {
   margin: 0;
   font-family: 'Open Sans', sans-serif;
@@ -43,8 +19,25 @@ code {
     monospace;
 }
 
-.inputs div {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
+a {
+  text-decoration: none;
+  color: inherit;
 }
+
+// Font awesome
+@import '~@fortawesome/fontawesome-free/css/all.min.css';
+
+// Page styles
+@import 'pages/AgentSettingsPage';
+@import 'pages/ConnectAgentPage';
+@import 'pages/TargetsSettingsPage';
+
+// Component styles
+@import 'components/Dimmer';
+@import 'components/Rows';
+@import 'components/buttons/Button';
+@import 'components/buttons/ButtonGrid';
+@import 'components/buttons/ButtonList';
+@import 'components/settings/SettingsCorner';
+@import 'components/settings/SettingsLayout';
+@import 'components/settings/TargetRow';
