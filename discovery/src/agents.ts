@@ -11,30 +11,37 @@ export interface AgentInfo {
 
 const agents: { [publicIp: string]: AgentInfo[] } = {};
 
-function removeAgent(reqIp: string, address: string): void {
-  agents[reqIp] = (agents[reqIp] || []).filter((a) => a.address !== address);
+function removeAgent(reqIp: string, address: string): AgentInfo | undefined {
+  const agentList = agents[reqIp] || [];
+
+  for (let i = 0; i < agentList.length; i++) {
+    if (agentList[i].address === address) {
+      const removed = agentList.splice(i, 1)[0];
+      agents[reqIp] = agentList;
+      return removed;
+    }
+  }
+
+  return undefined;
 }
 
 export function getAgents(req: Request, res: Response): void {
-  const response = (agents[req.ip] || []).map((agent) => ({
-    address: agent.address,
-    platform: agent.platform,
-  }));
-  res.json(response);
+  res.json(
+    (agents[req.ip] || []).map(({ address, platform }) => ({
+      address,
+      platform,
+    }))
+  );
 }
 
 export function registerAgent(req: Request, res: Response): void {
   const info: AgentInfo = req.body;
-  const currentAgents = agents[req.ip] || [];
 
-  // If there is an agent with the same address, clear the removal timeout and remove it.
-  const sameAddressAgent = currentAgents.find(
-    (a) => a.address === info.address
-  );
-  if (sameAddressAgent) {
-    clearTimeout(sameAddressAgent.removalTimeout);
+  // Remove any agents with the same address and clear their removal timeout.
+  const oldAgent = removeAgent(req.ip, info.address);
+  if (oldAgent) {
+    clearTimeout(oldAgent.removalTimeout);
   }
-  const newAgents = currentAgents.filter((a) => a.address !== info.address);
 
   // Set a timeout for removing the new agent.
   info.removalTimeout = setTimeout(
@@ -43,6 +50,7 @@ export function registerAgent(req: Request, res: Response): void {
   );
 
   // Add the new agent to the list, store it.
+  const newAgents = agents[req.ip] || [];
   newAgents.push(info);
   agents[req.ip] = newAgents;
 
