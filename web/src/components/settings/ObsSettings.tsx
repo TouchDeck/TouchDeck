@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ObsTargetConfig } from '../../api/config';
+import ObsTargetConfig from '../../model/configuration/ObsTargetConfig';
 
 export interface Props {
   config: ObsTargetConfig;

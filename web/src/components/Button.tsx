@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from '../util/classNames';
 
 export interface Props {
   backgroundColor?: string;
@@ -19,7 +20,7 @@ const Button: React.FC<Props> = ({
   image,
 }) => (
   <div
-    className={`button ${disabled ? 'disabled' : ''}`}
+    className={classNames(['button', disabled && 'disabled'])}
     style={{
       backgroundColor,
       color: textColor,

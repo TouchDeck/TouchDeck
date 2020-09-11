@@ -1,11 +1,11 @@
 import React from 'react';
 import Button, { Props as ButtonProps } from './Button';
-import { ActionConfig } from '../api/buttons';
+import ActionConfig from '../model/configuration/ActionConfig';
 
-export type Props = ButtonProps & {
+export interface Props extends ButtonProps {
   onTriggerAction: (action: string) => void;
   action: ActionConfig;
-};
+}
 
 const NormalButton: React.FC<Props> = (props) => (
   <Button {...props} onClick={() => props.onTriggerAction(props.action.id)} />

@@ -3,7 +3,9 @@ import ActionConfig from './ActionConfig';
 export type ButtonConfig =
   | NormalButtonConfig
   | ToggleButtonConfig
-  | FolderButtonConfig;
+  | FolderButtonConfig
+  | UpButtonConfig
+  | FillerButtonConfig;
 
 export interface BaseButtonConfig {
   name: string;
@@ -29,4 +31,12 @@ export interface FolderButtonConfig extends BaseButtonConfig {
   type: 'folder';
   buttons: ButtonConfig[];
   image?: string;
+}
+
+export interface UpButtonConfig {
+  type: 'up';
+}
+
+export interface FillerButtonConfig {
+  type: 'filler';
 }

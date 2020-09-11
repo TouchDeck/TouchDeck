@@ -1,4 +1,4 @@
-import { Configuration } from './config';
+import Configuration from '../model/configuration/Configuration';
 import ActionOption from '../model/ActionOption';
 import fetchTimeout from '../util/fetchTimeout';
 import AgentInfo from '../model/AgentInfo';

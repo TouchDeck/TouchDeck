@@ -7,15 +7,15 @@ import TargetsSettingsPage from './pages/TargetsSettingsPage';
 import ConnectAgentPage from './pages/ConnectAgentPage';
 
 const App: React.FC = () => {
-  const [state, dispatch] = useGlobalState();
+  const [{ agent }, dispatch] = useGlobalState();
 
   useEffect(() => {
-    if (!state.agent.agent) {
+    if (!agent.agent) {
       return;
     }
 
     // Load the configuration from the agent, store it in global state.
-    state.agent.agent.getConfiguration().then((config) => {
+    agent.agent.getConfiguration().then((config) => {
       dispatch({
         type: 'configLoading',
       });
@@ -24,10 +24,10 @@ const App: React.FC = () => {
         config,
       });
     });
-  }, [dispatch, state.agent]);
+  }, [dispatch, agent]);
 
   // If we are not connected to an agent, show the connect page.
-  if (!state.agent.agent || state.agent.connecting) {
+  if (!agent.agent || agent.connecting) {
     return <ConnectAgentPage />;
   }
 

@@ -1,5 +1,5 @@
 import { Reducer } from 'react';
-import { Configuration } from '../api/config';
+import Configuration from '../model/configuration/Configuration';
 
 export type State =
   | {

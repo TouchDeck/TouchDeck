@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Buttons } from '../api/buttons';
 import Button from './Button';
 import NormalButton from './NormalButton';
 import ToggleButton from './ToggleButton';
 import FolderButton from './FolderButton';
 import Icon from './Icon';
+import { ButtonConfig } from '../model/configuration/ButtonConfig';
 
 export interface Props {
   rowWidth: number;
-  buttons: Buttons;
+  buttons: ButtonConfig[];
   onTriggerAction: (action: string) => void;
 }
 
@@ -17,15 +17,15 @@ const ButtonGrid: React.FC<Props> = ({
   buttons,
   onTriggerAction,
 }) => {
-  const [buttonView, setButtonView] = useState<Buttons>(buttons);
+  const [buttonView, setButtonView] = useState<ButtonConfig[]>(buttons);
 
   // Update the button view state whenever the prop changes.
   useEffect(() => setButtonView(buttons), [buttons]);
 
-  const [folderStack, setFolderStack] = useState<Buttons[]>([]);
+  const [folderStack, setFolderStack] = useState<ButtonConfig[][]>([]);
 
   const enterFolder = useCallback(
-    (folder: Buttons) => {
+    (folder: ButtonConfig[]) => {
       setFolderStack((prev) => [...prev, buttonView]);
       setButtonView(folder);
     },
@@ -36,7 +36,7 @@ const ButtonGrid: React.FC<Props> = ({
     setFolderStack((prev) => prev.slice(0, prev.length - 1));
   }, [folderStack]);
 
-  const rows: Buttons[] = [[]];
+  const rows: ButtonConfig[][] = [[]];
 
   // If we're in a folder (i.e. if the folderStack is not empty) add an 'up' button.
   if (folderStack.length > 0) {
