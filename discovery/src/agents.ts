@@ -1,11 +1,12 @@
 import { Request, Response } from 'express';
 import { KEEP_AGENT_TIME } from './constants';
 
-export type Platform = 'windows' | 'linux' | 'apple' | 'other';
-
-export interface AgentInfo {
+interface DiscoveredAgent {
   address: string;
-  platform: Platform;
+  platform: string;
+}
+
+interface AgentInfo extends DiscoveredAgent {
   removalTimeout: NodeJS.Timeout;
 }
 
@@ -25,7 +26,10 @@ function removeAgent(reqIp: string, address: string): AgentInfo | undefined {
   return undefined;
 }
 
-export function getAgents(req: Request, res: Response): void {
+export function getAgents(
+  req: Request,
+  res: Response<DiscoveredAgent[]>
+): void {
   res.json(
     (agents[req.ip] || []).map(({ address, platform }) => ({
       address,
@@ -34,7 +38,10 @@ export function getAgents(req: Request, res: Response): void {
   );
 }
 
-export function registerAgent(req: Request, res: Response): void {
+export function registerAgent(
+  req: Request,
+  res: Response<DiscoveredAgent[]>
+): void {
   const info: AgentInfo = req.body;
 
   // Remove any agents with the same address and clear their removal timeout.

@@ -1,11 +1,7 @@
 import { Configuration } from './config';
-import { ActionOption } from './actions';
+import ActionOption from '../model/ActionOption';
 import fetchTimeout from '../util/fetchTimeout';
-
-export interface AgentInfo {
-  name: string;
-  version: string;
-}
+import AgentInfo from '../model/AgentInfo';
 
 export default class Agent {
   public constructor(private readonly address: string) {}

@@ -1,4 +1,4 @@
-import { ActionConfig } from '../configuration/buttons';
+import ActionConfig from '../model/configuration/ActionConfig';
 import { getActionRegistry } from './actionRegistry';
 import inject from '../inject';
 import { paramNamesKey } from './param';

@@ -1,6 +1,5 @@
 import os from 'os';
-
-export type Platform = 'windows' | 'linux' | 'apple' | 'other';
+import { Platform } from '../model/DiscoveredAgent';
 
 const platformMapping: { [key: string]: Platform } = {
   win32: 'windows',

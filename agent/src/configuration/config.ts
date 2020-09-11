@@ -1,8 +1,9 @@
 import * as fs from 'fs/promises';
-import { Button } from './buttons';
 import Logger from '../Logger';
 import { CONFIG_DIR, CONFIG_FILE } from '../constants';
 import prepareAction, { InvokableAction } from '../actions/prepareAction';
+import Configuration from '../model/configuration/Configuration';
+import { ButtonConfig } from '../model/configuration/ButtonConfig';
 
 const log = new Logger('Configuration');
 
@@ -12,7 +13,7 @@ export type ActionsById = { [id: string]: InvokableAction };
 let configuration: Configuration;
 let actionsById: ActionsById;
 
-function getActionsFromButtons(buttons: Button[]): ActionsById {
+function getActionsFromButtons(buttons: ButtonConfig[]): ActionsById {
   let actions: ActionsById = {};
 
   for (let i = 0; i < buttons.length; i++) {
@@ -67,8 +68,4 @@ export function getConfiguration(): Configuration {
 
 export function getActionsById(): ActionsById {
   return actionsById;
-}
-
-export interface Configuration {
-  buttons: Button[];
 }

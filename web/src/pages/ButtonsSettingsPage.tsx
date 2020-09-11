@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ButtonList from '../components/ButtonList';
-import { ActionOption } from '../api/actions';
+import ActionOption from '../model/ActionOption';
 import { useAgent, useGlobalState } from '../state/appState';
 import SettingsLayout from '../components/SettingsLayout';
 

@@ -2,18 +2,19 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useGlobalState } from '../state/appState';
 import Icon from '../components/Icon';
 import Agent from '../api/Agent';
-import { AgentInfo, listAgents } from '../api/agents';
+import listDiscoveredAgents from '../api/listDiscoveredAgents';
 import sanitizeAddress from '../util/sanitizeAddress';
 import Dimmer from '../components/Dimmer';
+import DiscoveredAgent from '../model/DiscoveredAgent';
 
 const ConnectAgentPage: React.FC = () => {
   const [{ agent }, dispatch] = useGlobalState();
 
   const [connectInput, setConnectInput] = useState('');
-  const [agentsList, setAgentsList] = useState<AgentInfo[]>();
+  const [agentsList, setAgentsList] = useState<DiscoveredAgent[]>();
 
   useEffect(() => {
-    listAgents()
+    listDiscoveredAgents()
       .then(setAgentsList)
       .catch((err) => {
         console.error('Could not list agents:', err);
