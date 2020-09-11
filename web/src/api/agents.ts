@@ -1,22 +1,8 @@
 export interface AgentInfo {
-  localAddress: string;
-  os: string;
+  address: string;
+  platform: string;
 }
 
 export async function listAgents(): Promise<AgentInfo[]> {
-  // TODO
-  return Promise.resolve([
-    {
-      localAddress: 'http://localhost:3000',
-      os: 'windows',
-    },
-    {
-      localAddress: '192.168.0.40:3000',
-      os: 'linux',
-    },
-    {
-      localAddress: '10.0.0.17:3000',
-      os: 'apple',
-    },
-  ]);
+  return (await fetch('http://localhost:5000/api/agents')).json();
 }

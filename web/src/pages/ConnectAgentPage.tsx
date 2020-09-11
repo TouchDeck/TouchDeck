@@ -28,10 +28,10 @@ const ConnectAgentPage: React.FC = () => {
       dispatch({
         type: 'agentConnecting',
       });
-      const agent = new Agent(sanitizedAddress);
+      const newAgent = new Agent(sanitizedAddress);
 
       // Test if the agent is valid.
-      agent
+      newAgent
         .getInfo()
         .then((info) => {
           if (info.name !== 'pideck-agent') {
@@ -40,7 +40,7 @@ const ConnectAgentPage: React.FC = () => {
 
           dispatch({
             type: 'agentConnected',
-            agent,
+            agent: newAgent,
           });
         })
         .catch((err) => {
@@ -64,17 +64,17 @@ const ConnectAgentPage: React.FC = () => {
       <main>
         <h2>Connect to an agent</h2>
 
-        <h3>Select an agent from the list (todo):</h3>
+        <h3>Select an agent from the list:</h3>
         <div className="agents-list">
           {!agentsList && <Icon icon="spinner" size={3} pulse />}
           {agentsList &&
             agentsList.map((agentInfo) => (
               <div
-                key={agentInfo.localAddress}
-                onClick={() => connectToAgent(agentInfo.localAddress)}
+                key={agentInfo.address}
+                onClick={() => connectToAgent(agentInfo.address)}
               >
-                <Icon icon={agentInfo.os} iconStyle="brands" size={2} />{' '}
-                {agentInfo.localAddress}
+                <Icon icon={agentInfo.platform} iconStyle="brands" size={2} />{' '}
+                {agentInfo.address}
               </div>
             ))}
         </div>

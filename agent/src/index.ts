@@ -1,10 +1,11 @@
 import 'reflect-metadata';
 import express from 'express';
 import cors from 'cors';
+import fetch from 'node-fetch';
 import Logger from './Logger';
 import invokeAction from './api/invokeAction';
 import { getAvailableActions } from './actions/actionRegistry';
-import { PORT } from './constants';
+import { DISCOVERY_SERVER, PORT } from './constants';
 import { loadConfiguration, saveConfiguration } from './configuration/config';
 import getActionOptions from './api/getActionOptions';
 import { getConfig, putConfig } from './api/config';
@@ -45,9 +46,22 @@ async function bootstrap(): Promise<void> {
   // Done!
   app.listen(PORT);
 
-  // Get the local IP address, report it to the discovery server.
-  // TODO
-  log.info(`Agent running on ${getPlatform()} ${getLocalAddress()}:${PORT}`);
+  // Get the agent info, report it to the discovery server.
+  const platform = getPlatform();
+  const address = `${getLocalAddress()}:${PORT}`;
+  log.info(`Agent running on ${platform} ${address}`);
+  await fetch(`${DISCOVERY_SERVER}/api/agents`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      platform,
+      address,
+    }),
+  }).catch((err) =>
+    log.error(`Failed to report agent to discovery server: ${err.message}`)
+  );
 }
 
 bootstrap().catch((err) => {
