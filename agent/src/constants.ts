@@ -14,3 +14,8 @@ export const DISCOVERY_SERVER = envOrDefault(
   'DISCOVERY_SERVER',
   'http://localhost:5000'
 );
+
+export const DISCOVERY_REPORT_TIME = parseInt(
+  envOrDefault('DISCOVERY_REPORT_TIME', '600'),
+  10
+);

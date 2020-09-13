@@ -1,15 +1,15 @@
 import 'reflect-metadata';
 import express from 'express';
 import cors from 'cors';
-import fetch from 'node-fetch';
 import Logger from './Logger';
 import invokeAction from './api/invokeAction';
 import { getAvailableActions } from './actions/actionRegistry';
-import { DISCOVERY_SERVER, PORT } from './constants';
+import { DISCOVERY_REPORT_TIME, PORT } from './constants';
 import { loadConfiguration, saveConfiguration } from './configuration/config';
 import getActionOptions from './api/getActionOptions';
 import { getConfig, putConfig } from './api/config';
 import getAgentInfo, { agentInfo } from './api/getAgentInfo';
+import reportAgentDiscovery from './util/reportAgentDiscovery';
 
 const log = new Logger('index');
 log.debug('Starting agent...');
@@ -46,17 +46,10 @@ async function bootstrap(): Promise<void> {
   log.info(`Agent running on ${agentInfo.address}`);
 
   // Report the agent info to the discovery server.
-  await fetch(`${DISCOVERY_SERVER}/api/agents`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(agentInfo),
-  })
-    .then(() => log.debug('Agent reported to discovery server'))
-    .catch((err) =>
-      log.error(`Failed to report agent to discovery server: ${err.message}`)
-    );
+  // No need to await this, since we don't care whether it succeeds or fails.
+  // noinspection ES6MissingAwait
+  reportAgentDiscovery();
+  setInterval(() => reportAgentDiscovery(), DISCOVERY_REPORT_TIME * 1000);
 }
 
 bootstrap().catch((err) => {
