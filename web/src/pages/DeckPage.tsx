@@ -1,23 +1,18 @@
 import React from 'react';
 import ButtonGrid from '../components/buttons/ButtonGrid';
 import SettingsCorner from '../components/settings/SettingsCorner';
-import { useAgent, useGlobalState } from '../state/appState';
+import { useAgent, useConfig } from '../state/appState';
 
 const DeckPage: React.FC = () => {
-  const [state] = useGlobalState();
-  const { config } = state;
+  const config = useConfig();
   const agent = useAgent();
-
-  if (!config.config) {
-    return <>Loading...</>;
-  }
 
   return (
     <>
       <SettingsCorner />
       <ButtonGrid
         rowWidth={4}
-        buttons={config.config.buttons}
+        buttons={config.buttons}
         onTriggerAction={(id) => agent.triggerAction(id)}
       />
     </>
