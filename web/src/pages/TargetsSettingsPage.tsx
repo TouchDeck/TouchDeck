@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useEffect, useState } from 'react';
+import React, { ReactElement, useCallback, useState } from 'react';
 import { useAgent, useConfig, useGlobalState } from '../state/appState';
 import TargetRow from '../components/settings/TargetRow';
 import ObsSettings from '../components/settings/ObsSettings';
