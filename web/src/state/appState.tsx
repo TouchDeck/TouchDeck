@@ -44,3 +44,5 @@ export const AppContextProvider: React.FC = ({ children }) => {
 export const useGlobalState = () => useContext(AppContext);
 
 export const useAgent = () => useGlobalState()[0].agent.agent!;
+
+export const useConfig = () => useGlobalState()[0].config.config!;

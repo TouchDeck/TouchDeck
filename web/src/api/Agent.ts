@@ -21,7 +21,15 @@ export default class Agent {
   public async setConfiguration(
     newConfig: Configuration
   ): Promise<Configuration> {
-    return (await fetch(this.getUrl('/api/config'), { method: 'PUT' })).json();
+    return (
+      await fetch(this.getUrl('/api/config'), {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newConfig),
+      })
+    ).json();
   }
 
   public async triggerAction(id: string): Promise<void> {
