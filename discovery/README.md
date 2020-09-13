@@ -34,5 +34,6 @@ Register a new agent. Send the agent address and platform as a JSON object in th
 
 | Variable        | Default | Description |
 |-----------------|---------|-------------|
+| LOG_LEVEL       | INFO    | The log level (DEBUG, INFO, WARN, ERROR or OFF).
 | PORT            | 5000    | The port the server listens on.
 | KEEP_AGENT_TIME | 600     | The time (in seconds) to keep agents in the registry. 

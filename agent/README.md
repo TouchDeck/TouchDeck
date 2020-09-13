@@ -50,6 +50,7 @@ Set the agent configuration.
 
 | Variable              | Default               | Description |
 |-----------------------|-----------------------|-------------|
+| LOG_LEVEL             | INFO                  | The log level (DEBUG, INFO, WARN, ERROR or OFF).
 | PORT                  | 4000                  | The port the server listens on.
 | CONFIG_DIR            | ~/.pideck             | The directory to store configuration files in. This directory contains a `config.json` file containing the full agent configuration.
 | DISCOVERY_SERVER      | http://localhost:5000 | The discovery server URL to register the agent on.
