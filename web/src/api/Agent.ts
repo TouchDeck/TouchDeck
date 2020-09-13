@@ -18,6 +18,12 @@ export default class Agent {
     return (await fetch(this.getUrl('/api/config'))).json();
   }
 
+  public async setConfiguration(
+    newConfig: Configuration
+  ): Promise<Configuration> {
+    return (await fetch(this.getUrl('/api/config'), { method: 'PUT' })).json();
+  }
+
   public async triggerAction(id: string): Promise<void> {
     console.log('Triggered:', id);
     await fetch(this.getUrl(`/api/actions/${id}`), { method: 'POST' });

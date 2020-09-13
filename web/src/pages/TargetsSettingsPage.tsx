@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { useGlobalState } from '../state/appState';
 import TargetRow from '../components/settings/TargetRow';
 import ObsSettings from '../components/settings/ObsSettings';
@@ -7,7 +7,7 @@ import SettingsLayout from '../components/settings/SettingsLayout';
 const TargetsSettingsPage: React.FC = () => {
   const [{ config }] = useGlobalState();
 
-  const [settingsPane, setSettingsPane] = useState();
+  const [settingsPane, setSettingsPane] = useState<ReactElement>();
 
   if (!config.config) {
     return <>Loading...</>;
@@ -22,7 +22,7 @@ const TargetsSettingsPage: React.FC = () => {
             onClick={() =>
               setSettingsPane(
                 <ObsSettings
-                  config={config.config.targets.obs}
+                  config={config.config?.targets.obs}
                   onSaveConfig={(newConfig) => {
                     // TODO
                     console.log(newConfig);
