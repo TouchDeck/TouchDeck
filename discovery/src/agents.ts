@@ -32,9 +32,14 @@ function removeAgent(
   return undefined;
 }
 
+function getRequestIp(req: Request): string {
+  // Make sure the IP address is always the same when coming from localhost.
+  return req.ip === '::1' ? '::ffff:127.0.0.1' : req.ip;
+}
+
 export function getAgents(req: Request, res: Response<AgentInfo[]>): void {
   res.json(
-    (agents[req.ip] || []).map(
+    (agents[getRequestIp(req)] || []).map(
       ({ name, version, address, platform, hostname }) => ({
         name,
         version,
@@ -48,23 +53,24 @@ export function getAgents(req: Request, res: Response<AgentInfo[]>): void {
 
 export function registerAgent(req: Request, res: Response<AgentInfo[]>): void {
   const info: AgentWithTimeout = req.body;
+  const requestIp = getRequestIp(req);
 
   // Remove any agents with the same address and clear their removal timeout.
-  const oldAgent = removeAgent(req.ip, info.address);
+  const oldAgent = removeAgent(requestIp, info.address);
   if (oldAgent) {
     clearTimeout(oldAgent.removalTimeout);
   }
 
   // Set a timeout for removing the new agent.
   info.removalTimeout = setTimeout(
-    () => removeAgent(req.ip, info.address),
+    () => removeAgent(requestIp, info.address),
     KEEP_AGENT_TIME * 1000
   );
 
   // Add the new agent to the list, store it.
-  const newAgents = agents[req.ip] || [];
+  const newAgents = agents[requestIp] || [];
   newAgents.push(info);
-  agents[req.ip] = newAgents;
+  agents[requestIp] = newAgents;
 
   getAgents(req, res);
 }
