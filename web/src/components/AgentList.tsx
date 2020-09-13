@@ -16,7 +16,9 @@ const AgentList: React.FC<Props> = ({ agents, error, onClickAgent }) => (
         Failed to list agents from discovery server: {error}
       </div>
     )}
-    {agents && agents.length === 0 && <div>No agents found.</div>}
+    {agents && agents.length === 0 && (
+      <div>No agents found on your local network.</div>
+    )}
     {agents &&
       agents.map((agent) => (
         <div
