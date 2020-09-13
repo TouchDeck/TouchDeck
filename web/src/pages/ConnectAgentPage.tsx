@@ -6,20 +6,19 @@ import listDiscoveredAgents from '../api/listDiscoveredAgents';
 import sanitizeAddress from '../util/sanitizeAddress';
 import Dimmer from '../components/Dimmer';
 import AgentInfo from '../model/AgentInfo';
+import AgentList from '../components/AgentList';
 
 const ConnectAgentPage: React.FC = () => {
   const [{ agent, config }, dispatch] = useGlobalState();
 
   const [connectInput, setConnectInput] = useState('');
-  const [agentsList, setAgentsList] = useState<AgentInfo[]>();
+  const [agentList, setAgentList] = useState<AgentInfo[]>();
+  const [agentListError, setAgentListError] = useState<string>();
 
   useEffect(() => {
     listDiscoveredAgents()
-      .then(setAgentsList)
-      .catch((err) => {
-        console.error('Could not list agents:', err);
-        setAgentsList([]);
-      });
+      .then(setAgentList)
+      .catch((err) => setAgentListError(err.message));
   }, []);
 
   const connectToAgent = useCallback(
@@ -71,19 +70,11 @@ const ConnectAgentPage: React.FC = () => {
         <h2>Connect to an agent</h2>
 
         <h3>Select an agent from the list:</h3>
-        <div className="agents-list">
-          {!agentsList && <Icon icon="spinner" size={3} pulse />}
-          {agentsList &&
-            agentsList.map((agentInfo) => (
-              <div
-                key={agentInfo.address}
-                onClick={() => connectToAgent(agentInfo.address)}
-              >
-                <Icon icon={agentInfo.platform} iconStyle="brands" size={2} />{' '}
-                {agentInfo.address}
-              </div>
-            ))}
-        </div>
+        <AgentList
+          agents={agentList}
+          onClickAgent={(address) => connectToAgent(address)}
+          error={agentListError}
+        />
 
         <h3>Or enter the IP address:</h3>
         <div className="manual-address">

@@ -1,0 +1,33 @@
+.agent-list {
+  .error {
+    color: #f66;
+  }
+
+  .agent {
+    cursor: pointer;
+    padding: 8px 16px;
+    border: 1px solid #000;
+    border-radius: 4px;
+    margin-bottom: 4px;
+    background-color: #555;
+
+    display: flex;
+    align-items: center;
+
+    i {
+      margin-right: 16px;
+    }
+
+    .details span {
+      display: block;
+
+      &.hostname {
+        font-weight: bold;
+      }
+
+      &.address {
+        font-size: 80%;
+      }
+    }
+  }
+}
