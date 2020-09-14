@@ -47,12 +47,16 @@ const ConnectAgentPage: React.FC = () => {
       dispatch({ type: 'configLoading' });
       const agentConfig = await newAgent.getConfiguration();
 
+      // Load the action options from the agent.
+      const actionOptions = await newAgent.getActionOptions();
+
       // Dispatch the loaded and connected events.
       dispatch({ type: 'configLoaded', config: agentConfig });
       dispatch({
         type: 'agentConnected',
         agent: newAgent,
         info: agentInfo,
+        actionOptions,
       });
     },
     [dispatch]

@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ButtonList from '../components/buttons/ButtonList';
-import ActionOption from '../model/ActionOption';
-import { useAgent, useConfig } from '../state/appState';
+import { useConfig } from '../state/appState';
 import SettingsLayout from '../components/settings/SettingsLayout';
+import { ButtonConfig } from '../model/configuration/ButtonConfig';
+import ButtonSettings from '../components/settings/ButtonSettings';
 
 const ButtonsSettingsPage: React.FC = () => {
   const config = useConfig();
-  const agent = useAgent();
 
-  const [actionOptions, setActionOptions] = useState<ActionOption[]>([]);
+  const [selectedButton, setSelectedButton] = useState<ButtonConfig>();
 
-  useEffect((): void => {
-    agent.getActionOptions().then((options) => setActionOptions(options));
-  }, [agent]);
-
-  // TODO
   return (
     <SettingsLayout>
-      <ButtonList buttons={config.buttons} />
-      <div className="button-settings"></div>
+      <main className="buttons-settings">
+        <ButtonList
+          buttons={config.buttons}
+          onClickButton={(button) => setSelectedButton(button)}
+        />
+        {selectedButton && <ButtonSettings button={selectedButton} />}
+      </main>
     </SettingsLayout>
   );
 };
