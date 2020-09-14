@@ -10,18 +10,18 @@ export interface Props {
 
 const NormalButtonSettings: React.FC<Props> = ({ button }) => {
   const [name, setName] = useState(button.name);
-  const [text, setText] = useState(button.text);
-  const [textColor, setTextColor] = useState(button.textColor);
+  const [text, setText] = useState(button.style.text);
+  const [textColor, setTextColor] = useState(button.style.textColor);
   const [backgroundColor, setBackgroundColor] = useState(
-    button.backgroundColor
+    button.style.backgroundColor
   );
   const [actionType, setActionType] = useState(button.action.type);
 
   useEffect(() => {
     setName(button.name);
-    setText(button.text);
-    setTextColor(button.textColor);
-    setBackgroundColor(button.backgroundColor);
+    setText(button.style.text);
+    setTextColor(button.style.textColor);
+    setBackgroundColor(button.style.backgroundColor);
     setActionType(button.action.type);
   }, [button]);
 

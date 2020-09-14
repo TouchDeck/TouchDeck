@@ -66,7 +66,7 @@ const ButtonGrid: React.FC<Props> = ({
           {row.map((button, i) => {
             switch (button.type) {
               case 'filler':
-                return <Button key={i} disabled />;
+                return <Button key={i} disabled style={{}} />;
               case 'normal':
                 return (
                   <NormalButton
@@ -89,7 +89,7 @@ const ButtonGrid: React.FC<Props> = ({
                 );
               case 'up':
                 return (
-                  <Button key={i} onClick={exitFolder}>
+                  <Button key={i} onClick={exitFolder} style={{}}>
                     <Icon icon="level-up-alt" size={3} />
                   </Button>
                 );

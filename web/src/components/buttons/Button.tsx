@@ -1,34 +1,24 @@
 import React from 'react';
 import classNames from '../../util/classNames';
+import { ButtonStyling } from '../../model/configuration/ButtonConfig';
 
 export interface Props {
-  backgroundColor?: string;
-  textColor?: string;
   disabled?: boolean;
   onClick?: () => void | Promise<void>;
-  text?: string;
-  image?: string;
+  style: ButtonStyling;
 }
 
-const Button: React.FC<Props> = ({
-  children,
-  backgroundColor,
-  textColor,
-  disabled,
-  text,
-  onClick,
-  image,
-}) => (
+const Button: React.FC<Props> = ({ children, disabled, onClick, style }) => (
   <div
     className={classNames(['button', disabled && 'disabled'])}
     style={{
-      backgroundColor,
-      color: textColor,
-      backgroundImage: image ? `url(/images/${image})` : '',
+      backgroundColor: style.backgroundColor,
+      color: style.textColor,
+      backgroundImage: style.image ? `url(/images/${style.image})` : '',
     }}
     onClick={onClick}
   >
-    {text}
+    {style.text}
     {children}
   </div>
 );

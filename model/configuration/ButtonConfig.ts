@@ -10,27 +10,35 @@ export type ButtonConfig =
 export interface BaseButtonConfig {
   name: string;
   type: string;
+  style: ButtonStyling;
+}
+
+export interface ButtonStyling {
   backgroundColor?: string;
   textColor?: string;
   text?: string;
+  image?: string;
 }
 
 export interface NormalButtonConfig extends BaseButtonConfig {
   type: 'normal';
-  image?: string;
   action: ActionConfig;
 }
 
 export interface ToggleButtonConfig extends BaseButtonConfig {
   type: 'toggle';
-  state1: NormalButtonConfig;
-  state2: NormalButtonConfig;
+  state1: ToggleButtonState;
+  state2: ToggleButtonState;
+}
+
+export interface ToggleButtonState {
+  action: ActionConfig;
+  style: ButtonStyling;
 }
 
 export interface FolderButtonConfig extends BaseButtonConfig {
   type: 'folder';
   buttons: ButtonConfig[];
-  image?: string;
 }
 
 export interface UpButtonConfig {
