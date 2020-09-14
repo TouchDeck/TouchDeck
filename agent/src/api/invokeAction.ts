@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
+import { Logger } from '@luca_scorpion/tinylogger';
 import { getActionsById } from '../configuration/config';
-import Logger from '../Logger';
 
 const log = new Logger('invokeAction');
 

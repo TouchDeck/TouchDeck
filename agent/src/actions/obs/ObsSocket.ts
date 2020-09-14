@@ -1,5 +1,5 @@
 import OBSWebSocket from 'obs-websocket-js';
-import Logger from '../../Logger';
+import { Logger } from '@luca_scorpion/tinylogger';
 import { singleton } from '../../inject';
 
 export interface VersionResult {

@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import Logger from './Logger';
+import { Logger } from '@luca_scorpion/tinylogger';
 import { PORT } from './constants';
 import { getAgents, registerAgent } from './agents';
 

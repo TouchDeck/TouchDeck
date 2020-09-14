@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import express from 'express';
 import cors from 'cors';
-import Logger from './Logger';
+import { Logger } from '@luca_scorpion/tinylogger';
 import invokeAction from './api/invokeAction';
 import { getAvailableActions } from './actions/actionRegistry';
 import { DISCOVERY_REPORT_TIME, PORT } from './constants';

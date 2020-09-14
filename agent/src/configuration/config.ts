@@ -1,5 +1,5 @@
 import * as fs from 'fs/promises';
-import Logger from '../Logger';
+import { Logger } from '@luca_scorpion/tinylogger';
 import { CONFIG_DIR, CONFIG_FILE } from '../constants';
 import prepareAction, { InvokableAction } from '../actions/prepareAction';
 import Configuration from '../model/configuration/Configuration';

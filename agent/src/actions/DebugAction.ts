@@ -1,4 +1,4 @@
-import Logger from '../Logger';
+import { Logger } from '@luca_scorpion/tinylogger';
 import Action, { action } from './Action';
 import param from './param';
 

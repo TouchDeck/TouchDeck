@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
+import { Logger } from '@luca_scorpion/tinylogger';
 import { DISCOVERY_SERVER } from '../constants';
 import { agentInfo } from '../api/getAgentInfo';
-import Logger from '../Logger';
 
 const log = new Logger('reportAgentDiscovery');
 
