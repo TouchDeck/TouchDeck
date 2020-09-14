@@ -1,8 +1,8 @@
 import ActionConfig from '../model/configuration/ActionConfig';
 import { getActionRegistry } from './actionRegistry';
 import inject from '../inject';
-import { actionParamsKey } from './param';
 import { ActionParameter } from '../model/ActionOption';
+import { actionParamsKey } from './Action';
 
 export type InvokableAction = () => void | Promise<void>;
 

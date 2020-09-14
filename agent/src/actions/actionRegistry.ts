@@ -1,11 +1,15 @@
 import { Constructor } from '../util/Constructor';
 import DebugAction from './DebugAction';
 import ObsSetSceneAction from './obs/ObsSetSceneAction';
-import Action, { actionCategoryKey, actionNameKey } from './Action';
+import {
+  Action,
+  actionCategoryKey,
+  actionNameKey,
+  actionParamsKey,
+} from './Action';
 import 'reflect-metadata';
 import ObsSetMuteAction from './obs/ObsSetMuteAction';
 import { ActionParameter } from '../model/ActionOption';
-import { actionParamsKey } from './param';
 
 // A list containing all available action classes.
 const actionClasses: Constructor<Action>[] = [
@@ -34,7 +38,8 @@ actionClasses.forEach((ActionCtor) => {
     category: Reflect.getMetadata(actionCategoryKey, ActionCtor.prototype),
     name: Reflect.getMetadata(actionNameKey, ActionCtor.prototype),
     constructor: ActionCtor,
-    parameters: Reflect.getMetadata(actionParamsKey, ActionCtor.prototype),
+    parameters:
+      Reflect.getMetadata(actionParamsKey, ActionCtor.prototype) || [],
   };
 });
 

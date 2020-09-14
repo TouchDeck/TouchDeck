@@ -1,6 +1,5 @@
 import { Logger } from '@luca_scorpion/tinylogger';
-import Action, { action } from './Action';
-import param from './param';
+import param, { Action, action } from './Action';
 
 @action('', 'Debug')
 export default class DebugAction implements Action {
