@@ -1,7 +1,10 @@
 import React, { InputHTMLAttributes } from 'react';
 
 export interface Props
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'type'> {
+  extends Omit<
+    InputHTMLAttributes<HTMLInputElement>,
+    'onChange' | 'type' | 'value'
+  > {
   onChange: (checked: boolean) => void;
 }
 

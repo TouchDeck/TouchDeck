@@ -3,6 +3,7 @@ import ObsTargetConfig from '../../model/configuration/ObsTargetConfig';
 import Rows from '../Rows';
 import TextInput from '../input/TextInput';
 import CheckboxInput from '../input/CheckboxInput';
+import NumberInput from '../input/NumberInput';
 
 export interface Props {
   config: ObsTargetConfig;
@@ -25,14 +26,10 @@ const ObsSettings: React.FC<Props> = ({ config, onSaveConfig }) => {
         </div>
         <div>
           <span>Port</span>
-          <input
-            type="number"
+          <NumberInput
             placeholder="4444"
-            value={newConfig.port.toString()}
-            onChange={(e) => {
-              const value = e.currentTarget.value;
-              setNewConfig((prev) => ({ ...prev, port: parseInt(value, 10) }));
-            }}
+            value={newConfig.port}
+            onChange={(port) => setNewConfig((prev) => ({ ...prev, port }))}
             min={0}
           />
         </div>
