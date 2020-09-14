@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { NormalButtonConfig } from '../../model/configuration/ButtonConfig';
 import Rows from '../Rows';
 import ActionOptions from './ActionOptions';
+import TextInput from '../TextInput';
 
 export interface Props {
   button: NormalButtonConfig;
@@ -31,37 +32,25 @@ const NormalButtonSettings: React.FC<Props> = ({ button }) => {
         <div>
           <span>Name</span>
           <span>
-            <input
-              value={name || ''}
-              onChange={(e) => setName(e.currentTarget.value)}
-            />
+            <TextInput value={name} onChange={setName} />
           </span>
         </div>
         <div>
           <span>Text</span>
           <span>
-            <input
-              value={text || ''}
-              onChange={(e) => setText(e.currentTarget.value)}
-            />
+            <TextInput value={text} onChange={setText} />
           </span>
         </div>
         <div>
           <span>Text color</span>
           <span>
-            <input
-              value={textColor || ''}
-              onChange={(e) => setTextColor(e.currentTarget.value)}
-            />
+            <TextInput value={textColor} onChange={setTextColor} />
           </span>
         </div>
         <div>
           <span>Background color</span>
           <span>
-            <input
-              value={backgroundColor || ''}
-              onChange={(e) => setBackgroundColor(e.currentTarget.value)}
-            />
+            <TextInput value={backgroundColor} onChange={setBackgroundColor} />
           </span>
         </div>
       </Rows>

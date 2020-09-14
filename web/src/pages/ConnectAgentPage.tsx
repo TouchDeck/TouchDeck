@@ -7,6 +7,7 @@ import sanitizeAddress from '../util/sanitizeAddress';
 import Dimmer from '../components/Dimmer';
 import AgentInfo from '../model/AgentInfo';
 import AgentList from '../components/AgentList';
+import TextInput from '../components/TextInput';
 
 const ConnectAgentPage: React.FC = () => {
   const [{ agent }, dispatch] = useGlobalState();
@@ -79,10 +80,10 @@ const ConnectAgentPage: React.FC = () => {
 
         <h3>Or enter the IP address:</h3>
         <div className="manual-address">
-          <input
+          <TextInput
             placeholder="localhost:3000"
             value={connectInput}
-            onChange={(e) => setConnectInput(e.currentTarget.value)}
+            onChange={setConnectInput}
             onKeyDown={(e) => {
               if (connectInput && e.key === 'Enter') {
                 connectToAgent(connectInput);

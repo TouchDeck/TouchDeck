@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ObsTargetConfig from '../../model/configuration/ObsTargetConfig';
 import Rows from '../Rows';
+import TextInput from '../TextInput';
 
 export interface Props {
   config: ObsTargetConfig;
@@ -15,13 +16,10 @@ const ObsSettings: React.FC<Props> = ({ config, onSaveConfig }) => {
       <Rows>
         <div>
           <span>IP Address</span>
-          <input
+          <TextInput
             placeholder="localhost"
             value={newConfig.ip}
-            onChange={(e) => {
-              const ip = e.currentTarget.value;
-              setNewConfig((prev) => ({ ...prev, ip }));
-            }}
+            onChange={(ip) => setNewConfig((prev) => ({ ...prev, ip }))}
           />
         </div>
         <div>
@@ -54,14 +52,13 @@ const ObsSettings: React.FC<Props> = ({ config, onSaveConfig }) => {
         {newConfig.authenticated && (
           <div>
             <span>Password</span>
-            <input
+            <TextInput
               type="password"
               placeholder="p455w0rd"
               value={newConfig.password}
-              onChange={(e) => {
-                const password = e.currentTarget.value;
-                setNewConfig((prev) => ({ ...prev, password }));
-              }}
+              onChange={(password) =>
+                setNewConfig((prev) => ({ ...prev, password }))
+              }
             />
           </div>
         )}
