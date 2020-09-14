@@ -6,7 +6,7 @@ import Configuration from '../model/configuration/Configuration';
 import { ButtonConfig } from '../model/configuration/ButtonConfig';
 import validateConfig from './validateConfig';
 
-const log = new Logger('Configuration');
+const log = new Logger('configuration');
 
 export type ActionsById = { [id: string]: InvokableAction };
 
