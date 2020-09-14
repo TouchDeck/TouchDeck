@@ -7,7 +7,7 @@ import sanitizeAddress from '../util/sanitizeAddress';
 import Dimmer from '../components/Dimmer';
 import AgentInfo from '../model/AgentInfo';
 import AgentList from '../components/AgentList';
-import TextInput from '../components/TextInput';
+import TextInput from '../components/input/TextInput';
 
 const ConnectAgentPage: React.FC = () => {
   const [{ agent }, dispatch] = useGlobalState();

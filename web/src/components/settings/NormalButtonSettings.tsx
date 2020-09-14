@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { NormalButtonConfig } from '../../model/configuration/ButtonConfig';
 import Rows from '../Rows';
 import ActionOptions from './ActionOptions';
-import TextInput from '../TextInput';
+import TextInput from '../input/TextInput';
 
 export interface Props {
   button: NormalButtonConfig;

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import ObsTargetConfig from '../../model/configuration/ObsTargetConfig';
 import Rows from '../Rows';
-import TextInput from '../TextInput';
-import CheckboxInput from '../CheckboxInput';
+import TextInput from '../input/TextInput';
+import CheckboxInput from '../input/CheckboxInput';
 
 export interface Props {
   config: ObsTargetConfig;
