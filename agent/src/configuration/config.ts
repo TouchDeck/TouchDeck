@@ -4,6 +4,7 @@ import { CONFIG_DIR, CONFIG_FILE } from '../constants';
 import prepareAction, { InvokableAction } from '../actions/prepareAction';
 import Configuration from '../model/configuration/Configuration';
 import { ButtonConfig } from '../model/configuration/ButtonConfig';
+import validateConfig from './validateConfig';
 
 const log = new Logger('Configuration');
 
@@ -29,8 +30,8 @@ function getActionsFromButtons(buttons: ButtonConfig[]): ActionsById {
   return actions;
 }
 
-export async function loadConfiguration(): Promise<void> {
-  log.debug('Loading configuration');
+export async function readConfiguration(): Promise<Configuration> {
+  log.debug('Reading configuration from disk');
 
   // Check if the config directory and file exist.
   await fs.stat(CONFIG_DIR).catch(() => fs.mkdir(CONFIG_DIR));
@@ -40,9 +41,7 @@ export async function loadConfiguration(): Promise<void> {
   const configJson = (
     await fs.readFile(CONFIG_FILE, { encoding: 'utf-8' })
   ).toString();
-  configuration = JSON.parse(configJson);
-
-  actionsById = getActionsFromButtons(configuration.buttons);
+  return JSON.parse(configJson);
 }
 
 export async function saveConfiguration(): Promise<void> {
@@ -56,7 +55,7 @@ export async function setConfiguration(
 ): Promise<void> {
   log.debug('Updating configuration');
 
-  configuration = newConfig;
+  configuration = validateConfig(newConfig);
   actionsById = getActionsFromButtons(configuration.buttons);
 
   await saveConfiguration();

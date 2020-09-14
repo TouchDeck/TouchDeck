@@ -10,7 +10,6 @@ export type ButtonConfig =
 export interface BaseButtonConfig {
   name: string;
   type: string;
-  style: ButtonStyling;
 }
 
 export interface ButtonStyling {
@@ -23,6 +22,7 @@ export interface ButtonStyling {
 export interface NormalButtonConfig extends BaseButtonConfig {
   type: 'normal';
   action: ActionConfig;
+  style: ButtonStyling;
 }
 
 export interface ToggleButtonConfig extends BaseButtonConfig {
@@ -39,6 +39,7 @@ export interface ToggleButtonState {
 export interface FolderButtonConfig extends BaseButtonConfig {
   type: 'folder';
   buttons: ButtonConfig[];
+  style: ButtonStyling;
 }
 
 export interface UpButtonConfig {

@@ -4,7 +4,7 @@ import { Logger } from '@luca_scorpion/tinylogger';
 import invokeAction from './api/invokeAction';
 import { getAvailableActions } from './actions/actionRegistry';
 import { DISCOVERY_REPORT_TIME, PORT } from './constants';
-import { loadConfiguration, saveConfiguration } from './configuration/config';
+import { readConfiguration, setConfiguration } from './configuration/config';
 import getActionOptions from './api/getActionOptions';
 import { getConfig, putConfig } from './api/config';
 import getAgentInfo, { agentInfo } from './api/getAgentInfo';
@@ -24,9 +24,9 @@ async function bootstrap(): Promise<void> {
     )
   );
 
-  // Load and re-save the configuration to ensure proper formatting.
-  await loadConfiguration();
-  await saveConfiguration();
+  // Read and set the configuration.
+  // Doing it this way allows us to validate on boot.
+  await readConfiguration().then(setConfiguration);
 
   // Start express.
   log.debug('Setting up routes');
