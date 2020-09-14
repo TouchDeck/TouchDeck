@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 import express from 'express';
-import cors from 'cors';
 import { Logger } from '@luca_scorpion/tinylogger';
 import invokeAction from './api/invokeAction';
 import { getAvailableActions } from './actions/actionRegistry';
@@ -10,6 +9,7 @@ import getActionOptions from './api/getActionOptions';
 import { getConfig, putConfig } from './api/config';
 import getAgentInfo, { agentInfo } from './api/getAgentInfo';
 import reportAgentDiscovery from './util/reportAgentDiscovery';
+import cors from './util/cors';
 
 const log = new Logger('index');
 log.debug('Starting agent...');
@@ -32,7 +32,7 @@ async function bootstrap(): Promise<void> {
   log.debug('Setting up routes');
   const app = express();
   app.use(express.json());
-  app.use(cors());
+  app.use(cors);
 
   // API routes.
   app.get('/api', getAgentInfo);

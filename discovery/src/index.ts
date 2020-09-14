@@ -1,8 +1,8 @@
 import express from 'express';
-import cors from 'cors';
 import { Logger } from '@luca_scorpion/tinylogger';
 import { PORT } from './constants';
 import { getAgents, registerAgent } from './agents';
+import cors from './cors';
 
 const log = new Logger('index');
 log.debug('Starting discovery server...');
@@ -11,7 +11,7 @@ async function bootstrap(): Promise<void> {
   // Start express.
   const app = express();
   app.use(express.json());
-  app.use(cors());
+  app.use(cors);
 
   // API routes.
   app.get('/api/agents', getAgents);
