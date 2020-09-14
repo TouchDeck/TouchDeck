@@ -1,4 +1,6 @@
-export const paramNamesKey = Symbol('param:names');
+import { ActionParameter } from '../model/ActionOption';
+
+export const actionParamsKey = Symbol('action:params');
 
 export default function param(name: string) {
   return function defineArg(
@@ -7,9 +9,12 @@ export default function param(name: string) {
     propertyKey: string | symbol,
     parameterIndex: number
   ): void {
-    const paramNames: string[] =
-      Reflect.getMetadata(paramNamesKey, target, propertyKey) || [];
-    paramNames[parameterIndex] = name;
-    Reflect.defineMetadata(paramNamesKey, paramNames, target, propertyKey);
+    const params: ActionParameter[] =
+      Reflect.getMetadata(actionParamsKey, target) || [];
+    params[parameterIndex] = {
+      name,
+      type: 'string', // TODO
+    };
+    Reflect.defineMetadata(actionParamsKey, params, target);
   };
 }

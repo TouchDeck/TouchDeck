@@ -34,9 +34,9 @@ export interface FolderButtonConfig extends BaseButtonConfig {
 }
 
 export interface UpButtonConfig {
-  type: 'up'
+  type: 'up';
 }
 
 export interface FillerButtonConfig {
-  type: 'filler'
+  type: 'filler';
 }

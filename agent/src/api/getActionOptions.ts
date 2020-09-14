@@ -11,6 +11,7 @@ export default function getActionOptions(
       id: action.constructor.name,
       category: action.category,
       name: action.name,
+      parameters: action.parameters,
     }))
   );
 }

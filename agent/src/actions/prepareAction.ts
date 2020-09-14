@@ -1,7 +1,8 @@
 import ActionConfig from '../model/configuration/ActionConfig';
 import { getActionRegistry } from './actionRegistry';
 import inject from '../inject';
-import { paramNamesKey } from './param';
+import { actionParamsKey } from './param';
+import { ActionParameter } from '../model/ActionOption';
 
 export type InvokableAction = () => void | Promise<void>;
 
@@ -11,13 +12,9 @@ export default function prepareAction(action: ActionConfig): InvokableAction {
   const actionInst = inject(ActionCtor);
 
   // Match the given arguments to the parameters.
-  const paramNames: string[] =
-    Reflect.getMetadata(
-      paramNamesKey,
-      ActionCtor.prototype,
-      actionInst.invoke.name
-    ) || [];
-  const args = paramNames.map((name) => name && action.args[name]);
+  const params: ActionParameter[] =
+    Reflect.getMetadata(actionParamsKey, ActionCtor.prototype) || [];
+  const args = params.map((param) => param && action.args[param.name]);
 
   return () => actionInst.invoke(...args);
 }
