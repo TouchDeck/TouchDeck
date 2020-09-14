@@ -45,8 +45,7 @@ export async function readConfiguration(): Promise<Configuration> {
 }
 
 export async function saveConfiguration(): Promise<void> {
-  log.debug('Saving configuration');
-
+  log.debug('Writing configuration to disk');
   await fs.writeFile(CONFIG_FILE, JSON.stringify(configuration, null, 2));
 }
 
