@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import ButtonList from '../components/buttons/ButtonList';
-import { useConfig } from '../state/appState';
+import { useConnectedAgent } from '../state/appState';
 import SettingsLayout from '../components/settings/SettingsLayout';
 import { ButtonConfig } from '../model/configuration/ButtonConfig';
 import ButtonSettings from '../components/settings/ButtonSettings';
 
 const ButtonsSettingsPage: React.FC = () => {
-  const config = useConfig();
+  const { config } = useConnectedAgent();
 
   const [selectedButton, setSelectedButton] = useState<ButtonConfig>();
 

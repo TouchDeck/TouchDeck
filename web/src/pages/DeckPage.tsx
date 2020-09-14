@@ -1,11 +1,10 @@
 import React from 'react';
 import ButtonGrid from '../components/buttons/ButtonGrid';
 import SettingsCorner from '../components/settings/SettingsCorner';
-import { useAgent, useConfig } from '../state/appState';
+import { useConnectedAgent } from '../state/appState';
 
 const DeckPage: React.FC = () => {
-  const config = useConfig();
-  const agent = useAgent();
+  const { agent, config } = useConnectedAgent();
 
   return (
     <>

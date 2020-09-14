@@ -1,33 +1,25 @@
 import React, { Dispatch, Reducer, useContext, useReducer } from 'react';
 import {
-  Action as ConfigAction,
-  getInitialState as getInitialConfigState,
-  reducer as configReducer,
-  State as ConfigState,
-} from './configState';
-import {
   Action as AgentAction,
+  ConnectedAgentState,
   getInitialState as getInitialAgentState,
   reducer as agentReducer,
   State as AgentState,
 } from './agentState';
 
 export interface State {
-  config: ConfigState;
   agent: AgentState;
 }
 
-export type Action = ConfigAction | AgentAction;
+export type Action = AgentAction;
 
 const reducer: Reducer<State, Action> = (prevState, action) => {
   return {
-    config: configReducer(prevState.config, action as ConfigAction),
-    agent: agentReducer(prevState.agent, action as AgentAction),
+    agent: agentReducer(prevState.agent, action),
   };
 };
 
 const getInitialState = (): State => ({
-  config: getInitialConfigState(),
   agent: getInitialAgentState(),
 });
 
@@ -43,6 +35,5 @@ export const AppContextProvider: React.FC = ({ children }) => {
 
 export const useGlobalState = () => useContext(AppContext);
 
-export const useAgent = () => useGlobalState()[0].agent.agent!;
-
-export const useConfig = () => useGlobalState()[0].config.config!;
+export const useConnectedAgent = () =>
+  useGlobalState()[0].agent as ConnectedAgentState;

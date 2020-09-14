@@ -1,17 +1,13 @@
 import React from 'react';
-import { useGlobalState } from '../state/appState';
+import { useConnectedAgent, useGlobalState } from '../state/appState';
 import SettingsLayout from '../components/settings/SettingsLayout';
 import Icon from '../components/Icon';
 import { Link } from 'react-router-dom';
 import Rows from '../components/Rows';
 
 const AgentSettingsPage: React.FC = () => {
-  const [
-    {
-      agent: { info },
-    },
-    dispatch,
-  ] = useGlobalState();
+  const [, dispatch] = useGlobalState();
+  const { info } = useConnectedAgent();
 
   return (
     <SettingsLayout>
@@ -19,19 +15,19 @@ const AgentSettingsPage: React.FC = () => {
         <Rows>
           <div>
             <span>Address:</span>
-            <span>{info?.address}</span>
+            <span>{info.address}</span>
           </div>
           <div>
             <span>Version:</span>
-            <span>{info?.version}</span>
+            <span>{info.version}</span>
           </div>
           <div>
             <span>Platform:</span>
-            <span>{info?.platform}</span>
+            <span>{info.platform}</span>
           </div>
           <div>
             <span>Hostname:</span>
-            <span>{info?.hostname}</span>
+            <span>{info.hostname}</span>
           </div>
         </Rows>
         <Link

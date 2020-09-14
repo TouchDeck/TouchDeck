@@ -9,7 +9,7 @@ import AgentInfo from '../model/AgentInfo';
 import AgentList from '../components/AgentList';
 
 const ConnectAgentPage: React.FC = () => {
-  const [{ agent, config }, dispatch] = useGlobalState();
+  const [{ agent }, dispatch] = useGlobalState();
 
   const [connectInput, setConnectInput] = useState('');
   const [agentList, setAgentList] = useState<AgentInfo[]>();
@@ -43,19 +43,16 @@ const ConnectAgentPage: React.FC = () => {
         return;
       }
 
-      // Load the configuration from the agent.
-      dispatch({ type: 'configLoading' });
+      // Load the configuration and action options from the agent.
       const agentConfig = await newAgent.getConfiguration();
-
-      // Load the action options from the agent.
       const actionOptions = await newAgent.getActionOptions();
 
-      // Dispatch the loaded and connected events.
-      dispatch({ type: 'configLoaded', config: agentConfig });
+      // Dispatch the connected event.
       dispatch({
         type: 'agentConnected',
         agent: newAgent,
         info: agentInfo,
+        config: agentConfig,
         actionOptions,
       });
     },
@@ -64,7 +61,7 @@ const ConnectAgentPage: React.FC = () => {
 
   return (
     <div className="connect-agent">
-      <Dimmer active={agent.connecting || config.loading}>
+      <Dimmer active={agent.connecting}>
         <div>
           <Icon icon="spinner" size={3} pulse />
           <h2>Connecting to agent...</h2>

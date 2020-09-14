@@ -1,17 +1,17 @@
 import React, { ReactElement, useCallback, useState } from 'react';
-import { useAgent, useConfig, useGlobalState } from '../state/appState';
+import { useConnectedAgent, useGlobalState } from '../state/appState';
 import TargetRow from '../components/settings/TargetRow';
 import ObsSettings from '../components/settings/ObsSettings';
 import SettingsLayout from '../components/settings/SettingsLayout';
 
 const TargetsSettingsPage: React.FC = () => {
   const [, dispatch] = useGlobalState();
-  const config = useConfig();
-  const agent = useAgent();
+  const { agent, config } = useConnectedAgent();
 
   const [settingsPane, setSettingsPane] = useState<ReactElement>();
 
   const updateConfig = useCallback(() => {
+    dispatch({ type: 'configLoading' });
     agent.setConfiguration(config).then((newConfig) =>
       dispatch({
         type: 'configLoaded',
