@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ObsTargetConfig from '../../model/configuration/ObsTargetConfig';
 import Rows from '../Rows';
 import TextInput from '../TextInput';
+import CheckboxInput from '../CheckboxInput';
 
 export interface Props {
   config: ObsTargetConfig;
@@ -37,10 +38,8 @@ const ObsSettings: React.FC<Props> = ({ config, onSaveConfig }) => {
         </div>
         <div>
           <span>Authenticated</span>
-          <input
-            type="checkbox"
-            onChange={(e) => {
-              const authenticated = e.currentTarget.checked;
+          <CheckboxInput
+            onChange={(authenticated) => {
               // If the target is not authenticated, clear the password.
               if (!authenticated) {
                 setNewConfig((prev) => ({ ...prev, password: '' }));
