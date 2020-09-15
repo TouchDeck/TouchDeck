@@ -3,6 +3,7 @@ import { useConnectedAgent, useGlobalState } from '../state/appState';
 import TargetRow from '../components/settings/TargetRow';
 import ObsSettings from '../components/settings/ObsSettings';
 import SettingsLayout from '../components/settings/SettingsLayout';
+import Configuration from '../model/configuration/Configuration';
 
 const TargetsSettingsPage: React.FC = () => {
   const [, dispatch] = useGlobalState();
@@ -10,15 +11,18 @@ const TargetsSettingsPage: React.FC = () => {
 
   const [settingsPane, setSettingsPane] = useState<ReactElement>();
 
-  const updateConfig = useCallback(() => {
-    dispatch({ type: 'configLoading' });
-    agent.setConfiguration(config).then((newConfig) =>
-      dispatch({
-        type: 'configLoaded',
-        config: newConfig,
-      })
-    );
-  }, [agent, config, dispatch]);
+  const updateConfig = useCallback(
+    (updated: Configuration) => {
+      dispatch({ type: 'configLoading' });
+      agent.setConfiguration(updated).then((newConfig) =>
+        dispatch({
+          type: 'configLoaded',
+          config: newConfig,
+        })
+      );
+    },
+    [agent, dispatch]
+  );
 
   return (
     <SettingsLayout>
@@ -29,11 +33,12 @@ const TargetsSettingsPage: React.FC = () => {
             onClick={() =>
               setSettingsPane(
                 <ObsSettings
-                  config={config.targets.obs}
-                  onSaveConfig={(newObsConfig) => {
-                    config.targets.obs = newObsConfig;
-                    updateConfig();
-                  }}
+                  onSaveConfig={(newConfig) =>
+                    updateConfig({
+                      ...config,
+                      targets: { ...config.targets, obs: newConfig },
+                    })
+                  }
                 />
               )
             }
