@@ -36,6 +36,7 @@ const ObsSettings: React.FC<Props> = ({ config, onSaveConfig }) => {
         <div>
           <span>Authenticated</span>
           <CheckboxInput
+            checked={newConfig.authenticated}
             onChange={(authenticated) => {
               // If the target is not authenticated, clear the password.
               if (!authenticated) {
