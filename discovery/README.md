@@ -13,8 +13,11 @@ Lists all known agents. This will return a JSON list of agents with their local 
 ```json
 [
   {
+    "name": "pideck-agent",
+    "version": "1.0.0",
     "address": "192.168.0.110:4000",
-    "platform": "windows"
+    "platform": "windows",
+    "hostname": "my-pc"
   }
 ]
 ```
@@ -25,12 +28,19 @@ Register a new agent. Send the agent address and platform as a JSON object in th
 
 ```json
 {
+  "name": "pideck-agent",
+  "version": "1.0.0",
   "address": "192.168.0.110:4000",
-  "platform": "windows"
+  "platform": "windows",
+  "hostname": "my-pc"
 }
 ```
 
+This will return the list of known agents in the local network (see above).
+
 ## Configuration
+
+The discovery server can be configured through environment variables.
 
 | Variable        | Default | Description |
 |-----------------|---------|-------------|
