@@ -1,9 +1,7 @@
-import ObsTargetConfig from './ObsTargetConfig';
 import { ButtonConfig } from './ButtonConfig';
+import TargetConfig from './TargetConfig';
 
 export default interface Configuration {
   buttons: ButtonConfig[];
-  targets: {
-    obs: ObsTargetConfig;
-  };
+  targets: TargetConfig;
 }

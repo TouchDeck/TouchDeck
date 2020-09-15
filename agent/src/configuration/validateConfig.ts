@@ -6,6 +6,9 @@ import {
   ToggleButtonState,
 } from '../model/configuration/ButtonConfig';
 import ActionConfig from '../model/configuration/ActionConfig';
+import TargetConfig, {
+  ObsTargetConfig,
+} from '../model/configuration/TargetConfig';
 
 const colorRegex = /^#[\da-f]{6}$/i;
 
@@ -84,16 +87,24 @@ function validateButton(button: ButtonConfig): ButtonConfig {
   }
 }
 
+function validateObsTarget(obs?: ObsTargetConfig): ObsTargetConfig {
+  return {
+    ip: obs?.ip || 'localhost',
+    port: obs?.port ?? 4444,
+    authenticated: obs?.authenticated ?? false,
+    password: obs?.password || '',
+  };
+}
+
+function validateTargets(targets?: TargetConfig): TargetConfig {
+  return {
+    obs: validateObsTarget(targets?.obs),
+  };
+}
+
 export default function validateConfig(config: Configuration): Configuration {
   return {
+    targets: validateTargets(config.targets),
     buttons: (config.buttons || []).map(validateButton),
-    targets: config.targets || {
-      obs: {
-        ip: 'localhost',
-        port: 4444,
-        authenticated: false,
-        password: '',
-      },
-    },
   };
 }

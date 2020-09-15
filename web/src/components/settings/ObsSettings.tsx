@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import ObsTargetConfig from '../../model/configuration/ObsTargetConfig';
 import Rows from '../Rows';
 import TextInput from '../input/TextInput';
 import CheckboxInput from '../input/CheckboxInput';
 import NumberInput from '../input/NumberInput';
+import { ObsTargetConfig } from '../../model/configuration/TargetConfig';
 
 export interface Props {
   config: ObsTargetConfig;
