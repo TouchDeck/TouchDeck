@@ -3,7 +3,7 @@ import express from 'express';
 import { Logger } from '@luca_scorpion/tinylogger';
 import invokeAction from './api/invokeAction';
 import { getAvailableActions } from './actions/actionRegistry';
-import { DISCOVERY_REPORT_TIME, PORT } from './constants';
+import { DISCOVERY_REPORT_TIME, IMAGES_DIR, PORT } from './constants';
 import { readConfiguration, setConfiguration } from './configuration/config';
 import getActionOptions from './api/getActionOptions';
 import { getConfig, putConfig } from './api/config';
@@ -28,13 +28,15 @@ async function bootstrap(): Promise<void> {
   // Doing it this way allows us to validate on boot.
   await readConfiguration().then(setConfiguration);
 
-  // Start express.
-  log.debug('Setting up routes');
+  log.debug('Starting express');
   const app = express();
+
+  // Register all middleware.
   app.use(express.json());
   app.use(cors);
+  app.use('/api/images', express.static(IMAGES_DIR));
 
-  // API routes.
+  // Register the API routes.
   app.get('/api', getAgentInfo);
   app.post('/api/actions/:action', invokeAction);
   app.get('/api/actions/options', getActionOptions);

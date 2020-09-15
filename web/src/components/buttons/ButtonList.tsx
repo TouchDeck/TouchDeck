@@ -33,7 +33,7 @@ function buttonToComponent(
     <div key={index}>
       <div className="list-item" onClick={() => onClickButton(button)}>
         {'style' in button && button.style.image && (
-          <img alt="" src={`/images/${button.style.image}`} />
+          <img alt="" src={`/api/images/${button.style.image}`} />
         )}
         <span className="name">{buttonName}</span>
       </div>

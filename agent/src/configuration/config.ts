@@ -1,6 +1,6 @@
 import * as fs from 'fs/promises';
 import { Logger } from '@luca_scorpion/tinylogger';
-import { CONFIG_DIR, CONFIG_FILE } from '../constants';
+import { CONFIG_DIR, CONFIG_FILE, IMAGES_DIR } from '../constants';
 import prepareAction, { InvokableAction } from '../actions/prepareAction';
 import Configuration from '../model/configuration/Configuration';
 import { ButtonConfig } from '../model/configuration/ButtonConfig';
@@ -40,6 +40,7 @@ export async function readConfiguration(): Promise<Configuration> {
   // Check if the config directory and file exist.
   await fs.stat(CONFIG_DIR).catch(() => fs.mkdir(CONFIG_DIR));
   await fs.stat(CONFIG_FILE).catch(() => fs.writeFile(CONFIG_FILE, '{}'));
+  await fs.stat(IMAGES_DIR).catch(() => fs.mkdir(IMAGES_DIR));
 
   // Read the config file.
   const configJson = (

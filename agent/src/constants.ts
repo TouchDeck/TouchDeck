@@ -9,6 +9,7 @@ export const PORT = parseInt(envOrDefault('PORT', '4000'), 10);
 
 export const CONFIG_DIR = envOrDefault('CONFIG_DIR', `${homedir()}/.pideck`);
 export const CONFIG_FILE = `${CONFIG_DIR}/config.json`;
+export const IMAGES_DIR = `${CONFIG_DIR}/images`;
 
 export const DISCOVERY_SERVER = envOrDefault(
   'DISCOVERY_SERVER',

@@ -14,7 +14,7 @@ const Button: React.FC<Props> = ({ children, disabled, onClick, style }) => (
     style={{
       backgroundColor: style.backgroundColor,
       color: style.textColor,
-      backgroundImage: style.image ? `url(/images/${style.image})` : '',
+      backgroundImage: style.image ? `url(/api/images/${style.image})` : '',
     }}
     onClick={onClick}
   >
