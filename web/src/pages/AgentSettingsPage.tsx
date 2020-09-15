@@ -4,6 +4,7 @@ import SettingsLayout from '../components/settings/SettingsLayout';
 import Icon from '../components/Icon';
 import { Link } from 'react-router-dom';
 import Rows from '../components/Rows';
+import capitalizeFirstLetter from '../util/capitalizeFirstLetter';
 
 const AgentSettingsPage: React.FC = () => {
   const [, dispatch] = useGlobalState();
@@ -23,7 +24,7 @@ const AgentSettingsPage: React.FC = () => {
           </div>
           <div>
             <span>Platform:</span>
-            <span>{info.platform}</span>
+            <span>{capitalizeFirstLetter(info.platform)}</span>
           </div>
           <div>
             <span>Hostname:</span>
