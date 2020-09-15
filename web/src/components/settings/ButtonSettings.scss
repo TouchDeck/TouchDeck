@@ -6,4 +6,12 @@
   .rows {
     margin-bottom: 32px;
   }
+
+  .preview-row {
+    display: flex;
+
+    .preview {
+      margin-left: 32px;
+    }
+  }
 }

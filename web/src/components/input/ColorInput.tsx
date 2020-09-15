@@ -21,7 +21,7 @@ const ColorInput: React.FC<Props> = ({ value, onChange }) => {
           backgroundColor: value,
         }}
       >
-        {value}
+        <code className="value">{value}</code>
       </div>
       {displayPicker && (
         <div className="popover">

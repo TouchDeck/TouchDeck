@@ -8,7 +8,8 @@ import { ActionParameter } from '../../model/ActionOption';
 import CheckboxInput from '../input/CheckboxInput';
 import capitalizeFirstLetter from '../../util/capitalizeFirstLetter';
 import { ActionArgs } from '../../model/configuration/ActionConfig';
-import ColorInput from '../input/ColorInput';
+import ButtonStyleSettings from './ButtonStyleSettings';
+import Button from '../buttons/Button';
 
 export interface Props {
   button: NormalButtonConfig;
@@ -18,11 +19,7 @@ const NormalButtonSettings: React.FC<Props> = ({ button }) => {
   const { actionOptions } = useConnectedAgent();
 
   const [name, setName] = useState(button.name);
-  const [text, setText] = useState(button.style.text);
-  const [textColor, setTextColor] = useState(button.style.textColor);
-  const [backgroundColor, setBackgroundColor] = useState(
-    button.style.backgroundColor
-  );
+  const [style, setStyle] = useState(button.style);
   const [actionType, setActionType] = useState(button.action.type);
   const [actionArgs, setActionArgs] = useState<ActionArgs>(button.action.args);
 
@@ -33,9 +30,7 @@ const NormalButtonSettings: React.FC<Props> = ({ button }) => {
 
   useEffect(() => {
     setName(button.name);
-    setText(button.style.text);
-    setTextColor(button.style.textColor);
-    setBackgroundColor(button.style.backgroundColor);
+    setStyle(button.style);
     setActionType(button.action.type);
     setActionArgs(button.action.args);
   }, [button]);
@@ -54,33 +49,21 @@ const NormalButtonSettings: React.FC<Props> = ({ button }) => {
 
   return (
     <div>
-      <h3>Button</h3>
-      <Rows>
-        <div>
-          <span>Name</span>
-          <span>
-            <TextInput value={name} onChange={setName} />
-          </span>
+      <div className="preview-row">
+        <Rows>
+          <div>
+            <span>Name</span>
+            <span>
+              <TextInput value={name} onChange={setName} />
+            </span>
+          </div>
+        </Rows>
+        <div className="preview">
+          <Button style={style} />
         </div>
-        <div>
-          <span>Text</span>
-          <span>
-            <TextInput value={text} onChange={setText} />
-          </span>
-        </div>
-        <div>
-          <span>Text color</span>
-          <span>
-            <ColorInput value={textColor} onChange={setTextColor} />
-          </span>
-        </div>
-        <div>
-          <span>Background color</span>
-          <span>
-            <ColorInput value={backgroundColor} onChange={setBackgroundColor} />
-          </span>
-        </div>
-      </Rows>
+      </div>
+
+      <ButtonStyleSettings buttonStyle={style} onChange={setStyle} />
 
       <h3>Action</h3>
       <Rows>
