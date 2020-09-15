@@ -17,6 +17,7 @@
     "node-sass": "^4.14.1",
     "prettier": "^2.0.5",
     "react": "^16.13.1",
+    "react-color": "^2.18.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
@@ -49,5 +50,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-color": "^3.0.4"
   }
 }

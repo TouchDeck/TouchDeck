@@ -13,10 +13,10 @@ export interface BaseButtonConfig {
 }
 
 export interface ButtonStyling {
-  backgroundColor?: string;
-  textColor?: string;
-  text?: string;
-  image?: string;
+  backgroundColor: string;
+  textColor: string;
+  text: string;
+  image: string;
 }
 
 export interface NormalButtonConfig extends BaseButtonConfig {

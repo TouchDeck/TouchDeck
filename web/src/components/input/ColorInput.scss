@@ -1,0 +1,11 @@
+.color-input {
+  .swatch {
+    cursor: pointer;
+    padding: 0 8px;
+  }
+
+  .popover {
+    position: absolute;
+    z-index: 2;
+  }
+}

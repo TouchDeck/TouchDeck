@@ -8,6 +8,7 @@ import { ActionParameter } from '../../model/ActionOption';
 import CheckboxInput from '../input/CheckboxInput';
 import capitalizeFirstLetter from '../../util/capitalizeFirstLetter';
 import { ActionArgs } from '../../model/configuration/ActionConfig';
+import ColorInput from '../input/ColorInput';
 
 export interface Props {
   button: NormalButtonConfig;
@@ -47,8 +48,8 @@ const NormalButtonSettings: React.FC<Props> = ({ button }) => {
     [actionOptions, actionType]
   );
 
-  const setActionArg = useCallback((name, newArg) => {
-    setActionArgs((prevArgs) => ({ ...prevArgs, [name]: newArg }));
+  const setActionArg = useCallback((paramName, newArg) => {
+    setActionArgs((prevArgs) => ({ ...prevArgs, [paramName]: newArg }));
   }, []);
 
   return (
@@ -70,13 +71,13 @@ const NormalButtonSettings: React.FC<Props> = ({ button }) => {
         <div>
           <span>Text color</span>
           <span>
-            <TextInput value={textColor} onChange={setTextColor} />
+            <ColorInput value={textColor} onChange={setTextColor} />
           </span>
         </div>
         <div>
           <span>Background color</span>
           <span>
-            <TextInput value={backgroundColor} onChange={setBackgroundColor} />
+            <ColorInput value={backgroundColor} onChange={setBackgroundColor} />
           </span>
         </div>
       </Rows>
