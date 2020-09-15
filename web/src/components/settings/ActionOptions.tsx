@@ -36,7 +36,7 @@ const ActionOptions: React.FC<Props> = ({ actionType, onChange }) => {
       {Object.entries(optionGroups).map(([category, options]) => (
         <optgroup key={category} label={category}>
           {options.map((option) => (
-            <option key={option.id} value={option.id}>
+            <option key={option.type} value={option.type}>
               {option.name}
             </option>
           ))}

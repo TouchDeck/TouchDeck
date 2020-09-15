@@ -1,5 +1,5 @@
 export default interface ActionOption {
-  id: string;
+  type: string;
   category: string;
   name: string;
   parameters: ActionParameter[];

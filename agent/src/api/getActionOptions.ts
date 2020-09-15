@@ -8,7 +8,7 @@ export default function getActionOptions(
 ): void {
   res.json(
     getAvailableActions().map((action) => ({
-      id: action.constructor.name,
+      type: action.constructor.name,
       category: action.category,
       name: action.name,
       parameters: action.parameters,

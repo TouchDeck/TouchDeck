@@ -25,7 +25,7 @@ const NormalButtonSettings: React.FC<Props> = ({ button }) => {
 
   // The parameter info for the current action.
   const [actionParams, setActionParams] = useState<ActionParameter[]>(
-    actionOptions.find((a) => a.id === actionType)?.parameters || []
+    actionOptions.find((option) => option.type === actionType)?.parameters || []
   );
 
   useEffect(() => {
@@ -38,7 +38,8 @@ const NormalButtonSettings: React.FC<Props> = ({ button }) => {
   useEffect(
     () =>
       setActionParams(
-        actionOptions.find((a) => a.id === actionType)?.parameters || []
+        actionOptions.find((option) => option.type === actionType)
+          ?.parameters || []
       ),
     [actionOptions, actionType]
   );
