@@ -4,7 +4,9 @@
   "main": "src/index.ts",
   "scripts": {
     "start": "ts-node-dev --respawn src/index.ts",
-    "build": "rimraf build && tsc",
+    "build:tsc": "rimraf build && tsc",
+    "build:nexe": "nexe build/index.js -t linux-x64-12.9.1",
+    "build": "npm run build:tsc && npm run build:nexe",
     "prettier": "prettier --write \"src/**/*.(ts)\"",
     "lint": "eslint . --ext .ts --fix",
     "format": "npm run prettier && npm run lint"
@@ -21,6 +23,7 @@
     "eslint-config-airbnb-typescript": "^9.0.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.22.0",
+    "nexe": "^3.3.7",
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2",
     "ts-node": "^8.10.2",

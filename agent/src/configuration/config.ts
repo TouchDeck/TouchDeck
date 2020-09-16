@@ -1,4 +1,4 @@
-import * as fs from 'fs/promises';
+import { promises as fs } from 'fs';
 import { Logger } from '@luca_scorpion/tinylogger';
 import { CONFIG_DIR, CONFIG_FILE, IMAGES_DIR } from '../constants';
 import prepareAction, { InvokableAction } from '../actions/prepareAction';
