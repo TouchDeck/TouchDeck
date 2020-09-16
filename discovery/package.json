@@ -4,7 +4,9 @@
   "main": "src/index.ts",
   "scripts": {
     "start": "ts-node-dev --respawn src/index.ts",
-    "build": "rimraf build && tsc",
+    "build:tsc": "rimraf build && tsc",
+    "build:docker": "docker build -t lucascorpion/${npm_package_name}:${npm_package_version} .",
+    "build": "npm run build:tsc && npm run build:docker",
     "prettier": "prettier --write \"src/**/*.(ts)\"",
     "lint": "eslint . --ext .ts --fix",
     "format": "npm run prettier && npm run lint"
