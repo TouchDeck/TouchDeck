@@ -13,7 +13,7 @@ export const IMAGES_DIR = `${CONFIG_DIR}/images`;
 
 export const DISCOVERY_SERVER = envOrDefault(
   'DISCOVERY_SERVER',
-  'http://localhost:5000'
+  'https://discovery.scorpiac.com'
 );
 
 export const DISCOVERY_REPORT_TIME = parseInt(
