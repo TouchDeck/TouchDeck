@@ -56,6 +56,10 @@ function validateToggleButtonState(
 }
 
 function validateButton(button: ButtonConfig): ButtonConfig {
+  if (!button) {
+    return button;
+  }
+
   switch (button.type) {
     case 'normal':
       return {

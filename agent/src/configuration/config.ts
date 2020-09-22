@@ -19,15 +19,17 @@ function getActionsFromButtons(buttons: ButtonConfig[]): ActionsById {
 
   for (let i = 0; i < buttons.length; i++) {
     const button = buttons[i];
-    if (button.type === 'normal') {
-      actions[button.action.id] = prepareAction(button.action);
-    }
-    if (button.type === 'toggle') {
-      actions[button.state1.action.id] = prepareAction(button.state1.action);
-      actions[button.state2.action.id] = prepareAction(button.state2.action);
-    }
-    if (button.type === 'folder') {
-      actions = { ...actions, ...getActionsFromButtons(button.buttons) };
+    if (button) {
+      if (button.type === 'normal') {
+        actions[button.action.id] = prepareAction(button.action);
+      }
+      if (button.type === 'toggle') {
+        actions[button.state1.action.id] = prepareAction(button.state1.action);
+        actions[button.state2.action.id] = prepareAction(button.state2.action);
+      }
+      if (button.type === 'folder') {
+        actions = { ...actions, ...getActionsFromButtons(button.buttons) };
+      }
     }
   }
 

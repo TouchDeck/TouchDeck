@@ -9,7 +9,9 @@ export interface Props {
 const ButtonList: React.FC<Props> = ({ buttons, onClickButton }) => {
   return (
     <div className="button-list">
-      {buttons.map((b, i) => buttonToComponent(b, i, onClickButton))}
+      {buttons
+        .filter((b) => b != null)
+        .map((b, i) => buttonToComponent(b, i, onClickButton))}
     </div>
   );
 };
@@ -21,11 +23,15 @@ function buttonToComponent(
   index: number,
   onClickButton: (button: ButtonConfig) => void
 ): ReactNode {
+  if (!button) {
+    return <></>;
+  }
+
   let subButtons: ReactNode[] = [];
   if (button.type === 'folder') {
-    subButtons = button.buttons.map((b, i) =>
-      buttonToComponent(b, i, onClickButton)
-    );
+    subButtons = button.buttons
+      .filter((b) => b != null)
+      .map((b, i) => buttonToComponent(b, i, onClickButton));
   }
   const buttonName = 'name' in button ? button.name : '';
 

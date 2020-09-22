@@ -6,12 +6,10 @@ import FolderButton from './FolderButton';
 import Icon from '../Icon';
 import { ButtonConfig } from '../../model/configuration/ButtonConfig';
 
-export type GridButton = ButtonConfig | { type: 'empty' };
-
 export interface Props {
   rowCount: number;
   columnCount: number;
-  buttons: GridButton[];
+  buttons: ButtonConfig[];
   onTriggerAction: (action: string) => void;
   editing?: boolean;
 }
@@ -43,8 +41,8 @@ const ButtonGrid: React.FC<Props> = ({
     return () => window.removeEventListener('resize', updateSize);
   }, [columnCount, rowCount]);
 
-  const [buttonView, setButtonView] = useState<GridButton[]>(buttons);
-  const [folderStack, setFolderStack] = useState<GridButton[][]>([]);
+  const [buttonView, setButtonView] = useState<ButtonConfig[]>(buttons);
+  const [folderStack, setFolderStack] = useState<ButtonConfig[][]>([]);
 
   // Update the button view state whenever the prop changes.
   useEffect(() => setButtonView(buttons), [buttons]);
@@ -81,35 +79,37 @@ const ButtonGrid: React.FC<Props> = ({
   // Get the button list, fill up the remainder of the grid.
   const renderButtons = [...buttonView];
   for (let i = renderButtons.length; i < rowCount * columnCount; i++) {
-    renderButtons.push({ type: 'empty' });
+    renderButtons.push(null);
   }
 
   return (
     <div className="button-grid" ref={gridRef}>
       {renderButtons.map((button, i) => {
+        if (!button) {
+          return (
+            <Button
+              key={i}
+              disabled
+              style={{
+                text: '',
+                image: '',
+                backgroundColor: '',
+                textColor: '',
+              }}
+              size={buttonSize}
+              buttonsPerRow={columnCount}
+              draggable={editing}
+              onDragOver={(e) => e.preventDefault()}
+              onDragStart={(e) => e.preventDefault()}
+              onDrop={(e) => {
+                e.preventDefault();
+                dropButton(i);
+              }}
+            />
+          );
+        }
+
         switch (button.type) {
-          case 'empty':
-            return (
-              <Button
-                key={i}
-                disabled
-                style={{
-                  text: '',
-                  image: '',
-                  backgroundColor: '',
-                  textColor: '',
-                }}
-                size={buttonSize}
-                buttonsPerRow={columnCount}
-                draggable={editing}
-                onDragOver={(e) => e.preventDefault()}
-                onDragStart={(e) => e.preventDefault()}
-                onDrop={(e) => {
-                  e.preventDefault();
-                  dropButton(i);
-                }}
-              />
-            );
           case 'normal':
             return (
               <NormalButton
