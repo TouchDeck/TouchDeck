@@ -65,9 +65,16 @@ const ButtonGrid: React.FC<Props> = ({
   const [draggingButton, setDraggingButton] = useState<number>();
   const dropButton = useCallback(
     (target: number) => {
-      console.log('Dropping', draggingButton, 'over', target);
+      if (!draggingButton) {
+        return;
+      }
+
+      const currentView = [...buttonView];
+      currentView[target] = currentView[draggingButton];
+      currentView[draggingButton] = null;
+      setButtonView(currentView);
     },
-    [draggingButton]
+    [draggingButton, buttonView]
   );
 
   // If we're in a folder (i.e. if the folderStack is not empty) add an 'up' button.

@@ -8,9 +8,7 @@ export interface ButtonProps {
   draggable?: boolean;
   onDragStart?: (event: React.DragEvent<HTMLDivElement>) => void;
   onDragEnd?: (event: React.DragEvent<HTMLDivElement>) => void;
-  onDragEnter?: (event: React.DragEvent<HTMLDivElement>) => void;
   onDragOver?: (event: React.DragEvent<HTMLDivElement>) => void;
-  onDragLeave?: (event: React.DragEvent<HTMLDivElement>) => void;
   onDrop?: (event: React.DragEvent<HTMLDivElement>) => void;
 }
 
@@ -30,9 +28,7 @@ const Button: React.FC<Props> = ({
   draggable,
   onDragStart,
   onDragEnd,
-  onDragEnter,
   onDragOver,
-  onDragLeave,
   onDrop,
 }) => {
   const wrapperStyle: { width?: string } = {};
@@ -41,7 +37,13 @@ const Button: React.FC<Props> = ({
   }
 
   return (
-    <div className="button-wrapper" style={wrapperStyle}>
+    <div
+      className="button-wrapper"
+      style={wrapperStyle}
+      onDragStart={onDragStart}
+      onDragOver={onDragOver}
+      onDrop={onDrop}
+    >
       <div
         className={classNames(['button', disabled && 'disabled'])}
         style={{
@@ -54,12 +56,7 @@ const Button: React.FC<Props> = ({
         }}
         onClick={onClick}
         draggable={draggable}
-        onDragStart={onDragStart}
         onDragEnd={onDragEnd}
-        onDragEnter={onDragEnter}
-        onDragOver={onDragOver}
-        onDragLeave={onDragLeave}
-        onDrop={onDrop}
       >
         {style.text}
         {children}
