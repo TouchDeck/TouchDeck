@@ -1,15 +1,13 @@
 import React from 'react';
-import Button from './Button';
+import Button, { ButtonProps } from './Button';
 import Icon from '../Icon';
 import {
   ButtonConfig,
   FolderButtonConfig,
 } from '../../model/configuration/ButtonConfig';
 
-export interface Props {
+export interface Props extends ButtonProps {
   enterFolder: (buttons: ButtonConfig[]) => void;
-  size: number;
-  buttonsPerRow: number;
 }
 
 const FolderButton: React.FC<Props & FolderButtonConfig> = (button) => (

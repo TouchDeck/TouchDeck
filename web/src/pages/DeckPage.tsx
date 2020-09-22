@@ -14,6 +14,7 @@ const DeckPage: React.FC = () => {
         columnCount={5}
         buttons={config.buttons}
         onTriggerAction={(id) => agent.triggerAction(id)}
+        editing
       />
     </>
   );

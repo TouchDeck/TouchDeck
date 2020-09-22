@@ -1,26 +1,22 @@
 import React, { useState } from 'react';
-import Button from './Button';
+import Button, { ButtonProps } from './Button';
 import { ToggleButtonState } from '../../model/configuration/ButtonConfig';
 
-export interface Props {
+export interface Props extends ButtonProps {
   onTriggerAction: (action: string) => void;
   state1: ToggleButtonState;
   state2: ToggleButtonState;
-  size: number;
-  buttonsPerRow: number;
 }
 
-const ToggleButton: React.FC<Props> = ({
-  state1,
-  state2,
-  onTriggerAction,
-  size,
-}) => {
+const ToggleButton: React.FC<Props> = (props) => {
+  const { state1, state2, onTriggerAction, size } = props;
+
   const [toggleState, setToggleState] = useState(false);
 
   const currentState = toggleState ? state1 : state2;
   return (
     <Button
+      {...props}
       {...currentState}
       onClick={async () => {
         onTriggerAction(currentState.action.id);

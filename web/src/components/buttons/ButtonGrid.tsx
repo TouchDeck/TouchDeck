@@ -13,6 +13,7 @@ export interface Props {
   columnCount: number;
   buttons: GridButton[];
   onTriggerAction: (action: string) => void;
+  editing?: boolean;
 }
 
 const ButtonGrid: React.FC<Props> = ({
@@ -20,6 +21,7 @@ const ButtonGrid: React.FC<Props> = ({
   columnCount,
   buttons,
   onTriggerAction,
+  editing,
 }) => {
   const gridRef = useRef<HTMLDivElement>(null);
   const [buttonSize, setButtonSize] = useState(0);
@@ -89,6 +91,7 @@ const ButtonGrid: React.FC<Props> = ({
                 }}
                 size={buttonSize}
                 buttonsPerRow={columnCount}
+                draggable={editing}
               />
             );
           case 'normal':
@@ -99,6 +102,7 @@ const ButtonGrid: React.FC<Props> = ({
                 onTriggerAction={onTriggerAction}
                 size={buttonSize}
                 buttonsPerRow={columnCount}
+                draggable={editing}
               />
             );
           case 'toggle':
@@ -109,6 +113,7 @@ const ButtonGrid: React.FC<Props> = ({
                 onTriggerAction={onTriggerAction}
                 size={buttonSize}
                 buttonsPerRow={columnCount}
+                draggable={editing}
               />
             );
           case 'folder':
@@ -119,6 +124,7 @@ const ButtonGrid: React.FC<Props> = ({
                 enterFolder={enterFolder}
                 size={buttonSize}
                 buttonsPerRow={columnCount}
+                draggable={editing}
               />
             );
           case 'up':

@@ -2,12 +2,18 @@ import React from 'react';
 import classNames from '../../util/classNames';
 import { ButtonStyling } from '../../model/configuration/ButtonConfig';
 
-export interface Props {
+export interface ButtonProps {
+  size?: number;
+  buttonsPerRow?: number;
+  draggable?: boolean;
+  onDragStart?: (event: React.DragEvent<HTMLDivElement>) => void;
+  onDragEnd?: (event: React.DragEvent<HTMLDivElement>) => void;
+}
+
+export interface Props extends ButtonProps {
   disabled?: boolean;
   onClick?: () => void | Promise<void>;
   style: ButtonStyling;
-  size?: number;
-  buttonsPerRow?: number;
 }
 
 const Button: React.FC<Props> = ({
@@ -17,6 +23,9 @@ const Button: React.FC<Props> = ({
   style,
   size,
   buttonsPerRow,
+  draggable,
+  onDragStart,
+  onDragEnd,
 }) => {
   const wrapperStyle: { width?: string } = {};
   if (buttonsPerRow) {
@@ -36,6 +45,9 @@ const Button: React.FC<Props> = ({
           height: size,
         }}
         onClick={onClick}
+        onDragStart={onDragStart}
+        onDragEnd={onDragEnd}
+        draggable={draggable}
       >
         {style.text}
         {children}
