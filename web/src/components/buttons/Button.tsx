@@ -30,6 +30,7 @@ const Button: React.FC<Props> = ({
         style={{
           backgroundColor: style.backgroundColor,
           color: style.textColor,
+          // TODO: Load image from agent, remove proxy from package.json
           backgroundImage: style.image ? `url(/api/images/${style.image})` : '',
           width: size,
           height: size,
