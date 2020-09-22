@@ -17,14 +17,10 @@ function validateOrGetUuid(uuid?: string): string {
 }
 
 function validateAction(action?: ActionConfig): ActionConfig {
-  if (!action || !action.type) {
-    throw new Error('No action set');
-  }
-
   return {
-    id: validateOrGetUuid(action.id),
-    type: action.type,
-    args: action.args || {},
+    id: validateOrGetUuid(action?.id),
+    type: action?.type || '',
+    args: action?.args || {},
   };
 }
 

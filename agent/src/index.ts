@@ -56,5 +56,5 @@ async function bootstrap(): Promise<void> {
 
 bootstrap().catch((err) => {
   log.error('An unexpected error occurred:');
-  log.error(err);
+  log.error(err.stack);
 });
