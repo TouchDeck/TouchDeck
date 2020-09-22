@@ -5,22 +5,18 @@ import ToggleButton from './ToggleButton';
 import FolderButton from './FolderButton';
 import Icon from '../Icon';
 import { ButtonConfig } from '../../model/configuration/ButtonConfig';
+import { useConnectedAgent } from '../../state/appState';
 
 export interface Props {
   rowCount: number;
   columnCount: number;
-  buttons: ButtonConfig[];
-  onTriggerAction: (action: string) => void;
   editing?: boolean;
 }
 
-const ButtonGrid: React.FC<Props> = ({
-  rowCount,
-  columnCount,
-  buttons,
-  onTriggerAction,
-  editing,
-}) => {
+const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
+  const { agent, config } = useConnectedAgent();
+  const { buttons } = config;
+
   // Get the button size, based on the current element size.
   const gridRef = useRef<HTMLDivElement>(null);
   const [buttonSize, setButtonSize] = useState(0);
@@ -61,6 +57,15 @@ const ButtonGrid: React.FC<Props> = ({
     setButtonView(folderStack[folderStack.length - 1]);
     setFolderStack((prev) => prev.slice(0, prev.length - 1));
   }, [folderStack]);
+
+  const triggerAction = useCallback(
+    (id: string) => {
+      if (!editing) {
+        agent.triggerAction(id);
+      }
+    },
+    [agent, editing]
+  );
 
   const [draggingButton, setDraggingButton] = useState<number>();
   const dropButton = useCallback(
@@ -122,7 +127,7 @@ const ButtonGrid: React.FC<Props> = ({
               <NormalButton
                 key={i}
                 {...button}
-                onTriggerAction={onTriggerAction}
+                onTriggerAction={triggerAction}
                 size={buttonSize}
                 buttonsPerRow={columnCount}
                 draggable={editing}
@@ -135,7 +140,7 @@ const ButtonGrid: React.FC<Props> = ({
               <ToggleButton
                 key={i}
                 {...button}
-                onTriggerAction={onTriggerAction}
+                onTriggerAction={triggerAction}
                 size={buttonSize}
                 buttonsPerRow={columnCount}
                 draggable={editing}
