@@ -7,16 +7,13 @@ import Icon from '../Icon';
 import { ButtonConfig } from '../../model/configuration/ButtonConfig';
 
 export interface Props {
-  rowWidth: number;
+  rows: number;
+  columns: number;
   buttons: ButtonConfig[];
   onTriggerAction: (action: string) => void;
 }
 
-const ButtonGrid: React.FC<Props> = ({
-  rowWidth,
-  buttons,
-  onTriggerAction,
-}) => {
+const ButtonGrid: React.FC<Props> = ({ columns, buttons, onTriggerAction }) => {
   const [buttonView, setButtonView] = useState<ButtonConfig[]>(buttons);
 
   // Update the button view state whenever the prop changes.
@@ -46,7 +43,7 @@ const ButtonGrid: React.FC<Props> = ({
   // Divide the buttons into rows.
   for (let i = 0; i < buttonView.length; i++) {
     const lastRow = rows[rows.length - 1];
-    if (lastRow.length < rowWidth) {
+    if (lastRow.length < columns) {
       lastRow.push(buttonView[i]);
     } else {
       rows.push([buttonView[i]]);
@@ -55,7 +52,7 @@ const ButtonGrid: React.FC<Props> = ({
 
   // Fill up the last row.
   const lastRow = rows[rows.length - 1];
-  for (let i = lastRow.length; i < rowWidth; i++) {
+  for (let i = lastRow.length; i < columns; i++) {
     lastRow.push({ type: 'filler' });
   }
 

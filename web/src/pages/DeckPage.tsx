@@ -10,7 +10,8 @@ const DeckPage: React.FC = () => {
     <>
       <SettingsCorner />
       <ButtonGrid
-        rowWidth={4}
+        rows={3}
+        columns={5}
         buttons={config.buttons}
         onTriggerAction={(id) => agent.triggerAction(id)}
       />
