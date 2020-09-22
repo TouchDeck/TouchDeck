@@ -7,6 +7,11 @@ import { actionParamsKey } from './Action';
 export type InvokableAction = () => void | Promise<void>;
 
 export default function prepareAction(action: ActionConfig): InvokableAction {
+  // If the action type is nullish, return a no-op.
+  if (!action.type) {
+    return () => undefined;
+  }
+
   // Get an instance of the action.
   const ActionCtor = getActionRegistry()[action.type].constructor;
   const actionInst = inject(ActionCtor);

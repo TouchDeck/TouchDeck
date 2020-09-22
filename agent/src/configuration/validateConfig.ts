@@ -41,8 +41,8 @@ function validateButtonStyle(style?: ButtonStyling): ButtonStyling {
   return {
     text: style?.text || '',
     image: style?.image || '',
-    textColor: validateColorOrDefault(style?.textColor, '#ffffff'),
-    backgroundColor: validateColorOrDefault(style?.backgroundColor, '#000000'),
+    textColor: validateColorOrDefault(style?.textColor, '#000000'),
+    backgroundColor: validateColorOrDefault(style?.backgroundColor, '#ffffff'),
   };
 }
 
