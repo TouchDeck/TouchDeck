@@ -4,8 +4,7 @@ export type ButtonConfig =
   | NormalButtonConfig
   | ToggleButtonConfig
   | FolderButtonConfig
-  | UpButtonConfig
-  | FillerButtonConfig;
+  | UpButtonConfig;
 
 export interface BaseButtonConfig {
   name: string;
@@ -44,8 +43,4 @@ export interface FolderButtonConfig extends BaseButtonConfig {
 
 export interface UpButtonConfig {
   type: 'up';
-}
-
-export interface FillerButtonConfig {
-  type: 'filler';
 }

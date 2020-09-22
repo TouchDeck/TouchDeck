@@ -8,6 +8,8 @@ import {
 
 export interface Props {
   enterFolder: (buttons: ButtonConfig[]) => void;
+  size: number;
+  buttonsPerRow: number;
 }
 
 const FolderButton: React.FC<Props & FolderButtonConfig> = (button) => (

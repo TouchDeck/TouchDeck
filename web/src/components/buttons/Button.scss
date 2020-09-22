@@ -1,35 +1,41 @@
-.button {
-  background-color: #fff;
-  width: 80px;
-  height: 80px;
-  overflow: hidden;
-  user-select: none;
-  font-weight: bold;
-
-  // Center the text (horizontally and vertically).
+.button-wrapper {
   display: flex;
-  align-items: center;
   justify-content: center;
-  text-align: center;
+  align-items: center;
 
-  // Rounded corners.
-  border-radius: 5px;
+  .button {
+    background-color: #fff;
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    user-select: none;
+    font-weight: bold;
 
-  // Background image.
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
+    // Center the text (horizontally and vertically).
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 
-  &:not(.disabled) {
-    cursor: pointer;
+    // Rounded corners.
+    border-radius: 5px;
 
-    &:active {
-      filter: grayscale(40%);
+    // Background image.
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &:not(.disabled) {
+      cursor: pointer;
+
+      &:active {
+        filter: grayscale(40%);
+      }
     }
-  }
 
-  &.disabled {
-    background-color: #ccc;
-    filter: grayscale(80%);
+    &.disabled {
+      background-color: #ccc;
+      filter: grayscale(80%);
+    }
   }
 }
