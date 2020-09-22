@@ -23,9 +23,9 @@ const ButtonGrid: React.FC<Props> = ({
   onTriggerAction,
   editing,
 }) => {
+  // Get the button size, based on the current element size.
   const gridRef = useRef<HTMLDivElement>(null);
   const [buttonSize, setButtonSize] = useState(0);
-
   useEffect(() => {
     function updateSize() {
       if (gridRef.current) {
@@ -35,6 +35,7 @@ const ButtonGrid: React.FC<Props> = ({
         setButtonSize(minSize);
       }
     }
+
     updateSize();
 
     // Update the size whenever the window resizes.
@@ -63,12 +64,21 @@ const ButtonGrid: React.FC<Props> = ({
     setFolderStack((prev) => prev.slice(0, prev.length - 1));
   }, [folderStack]);
 
+  const [draggingButton, setDraggingButton] = useState<number>();
+  const dropButton = useCallback(
+    (target: number) => {
+      console.log('Dropping', draggingButton, 'over', target);
+    },
+    [draggingButton]
+  );
+
   // If we're in a folder (i.e. if the folderStack is not empty) add an 'up' button.
   if (folderStack.length > 0) {
     // TODO
     // rows[0][0] = { type: 'up' };
   }
 
+  // Get the button list, fill up the remainder of the grid.
   const renderButtons = [...buttonView];
   for (let i = renderButtons.length; i < rowCount * columnCount; i++) {
     renderButtons.push({ type: 'empty' });
@@ -92,6 +102,12 @@ const ButtonGrid: React.FC<Props> = ({
                 size={buttonSize}
                 buttonsPerRow={columnCount}
                 draggable={editing}
+                onDragOver={(e) => e.preventDefault()}
+                onDragStart={(e) => e.preventDefault()}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  dropButton(i);
+                }}
               />
             );
           case 'normal':
@@ -103,6 +119,8 @@ const ButtonGrid: React.FC<Props> = ({
                 size={buttonSize}
                 buttonsPerRow={columnCount}
                 draggable={editing}
+                onDragStart={() => setDraggingButton(i)}
+                onDragEnd={() => setDraggingButton(undefined)}
               />
             );
           case 'toggle':
@@ -114,6 +132,8 @@ const ButtonGrid: React.FC<Props> = ({
                 size={buttonSize}
                 buttonsPerRow={columnCount}
                 draggable={editing}
+                onDragStart={() => setDraggingButton(i)}
+                onDragEnd={() => setDraggingButton(undefined)}
               />
             );
           case 'folder':
@@ -125,6 +145,8 @@ const ButtonGrid: React.FC<Props> = ({
                 size={buttonSize}
                 buttonsPerRow={columnCount}
                 draggable={editing}
+                onDragStart={() => setDraggingButton(i)}
+                onDragEnd={() => setDraggingButton(undefined)}
               />
             );
           case 'up':

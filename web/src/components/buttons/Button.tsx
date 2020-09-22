@@ -8,6 +8,10 @@ export interface ButtonProps {
   draggable?: boolean;
   onDragStart?: (event: React.DragEvent<HTMLDivElement>) => void;
   onDragEnd?: (event: React.DragEvent<HTMLDivElement>) => void;
+  onDragEnter?: (event: React.DragEvent<HTMLDivElement>) => void;
+  onDragOver?: (event: React.DragEvent<HTMLDivElement>) => void;
+  onDragLeave?: (event: React.DragEvent<HTMLDivElement>) => void;
+  onDrop?: (event: React.DragEvent<HTMLDivElement>) => void;
 }
 
 export interface Props extends ButtonProps {
@@ -26,6 +30,10 @@ const Button: React.FC<Props> = ({
   draggable,
   onDragStart,
   onDragEnd,
+  onDragEnter,
+  onDragOver,
+  onDragLeave,
+  onDrop,
 }) => {
   const wrapperStyle: { width?: string } = {};
   if (buttonsPerRow) {
@@ -45,9 +53,13 @@ const Button: React.FC<Props> = ({
           height: size,
         }}
         onClick={onClick}
+        draggable={draggable}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
-        draggable={draggable}
+        onDragEnter={onDragEnter}
+        onDragOver={onDragOver}
+        onDragLeave={onDragLeave}
+        onDrop={onDrop}
       >
         {style.text}
         {children}
