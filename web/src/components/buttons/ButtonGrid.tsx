@@ -5,7 +5,7 @@ import ToggleButton from './ToggleButton';
 import FolderButton from './FolderButton';
 import Icon from '../Icon';
 import { ButtonConfig } from '../../model/configuration/ButtonConfig';
-import { useConnectedAgent } from '../../state/appState';
+import { useConnectedAgent, useGlobalState } from '../../state/appState';
 
 export interface Props {
   rowCount: number;
@@ -14,6 +14,7 @@ export interface Props {
 }
 
 const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
+  const [, dispatch] = useGlobalState();
   const { agent, config } = useConnectedAgent();
   const { buttons } = config;
 
@@ -70,16 +71,25 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
   const [draggingButton, setDraggingButton] = useState<number>();
   const dropButton = useCallback(
     (target: number) => {
-      if (!draggingButton) {
+      if (draggingButton == null) {
         return;
       }
 
-      const currentView = [...buttonView];
-      currentView[target] = currentView[draggingButton];
-      currentView[draggingButton] = null;
-      setButtonView(currentView);
+      // TODO: Make this work for folders.
+      const updated = { ...config };
+      updated.buttons[target] = updated.buttons[draggingButton];
+      updated.buttons[draggingButton] = null;
+
+      // Update the agent config.
+      dispatch({ type: 'configLoading' });
+      agent.setConfiguration(updated).then((newConfig) =>
+        dispatch({
+          type: 'configLoaded',
+          config: newConfig,
+        })
+      );
     },
-    [draggingButton, buttonView]
+    [draggingButton, config, dispatch, agent]
   );
 
   // If we're in a folder (i.e. if the folderStack is not empty) add an 'up' button.
