@@ -46,7 +46,6 @@ h6 {
 
 // Page styles
 @import 'pages/AgentInfoPage';
-@import 'pages/ButtonsSettingsPage';
 @import 'pages/ConnectAgentPage';
 @import 'pages/DeckPage';
 @import 'pages/TargetsSettingsPage';
@@ -62,6 +61,4 @@ h6 {
 @import 'components/buttons/ButtonList';
 @import 'components/input/ColorInput';
 @import 'components/settings/ButtonSettings';
-@import 'components/settings/SettingsCorner';
-@import 'components/settings/SettingsLayout';
 @import 'components/settings/TargetRow';
