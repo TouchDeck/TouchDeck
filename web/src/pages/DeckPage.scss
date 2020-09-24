@@ -8,5 +8,13 @@
     top: 0;
     left: 0;
     padding: 16px;
+
+    &:active {
+      color: #aaa;
+    }
+  }
+
+  .mid-panel {
+    background-color: #181818;
   }
 }

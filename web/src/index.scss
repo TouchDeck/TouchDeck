@@ -32,17 +32,26 @@ a {
   color: inherit;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
 // Font awesome
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
 
 // Page styles
-@import 'pages/AgentSettingsPage';
 @import 'pages/ButtonsSettingsPage';
 @import 'pages/ConnectAgentPage';
 @import 'pages/DeckPage';
 @import 'pages/TargetsSettingsPage';
 
 // Component styles
+@import 'components/AgentInfoPanel';
 @import 'components/AgentList';
 @import 'components/Dimmer';
 @import 'components/Menu';

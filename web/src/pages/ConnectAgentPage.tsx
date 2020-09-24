@@ -68,6 +68,7 @@ const ConnectAgentPage: React.FC = () => {
           <h2>Connecting to agent...</h2>
         </div>
       </Dimmer>
+
       <main>
         <h2>Connect to an agent</h2>
 
