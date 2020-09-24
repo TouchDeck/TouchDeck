@@ -9,14 +9,18 @@ export interface Props {
 
 const Menu: React.FC<Props> = ({ open, onClose }) => (
   <nav className={classNames(['menu', !open && 'closed'])}>
-    <div className="close-wrapper" onClick={onClose}>
-      <Icon icon="times" size={3} />
+    <Icon className="close" icon="times" size={2} onClick={onClose} />
+    <div className="entry">
+      <h2>
+        <Icon icon="link" />
+        Targets
+      </h2>
     </div>
     <div className="entry">
-      <h2>Targets</h2>
-    </div>
-    <div className="entry">
-      <h2>Agent</h2>
+      <h2>
+        <Icon icon="robot" />
+        Agent
+      </h2>
     </div>
   </nav>
 );

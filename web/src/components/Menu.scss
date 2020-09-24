@@ -2,23 +2,26 @@
   height: 100%;
   background-color: #111;
   overflow: hidden;
+  flex: 1 0 auto;
 
   &.closed {
     width: 0;
   }
 
-  .close-wrapper {
-    text-align: right;
-    padding: 8px 16px;
-    cursor: pointer;
+  .close {
+    padding: 16px 16px 8px 16px;
   }
 
   .entry {
     cursor: pointer;
-    padding: 8px 32px;
+    padding: 8px 16px;
 
     &:hover {
       background-color: #333;
+    }
+
+    i {
+      margin-right: 16px;
     }
 
     h2 {
