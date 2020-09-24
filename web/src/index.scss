@@ -39,11 +39,13 @@ a {
 @import 'pages/AgentSettingsPage';
 @import 'pages/ButtonsSettingsPage';
 @import 'pages/ConnectAgentPage';
+@import 'pages/DeckPage';
 @import 'pages/TargetsSettingsPage';
 
 // Component styles
 @import 'components/AgentList';
 @import 'components/Dimmer';
+@import 'components/Menu';
 @import 'components/Rows';
 @import 'components/buttons/Button';
 @import 'components/buttons/ButtonGrid';

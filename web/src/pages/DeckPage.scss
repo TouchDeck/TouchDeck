@@ -1,0 +1,12 @@
+.deck {
+  width: 100%;
+  height: 100%;
+  display: flex;
+
+  .open-menu {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    cursor: pointer;
+  }
+}

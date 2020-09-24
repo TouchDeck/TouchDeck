@@ -1,0 +1,28 @@
+.menu {
+  height: 100%;
+  background-color: #111;
+  overflow: hidden;
+
+  &.closed {
+    width: 0;
+  }
+
+  .close-wrapper {
+    text-align: right;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+
+  .entry {
+    cursor: pointer;
+    padding: 8px 32px;
+
+    &:hover {
+      background-color: #333;
+    }
+
+    h2 {
+      margin: 0;
+    }
+  }
+}
