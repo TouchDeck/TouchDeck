@@ -1,12 +1,15 @@
 import React, { ReactNode } from 'react';
 import { ButtonConfig } from '../../model/configuration/ButtonConfig';
+import { useConnectedAgent } from '../../state/appState';
 
 export interface Props {
-  buttons: ButtonConfig[];
   onClickButton: (button: ButtonConfig) => void;
 }
 
-const ButtonList: React.FC<Props> = ({ buttons, onClickButton }) => {
+const ButtonList: React.FC<Props> = ({ onClickButton }) => {
+  const { config } = useConnectedAgent();
+  const { buttons } = config;
+
   return (
     <div className="button-list">
       {buttons
