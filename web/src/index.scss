@@ -45,15 +45,16 @@ h6 {
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
 
 // Page styles
+@import 'pages/AgentInfoPage';
 @import 'pages/ButtonsSettingsPage';
 @import 'pages/ConnectAgentPage';
 @import 'pages/DeckPage';
 @import 'pages/TargetsSettingsPage';
 
 // Component styles
-@import 'components/AgentInfoPanel';
 @import 'components/AgentList';
 @import 'components/Dimmer';
+@import 'components/Layout';
 @import 'components/Menu';
 @import 'components/Rows';
 @import 'components/buttons/Button';

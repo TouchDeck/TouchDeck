@@ -1,11 +1,11 @@
 import React from 'react';
-import Rows from './Rows';
+import Rows from '../components/Rows';
 import capitalizeFirstLetter from '../util/capitalizeFirstLetter';
 import { Link } from 'react-router-dom';
-import Icon from './Icon';
+import Icon from '../components/Icon';
 import { useConnectedAgent, useGlobalState } from '../state/appState';
 
-const AgentInfoPanel: React.FC = () => {
+const AgentInfoPage: React.FC = () => {
   const [, dispatch] = useGlobalState();
   const { info } = useConnectedAgent();
 
@@ -42,4 +42,4 @@ const AgentInfoPanel: React.FC = () => {
   );
 };
 
-export default AgentInfoPanel;
+export default AgentInfoPage;

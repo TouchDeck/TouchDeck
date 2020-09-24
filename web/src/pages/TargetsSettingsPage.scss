@@ -1,14 +1,13 @@
 .targets-settings {
-  width: 800px;
   display: flex;
 
   .targets-list {
-    flex-basis: 300px;
+    flex: 1 0 auto;
     border-right: 3px solid #333;
   }
 
   .target-settings {
-    padding-left: 32px;
-    flex-grow: 1;
+    padding: 16px 32px;
+    flex: 1 1 auto;
   }
 }
