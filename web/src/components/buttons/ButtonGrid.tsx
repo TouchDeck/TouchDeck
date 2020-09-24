@@ -6,6 +6,7 @@ import FolderButton from './FolderButton';
 import Icon from '../Icon';
 import { ButtonConfig } from '../../model/configuration/ButtonConfig';
 import { useConnectedAgent, useGlobalState } from '../../state/appState';
+import useResizeObserver from '../../util/useResizeObserver';
 
 export interface Props {
   rowCount: number;
@@ -34,18 +35,7 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
   );
   // The grid ref and its resize observer.
   const gridRef = useRef<HTMLDivElement>(null);
-  const resizeObserver = useRef(
-    new ResizeObserver(([element]) => {
-      updateButtonSize(element.contentRect);
-    })
-  );
-  useEffect(() => {
-    if (gridRef.current) {
-      const currentObserver = resizeObserver.current;
-      currentObserver.observe(gridRef.current);
-      return () => currentObserver.disconnect();
-    }
-  }, []);
+  useResizeObserver(gridRef, updateButtonSize);
 
   // The current button layout, button view, and folder stack.
   const [currentLayout, setCurrentLayout] = useState('root');
