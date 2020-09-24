@@ -22,13 +22,15 @@ const DeckPage: React.FC = () => {
       )}
       <Menu open={showMenu} onClose={() => setShowMenu(false)} />
 
-      <div className="mid-panel">
-        <Switch>
-          <Route exact path="/agent" component={AgentInfoPanel} />
-        </Switch>
-      </div>
-
-      <ButtonGrid rowCount={3} columnCount={5} editing />
+      <Switch>
+        <Route exact path="/">
+          <ButtonGrid rowCount={3} columnCount={5} />
+        </Route>
+        <Route exact path="/layout">
+          <ButtonGrid rowCount={3} columnCount={5} editing />
+        </Route>
+        <Route exact path="/agent" component={AgentInfoPanel} />
+      </Switch>
     </div>
   );
 };
