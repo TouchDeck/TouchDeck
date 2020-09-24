@@ -20,26 +20,34 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
   const { agent, config } = useConnectedAgent();
   const { buttons, layouts } = config;
 
-  // Get the button size, based on the current element size.
-  const gridRef = useRef<HTMLDivElement>(null);
+  // The button size, based on the current element size.
   const [buttonSize, setButtonSize] = useState(0);
+  // A callback to update the button size based on a content rect.
+  const updateButtonSize = useCallback(
+    (rect: DOMRectReadOnly) => {
+      const columnWidth = rect.width / columnCount - 64;
+      const rowHeight = rect.height / rowCount - 64;
+      const minSize = Math.min(columnWidth, rowHeight);
+      setButtonSize(minSize);
+    },
+    [columnCount, rowCount]
+  );
+  // The grid ref and its resize observer.
+  const gridRef = useRef<HTMLDivElement>(null);
+  const resizeObserver = useRef(
+    new ResizeObserver(([element]) => {
+      updateButtonSize(element.contentRect);
+    })
+  );
   useEffect(() => {
-    function updateSize() {
-      if (gridRef.current) {
-        const columnWidth = gridRef.current.clientWidth / columnCount - 64;
-        const rowHeight = gridRef.current.clientHeight / rowCount - 64;
-        const minSize = Math.min(columnWidth, rowHeight);
-        setButtonSize(minSize);
-      }
+    if (gridRef.current) {
+      const currentObserver = resizeObserver.current;
+      currentObserver.observe(gridRef.current);
+      return () => currentObserver.disconnect();
     }
+  }, []);
 
-    updateSize();
-
-    // Update the size whenever the window resizes.
-    window.addEventListener('resize', updateSize);
-    return () => window.removeEventListener('resize', updateSize);
-  }, [columnCount, rowCount]);
-
+  // The current button layout, button view, and folder stack.
   const [currentLayout, setCurrentLayout] = useState('root');
   const [buttonView, setButtonView] = useState<DisplayButton[]>(buttons);
   const [folderStack, setFolderStack] = useState<string[]>([]);
