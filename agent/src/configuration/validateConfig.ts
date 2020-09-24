@@ -1,5 +1,7 @@
 import { v4 as uuidv4, validate as validateUuid } from 'uuid';
-import Configuration from '../model/configuration/Configuration';
+import Configuration, {
+  ButtonLayouts,
+} from '../model/configuration/Configuration';
 import {
   ButtonConfig,
   ButtonStyling,
@@ -16,7 +18,7 @@ function validateOrGetUuid(uuid?: string): string {
   return !uuid || !validateUuid(uuid) ? uuidv4() : uuid;
 }
 
-function validateAction(action?: ActionConfig): ActionConfig {
+function validateAction(action?: Partial<ActionConfig>): ActionConfig {
   return {
     id: validateOrGetUuid(action?.id),
     type: action?.type || '',
@@ -37,7 +39,7 @@ function validateColorOrDefault(
   return color;
 }
 
-function validateButtonStyle(style?: ButtonStyling): ButtonStyling {
+function validateButtonStyle(style?: Partial<ButtonStyling>): ButtonStyling {
   return {
     text: style?.text || '',
     image: style?.image || '',
@@ -47,7 +49,7 @@ function validateButtonStyle(style?: ButtonStyling): ButtonStyling {
 }
 
 function validateToggleButtonState(
-  state?: ToggleButtonState
+  state?: Partial<ToggleButtonState>
 ): ToggleButtonState {
   return {
     style: validateButtonStyle(state?.style),
@@ -55,14 +57,11 @@ function validateToggleButtonState(
   };
 }
 
-function validateButton(button: ButtonConfig): ButtonConfig {
-  if (!button) {
-    return button;
-  }
-
+function validateButton(button: Partial<ButtonConfig>): ButtonConfig {
   switch (button.type) {
     case 'normal':
       return {
+        id: validateOrGetUuid(button.id),
         name: button.name || '',
         type: button.type,
         action: validateAction(button.action),
@@ -70,13 +69,14 @@ function validateButton(button: ButtonConfig): ButtonConfig {
       };
     case 'folder':
       return {
+        id: validateOrGetUuid(button.id),
         name: button.name || '',
         type: button.type,
-        buttons: (button.buttons || []).map(validateButton),
         style: validateButtonStyle(button.style),
       };
     case 'toggle':
       return {
+        id: validateOrGetUuid(button.id),
         name: button.name || '',
         type: button.type,
         state1: validateToggleButtonState(button.state1),
@@ -87,7 +87,7 @@ function validateButton(button: ButtonConfig): ButtonConfig {
   }
 }
 
-function validateObsTarget(obs?: ObsTargetConfig): ObsTargetConfig {
+function validateObsTarget(obs?: Partial<ObsTargetConfig>): ObsTargetConfig {
   return {
     ip: obs?.ip || 'localhost',
     port: obs?.port ?? 4444,
@@ -96,15 +96,22 @@ function validateObsTarget(obs?: ObsTargetConfig): ObsTargetConfig {
   };
 }
 
-function validateTargets(targets?: TargetConfig): TargetConfig {
+function validateTargets(targets?: Partial<TargetConfig>): TargetConfig {
   return {
     obs: validateObsTarget(targets?.obs),
   };
 }
 
-export default function validateConfig(config: Configuration): Configuration {
+function validateLayouts(layout?: Partial<ButtonLayouts>): ButtonLayouts {
+  return { root: [], ...layout };
+}
+
+export default function validateConfig(
+  config: Partial<Configuration>
+): Configuration {
   return {
     targets: validateTargets(config.targets),
     buttons: (config.buttons || []).map(validateButton),
+    layouts: validateLayouts(config.layouts || {}),
   };
 }

@@ -1,15 +1,19 @@
 import ActionConfig from './ActionConfig';
 
 export type ButtonConfig =
-  | null
   | NormalButtonConfig
   | ToggleButtonConfig
   | FolderButtonConfig
   | UpButtonConfig;
 
 export interface BaseButtonConfig {
+  id: string;
   name: string;
   type: string;
+}
+
+export interface StyledButtonConfig extends BaseButtonConfig {
+  style: ButtonStyling;
 }
 
 export interface ButtonStyling {
@@ -19,10 +23,9 @@ export interface ButtonStyling {
   image: string;
 }
 
-export interface NormalButtonConfig extends BaseButtonConfig {
+export interface NormalButtonConfig extends StyledButtonConfig {
   type: 'normal';
   action: ActionConfig;
-  style: ButtonStyling;
 }
 
 export interface ToggleButtonConfig extends BaseButtonConfig {
@@ -36,10 +39,8 @@ export interface ToggleButtonState {
   style: ButtonStyling;
 }
 
-export interface FolderButtonConfig extends BaseButtonConfig {
+export interface FolderButtonConfig extends StyledButtonConfig {
   type: 'folder';
-  buttons: ButtonConfig[];
-  style: ButtonStyling;
 }
 
 export interface UpButtonConfig {

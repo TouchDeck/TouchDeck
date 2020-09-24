@@ -4,6 +4,6 @@ export default interface ActionConfig {
   args: ActionArgs;
 }
 
-export type ActionArgs = Record<string, ActionArgument>
+export type ActionArgs = Record<string, ActionArgument>;
 
 export type ActionArgument = string | boolean;

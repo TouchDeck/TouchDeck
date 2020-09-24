@@ -15,7 +15,7 @@ let configuration: Configuration;
 let actionsById: ActionsById;
 
 function getActionsFromButtons(buttons: ButtonConfig[]): ActionsById {
-  let actions: ActionsById = {};
+  const actions: ActionsById = {};
 
   for (let i = 0; i < buttons.length; i++) {
     const button = buttons[i];
@@ -26,9 +26,6 @@ function getActionsFromButtons(buttons: ButtonConfig[]): ActionsById {
       if (button.type === 'toggle') {
         actions[button.state1.action.id] = prepareAction(button.state1.action);
         actions[button.state2.action.id] = prepareAction(button.state2.action);
-      }
-      if (button.type === 'folder') {
-        actions = { ...actions, ...getActionsFromButtons(button.buttons) };
       }
     }
   }
