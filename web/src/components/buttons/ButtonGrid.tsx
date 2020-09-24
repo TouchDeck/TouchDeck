@@ -73,7 +73,14 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
     }
 
     setButtonView(newLayout);
-  }, [buttons, currentLayout, layouts, rowCount, columnCount]);
+  }, [
+    buttons,
+    currentLayout,
+    layouts,
+    rowCount,
+    columnCount,
+    folderStack.length,
+  ]);
 
   // Enter a folder: push the current layout onto the folder stack and update it.
   const enterFolder = useCallback(
