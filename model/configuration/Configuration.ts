@@ -8,6 +8,6 @@ export default interface Configuration {
 }
 
 export interface ButtonLayouts {
-  root: string[];
-  [id: string]: string[];
+  root: (string | null)[];
+  [id: string]: (string | null)[];
 }

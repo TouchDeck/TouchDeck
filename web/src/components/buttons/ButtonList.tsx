@@ -27,23 +27,14 @@ function buttonToComponent(
     return <></>;
   }
 
-  let subButtons: ReactNode[] = [];
-  if (button.type === 'folder') {
-    subButtons = button.buttons
-      .filter((b) => b != null)
-      .map((b, i) => buttonToComponent(b, i, onClickButton));
-  }
-  const buttonName = 'name' in button ? button.name : '';
-
   return (
     <div key={index}>
       <div className="list-item" onClick={() => onClickButton(button)}>
         {'style' in button && button.style.image && (
           <img alt="" src={`/api/images/${button.style.image}`} />
         )}
-        <span className="name">{buttonName}</span>
+        <span className="name">{'name' in button ? button.name : ''}</span>
       </div>
-      <div className="list-folder">{subButtons}</div>
     </div>
   );
 }

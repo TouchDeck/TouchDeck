@@ -3,8 +3,7 @@ import ActionConfig from './ActionConfig';
 export type ButtonConfig =
   | NormalButtonConfig
   | ToggleButtonConfig
-  | FolderButtonConfig
-  | UpButtonConfig;
+  | FolderButtonConfig;
 
 export interface BaseButtonConfig {
   id: string;
@@ -41,8 +40,4 @@ export interface ToggleButtonState {
 
 export interface FolderButtonConfig extends StyledButtonConfig {
   type: 'folder';
-}
-
-export interface UpButtonConfig {
-  type: 'up';
 }

@@ -13,10 +13,12 @@ export interface Props {
   editing?: boolean;
 }
 
+type DisplayButton = ButtonConfig | { type: 'empty' } | { type: 'up' };
+
 const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
   const [, dispatch] = useGlobalState();
   const { agent, config } = useConnectedAgent();
-  const { buttons } = config;
+  const { buttons, layouts } = config;
 
   // Get the button size, based on the current element size.
   const gridRef = useRef<HTMLDivElement>(null);
@@ -38,24 +40,47 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
     return () => window.removeEventListener('resize', updateSize);
   }, [columnCount, rowCount]);
 
-  const [buttonView, setButtonView] = useState<ButtonConfig[]>(buttons);
-  const [folderStack, setFolderStack] = useState<ButtonConfig[][]>([]);
+  const [currentLayout, setCurrentLayout] = useState('root');
+  const [buttonView, setButtonView] = useState<DisplayButton[]>(buttons);
+  const [folderStack, setFolderStack] = useState<string[]>([]);
 
-  // Update the button view state whenever the prop changes.
-  useEffect(() => setButtonView(buttons), [buttons]);
+  // Update the button view whenever the layout changes.
+  useEffect(() => {
+    const newLayout = layouts[currentLayout].map<DisplayButton>((id) => {
+      if (!id) {
+        return { type: 'empty' };
+      }
 
-  // Enter a folder: push an item onto the folder stack and update the button view.
+      const found = buttons.find((b) => b.id === id);
+      if (!found) {
+        throw new Error(`Could not find button with id: ${id}`);
+      }
+      return found;
+    });
+
+    // Fill up the remainder of the grid.
+    for (let i = newLayout.length; i < rowCount * columnCount; i++) {
+      newLayout.push({ type: 'empty' });
+    }
+
+    // If we're in a folder (i.e. if the folderStack is not empty) add an 'up' button.
+    // TODO
+
+    setButtonView(newLayout);
+  }, [buttons, currentLayout, layouts, rowCount, columnCount]);
+
+  // Enter a folder: push the current layout onto the folder stack and update it.
   const enterFolder = useCallback(
-    (folder: ButtonConfig[]) => {
-      setFolderStack((prev) => [...prev, buttonView]);
-      setButtonView(folder);
+    (folderId: string) => {
+      setFolderStack((prev) => [...prev, currentLayout]);
+      setCurrentLayout(folderId);
     },
-    [buttonView]
+    [currentLayout]
   );
 
-  // Exit a folder: pop an item from the folder stack and update the button view.
+  // Exit a folder: pop an item from the folder stack set it as the current layout.
   const exitFolder = useCallback(() => {
-    setButtonView(folderStack[folderStack.length - 1]);
+    setCurrentLayout(folderStack[folderStack.length - 1]);
     setFolderStack((prev) => prev.slice(0, prev.length - 1));
   }, [folderStack]);
 
@@ -75,67 +100,32 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
         return;
       }
 
-      // TODO: Make this work for folders.
-      const updated = { ...config };
-      updated.buttons[target] = updated.buttons[draggingButton];
-      updated.buttons[draggingButton] = null;
+      // TODO
+
+      // const updated = { ...config };
+      // updated.buttons[target] = updated.buttons[draggingButton];
+      // updated.buttons[draggingButton] = null;
 
       // Update the agent config.
-      dispatch({ type: 'configLoading' });
-      agent.setConfiguration(updated).then((newConfig) =>
-        dispatch({
-          type: 'configLoaded',
-          config: newConfig,
-        })
-      );
+      // dispatch({ type: 'configLoading' });
+      // agent.setConfiguration(updated).then((newConfig) =>
+      //   dispatch({
+      //     type: 'configLoaded',
+      //     config: newConfig,
+      //   })
+      // );
     },
     [draggingButton, config, dispatch, agent]
   );
 
-  // If we're in a folder (i.e. if the folderStack is not empty) add an 'up' button.
-  if (folderStack.length > 0) {
-    // TODO
-    // rows[0][0] = { type: 'up' };
-  }
-
-  // Get the button list, fill up the remainder of the grid.
-  const renderButtons = [...buttonView];
-  for (let i = renderButtons.length; i < rowCount * columnCount; i++) {
-    renderButtons.push(null);
-  }
-
   return (
     <div className="button-grid" ref={gridRef}>
-      {renderButtons.map((button, i) => {
-        if (!button) {
-          return (
-            <Button
-              key={i}
-              disabled
-              style={{
-                text: '',
-                image: '',
-                backgroundColor: '',
-                textColor: '',
-              }}
-              size={buttonSize}
-              buttonsPerRow={columnCount}
-              draggable={editing}
-              onDragOver={(e) => e.preventDefault()}
-              onDragStart={(e) => e.preventDefault()}
-              onDrop={(e) => {
-                e.preventDefault();
-                dropButton(i);
-              }}
-            />
-          );
-        }
-
+      {buttonView.map((button, i) => {
         switch (button.type) {
           case 'normal':
             return (
               <NormalButton
-                key={i}
+                key={button.id}
                 {...button}
                 onTriggerAction={triggerAction}
                 size={buttonSize}
@@ -148,7 +138,7 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
           case 'toggle':
             return (
               <ToggleButton
-                key={i}
+                key={button.id}
                 {...button}
                 onTriggerAction={triggerAction}
                 size={buttonSize}
@@ -161,9 +151,9 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
           case 'folder':
             return (
               <FolderButton
-                key={i}
+                key={button.id}
                 {...button}
-                enterFolder={enterFolder}
+                onClick={() => enterFolder(button.id)}
                 size={buttonSize}
                 buttonsPerRow={columnCount}
                 draggable={editing}
@@ -187,6 +177,28 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
               >
                 <Icon icon="level-up-alt" size={3} />
               </Button>
+            );
+          case 'empty':
+            return (
+              <Button
+                key={i}
+                disabled
+                style={{
+                  text: '',
+                  image: '',
+                  backgroundColor: '',
+                  textColor: '',
+                }}
+                size={buttonSize}
+                buttonsPerRow={columnCount}
+                draggable={editing}
+                onDragOver={(e) => e.preventDefault()}
+                onDragStart={(e) => e.preventDefault()}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  dropButton(i);
+                }}
+              />
             );
           default:
             throw new Error('Unknown button type');
