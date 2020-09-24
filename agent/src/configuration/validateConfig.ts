@@ -63,21 +63,21 @@ function validateButton(button: ButtonConfig): ButtonConfig {
   switch (button.type) {
     case 'normal':
       return {
-        name: button.name,
+        name: button.name || '',
         type: button.type,
         action: validateAction(button.action),
         style: validateButtonStyle(button.style),
       };
     case 'folder':
       return {
-        name: button.name,
+        name: button.name || '',
         type: button.type,
         buttons: (button.buttons || []).map(validateButton),
         style: validateButtonStyle(button.style),
       };
     case 'toggle':
       return {
-        name: button.name,
+        name: button.name || '',
         type: button.type,
         state1: validateToggleButtonState(button.state1),
         state2: validateToggleButtonState(button.state2),
