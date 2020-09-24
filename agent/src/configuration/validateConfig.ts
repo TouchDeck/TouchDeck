@@ -102,8 +102,27 @@ function validateTargets(targets?: Partial<TargetConfig>): TargetConfig {
   };
 }
 
-function validateLayouts(layout?: Partial<ButtonLayouts>): ButtonLayouts {
-  return { root: [], ...layout };
+function validateLayout(layout: (string | null)[]): (string | null)[] {
+  const validated = [...layout];
+
+  // Remove any trailing nulls.
+  for (let i = validated.length - 1; i >= 0; i--) {
+    if (!validated[i]) {
+      validated.splice(i, 1);
+    } else {
+      break;
+    }
+  }
+
+  return validated;
+}
+
+function validateLayouts(layouts?: Partial<ButtonLayouts>): ButtonLayouts {
+  const validated: ButtonLayouts = { root: [], ...layouts };
+  Object.keys(validated).forEach((key) => {
+    validated[key] = validateLayout(validated[key]);
+  });
+  return validated;
 }
 
 export default function validateConfig(

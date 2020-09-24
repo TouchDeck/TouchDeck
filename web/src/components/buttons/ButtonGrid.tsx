@@ -46,30 +46,26 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
 
   // Update the button view whenever the layout changes.
   useEffect(() => {
-    const newLayout: DisplayButton[] = [];
+    const newLayout = layouts[currentLayout].map<DisplayButton>((id) => {
+      if (!id) {
+        return { type: 'empty' };
+      }
 
-    // If we're in a folder (i.e. if the folderStack is not empty) add an 'up' button.
-    if (folderStack.length > 0) {
-      newLayout.push({ type: 'up' });
-    }
-
-    newLayout.push(
-      ...layouts[currentLayout].map<DisplayButton>((id) => {
-        if (!id) {
-          return { type: 'empty' };
-        }
-
-        const found = buttons.find((b) => b.id === id);
-        if (!found) {
-          throw new Error(`Could not find button with id: ${id}`);
-        }
-        return found;
-      })
-    );
+      const found = buttons.find((b) => b.id === id);
+      if (!found) {
+        throw new Error(`Could not find button with id: ${id}`);
+      }
+      return found;
+    });
 
     // Fill up the remainder of the grid.
     for (let i = newLayout.length; i < rowCount * columnCount; i++) {
       newLayout.push({ type: 'empty' });
+    }
+
+    // If we're in a folder (i.e. if the folderStack is not empty) add an 'up' button.
+    if (folderStack.length > 0) {
+      newLayout[0] = { type: 'up' };
     }
 
     setButtonView(newLayout);
@@ -106,29 +102,36 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
     [agent, editing]
   );
 
+  // The index of the button that is currently being dragged.
   const [draggingButton, setDraggingButton] = useState<number>();
+  // Drop the dragged button, with the index of where it's being dropped.
   const dropButton = useCallback(
     (target: number) => {
       if (draggingButton == null) {
         return;
       }
 
-      // TODO
+      // Copy the config and current layout.
+      const updatedConfig = { ...config };
+      const updatedLayout = [...updatedConfig.layouts[currentLayout]];
 
-      // const updated = { ...config };
-      // updated.buttons[target] = updated.buttons[draggingButton];
-      // updated.buttons[draggingButton] = null;
+      // Move the button in the layout.
+      updatedLayout[target] = updatedLayout[draggingButton];
+      updatedLayout[draggingButton] = null;
+
+      // Update the layout in the copied config.
+      updatedConfig.layouts[currentLayout] = updatedLayout;
 
       // Update the agent config.
-      // dispatch({ type: 'configLoading' });
-      // agent.setConfiguration(updated).then((newConfig) =>
-      //   dispatch({
-      //     type: 'configLoaded',
-      //     config: newConfig,
-      //   })
-      // );
+      dispatch({ type: 'configLoading' });
+      agent.setConfiguration(updatedConfig).then((newConfig) =>
+        dispatch({
+          type: 'configLoaded',
+          config: newConfig,
+        })
+      );
     },
-    [draggingButton, config, dispatch, agent]
+    [draggingButton, config, currentLayout, dispatch, agent]
   );
 
   return (
