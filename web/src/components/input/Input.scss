@@ -1,6 +1,10 @@
 .input {
   input {
     width: 100%;
+
+    &.has-icon-right {
+      padding-right: 24px;
+    }
   }
 
   i {

@@ -19,7 +19,7 @@ body {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-  monospace;
+    monospace;
 }
 
 a {
@@ -33,4 +33,8 @@ input {
   border-radius: 4px;
   outline: none;
   height: 30px;
+
+  &:focus {
+    border-color: #4a92ff;
+  }
 }
