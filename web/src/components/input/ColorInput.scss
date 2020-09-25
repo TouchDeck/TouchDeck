@@ -1,4 +1,9 @@
 .color-input {
+  * {
+    // With border-box the RGB inputs clip.
+    box-sizing: initial;
+  }
+
   .swatch {
     cursor: pointer;
     padding: 0 8px;
