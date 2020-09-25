@@ -22,7 +22,6 @@ const ButtonList: React.FC<Props> = ({ onClickButton }) => {
     <div className="button-list">
       <div className="search-wrapper">
         <TextInput
-          className="search"
           placeholder="Search..."
           value={searchTerm}
           onChange={setSearchTerm}

@@ -34,15 +34,10 @@
     .manual-address {
       display: flex;
 
-      input {
+      .input {
         flex: 1 1 auto;
         margin-right: 16px;
         min-width: 0;
-      }
-
-      input,
-      button {
-        padding: 4px;
       }
     }
   }
