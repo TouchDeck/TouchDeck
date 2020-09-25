@@ -1,6 +1,10 @@
 .button-list {
   min-width: 200px;
 
+  .search {
+    width: 100%;
+  }
+
   .list-item {
     height: 50px;
     width: 200px;

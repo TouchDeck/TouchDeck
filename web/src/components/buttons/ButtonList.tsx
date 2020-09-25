@@ -1,6 +1,7 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { ButtonConfig } from '../../model/configuration/ButtonConfig';
 import { useConnectedAgent } from '../../state/appState';
+import TextInput from '../input/TextInput';
 
 export interface Props {
   onClickButton: (button: ButtonConfig) => void;
@@ -10,9 +11,22 @@ const ButtonList: React.FC<Props> = ({ onClickButton }) => {
   const { config } = useConnectedAgent();
   const { buttons } = config;
 
+  const [showButtons, setShowButtons] = useState(buttons);
+  const [searchTerm, setSearchTerm] = useState('');
+  useEffect(
+    () => setShowButtons(buttons.filter((b) => filterButton(searchTerm, b))),
+    [buttons, searchTerm]
+  );
+
   return (
     <div className="button-list">
-      {buttons
+      <TextInput
+        className="search"
+        placeholder="Search..."
+        value={searchTerm}
+        onChange={setSearchTerm}
+      />
+      {showButtons
         .filter((b) => b != null)
         .map((b, i) => buttonToComponent(b, i, onClickButton))}
     </div>
@@ -43,12 +57,7 @@ function buttonToComponent(
 }
 
 function getButtonNameOrText(button: ButtonConfig): string {
-  let text = '';
-
-  // If the button has a name, use that.
-  if ('name' in button) {
-    text = button.name;
-  }
+  let text = button.name;
 
   // If the button has text and no name, use the text.
   if (!text && 'style' in button) {
@@ -56,4 +65,24 @@ function getButtonNameOrText(button: ButtonConfig): string {
   }
 
   return text;
+}
+
+function filterButton(searchTerm: string, button: ButtonConfig): boolean {
+  const searchTermLower = searchTerm.toLowerCase();
+
+  // Check the button name.
+  if (button.name.toLowerCase().indexOf(searchTermLower) > -1) {
+    return true;
+  }
+
+  // Check the button text.
+  if (
+    'style' in button &&
+    button.style.text.toLowerCase().indexOf(searchTermLower) > -1
+  ) {
+    return true;
+  }
+
+  // No match.
+  return false;
 }
