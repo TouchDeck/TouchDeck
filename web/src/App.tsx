@@ -20,7 +20,7 @@ const App: React.FC = () => {
     <Layout>
       <Switch>
         <Route exact path="/" component={DeckPage} />
-        <Route exact path="/layout">
+        <Route exact path="/buttons">
           <DeckPage editing />
         </Route>
         <Route exact path="/targets" component={TargetsSettingsPage} />

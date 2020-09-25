@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import Icon from './Icon';
 import Menu from './Menu';
 
@@ -11,12 +11,14 @@ const Layout: React.FC = ({ children }) => {
   return (
     <div className="layout">
       {!showMenu && (
-        <Icon
-          className="open-menu"
-          icon="bars"
-          size={2}
-          onClick={() => setShowMenu(true)}
-        />
+        <Link to="/buttons">
+          <Icon
+            className="open-menu"
+            icon="bars"
+            size={2}
+            onClick={() => setShowMenu(true)}
+          />
+        </Link>
       )}
       <Menu open={showMenu} onClose={() => setShowMenu(false)} />
       {children}

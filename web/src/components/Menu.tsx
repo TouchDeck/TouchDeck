@@ -13,16 +13,10 @@ const Menu: React.FC<Props> = ({ open, onClose }) => (
     <Link to="/">
       <Icon className="close" icon="times" size={2} onClick={onClose} />
     </Link>
-    <NavLink className="entry" to="/" exact>
+    <NavLink className="entry" to="/buttons">
       <h2>
         <Icon icon="th" />
-        Deck
-      </h2>
-    </NavLink>
-    <NavLink className="entry" to="/layout">
-      <h2>
-        <Icon icon="edit" />
-        Layout
+        Buttons
       </h2>
     </NavLink>
     <NavLink className="entry" to="/targets">
