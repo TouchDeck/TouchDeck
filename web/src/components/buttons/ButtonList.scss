@@ -1,31 +1,44 @@
 .button-list {
-  min-width: 200px;
+  height: 100%;
+  width: 220px;
+  display: flex;
+  flex-direction: column;
 
-  .search {
-    width: 100%;
+  .search-wrapper {
+    padding: 8px;
+
+    .search {
+      width: 100%;
+    }
   }
 
-  .list-item {
-    height: 50px;
-    width: 200px;
-    cursor: pointer;
-    border: 1px solid #000;
-    border-radius: 5px;
-    margin-bottom: 4px;
+  .list {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 0 8px;
 
-    display: flex;
-    align-items: center;
-
-    background-color: #555;
-
-    img {
-      max-height: 48px;
-      max-width: 48px;
+    .entry {
+      height: 50px;
+      width: 100%;
+      cursor: pointer;
+      border: 1px solid #000;
       border-radius: 5px;
-    }
+      margin-bottom: 2px;
 
-    .name {
-      margin-left: 8px;
+      display: flex;
+      align-items: center;
+
+      background-color: #555;
+
+      img {
+        max-height: 48px;
+        max-width: 48px;
+        border-radius: 5px;
+      }
+
+      .name {
+        margin-left: 8px;
+      }
     }
   }
 }

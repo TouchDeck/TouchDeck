@@ -20,15 +20,19 @@ const ButtonList: React.FC<Props> = ({ onClickButton }) => {
 
   return (
     <div className="button-list">
-      <TextInput
-        className="search"
-        placeholder="Search..."
-        value={searchTerm}
-        onChange={setSearchTerm}
-      />
-      {showButtons
-        .filter((b) => b != null)
-        .map((b, i) => buttonToComponent(b, i, onClickButton))}
+      <div className="search-wrapper">
+        <TextInput
+          className="search"
+          placeholder="Search..."
+          value={searchTerm}
+          onChange={setSearchTerm}
+        />
+      </div>
+      <div className="list">
+        {showButtons
+          .filter((b) => b != null)
+          .map((b, i) => buttonToComponent(b, i, onClickButton))}
+      </div>
     </div>
   );
 };
@@ -46,7 +50,7 @@ function buttonToComponent(
 
   return (
     <div key={index}>
-      <div className="list-item" onClick={() => onClickButton(button)}>
+      <div className="entry" onClick={() => onClickButton(button)}>
         {'style' in button && button.style.image && (
           <img alt="" src={`/api/images/${button.style.image}`} />
         )}
