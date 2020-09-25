@@ -101,11 +101,11 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
   );
 
   // The index of the button that is currently being dragged.
-  const [draggingButton, setDraggingButton] = useState<number>();
+  const [dragIndex, setDragIndex] = useState<number>();
   // Drop the dragged button, with the index of where it's being dropped.
   const dropButton = useCallback(
-    (target: number) => {
-      if (draggingButton == null) {
+    (targetIndex: number, buttonId: string) => {
+      if (dragIndex == null && !buttonId) {
         return;
       }
 
@@ -113,9 +113,16 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
       const updatedConfig = { ...config };
       const updatedLayout = [...updatedConfig.layouts[currentLayout]];
 
+      let targetId: string | null = buttonId;
+
+      // If we're moving a button in the grid, get the id and remove the source.
+      if (dragIndex != null) {
+        targetId = updatedLayout[dragIndex];
+        updatedLayout[dragIndex] = null;
+      }
+
       // Move the button in the layout.
-      updatedLayout[target] = updatedLayout[draggingButton];
-      updatedLayout[draggingButton] = null;
+      updatedLayout[targetIndex] = targetId;
 
       // Update the layout in the copied config.
       updatedConfig.layouts[currentLayout] = updatedLayout;
@@ -129,7 +136,7 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
         })
       );
     },
-    [draggingButton, config, currentLayout, dispatch, agent]
+    [dragIndex, config, currentLayout, dispatch, agent]
   );
 
   return (
@@ -139,40 +146,40 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
           case 'normal':
             return (
               <NormalButton
-                key={button.id}
+                key={i}
                 {...button}
                 onTriggerAction={triggerAction}
                 size={buttonSize}
                 buttonsPerRow={columnCount}
                 draggable={editing}
-                onDragStart={() => setDraggingButton(i)}
-                onDragEnd={() => setDraggingButton(undefined)}
+                onDragStart={() => setDragIndex(i)}
+                onDragEnd={() => setDragIndex(undefined)}
               />
             );
           case 'toggle':
             return (
               <ToggleButton
-                key={button.id}
+                key={i}
                 {...button}
                 onTriggerAction={triggerAction}
                 size={buttonSize}
                 buttonsPerRow={columnCount}
                 draggable={editing}
-                onDragStart={() => setDraggingButton(i)}
-                onDragEnd={() => setDraggingButton(undefined)}
+                onDragStart={() => setDragIndex(i)}
+                onDragEnd={() => setDragIndex(undefined)}
               />
             );
           case 'folder':
             return (
               <FolderButton
-                key={button.id}
+                key={i}
                 {...button}
                 onClick={() => enterFolder(button.id)}
                 size={buttonSize}
                 buttonsPerRow={columnCount}
                 draggable={editing}
-                onDragStart={() => setDraggingButton(i)}
-                onDragEnd={() => setDraggingButton(undefined)}
+                onDragStart={() => setDragIndex(i)}
+                onDragEnd={() => setDragIndex(undefined)}
               />
             );
           case 'up':
@@ -210,7 +217,7 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
                 onDragStart={(e) => e.preventDefault()}
                 onDrop={(e) => {
                   e.preventDefault();
-                  dropButton(i);
+                  dropButton(i, e.dataTransfer.getData('button'));
                 }}
               />
             );

@@ -49,13 +49,17 @@ function buttonToComponent(
   }
 
   return (
-    <div key={index}>
-      <div className="entry" onClick={() => onClickButton(button)}>
-        {'style' in button && button.style.image && (
-          <img alt="" src={`/api/images/${button.style.image}`} />
-        )}
-        <span className="name">{getButtonNameOrText(button)}</span>
-      </div>
+    <div
+      key={button.id}
+      className="entry"
+      onClick={() => onClickButton(button)}
+      draggable
+      onDragStart={(e) => e.dataTransfer.setData('button', button.id)}
+    >
+      {'style' in button && button.style.image && (
+        <img alt="" src={`/api/images/${button.style.image}`} />
+      )}
+      <span className="name">{getButtonNameOrText(button)}</span>
     </div>
   );
 }
