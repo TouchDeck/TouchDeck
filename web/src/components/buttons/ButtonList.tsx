@@ -25,6 +25,7 @@ const ButtonList: React.FC<Props> = ({ onClickButton }) => {
           placeholder="Search..."
           value={searchTerm}
           onChange={setSearchTerm}
+          icon="search"
         />
       </div>
       <div className="list">
