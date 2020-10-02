@@ -16,7 +16,7 @@ const ButtonSettings: React.FC<Props> = ({ button }) => {
     dispatch({ type: 'configLoading' });
     const newConfig = await agent.setButton(button.id, updates);
     dispatch({ type: 'configLoaded', config: newConfig });
-  }, [button.id, updates]);
+  }, [agent, button.id, dispatch, updates]);
 
   // Reset the updates whenever the button changes.
   useEffect(() => setUpdates(button), [button]);
