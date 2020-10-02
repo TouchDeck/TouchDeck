@@ -8,6 +8,8 @@ export default interface Configuration {
 }
 
 export interface ButtonLayouts {
-  root: (string | null)[];
-  [id: string]: (string | null)[];
+  root: ButtonLayout;
+  [id: string]: ButtonLayout;
 }
+
+export type ButtonLayout = (string | null)[];

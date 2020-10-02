@@ -1,4 +1,6 @@
-import Configuration from '../model/configuration/Configuration';
+import Configuration, {
+  ButtonLayout,
+} from '../model/configuration/Configuration';
 import ActionOption from '../model/ActionOption';
 import fetchTimeout from '../util/fetchTimeout';
 import AgentInfo from '../model/AgentInfo';
@@ -6,10 +8,6 @@ import { ApiResponse } from '../model/ApiResponse';
 
 export default class Agent {
   public constructor(private readonly address: string) {}
-
-  private getUrl(path: string): string {
-    return `${this.address}${path}`;
-  }
 
   public async getInfo(): Promise<AgentInfo> {
     return (await fetchTimeout(this.getUrl('/api'), 5000)).json();
@@ -33,6 +31,21 @@ export default class Agent {
     ).json();
   }
 
+  public async setLayout(
+    layoutId: string,
+    newLayout: ButtonLayout
+  ): Promise<Configuration> {
+    return (
+      await fetch(this.getUrl(`/api/config/layouts/${layoutId}`), {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newLayout),
+      })
+    ).json();
+  }
+
   public async triggerAction(id: string): Promise<ApiResponse> {
     return (
       await fetch(this.getUrl(`/api/actions/${id}`), { method: 'POST' })
@@ -41,5 +54,9 @@ export default class Agent {
 
   public async getActionOptions(): Promise<ActionOption[]> {
     return (await fetch(this.getUrl('/api/actions/options'))).json();
+  }
+
+  private getUrl(path: string): string {
+    return `${this.address}${path}`;
   }
 }

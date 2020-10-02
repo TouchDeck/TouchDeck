@@ -6,7 +6,7 @@ import { getAvailableActions } from './actions/actionRegistry';
 import { DISCOVERY_REPORT_TIME, IMAGES_DIR, PORT } from './constants';
 import { readConfiguration, setConfiguration } from './configuration/config';
 import getActionOptions from './api/getActionOptions';
-import { getConfig, putConfig } from './api/config';
+import { getConfig, putButton, putConfig, putLayout } from './api/config';
 import getAgentInfo, { agentInfo } from './api/getAgentInfo';
 import reportAgentDiscovery from './util/reportAgentDiscovery';
 import cors from './util/cors';
@@ -42,6 +42,8 @@ async function bootstrap(): Promise<void> {
   app.get('/api/actions/options', getActionOptions);
   app.get('/api/config', getConfig);
   app.put('/api/config', putConfig);
+  app.put('/api/config/buttons/:button', putButton);
+  app.put('/api/config/layouts/:layout', putLayout);
 
   // Done!
   app.listen(PORT);

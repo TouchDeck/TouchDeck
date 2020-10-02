@@ -37,7 +37,7 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
   const gridRef = useRef<HTMLDivElement>(null);
   useResizeObserver(gridRef, updateButtonSize);
 
-  // The current button layout, button view, and folder stack.
+  // The current button layout (id), button view, and folder stack.
   const [currentLayout, setCurrentLayout] = useState('root');
   const [buttonView, setButtonView] = useState<DisplayButton[]>(buttons);
   const [folderStack, setFolderStack] = useState<string[]>([]);
@@ -120,9 +120,8 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
         return;
       }
 
-      // Copy the config and current layout.
-      const updatedConfig = { ...config };
-      const updatedLayout = [...updatedConfig.layouts[currentLayout]];
+      // Copy the current layout.
+      const updatedLayout = [...config.layouts[currentLayout]];
 
       let targetId: string | null = buttonId;
 
@@ -135,12 +134,9 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
       // Move the button in the layout.
       updatedLayout[targetIndex] = targetId;
 
-      // Update the layout in the copied config.
-      updatedConfig.layouts[currentLayout] = updatedLayout;
-
       // Update the agent config.
       dispatch({ type: 'configLoading' });
-      agent.setConfiguration(updatedConfig).then((newConfig) =>
+      agent.setLayout(currentLayout, updatedLayout).then((newConfig) =>
         dispatch({
           type: 'configLoaded',
           config: newConfig,
