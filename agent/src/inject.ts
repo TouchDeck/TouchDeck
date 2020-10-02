@@ -1,10 +1,15 @@
 import 'reflect-metadata';
 import { Constructor } from './util/Constructor';
 
-export const singletonKey = Symbol('inject:singleton');
+const singletonKey = Symbol('inject:singleton');
 
 const singletonInstances: { [key: string]: unknown } = {};
 
+/**
+ * Create an instance of a class, injecting all necessary arguments in the constructor.
+ *
+ * @param Target The target constructor to inject.
+ */
 export default function inject<T>(Target: Constructor<T>): T {
   const ctorParams = Reflect.getMetadata('design:paramtypes', Target) || [];
 
@@ -31,6 +36,11 @@ export default function inject<T>(Target: Constructor<T>): T {
   return new Target(...injections);
 }
 
+/**
+ * A decorator that indicates only a single instance of an injectable class should be constructed.
+ *
+ * @param ctor The singleton class.
+ */
 export function singleton<T extends Constructor>(ctor: T): void {
   Reflect.defineMetadata(singletonKey, true, ctor.prototype);
 }
