@@ -31,6 +31,28 @@ const ButtonSettings: React.FC<Props> = ({ button }) => {
           }
         />
       )}
+      {'state1' in updates && (
+        <ButtonStyleSettings
+          buttonStyle={updates.state1.style}
+          onChange={(style) =>
+            setUpdates((prevState) => ({
+              ...prevState,
+              state1: { ...updates.state1, style },
+            }))
+          }
+        />
+      )}
+      {'state2' in updates && (
+        <ButtonStyleSettings
+          buttonStyle={updates.state2.style}
+          onChange={(style) =>
+            setUpdates((prevState) => ({
+              ...prevState,
+              state2: { ...updates.state2, style },
+            }))
+          }
+        />
+      )}
       <button onClick={onSave}>Save</button>
     </div>
   );
