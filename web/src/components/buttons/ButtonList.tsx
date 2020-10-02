@@ -13,10 +13,13 @@ const ButtonList: React.FC<Props> = ({ onClickButton }) => {
 
   const [showButtons, setShowButtons] = useState(buttons);
   const [searchTerm, setSearchTerm] = useState('');
-  useEffect(
-    () => setShowButtons(buttons.filter((b) => filterButton(searchTerm, b))),
-    [buttons, searchTerm]
-  );
+  useEffect(() => {
+    setShowButtons(
+      buttons
+        .filter((b) => filterButton(searchTerm, b))
+        .sort((a, b) => a.name.localeCompare(b.name))
+    );
+  }, [buttons, searchTerm]);
 
   return (
     <div className="button-list">
