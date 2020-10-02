@@ -7,40 +7,81 @@ export interface VersionResult {
   'obs-studio-version': string;
 }
 
+enum ConnectionStatus {
+  DISCONNECTED,
+  CONNECTING,
+  CONNECTED,
+}
+
 @singleton
 export default class ObsSocket {
-  private readonly log = new Logger(ObsSocket.name);
+  private static readonly log = new Logger(ObsSocket.name);
 
   private readonly obs: OBSWebSocket;
+
+  private status = ConnectionStatus.DISCONNECTED;
 
   public constructor() {
     this.obs = new OBSWebSocket();
 
-    // TODO: Auto-connect, handle disconnect/reconnect.
-  }
-
-  public async connect(): Promise<void> {
-    await this.obs.connect();
-    const version = await this.getVersion();
-    this.log.debug(
-      `Connected to OBS version ${version['obs-studio-version']}, websocket plugin version ${version['obs-websocket-version']}`
-    );
+    // Hook into the socket disconnect event.
+    this.obs.on('ConnectionClosed', () => {
+      ObsSocket.log.debug('Connection closed');
+      this.status = ConnectionStatus.DISCONNECTED;
+    });
   }
 
   public async getVersion(): Promise<VersionResult> {
+    await this.assertConnected();
     return this.obs.send('GetVersion');
   }
 
   public async setScene(scene: string): Promise<void> {
+    await this.assertConnected();
     return this.obs.send('SetCurrentScene', { 'scene-name': scene });
   }
 
   public async getSceneNames(): Promise<string[]> {
+    await this.assertConnected();
     const response = await this.obs.send('GetSceneList');
     return response.scenes.map((scene) => scene.name);
   }
 
   public async setMute(source: string, mute: boolean): Promise<void> {
+    await this.assertConnected();
     return this.obs.send('SetMute', { source, mute });
+  }
+
+  private async tryConnect(): Promise<void> {
+    this.status = ConnectionStatus.CONNECTING;
+    try {
+      await this.obs.connect();
+      this.status = ConnectionStatus.CONNECTED;
+      this.printConnectionInfo();
+    } catch (e) {
+      ObsSocket.log.debug(`Could not connect to OBS: ${e.description}`);
+    }
+  }
+
+  private async printConnectionInfo(): Promise<void> {
+    const version = await this.getVersion();
+    ObsSocket.log.debug(
+      `Connected to OBS version ${version['obs-studio-version']}, websocket plugin version ${version['obs-websocket-version']}`
+    );
+  }
+
+  private async assertConnected(): Promise<void> {
+    // If we are not connected, try to connect.
+    if (this.status === ConnectionStatus.DISCONNECTED) {
+      await this.tryConnect().then(() => {
+        // Simply putting this block after the `await` seems to confuse typescript.
+        // Putting it in the `then` seems to work fine though.
+
+        // If we are still not connected, throw an error.
+        if (this.status !== ConnectionStatus.CONNECTED) {
+          throw new Error('Not connected to OBS');
+        }
+      });
+    }
   }
 }
