@@ -30,7 +30,7 @@ const ButtonSettings: React.FC<Props> = ({ button }) => {
         <div>
           <span>Name</span>
           <TextInput
-            value={button.name}
+            value={updates.name}
             onChange={(name) =>
               setUpdates((prevState) => ({ ...prevState, name }))
             }
