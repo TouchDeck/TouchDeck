@@ -10,5 +10,11 @@
 
   .button {
     width: calc(100% / 5);
+    box-shadow: 5px 5px 5px 2px #111;
+    transition: box-shadow 0.1s;
+
+    &:active {
+      box-shadow: 2px 2px 5px #111;
+    }
   }
 }
