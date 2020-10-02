@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from '../../util/classNames';
 import { ButtonStyling } from '../../model/configuration/ButtonConfig';
+import { useConnectedAgent } from '../../state/appState';
 
 export interface ButtonProps {
   size?: number;
@@ -36,6 +37,8 @@ const Button: React.FC<Props> = ({
     wrapperStyle.width = `calc(100% / ${buttonsPerRow})`;
   }
 
+  const { info } = useConnectedAgent();
+
   return (
     <div
       className="button-wrapper"
@@ -49,8 +52,9 @@ const Button: React.FC<Props> = ({
         style={{
           backgroundColor: style.backgroundColor,
           color: style.textColor,
-          // TODO: Load image from agent, remove proxy from package.json
-          backgroundImage: style.image ? `url(/api/images/${style.image})` : '',
+          backgroundImage: style.image
+            ? `url(http://${info.address}/api/images/${style.image})`
+            : '',
           width: size,
           height: size,
         }}
