@@ -29,14 +29,12 @@ const ButtonSettings: React.FC<Props> = ({ button }) => {
       <Rows>
         <div>
           <span>Name</span>
-          <span>
-            <TextInput
-              value={button.name}
-              onChange={(name) =>
-                setUpdates((prevState) => ({ ...prevState, name }))
-              }
-            />
-          </span>
+          <TextInput
+            value={button.name}
+            onChange={(name) =>
+              setUpdates((prevState) => ({ ...prevState, name }))
+            }
+          />
         </div>
       </Rows>
       {'style' in updates && (

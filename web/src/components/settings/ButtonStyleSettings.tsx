@@ -26,39 +26,28 @@ const ButtonStyleSettings: React.FC<Props> = ({ buttonStyle, onChange }) => {
       <Rows>
         <div>
           <span>Text</span>
-          <span>
-            <TextInput
-              value={buttonStyle.text}
-              onChange={setStyleProp('text')}
-            />
-          </span>
+          <TextInput value={buttonStyle.text} onChange={setStyleProp('text')} />
         </div>
         <div>
           <span>Image</span>
-          <span>
-            <TextInput
-              value={buttonStyle.image}
-              onChange={setStyleProp('image')}
-            />
-          </span>
+          <TextInput
+            value={buttonStyle.image}
+            onChange={setStyleProp('image')}
+          />
         </div>
         <div>
           <span>Text color</span>
-          <span>
-            <ColorInput
-              value={buttonStyle.textColor}
-              onChange={setStyleProp('textColor')}
-            />
-          </span>
+          <ColorInput
+            value={buttonStyle.textColor}
+            onChange={setStyleProp('textColor')}
+          />
         </div>
         <div>
           <span>Background color</span>
-          <span>
-            <ColorInput
-              value={buttonStyle.backgroundColor}
-              onChange={setStyleProp('backgroundColor')}
-            />
-          </span>
+          <ColorInput
+            value={buttonStyle.backgroundColor}
+            onChange={setStyleProp('backgroundColor')}
+          />
         </div>
       </Rows>
     </div>
