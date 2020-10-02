@@ -26,6 +26,7 @@ const ConnectAgentPage: React.FC = () => {
     async (address) => {
       const sanitizedAddress = sanitizeAddress(address);
       // Connect to the agent.
+      dispatch({ type: 'dismissError' });
       dispatch({ type: 'agentConnecting' });
       const newAgent = new Agent(sanitizedAddress);
 
@@ -34,12 +35,20 @@ const ConnectAgentPage: React.FC = () => {
       try {
         agentInfo = await newAgent.getInfo();
         if (agentInfo.name !== 'pideck-agent') {
-          console.error('Invalid agent name:', agentInfo.name);
+          dispatch({
+            type: 'error',
+            message: `Invalid agent name: ${agentInfo.name}`,
+            id: Math.random().toString().substring(2),
+          });
           dispatch({ type: 'agentDisconnected' });
           return;
         }
       } catch (err) {
-        console.error('Could not ping agent:', err.message);
+        dispatch({
+          type: 'error',
+          message: `Could not connect to agent: ${err.message}`,
+          id: Math.random().toString().substring(2),
+        });
         dispatch({ type: 'agentDisconnected' });
         return;
       }
