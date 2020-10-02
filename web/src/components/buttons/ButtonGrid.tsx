@@ -44,17 +44,19 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
 
   // Update the button view whenever the layout changes.
   useEffect(() => {
-    const newLayout = layouts[currentLayout].map<DisplayButton>((id) => {
-      if (!id) {
-        return { type: 'empty' };
-      }
+    const newLayout = (layouts[currentLayout] || []).map<DisplayButton>(
+      (id) => {
+        if (!id) {
+          return { type: 'empty' };
+        }
 
-      const found = buttons.find((b) => b.id === id);
-      if (!found) {
-        throw new Error(`Could not find button with id: ${id}`);
+        const found = buttons.find((b) => b.id === id);
+        if (!found) {
+          throw new Error(`Could not find button with id: ${id}`);
+        }
+        return found;
       }
-      return found;
-    });
+    );
 
     // Fill up the remainder of the grid.
     for (let i = newLayout.length; i < rowCount * columnCount; i++) {
