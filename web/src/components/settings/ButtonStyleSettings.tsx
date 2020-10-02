@@ -17,7 +17,7 @@ const ButtonStyleSettings: React.FC<Props> = ({ buttonStyle, onChange }) => {
   );
 
   return (
-    <div className="button-style-settings">
+    <div>
       <h3>Styling</h3>
       <Rows>
         <div>

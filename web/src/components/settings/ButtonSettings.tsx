@@ -1,15 +1,37 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ButtonConfig } from '../../model/configuration/ButtonConfig';
-import NormalButtonSettings from './NormalButtonSettings';
+import { useConnectedAgent, useGlobalState } from '../../state/appState';
+import ButtonStyleSettings from './ButtonStyleSettings';
 
 export interface Props {
   button: NonNullable<ButtonConfig>;
 }
 
 const ButtonSettings: React.FC<Props> = ({ button }) => {
+  const [, dispatch] = useGlobalState();
+  const { agent } = useConnectedAgent();
+  const [updates, setUpdates] = useState<ButtonConfig>({ ...button });
+
+  const onSave = useCallback(async () => {
+    dispatch({ type: 'configLoading' });
+    const newConfig = await agent.setButton(button.id, updates);
+    dispatch({ type: 'configLoaded', config: newConfig });
+  }, [button.id, updates]);
+
+  // Reset the updates whenever the button changes.
+  useEffect(() => setUpdates(button), [button]);
+
   return (
     <div className="button-settings">
-      {button.type === 'normal' && <NormalButtonSettings button={button} />}
+      {'style' in updates && (
+        <ButtonStyleSettings
+          buttonStyle={updates.style}
+          onChange={(style) =>
+            setUpdates((prevState) => ({ ...prevState, style }))
+          }
+        />
+      )}
+      <button onClick={onSave}>Save</button>
     </div>
   );
 };

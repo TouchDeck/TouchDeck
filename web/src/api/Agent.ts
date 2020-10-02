@@ -5,6 +5,7 @@ import ActionOption from '../model/ActionOption';
 import fetchTimeout from '../util/fetchTimeout';
 import AgentInfo from '../model/AgentInfo';
 import { ApiResponse } from '../model/ApiResponse';
+import { ButtonConfig } from '../model/configuration/ButtonConfig';
 
 export default class Agent {
   public constructor(private readonly address: string) {}
@@ -27,6 +28,21 @@ export default class Agent {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(newConfig),
+      })
+    ).json();
+  }
+
+  public async setButton(
+    buttonId: string,
+    newButton: ButtonConfig
+  ): Promise<Configuration> {
+    return (
+      await fetch(this.getUrl(`/api/config/buttons/${buttonId}`), {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newButton),
       })
     ).json();
   }
