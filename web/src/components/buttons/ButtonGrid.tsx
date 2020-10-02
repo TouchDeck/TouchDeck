@@ -103,6 +103,7 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
           dispatch({
             type: 'error',
             message: result.error,
+            id: result.errorId,
           });
         }
       }

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { Logger } from '@luca_scorpion/tinylogger';
+import { v4 as uuidv4 } from 'uuid';
 import { getActionsById } from '../configuration/config';
 import { ApiResponse } from '../model/ApiResponse';
 
@@ -19,6 +20,7 @@ export default function invokeAction(
     res.status(404).send({
       error,
       success: false,
+      errorId: uuidv4(),
     });
     return;
   }
@@ -35,6 +37,7 @@ export default function invokeAction(
       res.status(500).send({
         success: false,
         error: `Error invoking action: ${message}`,
+        errorId: uuidv4(),
       });
     });
 }

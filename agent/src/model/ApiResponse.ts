@@ -7,4 +7,5 @@ export interface ApiSuccess {
 export interface ApiError {
   success: false;
   error: string;
+  errorId: string;
 }
