@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { ButtonConfig } from '../../model/configuration/ButtonConfig';
 import { useConnectedAgent, useGlobalState } from '../../state/appState';
 import ButtonStyleSettings from './ButtonStyleSettings';
+import ButtonActionSettings from './ButtonActionSettings';
 
 export interface Props {
   button: NonNullable<ButtonConfig>;
@@ -31,27 +32,57 @@ const ButtonSettings: React.FC<Props> = ({ button }) => {
           }
         />
       )}
-      {'state1' in updates && (
-        <ButtonStyleSettings
-          buttonStyle={updates.state1.style}
-          onChange={(style) =>
-            setUpdates((prevState) => ({
-              ...prevState,
-              state1: { ...updates.state1, style },
-            }))
+      {'action' in updates && (
+        <ButtonActionSettings
+          action={updates.action}
+          onChange={(action) =>
+            setUpdates((prevState) => ({ ...prevState, action }))
           }
         />
       )}
+      {'state1' in updates && (
+        <>
+          <ButtonStyleSettings
+            buttonStyle={updates.state1.style}
+            onChange={(style) =>
+              setUpdates((prevState) => ({
+                ...prevState,
+                state1: { ...updates.state1, style },
+              }))
+            }
+          />
+          <ButtonActionSettings
+            action={updates.state1.action}
+            onChange={(action) =>
+              setUpdates((prevState) => ({
+                ...prevState,
+                state1: { ...updates.state1, action },
+              }))
+            }
+          />
+        </>
+      )}
       {'state2' in updates && (
-        <ButtonStyleSettings
-          buttonStyle={updates.state2.style}
-          onChange={(style) =>
-            setUpdates((prevState) => ({
-              ...prevState,
-              state2: { ...updates.state2, style },
-            }))
-          }
-        />
+        <>
+          <ButtonStyleSettings
+            buttonStyle={updates.state2.style}
+            onChange={(style) =>
+              setUpdates((prevState) => ({
+                ...prevState,
+                state2: { ...updates.state2, style },
+              }))
+            }
+          />
+          <ButtonActionSettings
+            action={updates.state2.action}
+            onChange={(action) =>
+              setUpdates((prevState) => ({
+                ...prevState,
+                state2: { ...updates.state2, action },
+              }))
+            }
+          />
+        </>
       )}
       <button onClick={onSave}>Save</button>
     </div>
