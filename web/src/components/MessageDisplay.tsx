@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useGlobalState, useMessages } from '../state/appState';
+import classNames from '../util/classNames';
 
 const MessageDisplay: React.FC = ({ children }) => {
   const [, dispatch] = useGlobalState();
@@ -8,15 +9,17 @@ const MessageDisplay: React.FC = ({ children }) => {
   const messageId = message?.id;
   useEffect(() => {
     if (message) {
-      // Clear the message after 5 seconds.
-      setTimeout(() => dispatch({ type: 'dismissError' }), 5000);
+      // Automatically clear the message.
+      setTimeout(() => dispatch({ type: 'dismissError' }), 10000);
     }
   }, [message, messageId, dispatch]);
 
   return (
     <>
       {children}
-      {message && <div className="message">{message.message}</div>}
+      <div className={classNames(['message', message && 'visible'])}>
+        {message?.message}
+      </div>
     </>
   );
 };
