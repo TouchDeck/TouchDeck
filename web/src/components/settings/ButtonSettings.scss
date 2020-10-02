@@ -11,11 +11,9 @@
     margin-bottom: 32px;
   }
 
-  .preview-row {
+  .preview-wrapper {
     display: flex;
-
-    .preview {
-      margin-left: 32px;
-    }
+    justify-content: space-between;
+    margin-bottom: 4px;
   }
 }

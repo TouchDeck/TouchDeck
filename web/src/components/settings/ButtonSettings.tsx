@@ -3,6 +3,8 @@ import { ButtonConfig } from '../../model/configuration/ButtonConfig';
 import { useConnectedAgent, useGlobalState } from '../../state/appState';
 import ButtonStyleSettings from './ButtonStyleSettings';
 import ButtonActionSettings from './ButtonActionSettings';
+import Rows from '../Rows';
+import TextInput from '../input/TextInput';
 
 export interface Props {
   button: NonNullable<ButtonConfig>;
@@ -24,6 +26,19 @@ const ButtonSettings: React.FC<Props> = ({ button }) => {
 
   return (
     <div className="button-settings">
+      <Rows>
+        <div>
+          <span>Name</span>
+          <span>
+            <TextInput
+              value={button.name}
+              onChange={(name) =>
+                setUpdates((prevState) => ({ ...prevState, name }))
+              }
+            />
+          </span>
+        </div>
+      </Rows>
       {'style' in updates && (
         <ButtonStyleSettings
           buttonStyle={updates.style}

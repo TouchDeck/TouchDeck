@@ -3,6 +3,7 @@ import Rows from '../Rows';
 import TextInput from '../input/TextInput';
 import ColorInput from '../input/ColorInput';
 import { ButtonStyling } from '../../model/configuration/ButtonConfig';
+import Button from '../buttons/Button';
 
 export interface Props {
   buttonStyle: ButtonStyling;
@@ -17,8 +18,11 @@ const ButtonStyleSettings: React.FC<Props> = ({ buttonStyle, onChange }) => {
   );
 
   return (
-    <div>
-      <h3>Styling</h3>
+    <div className="button-style-settings">
+      <div className="preview-wrapper">
+        <h3>Style</h3>
+        <Button style={buttonStyle} />
+      </div>
       <Rows>
         <div>
           <span>Text</span>
