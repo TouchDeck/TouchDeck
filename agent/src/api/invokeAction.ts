@@ -1,10 +1,14 @@
 import { Request, Response } from 'express';
 import { Logger } from '@luca_scorpion/tinylogger';
 import { getActionsById } from '../configuration/config';
+import { ApiResponse } from '../model/ApiResponse';
 
 const log = new Logger('invokeAction');
 
-export default function invokeAction(req: Request, res: Response): void {
+export default function invokeAction(
+  req: Request,
+  res: Response<ApiResponse>
+): void {
   const actions = getActionsById();
   const actionId = req.params.action;
   const action = actions[actionId];

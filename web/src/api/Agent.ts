@@ -2,6 +2,7 @@ import Configuration from '../model/configuration/Configuration';
 import ActionOption from '../model/ActionOption';
 import fetchTimeout from '../util/fetchTimeout';
 import AgentInfo from '../model/AgentInfo';
+import { ApiResponse } from '../model/ApiResponse';
 
 export default class Agent {
   public constructor(private readonly address: string) {}
@@ -32,9 +33,10 @@ export default class Agent {
     ).json();
   }
 
-  public async triggerAction(id: string): Promise<void> {
-    console.log('Triggered:', id);
-    await fetch(this.getUrl(`/api/actions/${id}`), { method: 'POST' });
+  public async triggerAction(id: string): Promise<ApiResponse> {
+    return (
+      await fetch(this.getUrl(`/api/actions/${id}`), { method: 'POST' })
+    ).json();
   }
 
   public async getActionOptions(): Promise<ActionOption[]> {

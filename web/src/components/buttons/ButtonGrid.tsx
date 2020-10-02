@@ -94,9 +94,15 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
   }, [folderStack]);
 
   const triggerAction = useCallback(
-    (id: string) => {
+    async (id: string) => {
+      // Only trigger actions if we are not editing the buttons.
       if (!editing) {
-        agent.triggerAction(id);
+        // Trigger the action, check for errors.
+        const result = await agent.triggerAction(id);
+        if (!result.success) {
+          // TODO
+          console.log(result.error);
+        }
       }
     },
     [agent, editing]
