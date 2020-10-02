@@ -100,12 +100,14 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
         // Trigger the action, check for errors.
         const result = await agent.triggerAction(id);
         if (!result.success) {
-          // TODO
-          console.log(result.error);
+          dispatch({
+            type: 'error',
+            message: result.error,
+          });
         }
       }
     },
-    [agent, editing]
+    [agent, editing, dispatch]
   );
 
   // The index of the button that is currently being dragged.

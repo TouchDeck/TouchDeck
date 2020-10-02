@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Icon from './Icon';
 import Menu from './Menu';
+import { useMessages } from '../state/appState';
 
 const Layout: React.FC = ({ children }) => {
   const location = useLocation();
   // If the pathname is longer than 1 ('/'), default the menu to open.
   const [showMenu, setShowMenu] = useState(location.pathname.length > 1);
+
+  const messages = useMessages();
 
   return (
     <div className="layout">
@@ -22,6 +25,7 @@ const Layout: React.FC = ({ children }) => {
       )}
       <Menu open={showMenu} onClose={() => setShowMenu(false)} />
       {children}
+      {messages.length > 0 && <div className="message">{messages[0]}</div>}
     </div>
   );
 };

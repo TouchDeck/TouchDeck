@@ -34,7 +34,7 @@ export default function invokeAction(
       log.error(`Error invoking action ${actionId}: ${message}`);
       res.status(500).send({
         success: false,
-        error: message,
+        error: `Error invoking action: ${message}`,
       });
     });
 }
