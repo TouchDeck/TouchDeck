@@ -5,10 +5,12 @@ export type ButtonConfig =
   | ToggleButtonConfig
   | FolderButtonConfig;
 
+export type ButtonType = 'normal' | 'toggle' | 'folder';
+
 export interface BaseButtonConfig {
   id: string;
   name: string;
-  type: string;
+  type: ButtonType;
 }
 
 export interface StyledButtonConfig extends BaseButtonConfig {
