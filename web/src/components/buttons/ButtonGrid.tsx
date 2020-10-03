@@ -136,7 +136,7 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
       }
 
       // Copy the current layout.
-      const newLayout = [...config.layouts[currentLayout]];
+      const newLayout = [...(config.layouts[currentLayout] || [])];
 
       let targetId: string | null = buttonId;
 
@@ -157,7 +157,7 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
   const deleteButton = useCallback(
     (deleteIndex: number) => {
       // Copy the current layout.
-      const newLayout = [...config.layouts[currentLayout]];
+      const newLayout = [...(config.layouts[currentLayout] || [])];
       newLayout[deleteIndex] = null;
       updateLayout(newLayout);
     },
@@ -226,6 +226,7 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
                 }}
                 size={buttonSize}
                 buttonsPerRow={columnCount}
+                editing={editing}
               >
                 <Icon icon="level-up-alt" size={3} />
               </Button>
@@ -250,6 +251,7 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
                   e.preventDefault();
                   dropButton(i, e.dataTransfer.getData('button'));
                 }}
+                editing={editing}
               />
             );
           default:

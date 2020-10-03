@@ -10,11 +10,14 @@
 
   .button {
     width: calc(100% / 5);
-    box-shadow: 5px 5px 5px 2px #111;
     transition: box-shadow 0.1s;
 
-    &:active {
-      box-shadow: 2px 2px 5px #111;
+    &:not(.disabled) {
+      box-shadow: 5px 5px 5px 2px #111;
+
+      &:active {
+        box-shadow: 2px 2px 5px #111;
+      }
     }
   }
 
@@ -25,11 +28,14 @@
     width: 32px;
     height: 32px;
     border-radius: 16px;
-    background-color: #cd3a3a;
-    cursor: pointer;
 
     display: flex;
     justify-content: center;
     align-items: center;
+
+    &.show {
+      background-color: #cd3a3a;
+      cursor: pointer;
+    }
   }
 }

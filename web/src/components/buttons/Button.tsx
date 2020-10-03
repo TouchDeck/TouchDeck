@@ -72,13 +72,13 @@ const Button: React.FC<Props> = ({
       </div>
       {editing && (
         <div
-          className="delete"
+          className={classNames(['delete', onDelete && 'show'])}
           style={{
             top: `${(size || 0) / 2}px`,
           }}
           onClick={onDelete}
         >
-          <Icon icon="trash" />
+          {onDelete && <Icon icon="trash" />}
         </div>
       )}
     </div>
