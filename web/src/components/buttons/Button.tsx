@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from '../../util/classNames';
 import { ButtonStyling } from '../../model/configuration/ButtonConfig';
 import { useConnectedAgent } from '../../state/appState';
+import Icon from '../Icon';
 
 export interface ButtonProps {
   size?: number;
@@ -11,6 +12,8 @@ export interface ButtonProps {
   onDragEnd?: (event: React.DragEvent<HTMLDivElement>) => void;
   onDragOver?: (event: React.DragEvent<HTMLDivElement>) => void;
   onDrop?: (event: React.DragEvent<HTMLDivElement>) => void;
+  editing?: boolean;
+  onDelete?: () => void;
 }
 
 export interface Props extends ButtonProps {
@@ -31,6 +34,8 @@ const Button: React.FC<Props> = ({
   onDragEnd,
   onDragOver,
   onDrop,
+  editing,
+  onDelete,
 }) => {
   const wrapperStyle: { width?: string } = {};
   if (buttonsPerRow) {
@@ -65,6 +70,17 @@ const Button: React.FC<Props> = ({
         {style.text}
         {children}
       </div>
+      {editing && (
+        <div
+          className="delete"
+          style={{
+            top: `${(size || 0) / 2}px`,
+          }}
+          onClick={onDelete}
+        >
+          <Icon icon="trash" />
+        </div>
+      )}
     </div>
   );
 };

@@ -7,6 +7,7 @@ import Icon from '../Icon';
 import { ButtonConfig } from '../../model/configuration/ButtonConfig';
 import { useConnectedAgent, useGlobalState } from '../../state/appState';
 import useResizeObserver from '../../util/useResizeObserver';
+import { ButtonLayout } from '../../model/configuration/Configuration';
 
 export interface Props {
   rowCount: number;
@@ -111,6 +112,20 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
     [agent, editing, dispatch]
   );
 
+  const updateLayout = useCallback(
+    (newLayout: ButtonLayout) => {
+      // Update the agent config.
+      dispatch({ type: 'configLoading' });
+      agent.setLayout(currentLayout, newLayout).then((newConfig) =>
+        dispatch({
+          type: 'configLoaded',
+          config: newConfig,
+        })
+      );
+    },
+    [dispatch, agent, currentLayout]
+  );
+
   // The index of the button that is currently being dragged.
   const [dragIndex, setDragIndex] = useState<number>();
   // Drop the dragged button, with the index of where it's being dropped.
@@ -121,29 +136,32 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
       }
 
       // Copy the current layout.
-      const updatedLayout = [...config.layouts[currentLayout]];
+      const newLayout = [...config.layouts[currentLayout]];
 
       let targetId: string | null = buttonId;
 
       // If we're moving a button in the grid, get the id and remove the source.
       if (dragIndex != null) {
-        targetId = updatedLayout[dragIndex];
-        updatedLayout[dragIndex] = null;
+        targetId = newLayout[dragIndex];
+        newLayout[dragIndex] = null;
       }
 
       // Move the button in the layout.
-      updatedLayout[targetIndex] = targetId;
+      newLayout[targetIndex] = targetId;
 
-      // Update the agent config.
-      dispatch({ type: 'configLoading' });
-      agent.setLayout(currentLayout, updatedLayout).then((newConfig) =>
-        dispatch({
-          type: 'configLoaded',
-          config: newConfig,
-        })
-      );
+      updateLayout(newLayout);
     },
-    [dragIndex, config, currentLayout, dispatch, agent]
+    [dragIndex, config, currentLayout, updateLayout]
+  );
+
+  const deleteButton = useCallback(
+    (deleteIndex: number) => {
+      // Copy the current layout.
+      const newLayout = [...config.layouts[currentLayout]];
+      newLayout[deleteIndex] = null;
+      updateLayout(newLayout);
+    },
+    [config, currentLayout, updateLayout]
   );
 
   return (
@@ -161,6 +179,8 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
                 draggable={editing}
                 onDragStart={() => setDragIndex(i)}
                 onDragEnd={() => setDragIndex(undefined)}
+                editing={editing}
+                onDelete={() => deleteButton(i)}
               />
             );
           case 'toggle':
@@ -174,6 +194,8 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
                 draggable={editing}
                 onDragStart={() => setDragIndex(i)}
                 onDragEnd={() => setDragIndex(undefined)}
+                editing={editing}
+                onDelete={() => deleteButton(i)}
               />
             );
           case 'folder':
@@ -187,6 +209,8 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
                 draggable={editing}
                 onDragStart={() => setDragIndex(i)}
                 onDragEnd={() => setDragIndex(undefined)}
+                editing={editing}
+                onDelete={() => deleteButton(i)}
               />
             );
           case 'up':

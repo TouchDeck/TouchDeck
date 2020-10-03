@@ -17,4 +17,19 @@
       box-shadow: 2px 2px 5px #111;
     }
   }
+
+  .delete {
+    position: relative;
+    right: 16px;
+
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+    background-color: #cd3a3a;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
