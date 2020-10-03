@@ -11,6 +11,7 @@ import ActionConfig from '../model/configuration/ActionConfig';
 import TargetConfig, {
   ObsTargetConfig,
 } from '../model/configuration/TargetConfig';
+import NoopAction from '../actions/NoopAction';
 
 const colorRegex = /^#[\da-f]{6}$/i;
 
@@ -21,7 +22,7 @@ function validateOrGetUuid(uuid?: string): string {
 function validateAction(action?: Partial<ActionConfig>): ActionConfig {
   return {
     id: validateOrGetUuid(action?.id),
-    type: action?.type || '',
+    type: action?.type || NoopAction.name,
     args: action?.args || {},
   };
 }

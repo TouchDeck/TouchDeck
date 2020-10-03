@@ -1,5 +1,4 @@
 import { Constructor } from '../util/Constructor';
-import DebugAction from './DebugAction';
 import ObsSetSceneAction from './obs/ObsSetSceneAction';
 import {
   Action,
@@ -10,17 +9,14 @@ import {
 import 'reflect-metadata';
 import ObsSetMuteAction from './obs/ObsSetMuteAction';
 import { ActionParameter } from '../model/ActionOption';
+import NoopAction from './NoopAction';
 
 // A list containing all available action classes.
 const actionClasses: Constructor<Action>[] = [
+  NoopAction,
   ObsSetMuteAction,
   ObsSetSceneAction,
 ];
-
-// Only add the debug action for development purposes.
-if (process.env.NODE_ENV !== 'production') {
-  actionClasses.push(DebugAction);
-}
 
 export interface ActionMeta {
   category: string;

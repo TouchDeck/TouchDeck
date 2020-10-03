@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   ButtonConfig,
-  ButtonStyling,
   ButtonType,
 } from '../../model/configuration/ButtonConfig';
 import { useConnectedAgent, useGlobalState } from '../../state/appState';
@@ -9,10 +8,10 @@ import ButtonStyleSettings from './ButtonStyleSettings';
 import ButtonActionSettings from './ButtonActionSettings';
 import Rows from '../Rows';
 import TextInput from '../input/TextInput';
-import ActionConfig from '../../model/configuration/ActionConfig';
+import newButton from '../../util/newButton';
 
 export interface Props {
-  button: NonNullable<ButtonConfig>;
+  button: ButtonConfig;
 }
 
 const ButtonSettings: React.FC<Props> = ({ button }) => {
@@ -46,63 +45,8 @@ const ButtonSettings: React.FC<Props> = ({ button }) => {
           <select
             value={updates.type}
             onChange={(e) => {
-              const type = e.currentTarget.value as ButtonType;
-              setUpdates((prevState) => {
-                switch (type) {
-                  case 'normal':
-                    return {
-                      type,
-                      id: prevState.id,
-                      name: prevState.name,
-                      action: {
-                        ...getDefaultAction(),
-                        ...('action' in prevState && prevState.action),
-                      },
-                      style: {
-                        ...getDefaultStyle(),
-                        ...('style' in prevState && prevState.style),
-                      },
-                    };
-                  case 'toggle':
-                    return {
-                      type,
-                      id: prevState.id,
-                      name: prevState.name,
-                      state1: {
-                        action: {
-                          ...getDefaultAction(),
-                          ...('state1' in prevState && prevState.state1.action),
-                        },
-                        style: {
-                          ...getDefaultStyle(),
-                          ...('state1' in prevState && prevState.state1.style),
-                        },
-                      },
-                      state2: {
-                        action: {
-                          ...getDefaultAction(),
-                          ...('state2' in prevState && prevState.state2.action),
-                        },
-                        style: {
-                          ...getDefaultStyle(),
-                          ...('state2' in prevState && prevState.state2.style),
-                        },
-                      },
-                    };
-                  case 'folder':
-                    return {
-                      type,
-                      id: prevState.id,
-                      name: prevState.name,
-                      style: {
-                        ...getDefaultStyle(),
-                        ...('style' in prevState && prevState.style),
-                      },
-                    };
-                  default:
-                    throw new Error(`Unknown button type: ${type}`);
-                }
-              });
+              const newType = e.currentTarget.value as ButtonType;
+              setUpdates((prevState) => newButton(newType, prevState));
             }}
           >
             <option value="normal">Normal</option>
@@ -177,20 +121,3 @@ const ButtonSettings: React.FC<Props> = ({ button }) => {
 };
 
 export default ButtonSettings;
-
-function getDefaultStyle(): ButtonStyling {
-  return {
-    backgroundColor: '#ffffff',
-    textColor: '#000000',
-    text: '',
-    image: '',
-  };
-}
-
-function getDefaultAction(): ActionConfig {
-  return {
-    id: '',
-    type: 'Debug',
-    args: {},
-  };
-}

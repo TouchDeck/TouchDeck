@@ -3,6 +3,7 @@ import ButtonGrid from '../components/buttons/ButtonGrid';
 import ButtonList from '../components/buttons/ButtonList';
 import { ButtonConfig } from '../model/configuration/ButtonConfig';
 import ButtonSettings from '../components/settings/ButtonSettings';
+import newButton from '../util/newButton';
 
 export interface Props {
   editing?: boolean;
@@ -15,7 +16,10 @@ const DeckPage: React.FC<Props> = ({ editing }) => {
     <main className="deck">
       {editing && (
         <div className="edit-panel">
-          <ButtonList onClickButton={setSelectedButton} />
+          <ButtonList
+            onClickButton={setSelectedButton}
+            onCreateButton={() => setSelectedButton(newButton('normal'))}
+          />
           {selectedButton && <ButtonSettings button={selectedButton} />}
         </div>
       )}

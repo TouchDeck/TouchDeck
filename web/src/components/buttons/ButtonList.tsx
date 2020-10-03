@@ -2,12 +2,14 @@ import React, { ReactNode, useEffect, useState } from 'react';
 import { ButtonConfig } from '../../model/configuration/ButtonConfig';
 import { useConnectedAgent } from '../../state/appState';
 import TextInput from '../input/TextInput';
+import Icon from '../Icon';
 
 export interface Props {
   onClickButton: (button: ButtonConfig) => void;
+  onCreateButton: () => void;
 }
 
-const ButtonList: React.FC<Props> = ({ onClickButton }) => {
+const ButtonList: React.FC<Props> = ({ onClickButton, onCreateButton }) => {
   const { config } = useConnectedAgent();
   const { buttons } = config;
 
@@ -30,6 +32,9 @@ const ButtonList: React.FC<Props> = ({ onClickButton }) => {
           onChange={setSearchTerm}
           icon="search"
         />
+        <div className="create" onClick={onCreateButton}>
+          <Icon icon="plus" />
+        </div>
       </div>
       <div className="list">
         {showButtons

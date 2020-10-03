@@ -42,6 +42,7 @@ async function bootstrap(): Promise<void> {
   app.get('/api/actions/options', getActionOptions);
   app.get('/api/config', getConfig);
   app.put('/api/config', putConfig);
+  app.put('/api/config/buttons', putButton);
   app.put('/api/config/buttons/:button', putButton);
   app.put('/api/config/layouts/:layout', putLayout);
 
