@@ -4,6 +4,9 @@
   height: 100vh;
   background-color: transparentize(#000, 0.5);
   position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
 
   &.active {
     display: flex;

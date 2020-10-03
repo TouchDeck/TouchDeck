@@ -16,4 +16,21 @@
     justify-content: space-between;
     margin-bottom: 4px;
   }
+
+  .dimmer {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    p {
+      margin-bottom: 16px;
+    }
+
+    > div {
+      background-color: #555;
+      border: 1px solid #000;
+      border-radius: 4px;
+      padding: 32px;
+    }
+  }
 }

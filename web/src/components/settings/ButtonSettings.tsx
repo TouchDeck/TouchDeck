@@ -9,6 +9,8 @@ import ButtonActionSettings from './ButtonActionSettings';
 import Rows from '../Rows';
 import TextInput from '../input/TextInput';
 import newButton from '../../util/newButton';
+import Dimmer from '../Dimmer';
+import Icon from '../Icon';
 
 export interface Props {
   button: ButtonConfig;
@@ -19,6 +21,7 @@ const ButtonSettings: React.FC<Props> = ({ button, onDeleteButton }) => {
   const [, dispatch] = useGlobalState();
   const { agent } = useConnectedAgent();
   const [updates, setUpdates] = useState<ButtonConfig>({ ...button });
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   const onSave = useCallback(async () => {
     dispatch({ type: 'configLoading' });
@@ -38,6 +41,16 @@ const ButtonSettings: React.FC<Props> = ({ button, onDeleteButton }) => {
 
   return (
     <div className="button-settings">
+      <Dimmer active={confirmDelete}>
+        <div>
+          <h3>Delete button "{button.name}"?</h3>
+          <p>This action is permanent and cannot be undone.</p>
+          <div>
+            <button onClick={onDelete}>Delete</button>
+            <button onClick={() => setConfirmDelete(false)}>Cancel</button>
+          </div>
+        </div>
+      </Dimmer>
       <Rows>
         <div>
           <span>Name</span>
@@ -123,8 +136,12 @@ const ButtonSettings: React.FC<Props> = ({ button, onDeleteButton }) => {
           />
         </>
       )}
-      <button onClick={onSave}>Save</button>
-      <button onClick={onDelete}>Delete</button>
+      <button onClick={onSave}>
+        <Icon icon="save" /> Save
+      </button>
+      <button onClick={() => setConfirmDelete(true)}>
+        <Icon icon="trash" /> Delete
+      </button>
     </div>
   );
 };
