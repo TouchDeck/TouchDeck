@@ -47,6 +47,14 @@ export default class Agent {
     ).json();
   }
 
+  public async deleteButton(buttonId: string): Promise<Configuration> {
+    return (
+      await fetch(this.getUrl(`/api/config/buttons/${buttonId}`), {
+        method: 'DELETE',
+      })
+    ).json();
+  }
+
   public async setLayout(
     layoutId: string,
     newLayout: ButtonLayout

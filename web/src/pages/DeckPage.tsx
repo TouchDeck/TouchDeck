@@ -20,7 +20,12 @@ const DeckPage: React.FC<Props> = ({ editing }) => {
             onClickButton={setSelectedButton}
             onCreateButton={() => setSelectedButton(newButton('normal'))}
           />
-          {selectedButton && <ButtonSettings button={selectedButton} />}
+          {selectedButton && (
+            <ButtonSettings
+              button={selectedButton}
+              onDeleteButton={() => setSelectedButton(undefined)}
+            />
+          )}
         </div>
       )}
       <ButtonGrid rowCount={3} columnCount={5} editing={editing} />

@@ -20,6 +20,14 @@ export function putButton(req: Request, res: Response<Configuration>): void {
   setConfiguration(newConfig).then(() => res.json(getConfiguration()));
 }
 
+export function deleteButton(req: Request, res: Response<Configuration>): void {
+  const newConfig = { ...getConfiguration() };
+  newConfig.buttons = newConfig.buttons.filter(
+    (b) => b.id !== req.params.button
+  );
+  setConfiguration(newConfig).then(() => res.json(getConfiguration()));
+}
+
 export function putLayout(req: Request, res: Response<Configuration>): void {
   const newConfig = { ...getConfiguration() };
   newConfig.layouts[req.params.layout] = req.body;

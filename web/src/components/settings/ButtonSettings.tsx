@@ -12,9 +12,10 @@ import newButton from '../../util/newButton';
 
 export interface Props {
   button: ButtonConfig;
+  onDeleteButton: () => void;
 }
 
-const ButtonSettings: React.FC<Props> = ({ button }) => {
+const ButtonSettings: React.FC<Props> = ({ button, onDeleteButton }) => {
   const [, dispatch] = useGlobalState();
   const { agent } = useConnectedAgent();
   const [updates, setUpdates] = useState<ButtonConfig>({ ...button });
@@ -24,6 +25,13 @@ const ButtonSettings: React.FC<Props> = ({ button }) => {
     const newConfig = await agent.setButton(button.id, updates);
     dispatch({ type: 'configLoaded', config: newConfig });
   }, [agent, button.id, dispatch, updates]);
+
+  const onDelete = useCallback(async () => {
+    dispatch({ type: 'configLoading' });
+    const newConfig = await agent.deleteButton(button.id);
+    dispatch({ type: 'configLoaded', config: newConfig });
+    onDeleteButton();
+  }, [agent, button.id, dispatch]);
 
   // Reset the updates whenever the button changes.
   useEffect(() => setUpdates(button), [button]);
@@ -116,6 +124,7 @@ const ButtonSettings: React.FC<Props> = ({ button }) => {
         </>
       )}
       <button onClick={onSave}>Save</button>
+      <button onClick={onDelete}>Delete</button>
     </div>
   );
 };
