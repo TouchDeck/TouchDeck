@@ -11,6 +11,14 @@
     margin-bottom: 32px;
   }
 
+  .close-wrapper {
+    text-align: right;
+
+    i {
+      margin-bottom: 8px;
+    }
+  }
+
   .preview-wrapper {
     display: flex;
     justify-content: space-between;

@@ -23,7 +23,7 @@ const DeckPage: React.FC<Props> = ({ editing }) => {
           {selectedButton && (
             <ButtonSettings
               button={selectedButton}
-              onDeleteButton={() => setSelectedButton(undefined)}
+              onClose={() => setSelectedButton(undefined)}
             />
           )}
         </div>

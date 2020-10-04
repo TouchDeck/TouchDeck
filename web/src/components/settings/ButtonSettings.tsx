@@ -14,10 +14,10 @@ import Icon from '../Icon';
 
 export interface Props {
   button: ButtonConfig;
-  onDeleteButton: () => void;
+  onClose: () => void;
 }
 
-const ButtonSettings: React.FC<Props> = ({ button, onDeleteButton }) => {
+const ButtonSettings: React.FC<Props> = ({ button, onClose }) => {
   const [, dispatch] = useGlobalState();
   const { agent } = useConnectedAgent();
   const [updates, setUpdates] = useState<ButtonConfig>({ ...button });
@@ -33,8 +33,8 @@ const ButtonSettings: React.FC<Props> = ({ button, onDeleteButton }) => {
     dispatch({ type: 'configLoading' });
     const newConfig = await agent.deleteButton(button.id);
     dispatch({ type: 'configLoaded', config: newConfig });
-    onDeleteButton();
-  }, [agent, button.id, dispatch, onDeleteButton]);
+    onClose();
+  }, [agent, button.id, dispatch, onClose]);
 
   // Reset the updates whenever the button changes.
   useEffect(() => setUpdates(button), [button]);
@@ -51,6 +51,9 @@ const ButtonSettings: React.FC<Props> = ({ button, onDeleteButton }) => {
           </div>
         </div>
       </Dimmer>
+      <div className="close-wrapper">
+        <Icon icon="times" size={2} onClick={onClose} />
+      </div>
       <Rows>
         <div>
           <span>Name</span>
