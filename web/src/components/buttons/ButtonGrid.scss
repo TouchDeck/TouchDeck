@@ -34,8 +34,12 @@
     align-items: center;
 
     &.show {
-      background-color: #cd3a3a;
+      background-color: $red;
       cursor: pointer;
+
+      &:hover {
+        background-color: $red-dark;
+      }
     }
   }
 }

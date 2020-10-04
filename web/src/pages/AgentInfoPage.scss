@@ -12,9 +12,10 @@
     display: flex;
     align-items: center;
     margin-top: 32px;
+    color: $red;
 
     &:hover {
-      color: #f66;
+      color: $red-dark;
     }
 
     i {

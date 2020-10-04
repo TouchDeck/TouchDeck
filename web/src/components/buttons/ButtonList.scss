@@ -9,17 +9,21 @@
     display: flex;
 
     .create {
-      background-color: #0b8f25;
+      background-color: $green;
       color: #fff;
       width: 30px;
       height: 30px;
-      border-radius: 4px;
+      border-radius: $border-radius;
       cursor: pointer;
       margin-left: 8px;
 
       display: flex;
       justify-content: center;
       align-items: center;
+
+      &:hover {
+        background-color: $green-dark;
+      }
     }
   }
 
@@ -33,7 +37,7 @@
       width: 100%;
       cursor: pointer;
       border: 1px solid #000;
-      border-radius: 5px;
+      border-radius: $border-radius;
       margin-bottom: 2px;
 
       display: flex;
@@ -44,7 +48,7 @@
       img {
         max-height: 48px;
         max-width: 48px;
-        border-radius: 5px;
+        border-radius: $border-radius;
       }
 
       .name {

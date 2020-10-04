@@ -18,8 +18,7 @@
     justify-content: center;
     text-align: center;
 
-    // Rounded corners.
-    border-radius: 5px;
+    border-radius: $border-radius;
 
     // Background image.
     background-size: contain;

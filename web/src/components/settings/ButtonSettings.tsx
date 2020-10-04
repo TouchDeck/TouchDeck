@@ -34,7 +34,7 @@ const ButtonSettings: React.FC<Props> = ({ button, onDeleteButton }) => {
     const newConfig = await agent.deleteButton(button.id);
     dispatch({ type: 'configLoaded', config: newConfig });
     onDeleteButton();
-  }, [agent, button.id, dispatch]);
+  }, [agent, button.id, dispatch, onDeleteButton]);
 
   // Reset the updates whenever the button changes.
   useEffect(() => setUpdates(button), [button]);
