@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ButtonGrid from '../components/buttons/ButtonGrid';
 import ButtonList from '../components/buttons/ButtonList';
 import { ButtonConfig } from '../model/configuration/ButtonConfig';
@@ -11,6 +11,12 @@ export interface Props {
 
 const DeckPage: React.FC<Props> = ({ editing }) => {
   const [selectedButton, setSelectedButton] = useState<ButtonConfig>();
+
+  useEffect(() => {
+    if (!editing) {
+      setSelectedButton(undefined);
+    }
+  }, [editing]);
 
   return (
     <main className="deck">

@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useLayoutEffect, useState } from 'react';
 import { ButtonConfig } from '../../model/configuration/ButtonConfig';
 import { useConnectedAgent } from '../../state/appState';
 import TextInput from '../input/TextInput';
@@ -15,7 +15,7 @@ const ButtonList: React.FC<Props> = ({ onClickButton, onCreateButton }) => {
 
   const [showButtons, setShowButtons] = useState(buttons);
   const [searchTerm, setSearchTerm] = useState('');
-  useEffect(() => {
+  useLayoutEffect(() => {
     setShowButtons(
       buttons
         .filter((b) => filterButton(searchTerm, b))
