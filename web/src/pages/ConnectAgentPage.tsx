@@ -4,10 +4,10 @@ import Icon from '../components/Icon';
 import Agent from '../api/Agent';
 import listDiscoveredAgents from '../api/listDiscoveredAgents';
 import sanitizeAddress from '../util/sanitizeAddress';
-import Dimmer from '../components/Dimmer';
 import AgentInfo from '../model/AgentInfo';
 import AgentList from '../components/AgentList';
 import TextInput from '../components/input/TextInput';
+import Modal from '../components/Modal';
 
 const ConnectAgentPage: React.FC = () => {
   const [{ agent }, dispatch] = useGlobalState();
@@ -71,12 +71,10 @@ const ConnectAgentPage: React.FC = () => {
 
   return (
     <div className="connect-agent">
-      <Dimmer active={agent.connecting}>
-        <div>
-          <Icon icon="spinner" size={3} pulse />
-          <h2>Connecting to agent...</h2>
-        </div>
-      </Dimmer>
+      <Modal active={agent.connecting}>
+        <Icon icon="spinner" size={3} pulse />
+        <h2>Connecting to agent...</h2>
+      </Modal>
 
       <main>
         <h2>Connect to an agent</h2>

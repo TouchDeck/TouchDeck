@@ -9,8 +9,8 @@ import ButtonActionSettings from './ButtonActionSettings';
 import Rows from '../Rows';
 import TextInput from '../input/TextInput';
 import newButton from '../../util/newButton';
-import Dimmer from '../Dimmer';
 import Icon from '../Icon';
+import Modal from '../Modal';
 
 export interface Props {
   button: ButtonConfig;
@@ -41,16 +41,14 @@ const ButtonSettings: React.FC<Props> = ({ button, onClose }) => {
 
   return (
     <div className="button-settings">
-      <Dimmer active={confirmDelete}>
+      <Modal active={confirmDelete}>
+        <h3>Delete button "{button.name}"?</h3>
+        <p>This action is permanent and cannot be undone.</p>
         <div>
-          <h3>Delete button "{button.name}"?</h3>
-          <p>This action is permanent and cannot be undone.</p>
-          <div>
-            <button onClick={onDelete}>Delete</button>
-            <button onClick={() => setConfirmDelete(false)}>Cancel</button>
-          </div>
+          <button onClick={onDelete}>Delete</button>
+          <button onClick={() => setConfirmDelete(false)}>Cancel</button>
         </div>
-      </Dimmer>
+      </Modal>
       <div className="close-wrapper">
         <Icon icon="times" size={2} onClick={onClose} />
       </div>

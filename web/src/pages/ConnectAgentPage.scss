@@ -2,19 +2,6 @@
   display: flex;
   justify-content: center;
 
-  .dimmer {
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-
-    div {
-      background-color: #555;
-      border: 1px solid #000;
-      border-radius: $border-radius;
-      padding: 32px;
-    }
-  }
-
   main {
     width: 320px;
 

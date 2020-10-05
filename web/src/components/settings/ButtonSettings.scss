@@ -25,20 +25,9 @@
     margin-bottom: 4px;
   }
 
-  .dimmer {
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-
+  .modal {
     p {
       margin-bottom: 16px;
-    }
-
-    > div {
-      background-color: #555;
-      border: 1px solid #000;
-      border-radius: $border-radius;
-      padding: 32px;
     }
   }
 }
