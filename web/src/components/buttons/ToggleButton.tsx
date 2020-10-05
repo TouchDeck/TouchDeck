@@ -18,10 +18,14 @@ const ToggleButton: React.FC<Props> = (props) => {
     <Button
       {...props}
       {...currentState}
-      onClick={async () => {
-        onTriggerAction(currentState.action.id);
-        setToggleState((prevState) => !prevState);
-      }}
+      onClick={
+        props.editing
+          ? () => undefined
+          : async () => {
+              onTriggerAction(currentState.action.id);
+              setToggleState((prevState) => !prevState);
+            }
+      }
       size={size}
     />
   );
