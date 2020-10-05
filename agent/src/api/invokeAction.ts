@@ -32,7 +32,7 @@ export default function invokeAction(
       })
     )
     .catch((error) => {
-      const message = error.message || error.description;
+      const message = error.message || error.description || error.error;
       log.error(`Error invoking action ${actionId}: ${message}`);
       res.status(500).send({
         success: false,
