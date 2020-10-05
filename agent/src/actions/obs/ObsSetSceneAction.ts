@@ -6,6 +6,8 @@ export default class ObsSetSceneAction implements Action {
   public constructor(private readonly obs: ObsSocket) {}
 
   public async invoke(@param('scene') scene: string): Promise<void> {
-    await this.obs.setScene(scene);
+    await (await this.obs.getSocket()).send('SetCurrentScene', {
+      'scene-name': scene,
+    });
   }
 }

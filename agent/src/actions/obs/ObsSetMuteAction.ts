@@ -9,6 +9,9 @@ export default class ObsSetMuteAction implements Action {
     @param('source') source: string,
     @param('mute') mute: boolean
   ): Promise<void> {
-    await this.obs.setMute(source, mute);
+    await (await this.obs.getSocket()).send('SetMute', {
+      source,
+      mute,
+    });
   }
 }

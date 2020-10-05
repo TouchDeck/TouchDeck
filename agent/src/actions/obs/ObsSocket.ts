@@ -31,25 +31,14 @@ export default class ObsSocket {
     });
   }
 
+  public async getSocket(): Promise<OBSWebSocket> {
+    await this.assertConnected();
+    return this.obs;
+  }
+
   public async getVersion(): Promise<VersionResult> {
     await this.assertConnected();
     return this.obs.send('GetVersion');
-  }
-
-  public async setScene(scene: string): Promise<void> {
-    await this.assertConnected();
-    return this.obs.send('SetCurrentScene', { 'scene-name': scene });
-  }
-
-  public async getSceneNames(): Promise<string[]> {
-    await this.assertConnected();
-    const response = await this.obs.send('GetSceneList');
-    return response.scenes.map((scene) => scene.name);
-  }
-
-  public async setMute(source: string, mute: boolean): Promise<void> {
-    await this.assertConnected();
-    return this.obs.send('SetMute', { source, mute });
   }
 
   private async tryConnect(): Promise<void> {
