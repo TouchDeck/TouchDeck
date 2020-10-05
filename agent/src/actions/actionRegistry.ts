@@ -10,12 +10,14 @@ import 'reflect-metadata';
 import ObsSetMuteAction from './obs/ObsSetMuteAction';
 import { ActionParameter } from '../model/ActionOption';
 import NoopAction from './NoopAction';
+import ObsSetVolumeAction from './obs/ObsSetVolumeAction';
 
 // A list containing all available action classes.
 const actionClasses: Constructor<Action>[] = [
   NoopAction,
   ObsSetMuteAction,
   ObsSetSceneAction,
+  ObsSetVolumeAction,
 ];
 
 export interface ActionMeta {

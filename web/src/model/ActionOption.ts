@@ -7,5 +7,5 @@ export default interface ActionOption {
 
 export interface ActionParameter {
   name: string;
-  type: 'string' | 'boolean';
+  type: 'string' | 'boolean' | 'number';
 }
