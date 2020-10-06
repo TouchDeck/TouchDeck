@@ -9,17 +9,6 @@
   }
 
   .disconnect {
-    display: flex;
-    align-items: center;
     margin-top: 32px;
-    color: $red;
-
-    &:hover {
-      color: $red-dark;
-    }
-
-    i {
-      margin-right: 8px;
-    }
   }
 }

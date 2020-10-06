@@ -2,8 +2,8 @@ import React from 'react';
 import Rows from '../components/Rows';
 import capitalizeFirstLetter from '../util/capitalizeFirstLetter';
 import { Link } from 'react-router-dom';
-import Icon from '../components/Icon';
 import { useConnectedAgent, useGlobalState } from '../state/appState';
+import Button from '../components/Button';
 
 const AgentInfoPage: React.FC = () => {
   const [, dispatch] = useGlobalState();
@@ -35,8 +35,9 @@ const AgentInfoPage: React.FC = () => {
         to="/"
         onClick={() => dispatch({ type: 'agentDisconnected' })}
       >
-        <Icon icon="power-off" />
-        Disconnect
+        <Button negative icon="power-off">
+          Disconnect
+        </Button>
       </Link>
     </main>
   );
