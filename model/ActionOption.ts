@@ -3,6 +3,7 @@ export default interface ActionOption {
   category: string;
   name: string;
   parameters: ActionParameter[];
+  toggleable: boolean;
 }
 
 export interface ActionParameter {

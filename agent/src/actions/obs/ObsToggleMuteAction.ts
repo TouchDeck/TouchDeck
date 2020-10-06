@@ -1,8 +1,11 @@
 import ObsSocket from './ObsSocket';
-import param, { action } from '../Action';
-import ToggleAction, { PreparedToggleAction } from '../ToggleAction';
+import param from '../Action';
+import ToggleAction, {
+  PreparedToggleAction,
+  toggleAction,
+} from '../ToggleAction';
 
-@action('OBS', 'Toggle Mute')
+@toggleAction('OBS', 'Toggle Mute')
 export default class ObsToggleMuteAction implements ToggleAction {
   public constructor(private readonly obs: ObsSocket) {}
 

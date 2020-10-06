@@ -12,6 +12,8 @@ import { ActionParameter } from '../model/ActionOption';
 import NoopAction from './NoopAction';
 import ObsSetVolumeAction from './obs/ObsSetVolumeAction';
 import ObsSetSceneItemRenderAction from './obs/ObsSetSceneItemRenderAction';
+import ObsToggleMuteAction from './obs/ObsToggleMuteAction';
+import { actionToggleableKey } from './ToggleAction';
 
 // A list containing all available action classes.
 const actionClasses: Constructor<Action>[] = [
@@ -20,6 +22,7 @@ const actionClasses: Constructor<Action>[] = [
   ObsSetSceneAction,
   ObsSetSceneItemRenderAction,
   ObsSetVolumeAction,
+  ObsToggleMuteAction,
 ];
 
 export interface ActionMeta {
@@ -27,6 +30,7 @@ export interface ActionMeta {
   name: string;
   constructor: Constructor<Action>;
   parameters: ActionParameter[];
+  toggleable: boolean;
 }
 
 // All action metadata by constructor name.
@@ -40,6 +44,8 @@ actionClasses.forEach((ActionCtor) => {
     constructor: ActionCtor,
     parameters:
       Reflect.getMetadata(actionParamsKey, ActionCtor.prototype) || [],
+    toggleable:
+      Reflect.getMetadata(actionToggleableKey, ActionCtor.prototype) || false,
   };
 });
 

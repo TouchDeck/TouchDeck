@@ -12,6 +12,7 @@ export default function getActionOptions(
       category: action.category,
       name: action.name,
       parameters: action.parameters,
+      toggleable: action.toggleable,
     }))
   );
 }
