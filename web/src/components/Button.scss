@@ -1,0 +1,65 @@
+button.button {
+  padding: 8px 12px;
+  outline: none;
+  border: none;
+  border-radius: $border-radius;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 20px;
+
+  background-color: $grey;
+
+  // Compact buttons are 30px high, the same as other input elements.
+  &.compact {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+
+  &.has-text {
+    i {
+      margin-right: 6px;
+    }
+  }
+
+  &:not(:disabled) {
+    cursor: pointer;
+
+    &:hover {
+      background-color: $grey-dark;
+    }
+
+    &:active {
+      background-color: $grey-darker;
+    }
+  }
+
+  &.positive {
+    background-color: $green;
+    color: #ddd;
+
+    &:not(:disabled) {
+      &:hover {
+        background-color: $green-dark;
+      }
+
+      &:active {
+        background-color: $green-darker;
+      }
+    }
+  }
+
+  &.negative {
+    background-color: $red;
+    color: #ddd;
+
+    &:not(:disabled) {
+      &:hover {
+        background-color: $red-dark;
+      }
+
+      &:active {
+        background-color: $red-darker;
+      }
+    }
+  }
+}

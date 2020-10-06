@@ -9,21 +9,7 @@
     display: flex;
 
     .create {
-      background-color: $green;
-      color: #fff;
-      width: 30px;
-      height: 30px;
-      border-radius: $border-radius;
-      cursor: pointer;
       margin-left: 8px;
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      &:hover {
-        background-color: $green-dark;
-      }
     }
   }
 

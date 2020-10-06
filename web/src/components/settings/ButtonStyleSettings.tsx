@@ -3,7 +3,7 @@ import Rows from '../Rows';
 import TextInput from '../input/TextInput';
 import ColorInput from '../input/ColorInput';
 import { ButtonStyling } from '../../model/configuration/ButtonConfig';
-import Button from '../buttons/Button';
+import GridButton from '../buttons/GridButton';
 
 export interface Props {
   buttonStyle: ButtonStyling;
@@ -21,7 +21,7 @@ const ButtonStyleSettings: React.FC<Props> = ({ buttonStyle, onChange }) => {
     <div className="button-style-settings">
       <div className="preview-wrapper">
         <h3>Style</h3>
-        <Button style={buttonStyle} size={64} />
+        <GridButton style={buttonStyle} size={64} />
       </div>
       <Rows>
         <div>

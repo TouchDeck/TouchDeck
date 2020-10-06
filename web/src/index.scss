@@ -1,9 +1,14 @@
 // Variables
 
-$green: #1ab738;
-$green-dark: #0b8f25;
-$red: #ff6666;
-$red-dark: #cd3a3a;
+$grey: #e0e1e2;
+$grey-dark: #cacbcd;
+$grey-darker: #babbbc;
+$green: #21ba45;
+$green-dark: #16ab39;
+$green-darker: #198f35;
+$red: #db2828;
+$red-dark: #d01919;
+$red-darker: #b21e1e;
 
 $border-radius: 4px;
 
@@ -11,7 +16,7 @@ $border-radius: 4px;
 @import 'reset';
 
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap');
 
 // Font awesome
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
@@ -24,15 +29,17 @@ $border-radius: 4px;
 
 // Component styles
 @import 'components/AgentList';
+@import 'components/Button';
+@import 'components/ButtonGroup';
 @import 'components/Dimmer';
 @import 'components/Layout';
 @import 'components/Menu';
 @import 'components/MessageDisplay';
 @import 'components/Modal';
 @import 'components/Rows';
-@import 'components/buttons/Button';
 @import 'components/buttons/ButtonGrid';
 @import 'components/buttons/ButtonList';
+@import 'components/buttons/GridButton';
 @import 'components/input/ColorInput';
 @import 'components/input/Input';
 @import 'components/settings/ButtonSettings';
@@ -40,9 +47,11 @@ $border-radius: 4px;
 
 // Styling
 
-body {
+* {
   font-family: 'Open Sans', sans-serif;
+}
 
+body {
   background-color: #222;
   color: #ddd;
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import Button, { Props as ButtonProps } from './Button';
+import GridButton, { Props as ButtonProps } from './GridButton';
 import ActionConfig from '../../model/configuration/ActionConfig';
 
 export interface Props extends ButtonProps {
@@ -8,7 +8,10 @@ export interface Props extends ButtonProps {
 }
 
 const NormalButton: React.FC<Props> = (props) => (
-  <Button {...props} onClick={() => props.onTriggerAction(props.action.id)} />
+  <GridButton
+    {...props}
+    onClick={() => props.onTriggerAction(props.action.id)}
+  />
 );
 
 export default NormalButton;

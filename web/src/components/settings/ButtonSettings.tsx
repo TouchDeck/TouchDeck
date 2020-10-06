@@ -11,6 +11,8 @@ import TextInput from '../input/TextInput';
 import newButton from '../../util/newButton';
 import Icon from '../Icon';
 import Modal from '../Modal';
+import ButtonGroup from '../ButtonGroup';
+import Button from '../Button';
 
 export interface Props {
   button: ButtonConfig;
@@ -44,10 +46,12 @@ const ButtonSettings: React.FC<Props> = ({ button, onClose }) => {
       <Modal active={confirmDelete}>
         <h3>Delete button "{button.name}"?</h3>
         <p>This action is permanent and cannot be undone.</p>
-        <div>
-          <button onClick={onDelete}>Delete</button>
-          <button onClick={() => setConfirmDelete(false)}>Cancel</button>
-        </div>
+        <ButtonGroup>
+          <Button onClick={onDelete} negative icon="trash">
+            Delete
+          </Button>
+          <Button onClick={() => setConfirmDelete(false)}>Cancel</Button>
+        </ButtonGroup>
       </Modal>
       <div className="close-wrapper">
         <Icon icon="times" size={2} onClick={onClose} />
@@ -137,12 +141,14 @@ const ButtonSettings: React.FC<Props> = ({ button, onClose }) => {
           />
         </>
       )}
-      <button onClick={onSave}>
-        <Icon icon="save" /> Save
-      </button>
-      <button onClick={() => setConfirmDelete(true)}>
-        <Icon icon="trash" /> Delete
-      </button>
+      <ButtonGroup>
+        <Button onClick={onSave} positive icon="save">
+          Save
+        </Button>
+        <Button onClick={() => setConfirmDelete(true)} negative icon="trash">
+          Delete
+        </Button>
+      </ButtonGroup>
     </div>
   );
 };

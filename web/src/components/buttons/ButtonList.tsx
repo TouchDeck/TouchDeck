@@ -3,6 +3,7 @@ import { ButtonConfig } from '../../model/configuration/ButtonConfig';
 import { useConnectedAgent } from '../../state/appState';
 import TextInput from '../input/TextInput';
 import Icon from '../Icon';
+import Button from '../Button';
 
 export interface Props {
   onClickButton: (button: ButtonConfig) => void;
@@ -32,9 +33,13 @@ const ButtonList: React.FC<Props> = ({ onClickButton, onCreateButton }) => {
           onChange={setSearchTerm}
           icon="search"
         />
-        <div className="create" onClick={onCreateButton}>
-          <Icon icon="plus" />
-        </div>
+        <Button
+          className="create"
+          onClick={onCreateButton}
+          icon="plus"
+          compact
+          positive
+        />
       </div>
       <div className="list">
         {showButtons
@@ -84,21 +89,37 @@ function getButtonNameOrText(button: ButtonConfig): string {
 }
 
 function filterButton(searchTerm: string, button: ButtonConfig): boolean {
-  const searchTermLower = searchTerm.toLowerCase();
+  // Split and sanitize the search term.
+  const searchTerms = searchTerm
+    .toLowerCase()
+    .split(' ')
+    .filter((t) => !!t);
 
-  // Check the button name.
-  if (button.name.toLowerCase().indexOf(searchTermLower) > -1) {
+  if (searchTerms.length === 0) {
     return true;
   }
 
-  // Check the button text.
-  if (
-    'style' in button &&
-    button.style.text.toLowerCase().indexOf(searchTermLower) > -1
-  ) {
-    return true;
+  // Get all terms to check from the button.
+  const checkTerms = [button.name.toLowerCase()];
+  if ('style' in button) {
+    checkTerms.push(button.style.text.toLowerCase());
   }
 
-  // No match.
-  return false;
+  // Check if all search terms match the button.
+  for (let searchI = 0; searchI < searchTerms.length; searchI++) {
+    // Check all check terms to see if the search term matches anything.
+    let matched = false;
+    for (let checkI = 0; checkI < checkTerms.length; checkI++) {
+      if (checkTerms[checkI].includes(searchTerms[searchI])) {
+        matched = true;
+      }
+    }
+
+    // If this search term matched nothing, return.
+    if (!matched) {
+      return false;
+    }
+  }
+
+  return true;
 }

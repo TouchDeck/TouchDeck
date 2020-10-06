@@ -10,9 +10,14 @@
 
   .close {
     padding: 16px 16px 8px 16px;
+    color: $grey;
+
+    &:hover {
+      color: $grey-dark;
+    }
 
     &:active {
-      color: #aaa;
+      color: $grey-darker;
     }
   }
 

@@ -8,6 +8,7 @@ import AgentInfo from '../model/AgentInfo';
 import AgentList from '../components/AgentList';
 import TextInput from '../components/input/TextInput';
 import Modal from '../components/Modal';
+import Button from '../components/Button';
 
 const ConnectAgentPage: React.FC = () => {
   const [{ agent }, dispatch] = useGlobalState();
@@ -98,12 +99,13 @@ const ConnectAgentPage: React.FC = () => {
               }
             }}
           />
-          <button
+          <Button
             disabled={!connectInput}
             onClick={() => connectToAgent(connectInput)}
+            compact
           >
             Connect
-          </button>
+          </Button>
         </div>
       </main>
     </div>
