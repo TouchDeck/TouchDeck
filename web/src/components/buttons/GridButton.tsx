@@ -14,11 +14,11 @@ export interface ButtonProps {
   onDrop?: (event: React.DragEvent<HTMLDivElement>) => void;
   editing?: boolean;
   onDelete?: () => void;
+  onClick?: () => void | Promise<void>;
 }
 
 export interface Props extends ButtonProps {
   disabled?: boolean;
-  onClick?: () => void | Promise<void>;
   style: ButtonStyling;
 }
 

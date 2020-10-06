@@ -31,13 +31,9 @@ export interface NormalButtonConfig extends StyledButtonConfig {
 
 export interface ToggleButtonConfig extends BaseButtonConfig {
   type: 'toggle';
-  state1: ToggleButtonState;
-  state2: ToggleButtonState;
-}
-
-export interface ToggleButtonState {
   action: ActionConfig;
-  style: ButtonStyling;
+  trueStyle: ButtonStyling;
+  falseStyle: ButtonStyling;
 }
 
 export interface FolderButtonConfig extends StyledButtonConfig {

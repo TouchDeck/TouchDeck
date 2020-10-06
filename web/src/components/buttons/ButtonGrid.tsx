@@ -1,7 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import GridButton from './GridButton';
-import NormalButton from './NormalButton';
-import ToggleButton from './ToggleButton';
 import Icon from '../Icon';
 import { ButtonConfig } from '../../model/configuration/ButtonConfig';
 import { useConnectedAgent, useGlobalState } from '../../state/appState';
@@ -169,10 +167,10 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
         switch (button.type) {
           case 'normal':
             return (
-              <NormalButton
+              <GridButton
                 key={i}
                 {...button}
-                onTriggerAction={triggerAction}
+                onClick={() => triggerAction(button.action.id)}
                 size={buttonSize}
                 buttonsPerRow={columnCount}
                 draggable={editing}
@@ -183,11 +181,13 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
               />
             );
           case 'toggle':
+            // TODO: select right style
             return (
-              <ToggleButton
+              <GridButton
                 key={i}
                 {...button}
-                onTriggerAction={triggerAction}
+                style={button.trueStyle}
+                onClick={() => triggerAction(button.action.id)}
                 size={buttonSize}
                 buttonsPerRow={columnCount}
                 draggable={editing}

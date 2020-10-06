@@ -97,49 +97,27 @@ const ButtonSettings: React.FC<Props> = ({ button, onClose }) => {
           }
         />
       )}
-      {'state1' in updates && (
-        <>
-          <ButtonStyleSettings
-            buttonStyle={updates.state1.style}
-            onChange={(style) =>
-              setUpdates((prevState) => ({
-                ...prevState,
-                state1: { ...updates.state1, style },
-              }))
-            }
-          />
-          <ButtonActionSettings
-            action={updates.state1.action}
-            onChange={(action) =>
-              setUpdates((prevState) => ({
-                ...prevState,
-                state1: { ...updates.state1, action },
-              }))
-            }
-          />
-        </>
+      {'trueStyle' in updates && (
+        <ButtonStyleSettings
+          buttonStyle={updates.trueStyle}
+          onChange={(style) =>
+            setUpdates((prevState) => ({
+              ...prevState,
+              trueStyle: style,
+            }))
+          }
+        />
       )}
-      {'state2' in updates && (
-        <>
-          <ButtonStyleSettings
-            buttonStyle={updates.state2.style}
-            onChange={(style) =>
-              setUpdates((prevState) => ({
-                ...prevState,
-                state2: { ...updates.state2, style },
-              }))
-            }
-          />
-          <ButtonActionSettings
-            action={updates.state2.action}
-            onChange={(action) =>
-              setUpdates((prevState) => ({
-                ...prevState,
-                state2: { ...updates.state2, action },
-              }))
-            }
-          />
-        </>
+      {'falseStyle' in updates && (
+        <ButtonStyleSettings
+          buttonStyle={updates.falseStyle}
+          onChange={(style) =>
+            setUpdates((prevState) => ({
+              ...prevState,
+              falseStyle: style,
+            }))
+          }
+        />
       )}
       <ButtonGroup>
         <Button onClick={onSave} positive icon="save">

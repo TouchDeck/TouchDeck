@@ -29,25 +29,17 @@ export default function newButton(
         type,
         id: from?.id || '',
         name: from?.name || '',
-        state1: {
-          action: {
-            ...getDefaultAction(),
-            ...(from && 'state1' in from && from.state1.action),
-          },
-          style: {
-            ...getDefaultStyle(),
-            ...(from && 'state1' in from && from.state1.style),
-          },
+        action: {
+          ...getDefaultAction(),
+          ...(from && 'action' in from && from.action),
         },
-        state2: {
-          action: {
-            ...getDefaultAction(),
-            ...(from && 'state2' in from && from.state2.action),
-          },
-          style: {
-            ...getDefaultStyle(),
-            ...(from && 'state2' in from && from.state2.style),
-          },
+        trueStyle: {
+          ...getDefaultStyle(),
+          ...(from && 'trueStyle' in from && from.trueStyle),
+        },
+        falseStyle: {
+          ...getDefaultStyle(),
+          ...(from && 'falseStyle' in from && from.falseStyle),
         },
       };
     case 'folder':

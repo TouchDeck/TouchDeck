@@ -6,7 +6,6 @@ import Configuration, {
 import {
   ButtonConfig,
   ButtonStyling,
-  ToggleButtonState,
 } from '../model/configuration/ButtonConfig';
 import ActionConfig from '../model/configuration/ActionConfig';
 import TargetConfig, {
@@ -52,15 +51,6 @@ function validateButtonStyle(style?: Partial<ButtonStyling>): ButtonStyling {
   };
 }
 
-function validateToggleButtonState(
-  state?: Partial<ToggleButtonState>
-): ToggleButtonState {
-  return {
-    style: validateButtonStyle(state?.style),
-    action: validateAction(state?.action),
-  };
-}
-
 function validateButton(button: Partial<ButtonConfig>): ButtonConfig {
   switch (button.type) {
     case 'normal':
@@ -83,8 +73,9 @@ function validateButton(button: Partial<ButtonConfig>): ButtonConfig {
         id: validateOrGetUuid(button.id),
         name: button.name || '',
         type: button.type,
-        state1: validateToggleButtonState(button.state1),
-        state2: validateToggleButtonState(button.state2),
+        action: validateAction(button.action),
+        trueStyle: validateButtonStyle(button.trueStyle),
+        falseStyle: validateButtonStyle(button.falseStyle),
       };
     default:
       throw new Error(`Invalid button type "${button.type}"`);
