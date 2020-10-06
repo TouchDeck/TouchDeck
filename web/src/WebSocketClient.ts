@@ -54,6 +54,7 @@ export default class WebSocketClient {
         return;
       }
 
+      delete this.responsePromises[message.replyTo];
       responseHandler(message.data);
     } else {
       // This is a normal message, invoke the type handler.
