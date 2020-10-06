@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Button, { ButtonProps } from './Button';
+import GridButton, { ButtonProps } from './GridButton';
 import { ToggleButtonState } from '../../model/configuration/ButtonConfig';
 
 export interface Props extends ButtonProps {
@@ -15,7 +15,7 @@ const ToggleButton: React.FC<Props> = (props) => {
 
   const currentState = toggleState ? state1 : state2;
   return (
-    <Button
+    <GridButton
       {...props}
       {...currentState}
       onClick={

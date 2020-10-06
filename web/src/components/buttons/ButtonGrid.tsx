@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import Button from './Button';
+import GridButton from './GridButton';
 import NormalButton from './NormalButton';
 import ToggleButton from './ToggleButton';
 import Icon from '../Icon';
@@ -199,7 +199,7 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
             );
           case 'folder':
             return (
-              <Button
+              <GridButton
                 key={i}
                 {...button}
                 onClick={() => enterFolder(button.id)}
@@ -214,7 +214,7 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
             );
           case 'up':
             return (
-              <Button
+              <GridButton
                 key={i}
                 onClick={exitFolder}
                 style={{
@@ -228,11 +228,11 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
                 editing={editing}
               >
                 <Icon icon="level-up-alt" size={3} />
-              </Button>
+              </GridButton>
             );
           case 'empty':
             return (
-              <Button
+              <GridButton
                 key={i}
                 disabled
                 style={{

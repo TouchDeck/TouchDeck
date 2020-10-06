@@ -22,7 +22,7 @@ export interface Props extends ButtonProps {
   style: ButtonStyling;
 }
 
-const Button: React.FC<Props> = ({
+const GridButton: React.FC<Props> = ({
   children,
   disabled,
   onClick,
@@ -46,14 +46,14 @@ const Button: React.FC<Props> = ({
 
   return (
     <div
-      className="button-wrapper"
+      className="grid-button-wrapper"
       style={wrapperStyle}
       onDragStart={onDragStart}
       onDragOver={onDragOver}
       onDrop={onDrop}
     >
       <div
-        className={classNames(['button', disabled && 'disabled'])}
+        className={classNames(['grid-button', disabled && 'disabled'])}
         style={{
           backgroundColor: style.backgroundColor,
           color: style.textColor,
@@ -86,4 +86,4 @@ const Button: React.FC<Props> = ({
   );
 };
 
-export default Button;
+export default GridButton;
