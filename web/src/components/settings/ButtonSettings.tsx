@@ -46,7 +46,9 @@ const ButtonSettings: React.FC<Props> = ({ button, onClose }) => {
         <h3>Delete button "{button.name}"?</h3>
         <p>This action is permanent and cannot be undone.</p>
         <ButtonGroup>
-          <button onClick={onDelete}>Delete</button>
+          <button onClick={onDelete} className="negative">
+            <Icon icon="trash" /> Delete
+          </button>
           <button onClick={() => setConfirmDelete(false)}>Cancel</button>
         </ButtonGroup>
       </Modal>
