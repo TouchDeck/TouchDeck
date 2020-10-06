@@ -12,6 +12,7 @@ export default class Agent {
   private readonly socket: WebSocketClient;
 
   public constructor(private readonly address: string) {
+    // TODO: use address from discovery server.
     this.socket = new WebSocketClient('ws://localhost:4001');
   }
 
@@ -20,7 +21,7 @@ export default class Agent {
   }
 
   public async getConfiguration(): Promise<Configuration> {
-    return (await fetch(this.getUrl('/api/config'))).json();
+    return this.socket.send('get-configuration');
   }
 
   public async setConfiguration(
@@ -82,7 +83,7 @@ export default class Agent {
   }
 
   public async getActionOptions(): Promise<ActionOption[]> {
-    return (await fetch(this.getUrl('/api/actions/options'))).json();
+    return this.socket.send('get-action-options');
   }
 
   public async getButtonStates(): Promise<ButtonStates> {

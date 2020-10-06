@@ -4,20 +4,18 @@ import { Logger } from '@luca_scorpion/tinylogger';
 import invokeAction from './api/invokeAction';
 import { getAvailableActions } from './actions/actionRegistry';
 import { DISCOVERY_REPORT_TIME, HTTP_PORT, IMAGES_DIR } from './constants';
-import { readConfiguration, setConfiguration } from './configuration/config';
-import getActionOptions from './api/getActionOptions';
 import {
-  deleteButton,
-  getConfig,
-  putButton,
-  putConfig,
-  putLayout,
-} from './api/config';
+  getConfiguration,
+  readConfiguration,
+  setConfiguration,
+} from './configuration/config';
+import { deleteButton, putButton, putConfig, putLayout } from './api/config';
 import { agentInfo } from './api/getAgentInfo';
 import reportAgentDiscovery from './util/reportAgentDiscovery';
 import cors from './util/cors';
 import getButtonStates from './api/getButtonStates';
 import WebSocketServer from './WebSocketServer';
+import getActionOptions from './wsApi/getActionOptions';
 
 const log = new Logger('index');
 log.debug('Starting agent...');
@@ -45,10 +43,8 @@ async function bootstrap(): Promise<void> {
   app.use('/api/images', express.static(IMAGES_DIR));
 
   // Register the API routes.
-  app.get('/api/actions/options', getActionOptions);
   app.get('/api/actions/states', getButtonStates);
   app.post('/api/buttons/:button', invokeAction);
-  app.get('/api/config', getConfig);
   app.put('/api/config', putConfig);
   app.put('/api/config/buttons', putButton);
   app.put('/api/config/buttons/:button', putButton);
@@ -62,6 +58,8 @@ async function bootstrap(): Promise<void> {
   // Start the websocket server.
   const server = new WebSocketServer();
   server.registerHandler('get-info', () => agentInfo);
+  server.registerHandler('get-configuration', getConfiguration);
+  server.registerHandler('get-action-options', getActionOptions);
 
   // Report the agent info to the discovery server.
   // No need to await this, since we don't care whether it succeeds or fails.
