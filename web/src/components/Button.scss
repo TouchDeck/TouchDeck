@@ -1,5 +1,9 @@
-.button {
+button.button {
   background-color: $grey;
+
+  i {
+    margin-right: 6px;
+  }
 
   &:not(:disabled) {
     &:hover {

@@ -47,8 +47,8 @@ const ButtonSettings: React.FC<Props> = ({ button, onClose }) => {
         <h3>Delete button "{button.name}"?</h3>
         <p>This action is permanent and cannot be undone.</p>
         <ButtonGroup>
-          <Button onClick={onDelete} negative>
-            <Icon icon="trash" /> Delete
+          <Button onClick={onDelete} negative icon="trash">
+            Delete
           </Button>
           <Button onClick={() => setConfirmDelete(false)}>Cancel</Button>
         </ButtonGroup>
@@ -142,11 +142,11 @@ const ButtonSettings: React.FC<Props> = ({ button, onClose }) => {
         </>
       )}
       <ButtonGroup>
-        <Button onClick={onSave} positive>
-          <Icon icon="save" /> Save
+        <Button onClick={onSave} positive icon="save">
+          Save
         </Button>
-        <Button onClick={() => setConfirmDelete(true)} negative>
-          <Icon icon="trash" /> Delete
+        <Button onClick={() => setConfirmDelete(true)} negative icon="trash">
+          Delete
         </Button>
       </ButtonGroup>
     </div>

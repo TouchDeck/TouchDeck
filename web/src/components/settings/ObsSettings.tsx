@@ -71,6 +71,7 @@ const ObsSettings: React.FC<Props> = ({ onSaveConfig }) => {
       <Button
         onClick={() => onSaveConfig({ ip, port, authenticated, password })}
         positive
+        icon="save"
       >
         Save
       </Button>

@@ -1,5 +1,6 @@
 import React, { ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
 import classNames from '../util/classNames';
+import Icon from './Icon';
 
 export interface Props
   extends DetailedHTMLProps<
@@ -8,12 +9,14 @@ export interface Props
   > {
   positive?: boolean;
   negative?: boolean;
+  icon?: string;
 }
 
 const Button: React.FC<Props> = ({
   children,
   positive,
   negative,
+  icon,
   ...props
 }) => (
   <button
@@ -25,6 +28,7 @@ const Button: React.FC<Props> = ({
       negative && 'negative',
     ])}
   >
+    {icon && <Icon icon={icon} />}
     {children}
   </button>
 );
