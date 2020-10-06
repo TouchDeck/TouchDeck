@@ -46,6 +46,9 @@ button {
   height: 30px;
   min-width: 64px;
   border-radius: $border-radius;
-  cursor: pointer;
   border: none;
+
+  &:not(:disabled) {
+    cursor: pointer;
+  }
 }
