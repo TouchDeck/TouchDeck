@@ -3,6 +3,7 @@ import { Reducer } from 'react';
 import AgentInfo from '../model/AgentInfo';
 import ActionOption from '../model/ActionOption';
 import Configuration from '../model/configuration/Configuration';
+import { ButtonStates } from '../model/ButtonStates';
 
 export interface ConnectedAgentState {
   connecting: false;
@@ -10,6 +11,7 @@ export interface ConnectedAgentState {
   info: AgentInfo;
   config: Configuration;
   actionOptions: ActionOption[];
+  buttonStates: ButtonStates;
 }
 
 export type State =
@@ -19,6 +21,7 @@ export type State =
       info: undefined;
       config?: Configuration;
       actionOptions: undefined;
+      buttonStates: undefined;
     }
   | ConnectedAgentState;
 
@@ -32,6 +35,7 @@ export type Action =
       info: AgentInfo;
       config: Configuration;
       actionOptions: ActionOption[];
+      buttonStates: ButtonStates;
     }
   | {
       type: 'agentDisconnected';
@@ -54,6 +58,7 @@ export const reducer: Reducer<State, Action> = (prevState, action) => {
         info: undefined,
         config: undefined,
         actionOptions: undefined,
+        buttonStates: undefined,
       };
     case 'agentConnected':
       return {
@@ -63,6 +68,7 @@ export const reducer: Reducer<State, Action> = (prevState, action) => {
         info: action.info,
         config: action.config,
         actionOptions: action.actionOptions,
+        buttonStates: action.buttonStates,
       };
     case 'agentDisconnected':
       return {
@@ -72,6 +78,7 @@ export const reducer: Reducer<State, Action> = (prevState, action) => {
         info: undefined,
         config: undefined,
         actionOptions: undefined,
+        buttonStates: undefined,
       };
     case 'configLoaded':
       return { ...prevState, config: action.config };
@@ -86,4 +93,5 @@ export const getInitialState = (): State => ({
   info: undefined,
   config: undefined,
   actionOptions: undefined,
+  buttonStates: undefined,
 });

@@ -4,8 +4,9 @@ import Configuration, {
 import ActionOption from '../model/ActionOption';
 import fetchTimeout from '../util/fetchTimeout';
 import AgentInfo from '../model/AgentInfo';
-import { ApiResponse } from '../model/ApiResponse';
 import { ButtonConfig } from '../model/configuration/ButtonConfig';
+import { InvokeActionResponse } from '../model/InvokeActionResponse';
+import { ButtonStates } from '../model/ButtonStates';
 
 export default class Agent {
   public constructor(private readonly address: string) {}
@@ -70,7 +71,7 @@ export default class Agent {
     ).json();
   }
 
-  public async triggerAction(id: string): Promise<ApiResponse> {
+  public async invokeAction(id: string): Promise<InvokeActionResponse> {
     return (
       await fetch(this.getUrl(`/api/actions/${id}`), { method: 'POST' })
     ).json();
@@ -78,6 +79,10 @@ export default class Agent {
 
   public async getActionOptions(): Promise<ActionOption[]> {
     return (await fetch(this.getUrl('/api/actions/options'))).json();
+  }
+
+  public async getButtonStates(): Promise<ButtonStates> {
+    return (await fetch(this.getUrl('/api/actions/states'))).json();
   }
 
   private getUrl(path: string): string {

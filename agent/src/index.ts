@@ -16,6 +16,7 @@ import {
 import getAgentInfo, { agentInfo } from './api/getAgentInfo';
 import reportAgentDiscovery from './util/reportAgentDiscovery';
 import cors from './util/cors';
+import getButtonStates from './api/getButtonStates';
 
 const log = new Logger('index');
 log.debug('Starting agent...');
@@ -46,6 +47,7 @@ async function bootstrap(): Promise<void> {
   app.get('/api', getAgentInfo);
   app.post('/api/actions/:action', invokeAction);
   app.get('/api/actions/options', getActionOptions);
+  app.get('/api/actions/states', getButtonStates);
   app.get('/api/config', getConfig);
   app.put('/api/config', putConfig);
   app.put('/api/config/buttons', putButton);

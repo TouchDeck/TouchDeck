@@ -17,3 +17,9 @@ export function toggleAction(category: string, name: string) {
     Reflect.defineMetadata(actionToggleableKey, true, ctor.prototype);
   };
 }
+
+export function isPreparedToggleAction(
+  a: PreparedAction
+): a is PreparedToggleAction {
+  return 'getState' in a;
+}

@@ -16,7 +16,7 @@ type DisplayButton = ButtonConfig | { type: 'empty' } | { type: 'up' };
 
 const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
   const [, dispatch] = useGlobalState();
-  const { agent, config } = useConnectedAgent();
+  const { agent, config, buttonStates } = useConnectedAgent();
   const { buttons, layouts } = config;
 
   // The button size, based on the current element size.
@@ -96,7 +96,7 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
       // Only trigger actions if we are not editing the buttons.
       if (!editing) {
         // Trigger the action, check for errors.
-        const result = await agent.triggerAction(id);
+        const result = await agent.invokeAction(id);
         if (!result.success) {
           dispatch({
             type: 'error',
@@ -181,12 +181,13 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
               />
             );
           case 'toggle':
-            // TODO: select right style
             return (
               <GridButton
                 key={i}
                 {...button}
-                style={button.trueStyle}
+                style={
+                  buttonStates[button.id] ? button.trueStyle : button.falseStyle
+                }
                 onClick={() => triggerAction(button.action.id)}
                 size={buttonSize}
                 buttonsPerRow={columnCount}
