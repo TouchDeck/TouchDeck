@@ -67,6 +67,6 @@
   },
   "prettier": {
     "singleQuote": true,
-    "endOfLine": "lf"
+    "endOfLine": "auto"
   }
 }
