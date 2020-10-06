@@ -45,9 +45,9 @@ async function bootstrap(): Promise<void> {
 
   // Register the API routes.
   app.get('/api', getAgentInfo);
-  app.post('/api/actions/:action', invokeAction);
   app.get('/api/actions/options', getActionOptions);
   app.get('/api/actions/states', getButtonStates);
+  app.post('/api/buttons/:button', invokeAction);
   app.get('/api/config', getConfig);
   app.put('/api/config', putConfig);
   app.put('/api/config/buttons', putButton);

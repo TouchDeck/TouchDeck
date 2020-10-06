@@ -9,19 +9,20 @@ import { PreparedAction } from '../actions/Action';
 
 const log = new Logger('configuration');
 
-export type PreparedActionsById = { [id: string]: PreparedAction };
+export type PreparedActions = { [id: string]: PreparedAction };
 
 // Cached configuration data.
 let configuration: Configuration;
-let preparedActions: PreparedActionsById;
+// Prepared actions by button id.
+let preparedActions: PreparedActions;
 
 function prepareActions(buttons: ButtonConfig[]): void {
-  const actions: PreparedActionsById = {};
+  const actions: PreparedActions = {};
 
   for (let i = 0; i < buttons.length; i++) {
     const button = buttons[i];
     if (button.type === 'normal' || button.type === 'toggle') {
-      actions[button.action.id] = prepareAction(button.action);
+      actions[button.id] = prepareAction(button.action);
     }
   }
 
@@ -63,6 +64,6 @@ export function getConfiguration(): Configuration {
   return configuration;
 }
 
-export function getPreparedActions(): PreparedActionsById {
+export function getPreparedActions(): PreparedActions {
   return preparedActions;
 }

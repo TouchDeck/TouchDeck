@@ -68,7 +68,6 @@ function getDefaultStyle(): ButtonStyling {
 
 function getDefaultAction(): ActionConfig {
   return {
-    id: '',
     type: 'NoopAction',
     args: {},
   };

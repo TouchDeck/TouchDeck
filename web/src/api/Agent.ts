@@ -71,9 +71,9 @@ export default class Agent {
     ).json();
   }
 
-  public async invokeAction(id: string): Promise<InvokeActionResponse> {
+  public async pressButton(id: string): Promise<InvokeActionResponse> {
     return (
-      await fetch(this.getUrl(`/api/actions/${id}`), { method: 'POST' })
+      await fetch(this.getUrl(`/api/buttons/${id}`), { method: 'POST' })
     ).json();
   }
 

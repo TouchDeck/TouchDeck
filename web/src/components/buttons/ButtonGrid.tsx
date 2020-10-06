@@ -96,7 +96,7 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
       // Only trigger actions if we are not editing the buttons.
       if (!editing) {
         // Trigger the action, check for errors.
-        const result = await agent.invokeAction(id);
+        const result = await agent.pressButton(id);
         if (!result.success) {
           dispatch({
             type: 'error',
@@ -170,7 +170,7 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
               <GridButton
                 key={i}
                 {...button}
-                onClick={() => triggerAction(button.action.id)}
+                onClick={() => triggerAction(button.id)}
                 size={buttonSize}
                 buttonsPerRow={columnCount}
                 draggable={editing}
@@ -188,7 +188,7 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
                 style={
                   buttonStates[button.id] ? button.trueStyle : button.falseStyle
                 }
-                onClick={() => triggerAction(button.action.id)}
+                onClick={() => triggerAction(button.id)}
                 size={buttonSize}
                 buttonsPerRow={columnCount}
                 draggable={editing}

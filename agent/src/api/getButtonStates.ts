@@ -25,6 +25,7 @@ export default function getButtonStates(
           states[actionId] = false;
         });
     }
+    return undefined;
   });
 
   Promise.all(getStatePromises).then(() => res.send(states));

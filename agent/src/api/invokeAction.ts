@@ -11,11 +11,11 @@ export default function invokeAction(
   res: Response<InvokeActionResponse>
 ): void {
   const actions = getPreparedActions();
-  const actionId = req.params.action;
-  const action = actions[actionId];
+  const buttonId = req.params.button;
+  const action = actions[buttonId];
 
   if (!action) {
-    const error = `Unknown action id: ${actionId}`;
+    const error = `Unknown action id: ${buttonId}`;
     log.error(error);
     res.status(404).send({
       error,
@@ -35,7 +35,7 @@ export default function invokeAction(
     )
     .catch((error) => {
       const message = error.message || error.description || error.error;
-      log.error(`Error invoking action ${actionId}: ${message}`);
+      log.error(`Error invoking action ${buttonId}: ${message}`);
       res.status(500).send({
         success: false,
         error: `Error invoking action: ${message}`,

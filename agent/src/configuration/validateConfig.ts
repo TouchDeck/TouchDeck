@@ -23,7 +23,6 @@ function validateOrGetUuid(uuid?: string): string {
 
 function validateAction(action?: Partial<ActionConfig>): ActionConfig {
   return {
-    id: validateOrGetUuid(action?.id),
     type: action?.type || NoopAction.name,
     args: action?.args || {},
   };
