@@ -139,10 +139,10 @@ const ButtonSettings: React.FC<Props> = ({ button, onClose }) => {
         </>
       )}
       <ButtonGroup>
-        <button onClick={onSave}>
+        <button onClick={onSave} className="positive">
           <Icon icon="save" /> Save
         </button>
-        <button onClick={() => setConfirmDelete(true)}>
+        <button onClick={() => setConfirmDelete(true)} className="negative">
           <Icon icon="trash" /> Delete
         </button>
       </ButtonGroup>

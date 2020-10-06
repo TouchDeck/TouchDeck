@@ -41,9 +41,11 @@ select {
 }
 
 button {
-  padding: 0 4px;
+  padding: 0 8px;
   outline: none;
   height: 30px;
   min-width: 64px;
   border-radius: $border-radius;
+  cursor: pointer;
+  border: none;
 }

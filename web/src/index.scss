@@ -1,9 +1,14 @@
 // Variables
 
-$green: #1ab738;
-$green-dark: #0b8f25;
-$red: #ff6666;
-$red-dark: #cd3a3a;
+$grey: #e0e1e2;
+$grey-dark: #cacbcd;
+$grey-darker: #babbbc;
+$green: #21ba45;
+$green-dark: #16ab39;
+$green-darker: #198f35;
+$red: #db2828;
+$red-dark: #d01919;
+$red-darker: #b21e1e;
 
 $border-radius: 4px;
 
@@ -41,9 +46,49 @@ $border-radius: 4px;
 
 // Styling
 
-body {
+* {
   font-family: 'Open Sans', sans-serif;
+}
 
+body {
   background-color: #222;
   color: #ddd;
+}
+
+button {
+  background-color: $grey;
+
+  &:hover {
+    background-color: $grey-dark;
+  }
+
+  &:active {
+    background-color: $grey-darker;
+  }
+
+  &.positive {
+    background-color: $green;
+    color: #ddd;
+
+    &:hover {
+      background-color: $green-dark;
+    }
+
+    &:active {
+      background-color: $green-darker;
+    }
+  }
+
+  &.negative {
+    background-color: $red;
+    color: #ddd;
+
+    &:hover {
+      background-color: $red-dark;
+    }
+
+    &:active {
+      background-color: $red-darker;
+    }
+  }
 }
