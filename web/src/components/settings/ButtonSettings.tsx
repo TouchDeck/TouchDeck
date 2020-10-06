@@ -11,6 +11,7 @@ import TextInput from '../input/TextInput';
 import newButton from '../../util/newButton';
 import Icon from '../Icon';
 import Modal from '../Modal';
+import ButtonGroup from '../ButtonGroup';
 
 export interface Props {
   button: ButtonConfig;
@@ -137,12 +138,14 @@ const ButtonSettings: React.FC<Props> = ({ button, onClose }) => {
           />
         </>
       )}
-      <button onClick={onSave}>
-        <Icon icon="save" /> Save
-      </button>
-      <button onClick={() => setConfirmDelete(true)}>
-        <Icon icon="trash" /> Delete
-      </button>
+      <ButtonGroup>
+        <button onClick={onSave}>
+          <Icon icon="save" /> Save
+        </button>
+        <button onClick={() => setConfirmDelete(true)}>
+          <Icon icon="trash" /> Delete
+        </button>
+      </ButtonGroup>
     </div>
   );
 };
