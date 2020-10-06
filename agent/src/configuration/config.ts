@@ -1,21 +1,22 @@
 import { promises as fs } from 'fs';
 import { Logger } from '@luca_scorpion/tinylogger';
 import { CONFIG_DIR, CONFIG_FILE, IMAGES_DIR } from '../constants';
-import prepareAction, { InvokableAction } from '../actions/prepareAction';
+import prepareAction from '../actions/prepareAction';
 import Configuration from '../model/configuration/Configuration';
 import { ButtonConfig } from '../model/configuration/ButtonConfig';
 import validateConfig from './validateConfig';
+import { PreparedAction } from '../actions/Action';
 
 const log = new Logger('configuration');
 
-export type ActionsById = { [id: string]: InvokableAction };
+export type PreparedActionsById = { [id: string]: PreparedAction };
 
 // Cached configuration data.
 let configuration: Configuration;
-let actionsById: ActionsById;
+let preparedActions: PreparedActionsById;
 
-function getActionsFromButtons(buttons: ButtonConfig[]): ActionsById {
-  const actions: ActionsById = {};
+function prepareActions(buttons: ButtonConfig[]): void {
+  const actions: PreparedActionsById = {};
 
   for (let i = 0; i < buttons.length; i++) {
     const button = buttons[i];
@@ -30,7 +31,7 @@ function getActionsFromButtons(buttons: ButtonConfig[]): ActionsById {
     }
   }
 
-  return actions;
+  preparedActions = actions;
 }
 
 export async function readConfiguration(): Promise<Configuration> {
@@ -59,7 +60,7 @@ export async function setConfiguration(
   log.debug('Updating configuration');
 
   configuration = validateConfig(newConfig);
-  actionsById = getActionsFromButtons(configuration.buttons);
+  prepareActions(configuration.buttons);
 
   await saveConfiguration();
 }
@@ -68,6 +69,6 @@ export function getConfiguration(): Configuration {
   return configuration;
 }
 
-export function getActionsById(): ActionsById {
-  return actionsById;
+export function getPreparedActions(): PreparedActionsById {
+  return preparedActions;
 }

@@ -1,14 +1,24 @@
 import ObsSocket from './ObsSocket';
-import param, { Action, action } from '../Action';
+import param, { Action, action, PreparedAction } from '../Action';
 
 @action('OBS', 'Set Volume')
 export default class ObsSetVolumeAction implements Action {
   public constructor(private readonly obs: ObsSocket) {}
 
-  public async invoke(
+  public prepare(
     @param('source') source: string,
     @param('volume') volume: number,
     @param('use decibel') useDecibel: boolean
+  ): PreparedAction {
+    return {
+      invoke: () => this.invoke(source, volume, useDecibel),
+    };
+  }
+
+  private async invoke(
+    source: string,
+    volume: number,
+    useDecibel: boolean
   ): Promise<void> {
     await (await this.obs.getSocket()).send('SetVolume', {
       source,

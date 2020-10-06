@@ -3,7 +3,11 @@ import 'reflect-metadata';
 import { ActionParameter } from '../model/ActionOption';
 
 export interface Action {
-  invoke(...args: unknown[]): void | Promise<void>;
+  prepare(...args: unknown[]): PreparedAction;
+}
+
+export interface PreparedAction {
+  invoke(): void | Promise<void>;
 }
 
 export const actionCategoryKey = Symbol('action:category');

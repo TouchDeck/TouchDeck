@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { Logger } from '@luca_scorpion/tinylogger';
 import { v4 as uuidv4 } from 'uuid';
-import { getActionsById } from '../configuration/config';
+import { getPreparedActions } from '../configuration/config';
 import { ApiResponse } from '../model/ApiResponse';
 
 const log = new Logger('invokeAction');
@@ -10,7 +10,7 @@ export default function invokeAction(
   req: Request,
   res: Response<ApiResponse>
 ): void {
-  const actions = getActionsById();
+  const actions = getPreparedActions();
   const actionId = req.params.action;
   const action = actions[actionId];
 
@@ -25,7 +25,7 @@ export default function invokeAction(
     return;
   }
 
-  Promise.resolve(action())
+  Promise.resolve(action.invoke())
     .then(() =>
       res.send({
         success: true,
