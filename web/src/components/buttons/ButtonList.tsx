@@ -3,6 +3,7 @@ import { ButtonConfig } from '../../model/configuration/ButtonConfig';
 import { useConnectedAgent } from '../../state/appState';
 import TextInput from '../input/TextInput';
 import Icon from '../Icon';
+import Button from '../Button';
 
 export interface Props {
   onClickButton: (button: ButtonConfig) => void;
@@ -32,9 +33,13 @@ const ButtonList: React.FC<Props> = ({ onClickButton, onCreateButton }) => {
           onChange={setSearchTerm}
           icon="search"
         />
-        <div className="create" onClick={onCreateButton}>
-          <Icon icon="plus" />
-        </div>
+        <Button
+          className="create"
+          onClick={onCreateButton}
+          icon="plus"
+          compact
+          positive
+        />
       </div>
       <div className="list">
         {showButtons

@@ -26,6 +26,7 @@ const Button: React.FC<Props> = ({
     className={classNames([
       'button',
       props.className,
+      children && 'has-text',
       positive && 'positive',
       negative && 'negative',
       compact && 'compact',
