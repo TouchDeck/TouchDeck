@@ -14,15 +14,18 @@ import ObsSetVolumeAction from './obs/ObsSetVolumeAction';
 import ObsSetSceneItemRenderAction from './obs/ObsSetSceneItemRenderAction';
 import ObsToggleMuteAction from './obs/ObsToggleMuteAction';
 import { actionToggleableKey } from './ToggleAction';
+import ObsToggleSceneItemRenderAction from './obs/ObsToggleSceneItemRenderAction';
 
 // A list containing all available action classes.
 const actionClasses: Constructor<Action>[] = [
   NoopAction,
+  // OBS
   ObsSetMuteAction,
   ObsSetSceneAction,
   ObsSetSceneItemRenderAction,
   ObsSetVolumeAction,
   ObsToggleMuteAction,
+  ObsToggleSceneItemRenderAction,
 ];
 
 export interface ActionMeta {
