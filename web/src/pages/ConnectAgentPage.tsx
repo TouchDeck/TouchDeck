@@ -102,6 +102,7 @@ const ConnectAgentPage: React.FC = () => {
           <Button
             disabled={!connectInput}
             onClick={() => connectToAgent(connectInput)}
+            compact
           >
             Connect
           </Button>

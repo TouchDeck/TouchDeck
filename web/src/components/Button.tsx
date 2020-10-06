@@ -9,6 +9,7 @@ export interface Props
   > {
   positive?: boolean;
   negative?: boolean;
+  compact?: boolean;
   icon?: string;
 }
 
@@ -16,6 +17,7 @@ const Button: React.FC<Props> = ({
   children,
   positive,
   negative,
+  compact,
   icon,
   ...props
 }) => (
@@ -26,6 +28,7 @@ const Button: React.FC<Props> = ({
       props.className,
       positive && 'positive',
       negative && 'negative',
+      compact && 'compact',
     ])}
   >
     {icon && <Icon icon={icon} />}

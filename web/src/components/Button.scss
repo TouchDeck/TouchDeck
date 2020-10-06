@@ -1,11 +1,27 @@
 button.button {
+  padding: 8px 12px;
+  outline: none;
+  border: none;
+  border-radius: $border-radius;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 20px;
+
   background-color: $grey;
+
+  // Compact buttons are 30px high, the same as other input elements.
+  &.compact {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
 
   i {
     margin-right: 6px;
   }
 
   &:not(:disabled) {
+    cursor: pointer;
+
     &:hover {
       background-color: $grey-dark;
     }
