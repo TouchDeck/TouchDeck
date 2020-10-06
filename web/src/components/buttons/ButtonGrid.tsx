@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Button from './Button';
 import NormalButton from './NormalButton';
 import ToggleButton from './ToggleButton';
-import FolderButton from './FolderButton';
 import Icon from '../Icon';
 import { ButtonConfig } from '../../model/configuration/ButtonConfig';
 import { useConnectedAgent, useGlobalState } from '../../state/appState';
@@ -200,7 +199,7 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
             );
           case 'folder':
             return (
-              <FolderButton
+              <Button
                 key={i}
                 {...button}
                 onClick={() => enterFolder(button.id)}
