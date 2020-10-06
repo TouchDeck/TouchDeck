@@ -21,7 +21,7 @@ const ButtonStyleSettings: React.FC<Props> = ({ buttonStyle, onChange }) => {
     <div className="button-style-settings">
       <div className="preview-wrapper">
         <h3>Style</h3>
-        <Button style={buttonStyle} />
+        <Button style={buttonStyle} size={64} />
       </div>
       <Rows>
         <div>

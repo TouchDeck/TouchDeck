@@ -5,7 +5,7 @@ import { useConnectedAgent } from '../../state/appState';
 import Icon from '../Icon';
 
 export interface ButtonProps {
-  size?: number;
+  size: number;
   buttonsPerRow?: number;
   draggable?: boolean;
   onDragStart?: (event: React.DragEvent<HTMLDivElement>) => void;
@@ -62,6 +62,7 @@ const Button: React.FC<Props> = ({
             : '',
           width: size,
           height: size,
+          fontSize: size / 4,
         }}
         onClick={onClick}
         draggable={draggable}
