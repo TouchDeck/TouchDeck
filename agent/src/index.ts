@@ -3,20 +3,17 @@ import express from 'express';
 import { Logger } from '@luca_scorpion/tinylogger';
 import invokeAction from './api/invokeAction';
 import { getAvailableActions } from './actions/actionRegistry';
-import { DISCOVERY_REPORT_TIME, IMAGES_DIR, PORT } from './constants';
+import { DISCOVERY_REPORT_TIME, HTTP_PORT, IMAGES_DIR } from './constants';
 import { readConfiguration, setConfiguration } from './configuration/config';
 import getActionOptions from './api/getActionOptions';
-import {
-  deleteButton,
-  getConfig,
-  putButton,
-  putConfig,
-  putLayout,
-} from './api/config';
+import { deleteButton, getConfig, putButton, putConfig, putLayout } from './api/config';
 import getAgentInfo, { agentInfo } from './api/getAgentInfo';
 import reportAgentDiscovery from './util/reportAgentDiscovery';
 import cors from './util/cors';
 import getButtonStates from './api/getButtonStates';
+import WebSocketServer from './WebSocketServer';
+import { GetInfoRequest } from './SocketMessage';
+import AgentInfo from './model/AgentInfo';
 
 const log = new Logger('index');
 log.debug('Starting agent...');
@@ -56,8 +53,12 @@ async function bootstrap(): Promise<void> {
   app.put('/api/config/layouts/:layout', putLayout);
 
   // Done!
-  app.listen(PORT);
+  app.listen(HTTP_PORT);
   log.info(`Agent running on ${agentInfo.address}`);
+
+  // Start the websocket server.
+  const server = new WebSocketServer();
+  server.registerHandler('get-info', () => agentInfo);
 
   // Report the agent info to the discovery server.
   // No need to await this, since we don't care whether it succeeds or fails.

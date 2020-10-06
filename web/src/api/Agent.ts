@@ -7,9 +7,12 @@ import AgentInfo from '../model/AgentInfo';
 import { ButtonConfig } from '../model/configuration/ButtonConfig';
 import { InvokeActionResponse } from '../model/InvokeActionResponse';
 import { ButtonStates } from '../model/ButtonStates';
+import WebSocketClient from '../WebSocketClient';
 
 export default class Agent {
-  public constructor(private readonly address: string) {}
+  public constructor(private readonly address: string) {
+    const socket = new WebSocketClient('ws://localhost:4001');
+  }
 
   public async getInfo(): Promise<AgentInfo> {
     return (await fetchTimeout(this.getUrl('/api'), 5000)).json();
