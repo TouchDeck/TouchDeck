@@ -29,6 +29,7 @@ $border-radius: 4px;
 
 // Component styles
 @import 'components/AgentList';
+@import 'components/Button';
 @import 'components/ButtonGroup';
 @import 'components/Dimmer';
 @import 'components/Layout';
@@ -53,48 +54,4 @@ $border-radius: 4px;
 body {
   background-color: #222;
   color: #ddd;
-}
-
-button {
-  background-color: $grey;
-
-  &:not(:disabled) {
-    &:hover {
-      background-color: $grey-dark;
-    }
-
-    &:active {
-      background-color: $grey-darker;
-    }
-  }
-
-  &.positive {
-    background-color: $green;
-    color: #ddd;
-
-    &:not(:disabled) {
-      &:hover {
-        background-color: $green-dark;
-      }
-
-      &:active {
-        background-color: $green-darker;
-      }
-    }
-  }
-
-  &.negative {
-    background-color: $red;
-    color: #ddd;
-
-    &:not(:disabled) {
-      &:hover {
-        background-color: $red-dark;
-      }
-
-      &:active {
-        background-color: $red-darker;
-      }
-    }
-  }
 }

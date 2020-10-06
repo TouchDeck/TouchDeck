@@ -5,6 +5,7 @@ import CheckboxInput from '../input/CheckboxInput';
 import NumberInput from '../input/NumberInput';
 import { useConnectedAgent } from '../../state/appState';
 import { ObsTargetConfig } from '../../model/configuration/TargetConfig';
+import Button from '../Button';
 
 export interface Props {
   onSaveConfig: (config: ObsTargetConfig) => void;
@@ -67,11 +68,12 @@ const ObsSettings: React.FC<Props> = ({ onSaveConfig }) => {
           </div>
         )}
       </Rows>
-      <button
+      <Button
         onClick={() => onSaveConfig({ ip, port, authenticated, password })}
+        positive
       >
         Save
-      </button>
+      </Button>
     </>
   );
 };
