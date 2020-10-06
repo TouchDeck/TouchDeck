@@ -7,11 +7,11 @@ export default class ObsSetSceneItemRenderAction implements Action {
 
   public async invoke(
     @param('source') source: string,
-    @param('render') render: boolean = false
+    @param('render') render = false
   ): Promise<void> {
     await (await this.obs.getSocket()).send('SetSceneItemRender', {
       source,
-      render: render,
+      render,
     });
   }
 }

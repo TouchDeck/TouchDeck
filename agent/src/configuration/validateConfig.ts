@@ -1,5 +1,6 @@
 import { v4 as uuidv4, validate as validateUuid } from 'uuid';
 import Configuration, {
+  ButtonLayout,
   ButtonLayouts,
 } from '../model/configuration/Configuration';
 import {
@@ -14,6 +15,8 @@ import TargetConfig, {
 import NoopAction from '../actions/NoopAction';
 
 const colorRegex = /^#[\da-f]{6}$/i;
+
+type ButtonMap = { [id: string]: ButtonConfig };
 
 function validateOrGetUuid(uuid?: string): string {
   return !uuid || !validateUuid(uuid) ? uuidv4() : uuid;
@@ -103,8 +106,12 @@ function validateTargets(targets?: Partial<TargetConfig>): TargetConfig {
   };
 }
 
-function validateLayout(layout: (string | null)[]): (string | null)[] {
-  const validated = [...layout];
+function validateLayout(
+  layout: ButtonLayout,
+  buttons: ButtonMap
+): ButtonLayout {
+  // Replace all buttons that don't exist in the button map with null.
+  const validated = layout.map((b) => (b && buttons[b] ? b : null));
 
   // Remove any trailing nulls.
   for (let i = validated.length - 1; i >= 0; i--) {
@@ -118,10 +125,13 @@ function validateLayout(layout: (string | null)[]): (string | null)[] {
   return validated;
 }
 
-function validateLayouts(layouts?: Partial<ButtonLayouts>): ButtonLayouts {
+function validateLayouts(
+  layouts: Partial<ButtonLayouts> | undefined,
+  buttons: ButtonMap
+): ButtonLayouts {
   const validated: ButtonLayouts = { root: [], ...layouts };
   Object.keys(validated).forEach((key) => {
-    validated[key] = validateLayout(validated[key]);
+    validated[key] = validateLayout(validated[key], buttons);
   });
   return validated;
 }
@@ -129,9 +139,15 @@ function validateLayouts(layouts?: Partial<ButtonLayouts>): ButtonLayouts {
 export default function validateConfig(
   config: Partial<Configuration>
 ): Configuration {
+  const validButtons = (config.buttons || []).map(validateButton);
+  const buttonMap: ButtonMap = {};
+  validButtons.forEach((b) => {
+    buttonMap[b.id] = b;
+  });
+
   return {
     targets: validateTargets(config.targets),
-    buttons: (config.buttons || []).map(validateButton),
-    layouts: validateLayouts(config.layouts || {}),
+    buttons: validButtons,
+    layouts: validateLayouts(config.layouts || {}, buttonMap),
   };
 }
