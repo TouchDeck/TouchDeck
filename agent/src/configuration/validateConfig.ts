@@ -129,7 +129,25 @@ function validateLayouts(
   layouts: Partial<ButtonLayouts> | undefined,
   buttons: ButtonMap
 ): ButtonLayouts {
-  const validated: ButtonLayouts = { root: [], ...layouts };
+  const validated: ButtonLayouts = { root: layouts?.root || [] };
+
+  // Ensure that all layouts correspond to a folder button.
+  const layoutsToCheck = layouts || {};
+  Object.entries(layoutsToCheck).forEach(([id, layout]) => {
+    const button = buttons[id];
+    if (button && button.type === 'folder') {
+      validated[id] = layout || [];
+    }
+  });
+
+  // Ensure that all folder buttons have a layout.
+  Object.values(buttons).forEach((button) => {
+    if (button.type === 'folder' && !validated[button.id]) {
+      validated[button.id] = [];
+    }
+  });
+
+  // Validate all the layouts.
   Object.keys(validated).forEach((key) => {
     validated[key] = validateLayout(validated[key], buttons);
   });
