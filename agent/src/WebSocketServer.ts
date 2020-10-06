@@ -1,8 +1,8 @@
 import WebSocket, { Data, Server } from 'ws';
-import { WS_PORT } from './constants';
 import { Logger } from '@luca_scorpion/tinylogger';
-import { SocketMessage } from './SocketMessage';
 import { v4 as uuidv4 } from 'uuid';
+import { WS_PORT } from './constants';
+import { SocketMessage } from './SocketMessage';
 
 export type SocketMessageHandler = (message: SocketMessage) => unknown;
 
@@ -10,11 +10,12 @@ export default class WebSocketServer {
   private static log = new Logger(WebSocketServer.name);
 
   private readonly server: Server;
+
   private readonly handlers: { [type: string]: SocketMessageHandler } = {};
 
   public constructor() {
     this.server = new Server({
-      port: WS_PORT
+      port: WS_PORT,
     });
 
     this.server.on('connection', (ws) => this.handleConnection(ws));
@@ -34,7 +35,9 @@ export default class WebSocketServer {
     const handler = this.handlers[message.type];
 
     if (!handler) {
-      WebSocketServer.log.error(`No handler registered for type: ${message.type}`);
+      WebSocketServer.log.error(
+        `No handler registered for type: ${message.type}`
+      );
       return;
     }
 
@@ -43,8 +46,8 @@ export default class WebSocketServer {
       type: `${message.type}-response`,
       messageId: uuidv4(),
       replyTo: message.messageId,
-      data: responseData
-    }
+      data: responseData,
+    };
     ws.send(JSON.stringify(response));
   }
 }

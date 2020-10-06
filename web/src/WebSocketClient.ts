@@ -1,3 +1,5 @@
+import ReconnectingWebSocket from 'reconnecting-websocket';
+
 export interface WebSocketMessage {
   type: string;
   messageId: string;
@@ -6,7 +8,7 @@ export interface WebSocketMessage {
 }
 
 export default class WebSocketClient {
-  private readonly socket: WebSocket;
+  private readonly socket: ReconnectingWebSocket;
 
   private messageIdCounter = 0;
   private responsePromises: {
@@ -14,13 +16,10 @@ export default class WebSocketClient {
   } = {};
 
   public constructor(address: string) {
-    this.socket = new WebSocket(address);
+    this.socket = new ReconnectingWebSocket(address);
     this.socket.addEventListener('message', (event) =>
       this.handleMessage(event)
     );
-    this.socket.addEventListener('open', () => {
-      this.send('get-info').then(console.log);
-    });
   }
 
   public send<R>(type: string): Promise<R> {

@@ -2,7 +2,6 @@ import Configuration, {
   ButtonLayout,
 } from '../model/configuration/Configuration';
 import ActionOption from '../model/ActionOption';
-import fetchTimeout from '../util/fetchTimeout';
 import AgentInfo from '../model/AgentInfo';
 import { ButtonConfig } from '../model/configuration/ButtonConfig';
 import { InvokeActionResponse } from '../model/InvokeActionResponse';
@@ -10,12 +9,14 @@ import { ButtonStates } from '../model/ButtonStates';
 import WebSocketClient from '../WebSocketClient';
 
 export default class Agent {
+  private readonly socket: WebSocketClient;
+
   public constructor(private readonly address: string) {
-    const socket = new WebSocketClient('ws://localhost:4001');
+    this.socket = new WebSocketClient('ws://localhost:4001');
   }
 
   public async getInfo(): Promise<AgentInfo> {
-    return (await fetchTimeout(this.getUrl('/api'), 5000)).json();
+    return this.socket.send('get-info');
   }
 
   public async getConfiguration(): Promise<Configuration> {

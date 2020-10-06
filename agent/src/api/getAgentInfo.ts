@@ -14,7 +14,7 @@ export const agentInfo: AgentInfo = {
   version: packageJson.version,
   address: `${getLocalAddress()}:${HTTP_PORT}`,
   platform: getPlatform(),
-  hostname: os.hostname()
+  hostname: os.hostname(),
 };
 
 export default function getAgentInfo(

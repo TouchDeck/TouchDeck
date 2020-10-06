@@ -6,14 +6,18 @@ import { getAvailableActions } from './actions/actionRegistry';
 import { DISCOVERY_REPORT_TIME, HTTP_PORT, IMAGES_DIR } from './constants';
 import { readConfiguration, setConfiguration } from './configuration/config';
 import getActionOptions from './api/getActionOptions';
-import { deleteButton, getConfig, putButton, putConfig, putLayout } from './api/config';
-import getAgentInfo, { agentInfo } from './api/getAgentInfo';
+import {
+  deleteButton,
+  getConfig,
+  putButton,
+  putConfig,
+  putLayout,
+} from './api/config';
+import { agentInfo } from './api/getAgentInfo';
 import reportAgentDiscovery from './util/reportAgentDiscovery';
 import cors from './util/cors';
 import getButtonStates from './api/getButtonStates';
 import WebSocketServer from './WebSocketServer';
-import { GetInfoRequest } from './SocketMessage';
-import AgentInfo from './model/AgentInfo';
 
 const log = new Logger('index');
 log.debug('Starting agent...');
@@ -41,7 +45,6 @@ async function bootstrap(): Promise<void> {
   app.use('/api/images', express.static(IMAGES_DIR));
 
   // Register the API routes.
-  app.get('/api', getAgentInfo);
   app.get('/api/actions/options', getActionOptions);
   app.get('/api/actions/states', getButtonStates);
   app.post('/api/buttons/:button', invokeAction);
