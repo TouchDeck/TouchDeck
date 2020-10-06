@@ -8,9 +8,14 @@
     top: 0;
     left: 0;
     padding: 16px;
+    color: $grey;
+
+    &:hover {
+      color: $grey-dark;
+    }
 
     &:active {
-      color: #aaa;
+      color: $grey-darker;
     }
   }
 }
