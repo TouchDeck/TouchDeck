@@ -1,7 +1,6 @@
 import 'reflect-metadata';
 import express from 'express';
 import { Logger } from '@luca_scorpion/tinylogger';
-import invokeAction from './api/invokeAction';
 import { getAvailableActions } from './actions/actionRegistry';
 import { DISCOVERY_REPORT_TIME, HTTP_PORT, IMAGES_DIR } from './constants';
 import {
@@ -9,13 +8,18 @@ import {
   readConfiguration,
   setConfiguration,
 } from './configuration/config';
-import { deleteButton, putButton, putConfig, putLayout } from './api/config';
 import { agentInfo } from './api/getAgentInfo';
 import reportAgentDiscovery from './util/reportAgentDiscovery';
 import cors from './util/cors';
-import getButtonStates from './api/getButtonStates';
 import WebSocketServer from './WebSocketServer';
 import getActionOptions from './wsApi/getActionOptions';
+import {
+  deleteButton,
+  updateConfig,
+  updateLayout,
+  upsertButton,
+} from './wsApi/config';
+import pressButton from './wsApi/pressButton';
 
 const log = new Logger('index');
 log.debug('Starting agent...');
@@ -43,13 +47,7 @@ async function bootstrap(): Promise<void> {
   app.use('/api/images', express.static(IMAGES_DIR));
 
   // Register the API routes.
-  app.get('/api/actions/states', getButtonStates);
-  app.post('/api/buttons/:button', invokeAction);
-  app.put('/api/config', putConfig);
-  app.put('/api/config/buttons', putButton);
-  app.put('/api/config/buttons/:button', putButton);
-  app.delete('/api/config/buttons/:button', deleteButton);
-  app.put('/api/config/layouts/:layout', putLayout);
+  // app.get('/api/actions/states', getButtonStates);
 
   // Done!
   app.listen(HTTP_PORT);
@@ -59,7 +57,12 @@ async function bootstrap(): Promise<void> {
   const server = new WebSocketServer();
   server.registerHandler('get-info', () => agentInfo);
   server.registerHandler('get-configuration', getConfiguration);
+  server.registerHandler('set-configuration', updateConfig);
+  server.registerHandler('upsert-configuration-button', upsertButton);
+  server.registerHandler('delete-configuration-button', deleteButton);
+  server.registerHandler('set-layout', updateLayout);
   server.registerHandler('get-action-options', getActionOptions);
+  server.registerHandler('press-button', pressButton);
 
   // Report the agent info to the discovery server.
   // No need to await this, since we don't care whether it succeeds or fails.

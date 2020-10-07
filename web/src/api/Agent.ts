@@ -5,7 +5,6 @@ import ActionOption from '../model/ActionOption';
 import AgentInfo from '../model/AgentInfo';
 import { ButtonConfig } from '../model/configuration/ButtonConfig';
 import { InvokeActionResponse } from '../model/InvokeActionResponse';
-import { ButtonStates } from '../model/ButtonStates';
 import WebSocketClient from '../WebSocketClient';
 
 export default class Agent {
@@ -27,70 +26,32 @@ export default class Agent {
   public async setConfiguration(
     newConfig: Configuration
   ): Promise<Configuration> {
-    return (
-      await fetch(this.getUrl('/api/config'), {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newConfig),
-      })
-    ).json();
+    return this.socket.send('set-configuration', newConfig);
   }
 
-  public async setButton(
-    buttonId: string,
-    newButton: ButtonConfig
-  ): Promise<Configuration> {
-    return (
-      await fetch(this.getUrl(`/api/config/buttons/${buttonId}`), {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newButton),
-      })
-    ).json();
+  public async upsertButton(newButton: ButtonConfig): Promise<Configuration> {
+    return this.socket.send('upsert-configuration-button', newButton);
   }
 
   public async deleteButton(buttonId: string): Promise<Configuration> {
-    return (
-      await fetch(this.getUrl(`/api/config/buttons/${buttonId}`), {
-        method: 'DELETE',
-      })
-    ).json();
+    return this.socket.send('delete-configuration-button', buttonId);
   }
 
   public async setLayout(
     layoutId: string,
     newLayout: ButtonLayout
   ): Promise<Configuration> {
-    return (
-      await fetch(this.getUrl(`/api/config/layouts/${layoutId}`), {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newLayout),
-      })
-    ).json();
+    return this.socket.send('set-layout', {
+      layoutId,
+      layout: newLayout,
+    });
   }
 
-  public async pressButton(id: string): Promise<InvokeActionResponse> {
-    return (
-      await fetch(this.getUrl(`/api/buttons/${id}`), { method: 'POST' })
-    ).json();
+  public async pressButton(buttonId: string): Promise<InvokeActionResponse> {
+    return this.socket.send('press-button', buttonId);
   }
 
   public async getActionOptions(): Promise<ActionOption[]> {
     return this.socket.send('get-action-options');
-  }
-
-  public async getButtonStates(): Promise<ButtonStates> {
-    return (await fetch(this.getUrl('/api/actions/states'))).json();
-  }
-
-  private getUrl(path: string): string {
-    return `${this.address}${path}`;
   }
 }

@@ -22,10 +22,11 @@ export default class WebSocketClient {
     );
   }
 
-  public send<R>(type: string): Promise<R> {
+  public send<T, R>(type: string, data?: T): Promise<R> {
     const message: WebSocketMessage = {
       type,
       messageId: (this.messageIdCounter++).toString(),
+      data,
     };
 
     // Store the reply handler promise.

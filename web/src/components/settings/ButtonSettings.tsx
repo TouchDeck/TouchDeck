@@ -27,7 +27,10 @@ const ButtonSettings: React.FC<Props> = ({ button, onClose }) => {
 
   const onSave = useCallback(async () => {
     dispatch({ type: 'configLoading' });
-    const newConfig = await agent.setButton(button.id, updates);
+    const newConfig = await agent.upsertButton({
+      ...updates,
+      id: button.id,
+    });
     dispatch({ type: 'configLoaded', config: newConfig });
   }, [agent, button.id, dispatch, updates]);
 

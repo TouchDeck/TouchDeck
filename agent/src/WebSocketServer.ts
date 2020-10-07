@@ -4,14 +4,16 @@ import { v4 as uuidv4 } from 'uuid';
 import { WS_PORT } from './constants';
 import { SocketMessage } from './SocketMessage';
 
-export type SocketMessageHandler = (message: SocketMessage) => unknown;
+export type SocketMessageHandler<T, R> = (data: T) => R | Promise<R>;
 
 export default class WebSocketServer {
   private static log = new Logger(WebSocketServer.name);
 
   private readonly server: Server;
 
-  private readonly handlers: { [type: string]: SocketMessageHandler } = {};
+  private readonly handlers: {
+    [type: string]: SocketMessageHandler<unknown, unknown>;
+  } = {};
 
   public constructor() {
     this.server = new Server({
@@ -21,8 +23,11 @@ export default class WebSocketServer {
     this.server.on('connection', (ws) => this.handleConnection(ws));
   }
 
-  public registerHandler(type: string, handler: SocketMessageHandler): void {
-    this.handlers[type] = handler;
+  public registerHandler<T, R>(
+    type: string,
+    handler: SocketMessageHandler<T, R>
+  ): void {
+    this.handlers[type] = handler as SocketMessageHandler<unknown, unknown>;
   }
 
   private handleConnection(ws: WebSocket): void {
@@ -31,7 +36,7 @@ export default class WebSocketServer {
   }
 
   private async handleMessage(ws: WebSocket, data: Data): Promise<void> {
-    const message: SocketMessage = JSON.parse(data.toString());
+    const message: SocketMessage<unknown> = JSON.parse(data.toString());
     const handler = this.handlers[message.type];
 
     if (!handler) {
@@ -41,8 +46,8 @@ export default class WebSocketServer {
       return;
     }
 
-    const responseData = await Promise.resolve(handler(message));
-    const response: SocketMessage = {
+    const responseData = await Promise.resolve(handler(message.data));
+    const response: SocketMessage<unknown> = {
       type: `${message.type}-response`,
       messageId: uuidv4(),
       replyTo: message.messageId,
