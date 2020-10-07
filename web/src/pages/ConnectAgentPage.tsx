@@ -3,7 +3,7 @@ import { useGlobalState } from '../state/appState';
 import Icon from '../components/Icon';
 import Agent from '../api/Agent';
 import listDiscoveredAgents from '../api/listDiscoveredAgents';
-import sanitizeAddress from '../util/sanitizeAddress';
+import sanitizeWsAddress from '../util/sanitizeWsAddress';
 import AgentInfo from '../model/AgentInfo';
 import AgentList from '../components/AgentList';
 import TextInput from '../components/input/TextInput';
@@ -25,11 +25,10 @@ const ConnectAgentPage: React.FC = () => {
 
   const connectToAgent = useCallback(
     async (address) => {
-      const sanitizedAddress = sanitizeAddress(address);
       // Connect to the agent.
       dispatch({ type: 'dismissError' });
       dispatch({ type: 'agentConnecting' });
-      const newAgent = new Agent(sanitizedAddress);
+      const newAgent = new Agent(address);
       newAgent.onButtonStateChanged((event) =>
         dispatch({
           type: 'buttonStateChanged',

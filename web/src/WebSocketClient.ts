@@ -1,5 +1,6 @@
 import ReconnectingWebSocket from 'reconnecting-websocket';
 import { MessageHandler } from './model/messages/MessageHandler';
+import sanitizeWsAddress from './util/sanitizeWsAddress';
 
 export interface WebSocketMessage {
   type: string;
@@ -21,7 +22,7 @@ export default class WebSocketClient {
   } = {};
 
   public constructor(address: string) {
-    this.socket = new ReconnectingWebSocket(address);
+    this.socket = new ReconnectingWebSocket(sanitizeWsAddress(address));
     this.socket.addEventListener('message', (event) =>
       this.handleMessage(event)
     );

@@ -11,7 +11,7 @@ export default function getAgentInfo(port: number): AgentInfo {
   return {
     name: packageJson.name,
     version: packageJson.version,
-    address: `ws://${getLocalAddress()}:${port}`,
+    address: `${getLocalAddress()}:${port}`,
     platform: getPlatform(),
     hostname: os.hostname(),
   };
