@@ -21,7 +21,7 @@ export type State =
       info: undefined;
       config?: Configuration;
       actionOptions: undefined;
-      buttonStates: undefined;
+      buttonStates: ButtonStates;
     }
   | ConnectedAgentState;
 
@@ -46,6 +46,11 @@ export type Action =
   | {
       type: 'configLoaded';
       config: Configuration;
+    }
+  | {
+      type: 'buttonStateChanged';
+      buttonId: string;
+      buttonState: boolean;
     };
 
 export const reducer: Reducer<State, Action> = (prevState, action) => {
@@ -58,7 +63,7 @@ export const reducer: Reducer<State, Action> = (prevState, action) => {
         info: undefined,
         config: undefined,
         actionOptions: undefined,
-        buttonStates: undefined,
+        buttonStates: {},
       };
     case 'agentConnected':
       return {
@@ -78,10 +83,18 @@ export const reducer: Reducer<State, Action> = (prevState, action) => {
         info: undefined,
         config: undefined,
         actionOptions: undefined,
-        buttonStates: undefined,
+        buttonStates: {},
       };
     case 'configLoaded':
       return { ...prevState, config: action.config };
+    case 'buttonStateChanged':
+      return {
+        ...prevState,
+        buttonStates: {
+          ...prevState.buttonStates,
+          [action.buttonId]: action.buttonState,
+        },
+      };
     default:
       return prevState;
   }
@@ -93,5 +106,5 @@ export const getInitialState = (): State => ({
   info: undefined,
   config: undefined,
   actionOptions: undefined,
-  buttonStates: undefined,
+  buttonStates: {},
 });

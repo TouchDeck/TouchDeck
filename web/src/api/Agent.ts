@@ -4,14 +4,21 @@ import Configuration, {
 import ActionOption from '../model/ActionOption';
 import AgentInfo from '../model/AgentInfo';
 import { ButtonConfig } from '../model/configuration/ButtonConfig';
-import { InvokeActionResponse } from '../model/InvokeActionResponse';
 import WebSocketClient from '../WebSocketClient';
+import { ButtonStateChanged } from '../model/messages/ButtonStateChanged';
+import { ApiResponse } from '../model/ApiResponse';
 
 export default class Agent {
   private readonly socket: WebSocketClient;
 
   public constructor(private readonly address: string) {
     this.socket = new WebSocketClient(address);
+  }
+
+  public onButtonStateChanged(
+    handler: (data: ButtonStateChanged) => void
+  ): void {
+    this.socket.registerHandler('button-state-changed', handler);
   }
 
   public async getInfo(): Promise<AgentInfo> {
@@ -46,7 +53,7 @@ export default class Agent {
     });
   }
 
-  public async pressButton(buttonId: string): Promise<InvokeActionResponse> {
+  public async pressButton(buttonId: string): Promise<ApiResponse> {
     return this.socket.send('press-button', buttonId);
   }
 

@@ -1,9 +1,8 @@
 import WebSocket, { AddressInfo, Data, Server } from 'ws';
 import { Logger } from '@luca_scorpion/tinylogger';
 import { v4 as uuidv4 } from 'uuid';
-import { SocketMessage } from './SocketMessage';
-
-export type SocketMessageHandler<T, R> = (data: T) => R | Promise<R>;
+import Message from './model/messages/Message';
+import { MessageHandler } from './model/messages/MessageHandler';
 
 export default class WebSocketServer {
   private static log = new Logger(WebSocketServer.name);
@@ -11,7 +10,7 @@ export default class WebSocketServer {
   private readonly server: Server;
 
   private readonly handlers: {
-    [type: string]: SocketMessageHandler<unknown, unknown>;
+    [type: string]: MessageHandler<unknown, unknown>;
   } = {};
 
   public constructor() {
@@ -25,9 +24,9 @@ export default class WebSocketServer {
 
   public registerHandler<T, R>(
     type: string,
-    handler: SocketMessageHandler<T, R>
+    handler: MessageHandler<T, R>
   ): void {
-    this.handlers[type] = handler as SocketMessageHandler<unknown, unknown>;
+    this.handlers[type] = handler as MessageHandler<unknown, unknown>;
   }
 
   private handleConnection(ws: WebSocket): void {
@@ -36,7 +35,7 @@ export default class WebSocketServer {
   }
 
   private async handleMessage(ws: WebSocket, data: Data): Promise<void> {
-    const message: SocketMessage<unknown> = JSON.parse(data.toString());
+    const message: Message = JSON.parse(data.toString());
     const handler = this.handlers[message.type];
 
     if (!handler) {
@@ -47,7 +46,7 @@ export default class WebSocketServer {
     }
 
     const responseData = await Promise.resolve(handler(message.data));
-    const response: SocketMessage<unknown> = {
+    const response: Message = {
       type: `${message.type}-response`,
       messageId: uuidv4(),
       replyTo: message.messageId,

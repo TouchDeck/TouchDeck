@@ -30,6 +30,13 @@ const ConnectAgentPage: React.FC = () => {
       dispatch({ type: 'dismissError' });
       dispatch({ type: 'agentConnecting' });
       const newAgent = new Agent(sanitizedAddress);
+      newAgent.onButtonStateChanged((event) =>
+        dispatch({
+          type: 'buttonStateChanged',
+          buttonId: event.buttonId,
+          buttonState: event.buttonState,
+        })
+      );
 
       // Test if the agent is valid.
       let agentInfo: AgentInfo;

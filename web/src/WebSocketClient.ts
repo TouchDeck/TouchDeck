@@ -1,4 +1,5 @@
 import ReconnectingWebSocket from 'reconnecting-websocket';
+import { MessageHandler } from './model/messages/MessageHandler';
 
 export interface WebSocketMessage {
   type: string;
@@ -12,7 +13,11 @@ export default class WebSocketClient {
 
   private messageIdCounter = 0;
   private responsePromises: {
-    [messageId: string]: (data: unknown) => void;
+    [messageId: string]: MessageHandler;
+  } = {};
+
+  private messageHandlers: {
+    [type: string]: MessageHandler;
   } = {};
 
   public constructor(address: string) {
@@ -20,6 +25,10 @@ export default class WebSocketClient {
     this.socket.addEventListener('message', (event) =>
       this.handleMessage(event)
     );
+  }
+
+  public registerHandler<T>(type: string, handler: MessageHandler<T>): void {
+    this.messageHandlers[type] = handler as MessageHandler;
   }
 
   public send<T, R>(type: string, data?: T): Promise<R> {
@@ -47,19 +56,26 @@ export default class WebSocketClient {
       const responseHandler = this.responsePromises[message.replyTo];
 
       // Check if we have a message handler.
-      if (!responseHandler) {
+      if (responseHandler) {
+        delete this.responsePromises[message.replyTo];
+        Promise.resolve(responseHandler(message.data)).catch((err) =>
+          console.error(`Error while handling "${message.type}" message:`, err)
+        );
+      } else {
         console.error(
           `No handler found for message reply "${message.replyTo}", dropping.`
         );
-        return;
       }
-
-      delete this.responsePromises[message.replyTo];
-      responseHandler(message.data);
     } else {
       // This is a normal message, invoke the type handler.
-      // TODO
-      console.log('Unhandled message', message);
+      const handler = this.messageHandlers[message.type];
+
+      // Check if we have a message handler.
+      if (handler) {
+        handler(message.data);
+      } else {
+        console.log(`Unhandled message type "${message.type}", dropping.`);
+      }
     }
   }
 }
