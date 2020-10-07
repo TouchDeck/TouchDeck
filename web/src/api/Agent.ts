@@ -11,7 +11,6 @@ export default class Agent {
   private readonly socket: WebSocketClient;
 
   public constructor(private readonly address: string) {
-    // TODO: use address from discovery server.
     this.socket = new WebSocketClient(address);
   }
 
