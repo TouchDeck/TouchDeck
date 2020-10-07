@@ -1,6 +1,6 @@
 import AgentInfo from '../AgentInfo';
 import { ButtonConfig } from '../configuration/ButtonConfig';
-import Configuration from '../configuration/Configuration';
+import Configuration, { ButtonLayout } from '../configuration/Configuration';
 import ActionOption from '../ActionOption';
 import { ApiResponse } from '../ApiResponse';
 import { ButtonStateChanged } from './ButtonStateChanged';
@@ -11,7 +11,7 @@ export interface MessageDataMap {
   'set-configuration': Configuration;
   'upsert-configuration-button': ButtonConfig;
   'delete-configuration-button': string;
-  'set-layout': string; // TODO
+  'set-layout': ButtonLayout;
   'get-action-options': void;
   'press-button': string;
   'button-state-changed': ButtonStateChanged;

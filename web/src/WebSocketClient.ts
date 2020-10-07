@@ -41,12 +41,12 @@ export default class WebSocketClient {
 
   public send<T extends keyof MessageDataMap>(
     type: T,
-    ...data: MessageDataMap[T] extends void ? [undefined?] : [MessageDataMap[T]]
+    ...args: MessageDataMap[T] extends void ? [undefined?] : [MessageDataMap[T]]
   ): Promise<MessageResponseMap[T]> {
     const message: WebSocketMessage = {
       type: type.toString(),
       messageId: (this.messageIdCounter++).toString(),
-      data,
+      data: args[0],
     };
 
     // Store the reply handler promise.
@@ -85,7 +85,7 @@ export default class WebSocketClient {
       if (handler) {
         handler(message.data);
       } else {
-        console.log(`Unhandled message type "${message.type}", dropping.`);
+        console.error(`Unhandled message type "${message.type}", dropping.`);
       }
     }
   }

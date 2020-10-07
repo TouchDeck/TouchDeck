@@ -1,4 +1,6 @@
-import Configuration from '../model/configuration/Configuration';
+import Configuration, {
+  ButtonLayout,
+} from '../model/configuration/Configuration';
 import { getConfiguration, setConfiguration } from '../configuration/config';
 import { ButtonConfig } from '../model/configuration/ButtonConfig';
 
@@ -28,10 +30,14 @@ export async function deleteButton(buttonId: string): Promise<Configuration> {
   return getConfiguration();
 }
 
-export async function updateLayout(): Promise<Configuration> {
+export async function updateLayout(
+  newLayout: ButtonLayout
+): Promise<Configuration> {
   const newConfig = { ...getConfiguration() };
-  // TODO
-  // newConfig.layouts[req.params.layout] = req.body;
+  newConfig.layouts = [
+    ...newConfig.layouts.filter((l) => l.id !== newLayout.id),
+    newLayout,
+  ];
   await setConfiguration(newConfig);
   return getConfiguration();
 }

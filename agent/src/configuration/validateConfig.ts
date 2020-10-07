@@ -1,7 +1,6 @@
 import { v4 as uuidv4, validate as validateUuid } from 'uuid';
 import Configuration, {
   ButtonLayout,
-  ButtonLayouts,
 } from '../model/configuration/Configuration';
 import {
   ButtonConfig,
@@ -101,47 +100,52 @@ function validateLayout(
   buttons: ButtonMap
 ): ButtonLayout {
   // Replace all buttons that don't exist in the button map with null.
-  const validated = layout.map((b) => (b && buttons[b] ? b : null));
+  const validatedLayout = layout.layout.map((b) =>
+    b && buttons[b] ? b : null
+  );
 
   // Remove any trailing nulls.
-  for (let i = validated.length - 1; i >= 0; i--) {
-    if (!validated[i]) {
-      validated.splice(i, 1);
+  for (let i = validatedLayout.length - 1; i >= 0; i--) {
+    if (!validatedLayout[i]) {
+      validatedLayout.splice(i, 1);
     } else {
       break;
     }
   }
 
-  return validated;
+  return {
+    id: layout.id,
+    layout: validatedLayout,
+  };
 }
 
 function validateLayouts(
-  layouts: Partial<ButtonLayouts> | undefined,
+  layouts: ButtonLayout[],
   buttons: ButtonMap
-): ButtonLayouts {
-  const validated: ButtonLayouts = { root: layouts?.root || [] };
+): ButtonLayout[] {
+  const layoutIds = new Set<string>();
 
   // Ensure that all layouts correspond to a folder button.
-  const layoutsToCheck = layouts || {};
-  Object.entries(layoutsToCheck).forEach(([id, layout]) => {
-    const button = buttons[id];
-    if (button && button.type === 'folder') {
-      validated[id] = layout || [];
-    }
+  const validated = layouts.filter((layout) => {
+    layoutIds.add(layout.id);
+    const button = buttons[layout.id];
+    return layout.id === 'root' || (button && button.type === 'folder');
   });
+
+  // Ensure that there is a root layout.
+  if (!layoutIds.has('root')) {
+    validated.push({ id: 'root', layout: [] });
+  }
 
   // Ensure that all folder buttons have a layout.
   Object.values(buttons).forEach((button) => {
-    if (button.type === 'folder' && !validated[button.id]) {
-      validated[button.id] = [];
+    if (button.type === 'folder' && !layoutIds.has(button.id)) {
+      validated.push({ id: button.id, layout: [] });
     }
   });
 
   // Validate all the layouts.
-  Object.keys(validated).forEach((key) => {
-    validated[key] = validateLayout(validated[key], buttons);
-  });
-  return validated;
+  return validated.map((layout) => validateLayout(layout, buttons));
 }
 
 export default function validateConfig(
@@ -156,6 +160,6 @@ export default function validateConfig(
   return {
     targets: validateTargets(config.targets),
     buttons: validButtons,
-    layouts: validateLayouts(config.layouts || {}, buttonMap),
+    layouts: validateLayouts(config.layouts || [], buttonMap),
   };
 }

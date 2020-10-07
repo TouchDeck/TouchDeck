@@ -4,12 +4,10 @@ import TargetConfig from './TargetConfig';
 export default interface Configuration {
   targets: TargetConfig;
   buttons: ButtonConfig[];
-  layouts: ButtonLayouts;
+  layouts: ButtonLayout[];
 }
 
-export interface ButtonLayouts {
-  root: ButtonLayout;
-  [id: string]: ButtonLayout;
-}
-
-export type ButtonLayout = (string | null)[];
+export type ButtonLayout = {
+  id: string;
+  layout: (string | null)[];
+};

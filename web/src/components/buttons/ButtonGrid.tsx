@@ -42,8 +42,9 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
 
   // Update the button view whenever the layout changes.
   useEffect(() => {
-    const newLayout = (layouts[currentLayout] || []).map<DisplayButton>(
-      (id) => {
+    const newLayout = layouts
+      .find((l) => l.id === currentLayout)!
+      .layout.map<DisplayButton>((id) => {
         if (!id) {
           return { type: 'empty' };
         }
@@ -53,8 +54,7 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
           throw new Error(`Could not find button with id: ${id}`);
         }
         return found;
-      }
-    );
+      });
 
     // Fill up the remainder of the grid.
     for (let i = newLayout.length; i < rowCount * columnCount; i++) {
@@ -113,14 +113,14 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
     (newLayout: ButtonLayout) => {
       // Update the agent config.
       dispatch({ type: 'configLoading' });
-      agent.setLayout(currentLayout, newLayout).then((newConfig) =>
+      agent.setLayout(newLayout).then((newConfig) =>
         dispatch({
           type: 'configLoaded',
           config: newConfig,
         })
       );
     },
-    [dispatch, agent, currentLayout]
+    [dispatch, agent]
   );
 
   // The index of the button that is currently being dragged.
@@ -133,32 +133,32 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
       }
 
       // Copy the current layout.
-      const newLayout = [...(config.layouts[currentLayout] || [])];
+      const newLayout = { ...layouts.find((l) => l.id === currentLayout)! };
 
       let targetId: string | null = buttonId;
 
       // If we're moving a button in the grid, get the id and remove the source.
       if (dragIndex != null) {
-        targetId = newLayout[dragIndex];
-        newLayout[dragIndex] = null;
+        targetId = newLayout.layout[dragIndex];
+        newLayout.layout[dragIndex] = null;
       }
 
       // Move the button in the layout.
-      newLayout[targetIndex] = targetId;
+      newLayout.layout[targetIndex] = targetId;
 
       updateLayout(newLayout);
     },
-    [dragIndex, config, currentLayout, updateLayout]
+    [dragIndex, layouts, currentLayout, updateLayout]
   );
 
   const deleteButton = useCallback(
     (deleteIndex: number) => {
       // Copy the current layout.
-      const newLayout = [...(config.layouts[currentLayout] || [])];
-      newLayout[deleteIndex] = null;
+      const newLayout = { ...layouts.find((l) => l.id === currentLayout)! };
+      newLayout.layout[deleteIndex] = null;
       updateLayout(newLayout);
     },
-    [config, currentLayout, updateLayout]
+    [layouts, currentLayout, updateLayout]
   );
 
   return (

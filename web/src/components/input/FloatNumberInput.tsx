@@ -21,7 +21,6 @@ const FloatNumberInput: React.FC<Props> = (props) => {
         // Parse the new value, only emit onChange if it is valid.
         const parsed = parseFloat(newValue);
         if (parsed.toString() === newValue) {
-          console.log(newValue);
           props.onChange(parsed);
         }
       }}

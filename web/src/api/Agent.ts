@@ -43,16 +43,8 @@ export default class Agent {
     return this.socket.send('delete-configuration-button', buttonId);
   }
 
-  public async setLayout(
-    layoutId: string,
-    newLayout: ButtonLayout
-  ): Promise<Configuration> {
-    return this.socket.send('set-layout', layoutId);
-    // TODO
-    // {
-    //   layoutId,
-    //     layout: newLayout,
-    // }
+  public async setLayout(newLayout: ButtonLayout): Promise<Configuration> {
+    return this.socket.send('set-layout', newLayout);
   }
 
   public async pressButton(buttonId: string): Promise<ApiResponse> {
