@@ -6,7 +6,6 @@ function envOrDefault(param: string, def: string): string {
 }
 
 export const HTTP_PORT = parseInt(envOrDefault('PORT', '4000'), 10);
-export const WS_PORT = parseInt(envOrDefault('PORT', '4001'), 10);
 
 export const CONFIG_DIR = envOrDefault('CONFIG_DIR', `${homedir()}/.pideck`);
 export const CONFIG_FILE = `${CONFIG_DIR}/config.json`;

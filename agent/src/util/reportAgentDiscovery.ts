@@ -1,17 +1,19 @@
 import fetch from 'node-fetch';
 import { Logger } from '@luca_scorpion/tinylogger';
 import { DISCOVERY_SERVER } from '../constants';
-import { agentInfo } from '../api/getAgentInfo';
+import getAgentInfo from './getAgentInfo';
 
 const log = new Logger('reportAgentDiscovery');
 
-export default async function reportAgentDiscovery(): Promise<void> {
+export default async function reportAgentDiscovery(
+  port: number
+): Promise<void> {
   await fetch(`${DISCOVERY_SERVER}/api/agents`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(agentInfo),
+    body: JSON.stringify(getAgentInfo(port)),
   })
     .then(() => log.debug('Agent reported to discovery server'))
     .catch((err) =>

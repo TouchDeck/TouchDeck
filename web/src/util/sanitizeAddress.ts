@@ -1,13 +1,9 @@
 export default function sanitizeAddress(address: string): string {
-  let sanitized = address;
+  let sanitized = address.trim();
 
-  if (!sanitized.startsWith('http://')) {
-    sanitized = `http://${sanitized}`;
+  if (!sanitized.startsWith('ws://')) {
+    sanitized = `ws://${sanitized}`;
   }
 
-  if (sanitized.endsWith('/')) {
-    sanitized = sanitized.substring(0, sanitized.length - 1);
-  }
-
-  return sanitized.trim();
+  return sanitized;
 }

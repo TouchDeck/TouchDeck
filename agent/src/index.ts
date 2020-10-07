@@ -8,7 +8,6 @@ import {
   readConfiguration,
   setConfiguration,
 } from './configuration/config';
-import { agentInfo } from './api/getAgentInfo';
 import reportAgentDiscovery from './util/reportAgentDiscovery';
 import cors from './util/cors';
 import WebSocketServer from './WebSocketServer';
@@ -20,6 +19,7 @@ import {
   upsertButton,
 } from './wsApi/config';
 import pressButton from './wsApi/pressButton';
+import getAgentInfo from './util/getAgentInfo';
 
 const log = new Logger('index');
 log.debug('Starting agent...');
@@ -51,11 +51,13 @@ async function bootstrap(): Promise<void> {
 
   // Done!
   app.listen(HTTP_PORT);
-  log.info(`Agent running on ${agentInfo.address}`);
 
   // Start the websocket server.
   const server = new WebSocketServer();
-  server.registerHandler('get-info', () => agentInfo);
+  const serverPort = server.address().port;
+
+  // Register all websocket server handlers.
+  server.registerHandler('get-info', () => getAgentInfo(serverPort));
   server.registerHandler('get-configuration', getConfiguration);
   server.registerHandler('set-configuration', updateConfig);
   server.registerHandler('upsert-configuration-button', upsertButton);
@@ -64,11 +66,16 @@ async function bootstrap(): Promise<void> {
   server.registerHandler('get-action-options', getActionOptions);
   server.registerHandler('press-button', pressButton);
 
+  log.info(`Agent running on ${getAgentInfo(serverPort).address}`);
+
   // Report the agent info to the discovery server.
   // No need to await this, since we don't care whether it succeeds or fails.
   // noinspection ES6MissingAwait
-  reportAgentDiscovery();
-  setInterval(() => reportAgentDiscovery(), DISCOVERY_REPORT_TIME * 1000);
+  reportAgentDiscovery(serverPort);
+  setInterval(
+    () => reportAgentDiscovery(serverPort),
+    DISCOVERY_REPORT_TIME * 1000
+  );
 }
 
 bootstrap().catch((err) => {

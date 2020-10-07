@@ -12,7 +12,7 @@ export default class Agent {
 
   public constructor(private readonly address: string) {
     // TODO: use address from discovery server.
-    this.socket = new WebSocketClient('ws://localhost:4001');
+    this.socket = new WebSocketClient(address);
   }
 
   public async getInfo(): Promise<AgentInfo> {

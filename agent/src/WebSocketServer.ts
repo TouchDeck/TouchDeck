@@ -1,7 +1,6 @@
-import WebSocket, { Data, Server } from 'ws';
+import WebSocket, { AddressInfo, Data, Server } from 'ws';
 import { Logger } from '@luca_scorpion/tinylogger';
 import { v4 as uuidv4 } from 'uuid';
-import { WS_PORT } from './constants';
 import { SocketMessage } from './SocketMessage';
 
 export type SocketMessageHandler<T, R> = (data: T) => R | Promise<R>;
@@ -16,11 +15,12 @@ export default class WebSocketServer {
   } = {};
 
   public constructor() {
-    this.server = new Server({
-      port: WS_PORT,
-    });
-
+    this.server = new Server({ port: 0 });
     this.server.on('connection', (ws) => this.handleConnection(ws));
+  }
+
+  public address(): AddressInfo {
+    return this.server.address() as AddressInfo;
   }
 
   public registerHandler<T, R>(
