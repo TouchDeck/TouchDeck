@@ -3,6 +3,7 @@ import { Logger } from '@luca_scorpion/tinylogger';
 import { v4 as uuidv4 } from 'uuid';
 import Message from './model/messages/Message';
 import { MessageHandler } from './model/messages/MessageHandler';
+import { MessageDataMap, MessageResponseMap } from './model/messages/messages';
 
 export default class WebSocketServer {
   private static log = new Logger(WebSocketServer.name);
@@ -22,9 +23,9 @@ export default class WebSocketServer {
     return this.server.address() as AddressInfo;
   }
 
-  public registerHandler<T, R>(
-    type: string,
-    handler: MessageHandler<T, R>
+  public registerHandler<T extends keyof MessageDataMap>(
+    type: T,
+    handler: MessageHandler<MessageDataMap[T], MessageResponseMap[T]>
   ): void {
     this.handlers[type] = handler as MessageHandler<unknown, unknown>;
   }

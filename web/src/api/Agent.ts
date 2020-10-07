@@ -47,10 +47,12 @@ export default class Agent {
     layoutId: string,
     newLayout: ButtonLayout
   ): Promise<Configuration> {
-    return this.socket.send('set-layout', {
-      layoutId,
-      layout: newLayout,
-    });
+    return this.socket.send('set-layout', layoutId);
+    // TODO
+    // {
+    //   layoutId,
+    //     layout: newLayout,
+    // }
   }
 
   public async pressButton(buttonId: string): Promise<ApiResponse> {

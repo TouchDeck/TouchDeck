@@ -3,7 +3,6 @@ import { useGlobalState } from '../state/appState';
 import Icon from '../components/Icon';
 import Agent from '../api/Agent';
 import listDiscoveredAgents from '../api/listDiscoveredAgents';
-import sanitizeWsAddress from '../util/sanitizeWsAddress';
 import AgentInfo from '../model/AgentInfo';
 import AgentList from '../components/AgentList';
 import TextInput from '../components/input/TextInput';

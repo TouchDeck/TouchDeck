@@ -1,6 +1,7 @@
 import ReconnectingWebSocket from 'reconnecting-websocket';
-import { MessageHandler } from './model/messages/MessageHandler';
 import sanitizeWsAddress from './util/sanitizeWsAddress';
+import { MessageDataMap, MessageResponseMap } from './model/messages/messages';
+import { MessageHandler } from './model/messages/MessageHandler';
 
 export interface WebSocketMessage {
   type: string;
@@ -18,7 +19,7 @@ export default class WebSocketClient {
   } = {};
 
   private messageHandlers: {
-    [type: string]: MessageHandler;
+    [type: string]: MessageHandler<unknown, unknown>;
   } = {};
 
   public constructor(address: string) {
@@ -28,13 +29,22 @@ export default class WebSocketClient {
     );
   }
 
-  public registerHandler<T>(type: string, handler: MessageHandler<T>): void {
-    this.messageHandlers[type] = handler as MessageHandler;
+  public registerHandler<T extends keyof MessageDataMap>(
+    type: T,
+    handler: MessageHandler<MessageDataMap[T], MessageResponseMap[T]>
+  ): void {
+    this.messageHandlers[type.toString()] = handler as MessageHandler<
+      unknown,
+      unknown
+    >;
   }
 
-  public send<T, R>(type: string, data?: T): Promise<R> {
+  public send<T extends keyof MessageDataMap>(
+    type: T,
+    ...data: MessageDataMap[T] extends void ? [undefined?] : [MessageDataMap[T]]
+  ): Promise<MessageResponseMap[T]> {
     const message: WebSocketMessage = {
-      type,
+      type: type.toString(),
       messageId: (this.messageIdCounter++).toString(),
       data,
     };
@@ -46,7 +56,7 @@ export default class WebSocketClient {
 
     this.socket.send(JSON.stringify(message));
 
-    return replyPromise as Promise<R>;
+    return replyPromise as Promise<MessageResponseMap[T]>;
   }
 
   private handleMessage(event: MessageEvent): void {
