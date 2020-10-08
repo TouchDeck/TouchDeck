@@ -23,7 +23,7 @@ export default class WebSocketClient {
   } = {};
 
   public constructor(address: string) {
-    this.socket = new ReconnectingWebSocket(sanitizeWsAddress(address));
+    this.socket = new ReconnectingWebSocket(`${sanitizeWsAddress(address)}/ws`);
     this.socket.addEventListener('message', (event) =>
       this.handleMessage(event)
     );

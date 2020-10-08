@@ -15,7 +15,7 @@ export default class WebSocketServer {
   } = {};
 
   public constructor(port: number) {
-    this.server = new Server({ port });
+    this.server = new Server({ port, path: '/ws' });
     this.server.on('connection', (ws) => this.handleConnection(ws));
   }
 
