@@ -1,7 +1,6 @@
 {
   "name": "pideck",
   "version": "0.1.0",
-  "proxy": "http://localhost:4000",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.14.0",
     "@testing-library/jest-dom": "^4.2.4",
