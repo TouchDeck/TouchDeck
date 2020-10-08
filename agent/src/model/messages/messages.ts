@@ -3,7 +3,8 @@ import { ButtonConfig } from '../configuration/ButtonConfig';
 import Configuration, { ButtonLayout } from '../configuration/Configuration';
 import ActionOption from '../ActionOption';
 import { ApiResponse } from '../ApiResponse';
-import { ButtonStateChanged } from './ButtonStateChanged';
+import ButtonStateChanged from './ButtonStateChanged';
+import { ImageMap } from './ImageMap';
 
 export interface MessageDataMap {
   'get-info': void;
@@ -15,6 +16,7 @@ export interface MessageDataMap {
   'get-action-options': void;
   'press-button': string;
   'button-state-changed': ButtonStateChanged;
+  'get-images': void;
 }
 
 export interface MessageResponseMap {
@@ -27,4 +29,5 @@ export interface MessageResponseMap {
   'get-action-options': ActionOption[];
   'press-button': ApiResponse;
   'button-state-changed': void;
+  'get-images': ImageMap;
 }

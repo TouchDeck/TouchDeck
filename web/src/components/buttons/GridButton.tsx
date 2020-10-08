@@ -42,7 +42,7 @@ const GridButton: React.FC<Props> = ({
     wrapperStyle.width = `calc(100% / ${buttonsPerRow})`;
   }
 
-  const { info } = useConnectedAgent();
+  const { images } = useConnectedAgent();
 
   return (
     <div
@@ -57,9 +57,7 @@ const GridButton: React.FC<Props> = ({
         style={{
           backgroundColor: style.backgroundColor,
           color: style.textColor,
-          backgroundImage: style.image
-            ? `url(http://${info.address}/api/images/${style.image})`
-            : '',
+          backgroundImage: style.image ? `url(${images[style.image]})` : '',
           width: size,
           height: size,
           fontSize: size / 4,

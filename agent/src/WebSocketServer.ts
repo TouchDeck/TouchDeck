@@ -1,4 +1,4 @@
-import WebSocket, { AddressInfo, Data, Server } from 'ws';
+import WebSocket, { AddressInfo, Data, Server, ServerOptions } from 'ws';
 import { Logger } from '@luca_scorpion/tinylogger';
 import { v4 as uuidv4 } from 'uuid';
 import Message from './model/messages/Message';
@@ -14,8 +14,8 @@ export default class WebSocketServer {
     [type: string]: MessageHandler<unknown, unknown>;
   } = {};
 
-  public constructor(port: number) {
-    this.server = new Server({ port, path: '/ws' });
+  public constructor(options: ServerOptions) {
+    this.server = new Server(options);
     this.server.on('connection', (ws) => this.handleConnection(ws));
   }
 

@@ -3,6 +3,7 @@ import { ButtonConfig } from '../../model/configuration/ButtonConfig';
 import { useConnectedAgent } from '../../state/appState';
 import TextInput from '../input/TextInput';
 import Button from '../Button';
+import { ImageMap } from '../../model/messages/ImageMap';
 
 export interface Props {
   onClickButton: (button: ButtonConfig) => void;
@@ -10,7 +11,7 @@ export interface Props {
 }
 
 const ButtonList: React.FC<Props> = ({ onClickButton, onCreateButton }) => {
-  const { config } = useConnectedAgent();
+  const { config, images } = useConnectedAgent();
   const { buttons } = config;
 
   const [showButtons, setShowButtons] = useState(buttons);
@@ -43,7 +44,7 @@ const ButtonList: React.FC<Props> = ({ onClickButton, onCreateButton }) => {
       <div className="list">
         {showButtons
           .filter((b) => b != null)
-          .map((b, i) => buttonToComponent(b, i, onClickButton))}
+          .map((b, i) => buttonToComponent(b, i, onClickButton, images))}
       </div>
     </div>
   );
@@ -54,7 +55,8 @@ export default ButtonList;
 function buttonToComponent(
   button: ButtonConfig,
   index: number,
-  onClickButton: (button: ButtonConfig) => void
+  onClickButton: (button: ButtonConfig) => void,
+  images: ImageMap
 ): ReactNode {
   if (!button) {
     return <></>;
@@ -69,7 +71,7 @@ function buttonToComponent(
       onDragStart={(e) => e.dataTransfer.setData('button', button.id)}
     >
       {'style' in button && button.style.image && (
-        <img alt="" src={`/api/images/${button.style.image}`} />
+        <img alt="" src={images[button.style.image]} />
       )}
       <span className="name">{getButtonNameOrText(button)}</span>
     </div>

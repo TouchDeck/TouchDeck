@@ -5,8 +5,9 @@ import ActionOption from '../model/ActionOption';
 import AgentInfo from '../model/AgentInfo';
 import { ButtonConfig } from '../model/configuration/ButtonConfig';
 import WebSocketClient from '../WebSocketClient';
-import { ButtonStateChanged } from '../model/messages/ButtonStateChanged';
+import ButtonStateChanged from '../model/messages/ButtonStateChanged';
 import { ApiResponse } from '../model/ApiResponse';
+import { ImageMap } from '../model/messages/ImageMap';
 
 export default class Agent {
   private readonly socket: WebSocketClient;
@@ -53,5 +54,9 @@ export default class Agent {
 
   public async getActionOptions(): Promise<ActionOption[]> {
     return this.socket.send('get-action-options');
+  }
+
+  public async getImages(): Promise<ImageMap> {
+    return this.socket.send('get-images');
   }
 }

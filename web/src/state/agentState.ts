@@ -4,6 +4,7 @@ import AgentInfo from '../model/AgentInfo';
 import ActionOption from '../model/ActionOption';
 import Configuration from '../model/configuration/Configuration';
 import { ButtonStates } from '../model/ButtonStates';
+import { ImageMap } from '../model/messages/ImageMap';
 
 export interface ConnectedAgentState {
   connecting: false;
@@ -12,6 +13,7 @@ export interface ConnectedAgentState {
   config: Configuration;
   actionOptions: ActionOption[];
   buttonStates: ButtonStates;
+  images: ImageMap;
 }
 
 export type State =
@@ -22,6 +24,7 @@ export type State =
       config?: Configuration;
       actionOptions: undefined;
       buttonStates: ButtonStates;
+      images: {};
     }
   | ConnectedAgentState;
 
@@ -36,6 +39,7 @@ export type Action =
       config: Configuration;
       actionOptions: ActionOption[];
       buttonStates: ButtonStates;
+      images: ImageMap;
     }
   | {
       type: 'agentDisconnected';
@@ -64,6 +68,7 @@ export const reducer: Reducer<State, Action> = (prevState, action) => {
         config: undefined,
         actionOptions: undefined,
         buttonStates: {},
+        images: {},
       };
     case 'agentConnected':
       return {
@@ -74,6 +79,7 @@ export const reducer: Reducer<State, Action> = (prevState, action) => {
         config: action.config,
         actionOptions: action.actionOptions,
         buttonStates: action.buttonStates,
+        images: action.images,
       };
     case 'agentDisconnected':
       return {
@@ -84,6 +90,7 @@ export const reducer: Reducer<State, Action> = (prevState, action) => {
         config: undefined,
         actionOptions: undefined,
         buttonStates: {},
+        images: {},
       };
     case 'configLoaded':
       return { ...prevState, config: action.config };
@@ -107,4 +114,5 @@ export const getInitialState = (): State => ({
   config: undefined,
   actionOptions: undefined,
   buttonStates: {},
+  images: {},
 });

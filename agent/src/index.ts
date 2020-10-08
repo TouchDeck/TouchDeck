@@ -1,20 +1,13 @@
 import 'reflect-metadata';
-import express from 'express';
 import { Logger } from '@luca_scorpion/tinylogger';
 import { getAvailableActions } from './actions/actionRegistry';
-import {
-  DISCOVERY_REPORT_TIME,
-  HTTP_PORT,
-  IMAGES_DIR,
-  PORT,
-} from './constants';
+import { DISCOVERY_REPORT_TIME, PORT } from './constants';
 import {
   getConfiguration,
   readConfiguration,
   setConfiguration,
 } from './configuration/config';
 import reportAgentDiscovery from './util/reportAgentDiscovery';
-import cors from './util/cors';
 import WebSocketServer from './WebSocketServer';
 import getActionOptions from './wsApi/getActionOptions';
 import {
@@ -25,6 +18,7 @@ import {
 } from './wsApi/config';
 import pressButton from './wsApi/pressButton';
 import getAgentInfo from './util/getAgentInfo';
+import getImages from './wsApi/getImages';
 
 const log = new Logger('index');
 log.debug('Starting agent...');
@@ -43,22 +37,20 @@ async function bootstrap(): Promise<void> {
   // Doing it this way allows us to validate on boot.
   await readConfiguration().then(setConfiguration);
 
-  log.debug('Starting express');
-  const app = express();
-
-  // Register all middleware.
-  app.use(express.json());
-  app.use(cors);
-  app.use('/api/images', express.static(IMAGES_DIR));
+  // log.debug('Starting express');
+  // const app = express();
+  // app.use(cors);
+  // app.use('/images', express.static(IMAGES_DIR));
 
   // Register the API routes.
   // app.get('/api/actions/states', getButtonStates);
 
   // Done!
-  app.listen(HTTP_PORT);
+  // app.listen(HTTP_PORT);
 
   // Start the websocket server.
-  const server = new WebSocketServer(PORT);
+  log.debug('Starting websocket server');
+  const server = new WebSocketServer({ port: PORT, path: '/ws' });
   const serverPort = server.address().port;
 
   // Register all websocket server handlers.
@@ -69,6 +61,7 @@ async function bootstrap(): Promise<void> {
   server.registerHandler('delete-configuration-button', deleteButton);
   server.registerHandler('set-layout', updateLayout);
   server.registerHandler('get-action-options', getActionOptions);
+  server.registerHandler('get-images', getImages);
   server.registerHandler('press-button', pressButton);
 
   log.info(`Agent running on ${getAgentInfo(serverPort).address}`);

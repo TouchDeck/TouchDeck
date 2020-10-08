@@ -63,6 +63,7 @@ const ConnectAgentPage: React.FC = () => {
       const agentConfig = await newAgent.getConfiguration();
       const actionOptions = await newAgent.getActionOptions();
       // const buttonStates = await newAgent.getButtonStates();
+      const images = await newAgent.getImages();
 
       // Dispatch the connected event.
       dispatch({
@@ -72,8 +73,8 @@ const ConnectAgentPage: React.FC = () => {
         config: agentConfig,
 
         actionOptions,
-        // TODO
-        buttonStates: {},
+        buttonStates: {}, // TODO
+        images,
       });
     },
     [dispatch]
