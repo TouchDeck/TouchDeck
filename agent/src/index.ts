@@ -37,17 +37,6 @@ async function bootstrap(): Promise<void> {
   // Doing it this way allows us to validate on boot.
   await readConfiguration().then(setConfiguration);
 
-  // log.debug('Starting express');
-  // const app = express();
-  // app.use(cors);
-  // app.use('/images', express.static(IMAGES_DIR));
-
-  // Register the API routes.
-  // app.get('/api/actions/states', getButtonStates);
-
-  // Done!
-  // app.listen(HTTP_PORT);
-
   // Start the websocket server.
   log.debug('Starting websocket server');
   const server = new WebSocketServer({ port: PORT, path: '/ws' });
