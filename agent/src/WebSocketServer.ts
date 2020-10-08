@@ -14,8 +14,8 @@ export default class WebSocketServer {
     [type: string]: MessageHandler<unknown, unknown>;
   } = {};
 
-  public constructor() {
-    this.server = new Server({ port: 0 });
+  public constructor(port: number) {
+    this.server = new Server({ port });
     this.server.on('connection', (ws) => this.handleConnection(ws));
   }
 

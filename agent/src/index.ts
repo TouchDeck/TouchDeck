@@ -2,7 +2,12 @@ import 'reflect-metadata';
 import express from 'express';
 import { Logger } from '@luca_scorpion/tinylogger';
 import { getAvailableActions } from './actions/actionRegistry';
-import { DISCOVERY_REPORT_TIME, HTTP_PORT, IMAGES_DIR } from './constants';
+import {
+  DISCOVERY_REPORT_TIME,
+  HTTP_PORT,
+  IMAGES_DIR,
+  PORT,
+} from './constants';
 import {
   getConfiguration,
   readConfiguration,
@@ -53,7 +58,7 @@ async function bootstrap(): Promise<void> {
   app.listen(HTTP_PORT);
 
   // Start the websocket server.
-  const server = new WebSocketServer();
+  const server = new WebSocketServer(PORT);
   const serverPort = server.address().port;
 
   // Register all websocket server handlers.
