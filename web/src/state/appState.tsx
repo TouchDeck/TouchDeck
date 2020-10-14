@@ -44,7 +44,14 @@ export const AppContextProvider: React.FC = ({ children }) => {
 
 export const useGlobalState = () => useContext(AppContext);
 
-export const useConnectedAgent = () =>
-  useGlobalState()[0].agent as ConnectedAgentState;
+export const useConnectedAgent = () => {
+  const agent = useGlobalState()[0].agent;
+  if (!agent.info) {
+    throw new Error(
+      'Trying to get connected agent state while not connected to agent.'
+    );
+  }
+  return agent;
+};
 
 export const useMessages = () => useGlobalState()[0].messages.messages;
