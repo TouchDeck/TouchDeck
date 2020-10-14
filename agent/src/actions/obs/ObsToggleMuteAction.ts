@@ -25,8 +25,10 @@ export default class ObsToggleMuteAction implements ToggleAction {
   }
 
   private async getState(source: string): Promise<boolean> {
-    return (await this.obs.getSocket())
-      .send('GetMute', { source })
-      .then((o) => o.muted);
+    return this.obs
+      .getSocket()
+      .then((s) => s.send('GetMute', { source }))
+      .then((o) => o.muted)
+      .catch(() => false);
   }
 }

@@ -25,8 +25,10 @@ export default class ObsToggleSceneItemRenderAction implements ToggleAction {
   }
 
   private async getState(source: string): Promise<boolean> {
-    return (await this.obs.getSocket())
-      .send('GetSceneItemProperties', { item: source })
-      .then((o) => o.visible);
+    return this.obs
+      .getSocket()
+      .then((s) => s.send('GetSceneItemProperties', { item: source }))
+      .then((o) => o.visible)
+      .catch(() => false);
   }
 }

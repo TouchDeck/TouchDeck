@@ -8,7 +8,7 @@ import { MessageDataMap, MessageResponseMap } from './model/messages/messages';
 export default class WebSocketServer {
   private static log = new Logger(WebSocketServer.name);
 
-  private readonly server: Server;
+  public readonly server: Server;
 
   private readonly handlers: {
     [type: string]: MessageHandler<unknown, unknown>;
@@ -16,7 +16,7 @@ export default class WebSocketServer {
 
   public constructor(options: ServerOptions) {
     this.server = new Server(options);
-    this.server.on('connection', (ws) => this.handleConnection(ws));
+    this.server.addListener('connection', (ws) => this.handleConnection(ws));
   }
 
   public address(): AddressInfo {
@@ -28,6 +28,24 @@ export default class WebSocketServer {
     handler: MessageHandler<MessageDataMap[T], MessageResponseMap[T]>
   ): void {
     this.handlers[type] = handler as MessageHandler<unknown, unknown>;
+  }
+
+  public send<T extends keyof MessageDataMap>(
+    type: T,
+    data: MessageDataMap[T],
+    replyTo?: string
+  ): void {
+    const msg: Message = {
+      type,
+      replyTo,
+      messageId: uuidv4(),
+      data,
+    };
+    this.broadcast(JSON.stringify(msg));
+  }
+
+  private broadcast(data: string): void {
+    this.server.clients.forEach((ws) => ws.send(data));
   }
 
   private handleConnection(ws: WebSocket): void {

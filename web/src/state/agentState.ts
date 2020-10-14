@@ -23,7 +23,7 @@ export type State =
       info: undefined;
       config?: Configuration;
       actionOptions: undefined;
-      buttonStates: ButtonStates;
+      buttonStates: {};
       images: {};
     }
   | ConnectedAgentState;
@@ -38,7 +38,6 @@ export type Action =
       info: AgentInfo;
       config: Configuration;
       actionOptions: ActionOption[];
-      buttonStates: ButtonStates;
       images: ImageMap;
     }
   | {
@@ -78,8 +77,8 @@ export const reducer: Reducer<State, Action> = (prevState, action) => {
         info: action.info,
         config: action.config,
         actionOptions: action.actionOptions,
-        buttonStates: action.buttonStates,
         images: action.images,
+        buttonStates: {},
       };
     case 'agentDisconnected':
       return {

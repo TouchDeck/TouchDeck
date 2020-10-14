@@ -19,6 +19,7 @@ import {
 import pressButton from './wsApi/pressButton';
 import getAgentInfo from './util/getAgentInfo';
 import getImages from './wsApi/getImages';
+import sendButtonStates from './wsApi/sendButtonStates';
 
 const log = new Logger('index');
 log.debug('Starting agent...');
@@ -52,6 +53,9 @@ async function bootstrap(): Promise<void> {
   server.registerHandler('get-action-options', getActionOptions);
   server.registerHandler('get-images', getImages);
   server.registerHandler('press-button', pressButton);
+
+  // When a new connection is established, send all button states.
+  server.server.addListener('connection', () => sendButtonStates(server));
 
   log.info(`Agent running on ${getAgentInfo(serverPort).address}`);
 

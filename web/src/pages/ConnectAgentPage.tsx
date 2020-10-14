@@ -59,10 +59,9 @@ const ConnectAgentPage: React.FC = () => {
         return;
       }
 
-      // Load the configuration, action options, button states from the agent.
+      // Load the configuration, action options from the agent.
       const agentConfig = await newAgent.getConfiguration();
       const actionOptions = await newAgent.getActionOptions();
-      // const buttonStates = await newAgent.getButtonStates();
       const images = await newAgent.getImages();
 
       // Dispatch the connected event.
@@ -71,9 +70,7 @@ const ConnectAgentPage: React.FC = () => {
         agent: newAgent,
         info: agentInfo,
         config: agentConfig,
-
         actionOptions,
-        buttonStates: {}, // TODO
         images,
       });
     },
