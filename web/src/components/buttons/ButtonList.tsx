@@ -73,6 +73,9 @@ function buttonToComponent(
       {'style' in button && button.style.image && (
         <img alt="" src={images[button.style.image]} />
       )}
+      {'trueStyle' in button && button.trueStyle.image && (
+        <img alt="" src={images[button.trueStyle.image]} />
+      )}
       <span className="name">{getButtonNameOrText(button)}</span>
     </div>
   );
