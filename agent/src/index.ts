@@ -52,7 +52,7 @@ async function bootstrap(): Promise<void> {
   server.registerHandler('set-layout', updateLayout);
   server.registerHandler('get-action-options', getActionOptions);
   server.registerHandler('get-images', getImages);
-  server.registerHandler('press-button', pressButton);
+  server.registerHandler('press-button', pressButton(server));
 
   // When a new connection is established, send all button states.
   server.server.addListener('connection', () => sendButtonStates(server));

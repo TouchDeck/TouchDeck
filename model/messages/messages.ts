@@ -2,9 +2,9 @@ import AgentInfo from '../AgentInfo';
 import { ButtonConfig } from '../configuration/ButtonConfig';
 import Configuration, { ButtonLayout } from '../configuration/Configuration';
 import ActionOption from '../ActionOption';
-import { ApiResponse } from '../ApiResponse';
 import ButtonStateChanged from './ButtonStateChanged';
 import { ImageMap } from './ImageMap';
+import { PressButtonResult } from './PressButtonResult';
 
 export interface MessageDataMap {
   'get-info': void;
@@ -27,7 +27,7 @@ export interface MessageResponseMap {
   'delete-configuration-button': Configuration;
   'set-layout': Configuration;
   'get-action-options': ActionOption[];
-  'press-button': ApiResponse;
+  'press-button': PressButtonResult;
   'button-state-changed': void;
   'get-images': ImageMap;
 }

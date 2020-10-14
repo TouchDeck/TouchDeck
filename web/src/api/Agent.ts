@@ -6,8 +6,8 @@ import AgentInfo from '../model/AgentInfo';
 import { ButtonConfig } from '../model/configuration/ButtonConfig';
 import WebSocketClient from '../WebSocketClient';
 import ButtonStateChanged from '../model/messages/ButtonStateChanged';
-import { ApiResponse } from '../model/ApiResponse';
 import { ImageMap } from '../model/messages/ImageMap';
+import { PressButtonResult } from '../model/messages/PressButtonResult';
 
 export default class Agent {
   private readonly socket: WebSocketClient;
@@ -48,7 +48,7 @@ export default class Agent {
     return this.socket.send('set-layout', newLayout);
   }
 
-  public async pressButton(buttonId: string): Promise<ApiResponse> {
+  public async pressButton(buttonId: string): Promise<PressButtonResult> {
     return this.socket.send('press-button', buttonId);
   }
 
