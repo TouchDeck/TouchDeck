@@ -78,7 +78,8 @@ export const reducer: Reducer<State, Action> = (prevState, action) => {
         config: action.config,
         actionOptions: action.actionOptions,
         images: action.images,
-        buttonStates: {},
+        // Don't overwrite the button states here,
+        // this event might occur after first button state changed messages.
       };
     case 'agentDisconnected':
       return {
