@@ -1,7 +1,6 @@
 import React, { Dispatch, Reducer, useContext, useReducer } from 'react';
 import {
   Action as AgentAction,
-  ConnectedAgentState,
   getInitialState as getInitialAgentState,
   reducer as agentReducer,
   State as AgentState,
