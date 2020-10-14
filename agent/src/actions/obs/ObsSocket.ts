@@ -2,11 +2,6 @@ import OBSWebSocket from 'obs-websocket-js';
 import { Logger } from '@luca_scorpion/tinylogger';
 import { singleton } from '../../inject';
 
-export interface VersionResult {
-  'obs-websocket-version': string;
-  'obs-studio-version': string;
-}
-
 enum ConnectionStatus {
   DISCONNECTED,
   CONNECTING,
@@ -24,6 +19,13 @@ export default class ObsSocket {
   public constructor() {
     this.obs = new OBSWebSocket();
 
+    this.obs.on('ConnectionOpened', async () => {
+      const version = await this.obs.send('GetVersion');
+      ObsSocket.log.debug(
+        `Connected to OBS version ${version['obs-studio-version']}, websocket plugin version ${version['obs-websocket-version']}`
+      );
+    });
+
     // Hook into the socket disconnect event.
     this.obs.on('ConnectionClosed', () => {
       ObsSocket.log.debug('Connection closed');
@@ -36,27 +38,14 @@ export default class ObsSocket {
     return this.obs;
   }
 
-  public async getVersion(): Promise<VersionResult> {
-    await this.assertConnected();
-    return this.obs.send('GetVersion');
-  }
-
   private async tryConnect(): Promise<void> {
     this.status = ConnectionStatus.CONNECTING;
     try {
       await this.obs.connect();
       this.status = ConnectionStatus.CONNECTED;
-      this.printConnectionInfo();
     } catch (e) {
       ObsSocket.log.debug(`Could not connect to OBS: ${e.description}`);
     }
-  }
-
-  private async printConnectionInfo(): Promise<void> {
-    const version = await this.getVersion();
-    ObsSocket.log.debug(
-      `Connected to OBS version ${version['obs-studio-version']}, websocket plugin version ${version['obs-websocket-version']}`
-    );
   }
 
   private async assertConnected(): Promise<void> {
