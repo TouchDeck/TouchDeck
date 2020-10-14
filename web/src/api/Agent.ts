@@ -8,12 +8,21 @@ import WebSocketClient from '../WebSocketClient';
 import ButtonStateChanged from '../model/messages/ButtonStateChanged';
 import { ImageMap } from '../model/messages/ImageMap';
 import { PressButtonResult } from '../model/messages/PressButtonResult';
+import sanitizeWsAddress from '../util/sanitizeWsAddress';
 
 export default class Agent {
   private readonly socket: WebSocketClient;
 
-  public constructor(private readonly address: string) {
-    this.socket = new WebSocketClient(address);
+  public constructor(address: string) {
+    this.socket = new WebSocketClient(`${sanitizeWsAddress(address)}/ws`);
+  }
+
+  public connect(): Promise<void> {
+    return this.socket.connect();
+  }
+
+  public onDisconnect(handler: () => void): void {
+    this.socket.onDisconnect(handler);
   }
 
   public onButtonStateChanged(

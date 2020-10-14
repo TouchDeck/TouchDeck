@@ -28,6 +28,14 @@ const ConnectAgentPage: React.FC = () => {
       dispatch({ type: 'dismissError' });
       dispatch({ type: 'agentConnecting' });
       const newAgent = new Agent(address);
+      await newAgent.connect();
+
+      // Hook into the disconnect event.
+      newAgent.onDisconnect(() => {
+        dispatch({ type: 'agentDisconnected' });
+      });
+
+      // Hook into button state change events.
       newAgent.onButtonStateChanged((event) =>
         dispatch({
           type: 'buttonStateChanged',

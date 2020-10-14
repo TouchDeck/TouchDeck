@@ -1,5 +1,3 @@
-import ReconnectingWebSocket from 'reconnecting-websocket';
-import sanitizeWsAddress from './util/sanitizeWsAddress';
 import { MessageDataMap, MessageResponseMap } from './model/messages/messages';
 import { MessageHandler } from './model/messages/MessageHandler';
 
@@ -11,7 +9,7 @@ export interface WebSocketMessage {
 }
 
 export default class WebSocketClient {
-  private readonly socket: ReconnectingWebSocket;
+  private socket?: WebSocket;
 
   private messageIdCounter = 0;
   private responsePromises: {
@@ -22,11 +20,21 @@ export default class WebSocketClient {
     [type: string]: MessageHandler<unknown, unknown>;
   } = {};
 
-  public constructor(address: string) {
-    this.socket = new ReconnectingWebSocket(`${sanitizeWsAddress(address)}/ws`);
+  public constructor(private readonly address: string) {}
+
+  public connect(): Promise<void> {
+    this.socket = new WebSocket(this.address);
     this.socket.addEventListener('message', (event) =>
       this.handleMessage(event)
     );
+
+    return new Promise((resolve) => {
+      this.socket?.addEventListener('open', () => resolve());
+    });
+  }
+
+  public onDisconnect(handler: () => void): void {
+    this.socket?.addEventListener('error', handler);
   }
 
   public registerHandler<T extends keyof MessageDataMap>(
@@ -43,6 +51,10 @@ export default class WebSocketClient {
     type: T,
     ...args: MessageDataMap[T] extends void ? [undefined?] : [MessageDataMap[T]]
   ): Promise<MessageResponseMap[T]> {
+    if (!this.socket) {
+      throw new Error('No agent socket connection available.');
+    }
+
     const message: WebSocketMessage = {
       type: type.toString(),
       messageId: (this.messageIdCounter++).toString(),
