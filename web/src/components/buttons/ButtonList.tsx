@@ -3,7 +3,7 @@ import { ButtonConfig } from '../../model/configuration/ButtonConfig';
 import { useConnectedAgent } from '../../state/appState';
 import TextInput from '../input/TextInput';
 import Button from '../Button';
-import { ImageMap } from '../../model/messages/ImageMap';
+import GridButton from './GridButton';
 
 export interface Props {
   onClickButton: (button: ButtonConfig) => void;
@@ -11,7 +11,7 @@ export interface Props {
 }
 
 const ButtonList: React.FC<Props> = ({ onClickButton, onCreateButton }) => {
-  const { config, images } = useConnectedAgent();
+  const { config } = useConnectedAgent();
   const { buttons } = config;
 
   const [showButtons, setShowButtons] = useState(buttons);
@@ -44,7 +44,7 @@ const ButtonList: React.FC<Props> = ({ onClickButton, onCreateButton }) => {
       <div className="list">
         {showButtons
           .filter((b) => b != null)
-          .map((b, i) => buttonToComponent(b, i, onClickButton, images))}
+          .map((b, i) => buttonToComponent(b, i, onClickButton))}
       </div>
     </div>
   );
@@ -55,8 +55,7 @@ export default ButtonList;
 function buttonToComponent(
   button: ButtonConfig,
   index: number,
-  onClickButton: (button: ButtonConfig) => void,
-  images: ImageMap
+  onClickButton: (button: ButtonConfig) => void
 ): ReactNode {
   if (!button) {
     return <></>;
@@ -70,11 +69,11 @@ function buttonToComponent(
       draggable
       onDragStart={(e) => e.dataTransfer.setData('button', button.id)}
     >
-      {'style' in button && button.style.image && (
-        <img alt="" src={images[button.style.image]} />
+      {'style' in button && (
+        <GridButton style={button.style} size={48} disabled />
       )}
-      {'trueStyle' in button && button.trueStyle.image && (
-        <img alt="" src={images[button.trueStyle.image]} />
+      {'trueStyle' in button && (
+        <GridButton style={button.trueStyle} size={48} disabled />
       )}
       <span className="name">{getButtonNameOrText(button)}</span>
     </div>
