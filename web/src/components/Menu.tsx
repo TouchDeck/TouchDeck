@@ -25,12 +25,12 @@ const Menu: React.FC<Props> = ({ open, onClose }) => (
         Targets
       </h2>
     </NavLink>
-    <NavLink className="entry" to="/agent">
+    <Link className="entry" to="#agent">
       <h2>
         <Icon icon="robot" />
         Agent
       </h2>
-    </NavLink>
+    </Link>
   </nav>
 );
 

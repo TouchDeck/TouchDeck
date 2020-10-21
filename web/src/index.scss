@@ -22,12 +22,12 @@ $border-radius: 4px;
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
 
 // Page styles
-@import 'pages/AgentInfoPage';
 @import 'pages/ConnectAgentPage';
 @import 'pages/DeckPage';
 @import 'pages/TargetsSettingsPage';
 
 // Component styles
+@import 'components/AgentInfoModal';
 @import 'components/AgentList';
 @import 'components/Button';
 @import 'components/ButtonGroup';

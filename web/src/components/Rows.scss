@@ -1,4 +1,10 @@
 .rows {
+  &.compact {
+    > div {
+      height: 22px;
+    }
+  }
+
   > div {
     display: flex;
     justify-content: space-between;

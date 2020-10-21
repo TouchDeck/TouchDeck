@@ -1,18 +1,26 @@
 import React from 'react';
-import Rows from '../components/Rows';
+import Rows from './Rows';
 import capitalizeFirstLetter from '../util/capitalizeFirstLetter';
-import { Link } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useConnectedAgent, useGlobalState } from '../state/appState';
-import Button from '../components/Button';
+import Button from './Button';
+import Modal from './Modal';
 
-const AgentInfoPage: React.FC = () => {
+const AgentInfoModal: React.FC = () => {
   const [, dispatch] = useGlobalState();
   const { info } = useConnectedAgent();
+  const location = useLocation();
+  const active = location.hash === '#agent';
+  const history = useHistory();
 
   return (
-    <main className="agent-info">
+    <Modal
+      className="agent-info"
+      active={active}
+      onClose={() => history.push('#')}
+    >
       <h3>Connected agent:</h3>
-      <Rows>
+      <Rows compact>
         <div>
           <span>Address:</span>
           <span>{info.address}</span>
@@ -30,17 +38,15 @@ const AgentInfoPage: React.FC = () => {
           <span>{info.hostname}</span>
         </div>
       </Rows>
-      <Link
-        className="disconnect"
-        to="/"
-        onClick={() => dispatch({ type: 'agentDisconnected' })}
-      >
-        <Button negative icon="power-off">
-          Disconnect
-        </Button>
-      </Link>
-    </main>
+      <div className="disconnect">
+        <Link to="/" onClick={() => dispatch({ type: 'agentDisconnected' })}>
+          <Button negative icon="power-off">
+            Disconnect
+          </Button>
+        </Link>
+      </div>
+    </Modal>
   );
 };
 
-export default AgentInfoPage;
+export default AgentInfoModal;

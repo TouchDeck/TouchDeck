@@ -3,7 +3,7 @@ import DeckPage from './pages/DeckPage';
 import { useGlobalState } from './state/appState';
 import ConnectAgentPage from './pages/ConnectAgentPage';
 import { Route, Switch } from 'react-router-dom';
-import AgentInfoPage from './pages/AgentInfoPage';
+import AgentInfoModal from './components/AgentInfoModal';
 import Layout from './components/Layout';
 import TargetsSettingsPage from './pages/TargetsSettingsPage';
 import MessageDisplay from './components/MessageDisplay';
@@ -30,9 +30,9 @@ const App: React.FC = () => {
             <DeckPage editing />
           </Route>
           <Route exact path="/targets" component={TargetsSettingsPage} />
-          <Route exact path="/agent" component={AgentInfoPage} />
         </Switch>
       </Layout>
+      <AgentInfoModal />
     </MessageDisplay>
   );
 };
