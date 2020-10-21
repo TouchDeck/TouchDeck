@@ -39,10 +39,12 @@ $border-radius: 4px;
 @import 'components/Rows';
 @import 'components/buttons/ButtonGrid';
 @import 'components/buttons/ButtonList';
+@import 'components/buttons/EditButtonModal';
 @import 'components/buttons/GridButton';
 @import 'components/input/ColorInput';
 @import 'components/input/Input';
 @import 'components/settings/ButtonSettings';
+@import 'components/settings/ButtonStyleSettings';
 @import 'components/settings/TargetRow';
 
 // Styling
