@@ -35,44 +35,46 @@ const EditButtonModal: React.FC<Props> = ({ button, onClose }) => {
         value={updates.name}
         onChange={(name) => setUpdates((prevState) => ({ ...prevState, name }))}
       />
-      {'style' in updates && (
-        <ButtonStyleSettings
-          buttonStyle={updates.style}
-          onChange={(style) =>
-            setUpdates((prevState) => ({ ...prevState, style }))
-          }
-        />
-      )}
-      {'action' in updates && (
-        <ButtonActionSettings
-          action={updates.action}
-          onChange={(action) =>
-            setUpdates((prevState) => ({ ...prevState, action }))
-          }
-        />
-      )}
-      {'trueStyle' in updates && (
-        <ButtonStyleSettings
-          buttonStyle={updates.trueStyle}
-          onChange={(style) =>
-            setUpdates((prevState) => ({
-              ...prevState,
-              trueStyle: style,
-            }))
-          }
-        />
-      )}
-      {'falseStyle' in updates && (
-        <ButtonStyleSettings
-          buttonStyle={updates.falseStyle}
-          onChange={(style) =>
-            setUpdates((prevState) => ({
-              ...prevState,
-              falseStyle: style,
-            }))
-          }
-        />
-      )}
+      <div className="columns">
+        {'action' in updates && (
+          <ButtonActionSettings
+            action={updates.action}
+            onChange={(action) =>
+              setUpdates((prevState) => ({ ...prevState, action }))
+            }
+          />
+        )}
+        {'style' in updates && (
+          <ButtonStyleSettings
+            buttonStyle={updates.style}
+            onChange={(style) =>
+              setUpdates((prevState) => ({ ...prevState, style }))
+            }
+          />
+        )}
+        {'trueStyle' in updates && (
+          <ButtonStyleSettings
+            buttonStyle={updates.trueStyle}
+            onChange={(style) =>
+              setUpdates((prevState) => ({
+                ...prevState,
+                trueStyle: style,
+              }))
+            }
+          />
+        )}
+        {'falseStyle' in updates && (
+          <ButtonStyleSettings
+            buttonStyle={updates.falseStyle}
+            onChange={(style) =>
+              setUpdates((prevState) => ({
+                ...prevState,
+                falseStyle: style,
+              }))
+            }
+          />
+        )}
+      </div>
       <ButtonGroup className="actions">
         <Button onClick={onSave} positive icon="save">
           Save
