@@ -41,6 +41,7 @@ const EditButtonModal: React.FC<Props> = ({ button, onClose }) => {
         className="name"
         value={updates.name}
         onChange={(name) => setUpdates((prevState) => ({ ...prevState, name }))}
+        placeholder="Button name"
       />
       <div className="columns">
         {'action' in updates && (
