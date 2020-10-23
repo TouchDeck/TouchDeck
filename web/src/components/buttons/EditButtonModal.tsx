@@ -44,42 +44,54 @@ const EditButtonModal: React.FC<Props> = ({ button, onClose }) => {
       />
       <div className="columns">
         {'action' in updates && (
-          <ButtonActionSettings
-            action={updates.action}
-            onChange={(action) =>
-              setUpdates((prevState) => ({ ...prevState, action }))
-            }
-          />
+          <div>
+            <h3>Action</h3>
+            <ButtonActionSettings
+              action={updates.action}
+              onChange={(action) =>
+                setUpdates((prevState) => ({ ...prevState, action }))
+              }
+            />
+          </div>
         )}
         {'style' in updates && (
-          <ButtonStyleSettings
-            buttonStyle={updates.style}
-            onChange={(style) =>
-              setUpdates((prevState) => ({ ...prevState, style }))
-            }
-          />
+          <div>
+            <h3>Style</h3>
+            <ButtonStyleSettings
+              buttonStyle={updates.style}
+              onChange={(style) =>
+                setUpdates((prevState) => ({ ...prevState, style }))
+              }
+            />
+          </div>
         )}
         {'trueStyle' in updates && (
-          <ButtonStyleSettings
-            buttonStyle={updates.trueStyle}
-            onChange={(style) =>
-              setUpdates((prevState) => ({
-                ...prevState,
-                trueStyle: style,
-              }))
-            }
-          />
+          <div>
+            <h3>True style</h3>
+            <ButtonStyleSettings
+              buttonStyle={updates.trueStyle}
+              onChange={(style) =>
+                setUpdates((prevState) => ({
+                  ...prevState,
+                  trueStyle: style,
+                }))
+              }
+            />
+          </div>
         )}
         {'falseStyle' in updates && (
-          <ButtonStyleSettings
-            buttonStyle={updates.falseStyle}
-            onChange={(style) =>
-              setUpdates((prevState) => ({
-                ...prevState,
-                falseStyle: style,
-              }))
-            }
-          />
+          <div>
+            <h3>False style</h3>
+            <ButtonStyleSettings
+              buttonStyle={updates.falseStyle}
+              onChange={(style) =>
+                setUpdates((prevState) => ({
+                  ...prevState,
+                  falseStyle: style,
+                }))
+              }
+            />
+          </div>
         )}
       </div>
       <div className="actions">

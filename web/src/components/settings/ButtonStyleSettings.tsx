@@ -20,7 +20,6 @@ const ButtonStyleSettings: React.FC<Props> = ({ buttonStyle, onChange }) => {
   return (
     <div className="button-style-settings">
       <div className="preview-wrapper">
-        <h3>Style</h3>
         <GridButton style={buttonStyle} size={64} />
       </div>
       <Rows>
