@@ -1,15 +1,20 @@
 .button-list {
   height: 100%;
-  width: 220px;
+  width: 240px;
   display: flex;
   flex-direction: column;
 
-  .search-wrapper {
-    padding: 8px;
-    display: flex;
+  .search {
+    margin: 8px;
+  }
 
-    .create {
-      margin-left: 8px;
+  .button-group {
+    margin-bottom: 8px;
+    padding: 0 8px;
+    width: 100%;
+
+    button {
+      width: 50%;
     }
   }
 
