@@ -1,5 +1,10 @@
 import React, { useCallback, useState } from 'react';
-import { ButtonConfig } from '../../model/configuration/ButtonConfig';
+import {
+  ActionButtonConfig,
+  ButtonConfig,
+  NormalButtonConfig,
+  ToggleButtonConfig,
+} from '../../model/configuration/ButtonConfig';
 import Modal from '../Modal';
 import Button from '../Button';
 import TextInput from '../input/TextInput';
@@ -15,7 +20,7 @@ export interface Props {
 
 const EditButtonModal: React.FC<Props> = ({ button, onClose }) => {
   const [, dispatch] = useGlobalState();
-  const { agent } = useConnectedAgent();
+  const { agent, actionOptions } = useConnectedAgent();
   const [updates, setUpdates] = useState<ButtonConfig>({ ...button });
 
   const onSave = useCallback(async () => {
@@ -50,7 +55,41 @@ const EditButtonModal: React.FC<Props> = ({ button, onClose }) => {
             <ButtonActionSettings
               action={updates.action}
               onChange={(action) =>
-                setUpdates((prevState) => ({ ...prevState, action }))
+                setUpdates((prevState) => {
+                  // It's safe to cast this to ActionButtonConfig, since we have an 'action' prop.
+                  const newState = {
+                    ...prevState,
+                    action,
+                  } as ActionButtonConfig;
+
+                  // Find the new action option, update the button type.
+                  const actionOption = actionOptions.find(
+                    (o) => o.type === action.type
+                  )!;
+                  newState.type = actionOption.toggleable ? 'toggle' : 'normal';
+
+                  // If the action changed between normal and toggleable, update the styles.
+                  if (
+                    prevState.type === 'normal' &&
+                    newState.type === 'toggle'
+                  ) {
+                    newState.trueStyle = prevState.style;
+                    newState.falseStyle = prevState.style;
+                    delete ((newState as unknown) as NormalButtonConfig).style;
+                  }
+                  if (
+                    prevState.type === 'toggle' &&
+                    newState.type === 'normal'
+                  ) {
+                    newState.style = prevState.trueStyle;
+                    delete ((newState as unknown) as ToggleButtonConfig)
+                      .trueStyle;
+                    delete ((newState as unknown) as ToggleButtonConfig)
+                      .falseStyle;
+                  }
+
+                  return newState;
+                })
               }
             />
           </div>
