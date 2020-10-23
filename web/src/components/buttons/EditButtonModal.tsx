@@ -28,6 +28,13 @@ const EditButtonModal: React.FC<Props> = ({ button, onClose }) => {
     onClose();
   }, [agent, button.id, dispatch, updates, onClose]);
 
+  const onDelete = useCallback(async () => {
+    dispatch({ type: 'configLoading' });
+    const newConfig = await agent.deleteButton(button.id);
+    dispatch({ type: 'configLoaded', config: newConfig });
+    onClose();
+  }, [agent, button.id, dispatch, onClose]);
+
   return (
     <Modal className="edit-button" active onClose={onClose}>
       <TextInput
@@ -75,12 +82,17 @@ const EditButtonModal: React.FC<Props> = ({ button, onClose }) => {
           />
         )}
       </div>
-      <ButtonGroup className="actions">
-        <Button onClick={onSave} positive icon="save">
-          Save
+      <div className="actions">
+        <Button onClick={onDelete} negative icon="trash">
+          Delete
         </Button>
-        <Button onClick={onClose}>Cancel</Button>
-      </ButtonGroup>
+        <ButtonGroup>
+          <Button onClick={onSave} positive icon="save">
+            Save
+          </Button>
+          <Button onClick={onClose}>Cancel</Button>
+        </ButtonGroup>
+      </div>
     </Modal>
   );
 };

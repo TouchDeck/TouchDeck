@@ -7,6 +7,7 @@
 
   .columns {
     display: flex;
+    justify-content: space-around;
 
     > * {
       &:not(:last-child) {
@@ -17,6 +18,7 @@
 
   .actions {
     margin-top: 32px;
-    text-align: right;
+    display: flex;
+    justify-content: space-between;
   }
 }
