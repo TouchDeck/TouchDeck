@@ -87,10 +87,10 @@ const EditButtonModal: React.FC<Props> = ({ button, onClose }) => {
           Delete
         </Button>
         <ButtonGroup>
+          <Button onClick={onClose}>Cancel</Button>
           <Button onClick={onSave} positive icon="save">
             Save
           </Button>
-          <Button onClick={onClose}>Cancel</Button>
         </ButtonGroup>
       </div>
     </Modal>
