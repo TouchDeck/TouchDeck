@@ -8,6 +8,7 @@ import AgentList from '../components/AgentList';
 import TextInput from '../components/input/TextInput';
 import Modal from '../components/Modal';
 import Button from '../components/Button';
+import { errorId } from '../util/errorId';
 
 const ConnectAgentPage: React.FC = () => {
   const [{ agent }, dispatch] = useGlobalState();
@@ -28,7 +29,18 @@ const ConnectAgentPage: React.FC = () => {
       dispatch({ type: 'dismissError' });
       dispatch({ type: 'agentConnecting' });
       const newAgent = new Agent(address);
-      await newAgent.connect();
+
+      try {
+        await newAgent.connect();
+      } catch {
+        dispatch({ type: 'agentDisconnected' });
+        dispatch({
+          type: 'error',
+          message: `Failed to connect to agent at ${address}`,
+          id: errorId(),
+        });
+        return;
+      }
 
       // Hook into the disconnect event.
       newAgent.onDisconnect(() => {
@@ -52,7 +64,7 @@ const ConnectAgentPage: React.FC = () => {
           dispatch({
             type: 'error',
             message: `Invalid agent name: ${agentInfo.name}`,
-            id: Math.random().toString().substring(2),
+            id: errorId(),
           });
           dispatch({ type: 'agentDisconnected' });
           return;
@@ -61,7 +73,7 @@ const ConnectAgentPage: React.FC = () => {
         dispatch({
           type: 'error',
           message: `Could not connect to agent: ${err.message}`,
-          id: Math.random().toString().substring(2),
+          id: errorId(),
         });
         dispatch({ type: 'agentDisconnected' });
         return;

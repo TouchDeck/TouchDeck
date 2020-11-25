@@ -28,8 +28,9 @@ export default class WebSocketClient {
       this.handleMessage(event)
     );
 
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       this.socket?.addEventListener('open', () => resolve());
+      this.socket?.addEventListener('error', () => reject());
     });
   }
 
