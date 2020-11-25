@@ -4,6 +4,7 @@ import { useConnectedAgent } from '../../state/appState';
 import TextInput from '../input/TextInput';
 import Button from '../Button';
 import GridButton from './GridButton';
+import ButtonGroup from '../ButtonGroup';
 
 export interface Props {
   onClickButton: (button: ButtonConfig) => void;
@@ -26,21 +27,21 @@ const ButtonList: React.FC<Props> = ({ onClickButton, onCreateButton }) => {
 
   return (
     <div className="button-list">
-      <div className="search-wrapper">
-        <TextInput
-          placeholder="Search..."
-          value={searchTerm}
-          onChange={setSearchTerm}
-          icon="search"
-        />
-        <Button
-          className="create"
-          onClick={onCreateButton}
-          icon="plus"
-          compact
-          positive
-        />
-      </div>
+      <TextInput
+        className="search"
+        placeholder="Search..."
+        value={searchTerm}
+        onChange={setSearchTerm}
+        icon="search"
+      />
+      <ButtonGroup>
+        <Button onClick={onCreateButton} icon="plus" positive>
+          Action
+        </Button>
+        <Button onClick={onCreateButton} icon="folder-open">
+          Folder
+        </Button>
+      </ButtonGroup>
       <div className="list">
         {showButtons
           .filter((b) => b != null)

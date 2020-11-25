@@ -1,0 +1,29 @@
+.edit-button {
+  .name input {
+    font-size: 1.5rem;
+    height: auto;
+    margin-bottom: 32px;
+  }
+
+  .columns {
+    display: flex;
+    justify-content: space-around;
+
+    > * {
+      &:not(:last-child) {
+        margin-right: 32px;
+      }
+
+      h3 {
+        text-align: center;
+        margin-bottom: 4px;
+      }
+    }
+  }
+
+  .actions {
+    margin-top: 32px;
+    display: flex;
+    justify-content: space-between;
+  }
+}

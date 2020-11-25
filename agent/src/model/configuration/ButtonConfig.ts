@@ -1,9 +1,8 @@
 import ActionConfig from './ActionConfig';
 
-export type ButtonConfig =
-  | NormalButtonConfig
-  | ToggleButtonConfig
-  | FolderButtonConfig;
+export type ButtonConfig = ActionButtonConfig | FolderButtonConfig;
+
+export type ActionButtonConfig = NormalButtonConfig | ToggleButtonConfig;
 
 export type ButtonType = 'normal' | 'toggle' | 'folder';
 

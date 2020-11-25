@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import ButtonGrid from '../components/buttons/ButtonGrid';
 import ButtonList from '../components/buttons/ButtonList';
 import { ButtonConfig } from '../model/configuration/ButtonConfig';
-import ButtonSettings from '../components/settings/ButtonSettings';
 import newButton from '../util/newButton';
+import EditButtonModal from '../components/buttons/EditButtonModal';
 
 export interface Props {
   editing?: boolean;
@@ -27,7 +27,7 @@ const DeckPage: React.FC<Props> = ({ editing }) => {
             onCreateButton={() => setSelectedButton(newButton('normal'))}
           />
           {selectedButton && (
-            <ButtonSettings
+            <EditButtonModal
               button={selectedButton}
               onClose={() => setSelectedButton(undefined)}
             />

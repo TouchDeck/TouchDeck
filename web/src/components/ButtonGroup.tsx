@@ -1,7 +1,12 @@
 import React from 'react';
+import classNames from '../util/classNames';
 
-const ButtonGroup: React.FC = ({ children }) => (
-  <div className="button-group">{children}</div>
+export interface Props {
+  className?: string;
+}
+
+const ButtonGroup: React.FC<Props> = ({ children, className }) => (
+  <div className={classNames(['button-group', className])}>{children}</div>
 );
 
 export default ButtonGroup;
