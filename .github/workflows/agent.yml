@@ -36,8 +36,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.release.outputs.upload_url }}
-          asset_path: ./agent/exe/${{ steps.package.outputs.packageName }}-${{ steps.package.outputs.packageVersion }}-windows.exe
-          asset_name: ${{ steps.package.outputs.packageName }}-${{ steps.package.outputs.packageVersion }}-windows.exe
+          asset_path: ./agent/exe/${{ steps.package.outputs.packageName }}-${{ steps.package.outputs.packageVersion }}-windows-x64.exe
+          asset_name: ${{ steps.package.outputs.packageName }}-${{ steps.package.outputs.packageVersion }}-windows-x64.exe
           asset_content_type: application/vnd.microsoft.portable-executable
       - name: Upload Mac build
         uses: actions/upload-release-asset@v1
@@ -45,8 +45,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.release.outputs.upload_url }}
-          asset_path: ./agent/exe/${{ steps.package.outputs.packageName }}-${{ steps.package.outputs.packageVersion }}-mac
-          asset_name: ${{ steps.package.outputs.packageName }}-${{ steps.package.outputs.packageVersion }}-mac
+          asset_path: ./agent/exe/${{ steps.package.outputs.packageName }}-${{ steps.package.outputs.packageVersion }}-mac-x64
+          asset_name: ${{ steps.package.outputs.packageName }}-${{ steps.package.outputs.packageVersion }}-mac-x64
           asset_content_type: application/octet-stream
       - name: Upload Linux build
         uses: actions/upload-release-asset@v1
@@ -54,6 +54,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.release.outputs.upload_url }}
-          asset_path: ./agent/exe/${{ steps.package.outputs.packageName }}-${{ steps.package.outputs.packageVersion }}-linux
-          asset_name: ${{ steps.package.outputs.packageName }}-${{ steps.package.outputs.packageVersion }}-linux
+          asset_path: ./agent/exe/${{ steps.package.outputs.packageName }}-${{ steps.package.outputs.packageVersion }}-linux-x64
+          asset_name: ${{ steps.package.outputs.packageName }}-${{ steps.package.outputs.packageVersion }}-linux-x64
           asset_content_type: application/octet-stream
