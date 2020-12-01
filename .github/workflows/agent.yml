@@ -15,8 +15,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Build
         run: |
-          npm i
-          npm run build
+          npm i --prefix agent
+          npm run build --prefix agent
       - name: Read package.json
         id: package
         uses: myrotvorets/info-from-package-json-action@0.0.2
