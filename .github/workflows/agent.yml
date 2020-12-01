@@ -1,0 +1,57 @@
+name: Build and release agent
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build
+        run: |
+          npm i --prefix agent
+          npm run build --prefix agent
+      - name: Read package.json
+        id: package
+        uses: myrotvorets/info-from-package-json-action@0.0.2
+        with:
+          workingdir: ./agent
+      - name: Create release
+        id: release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.package.outputs.packageVersion }}
+          release_name: v${{ steps.package.outputs.packageVersion }}
+      - name: Upload Windows build
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.release.outputs.upload_url }}
+          asset_path: ./agent/exe/${{ steps.package.outputs.packageName }}-${{ steps.package.outputs.packageVersion }}-windows-x64.exe
+          asset_name: ${{ steps.package.outputs.packageName }}-${{ steps.package.outputs.packageVersion }}-windows-x64.exe
+          asset_content_type: application/vnd.microsoft.portable-executable
+      - name: Upload Mac build
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.release.outputs.upload_url }}
+          asset_path: ./agent/exe/${{ steps.package.outputs.packageName }}-${{ steps.package.outputs.packageVersion }}-mac-x64
+          asset_name: ${{ steps.package.outputs.packageName }}-${{ steps.package.outputs.packageVersion }}-mac-x64
+          asset_content_type: application/octet-stream
+      - name: Upload Linux build
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.release.outputs.upload_url }}
+          asset_path: ./agent/exe/${{ steps.package.outputs.packageName }}-${{ steps.package.outputs.packageVersion }}-linux-x64
+          asset_name: ${{ steps.package.outputs.packageName }}-${{ steps.package.outputs.packageVersion }}-linux-x64
+          asset_content_type: application/octet-stream
