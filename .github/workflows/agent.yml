@@ -2,10 +2,8 @@ name: Build and release agent
 
 on:
   push:
-    branches:
-      - setup-build
-#    tags:
-#      - 'v*'
+    tags:
+      - 'v*'
 
 jobs:
   build:
