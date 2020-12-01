@@ -3,7 +3,7 @@ name: Build and release agent
 on:
   push:
     tags:
-      - 'v*'
+      - v*
 
 jobs:
   build:
