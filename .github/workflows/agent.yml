@@ -21,7 +21,7 @@ jobs:
         id: package
         uses: myrotvorets/info-from-package-json-action@0.0.2
         with:
-          path: ./agent
+          workingdir: ./agent
       - name: Create release
         id: release
         uses: actions/create-release@v1
