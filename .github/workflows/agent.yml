@@ -55,3 +55,5 @@ jobs:
           asset_path: ./agent/exe/${{ steps.package.outputs.packageName }}-${{ steps.package.outputs.packageVersion }}-linux-x64
           asset_name: ${{ steps.package.outputs.packageName }}-${{ steps.package.outputs.packageVersion }}-linux-x64
           asset_content_type: application/octet-stream
+      - name: Trigger Netlify build
+        run: curl -X POST -d {} https://api.netlify.com/build_hooks/${{ secrets.NETLIFY_BUILD_HOOK_ID }}
