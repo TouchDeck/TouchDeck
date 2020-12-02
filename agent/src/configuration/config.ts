@@ -1,33 +1,16 @@
 import { promises as fs } from 'fs';
 import { Logger } from '@luca_scorpion/tinylogger';
 import { CONFIG_DIR, CONFIG_FILE, IMAGES_DIR } from '../constants';
-import prepareAction from '../actions/prepareAction';
+import { prepareActions, PreparedActions } from '../actions/prepareActions';
 import Configuration from '../model/configuration/Configuration';
-import { ButtonConfig } from '../model/configuration/ButtonConfig';
 import validateConfig from './validateConfig';
-import { PreparedAction } from '../actions/Action';
 
 const log = new Logger('configuration');
-
-export type PreparedActions = { [id: string]: PreparedAction };
 
 // Cached configuration data.
 let configuration: Configuration;
 // Prepared actions by button id.
 let preparedActions: PreparedActions;
-
-function prepareActions(buttons: ButtonConfig[]): void {
-  const actions: PreparedActions = {};
-
-  for (let i = 0; i < buttons.length; i++) {
-    const button = buttons[i];
-    if (button.type === 'normal' || button.type === 'toggle') {
-      actions[button.id] = prepareAction(button.action);
-    }
-  }
-
-  preparedActions = actions;
-}
 
 export async function readConfiguration(): Promise<Configuration> {
   log.debug('Reading configuration from disk');
@@ -55,7 +38,7 @@ export async function setConfiguration(
   log.debug('Updating configuration');
 
   configuration = validateConfig(newConfig);
-  prepareActions(configuration.buttons);
+  preparedActions = prepareActions(configuration.buttons);
 
   await saveConfiguration();
 }
