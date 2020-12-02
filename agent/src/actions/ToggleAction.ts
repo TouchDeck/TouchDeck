@@ -2,11 +2,15 @@ import { action, PreparedAction } from './Action';
 import { Constructor } from '../util/Constructor';
 
 export default interface ToggleAction {
-  prepare(...args: unknown[]): PreparedToggleAction;
+  prepare(
+    onStateChange: (state: boolean) => void,
+    ...args: unknown[]
+  ): PreparedToggleAction;
 }
 
 export interface PreparedToggleAction extends PreparedAction {
   getState(): boolean | Promise<boolean>;
+  unPrepare(): void;
 }
 
 export const actionToggleableKey = Symbol('action:toggleable');

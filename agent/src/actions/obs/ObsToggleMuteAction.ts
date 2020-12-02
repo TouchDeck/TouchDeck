@@ -9,10 +9,24 @@ import ToggleAction, {
 export default class ObsToggleMuteAction implements ToggleAction {
   public constructor(private readonly obs: ObsSocket) {}
 
-  public prepare(@param('source') source: string): PreparedToggleAction {
+  public prepare(
+    onStateChange: (state: boolean) => void,
+    @param('source') source: string
+  ): PreparedToggleAction {
+    const handler = (event: { sourceName: string; muted: boolean }): void => {
+      if (event.sourceName === source) {
+        onStateChange(event.muted);
+      }
+    };
+    this.obs.getSocketRaw().on('SourceMuteStateChanged', handler);
+
     return {
       invoke: () => this.invoke(source),
       getState: () => this.getState(source),
+      unPrepare: () =>
+        this.obs
+          .getSocketRaw()
+          .removeListener('SourceMuteStateChanged', handler),
     };
   }
 

@@ -9,10 +9,14 @@ import ToggleAction, {
 export default class ObsToggleSceneItemRenderAction implements ToggleAction {
   public constructor(private readonly obs: ObsSocket) {}
 
-  public prepare(@param('source') source: string): PreparedToggleAction {
+  public prepare(
+    onStateChange: (state: boolean) => void,
+    @param('source') source: string
+  ): PreparedToggleAction {
     return {
       invoke: () => this.invoke(source),
       getState: () => this.getState(source),
+      unPrepare: () => undefined,
     };
   }
 

@@ -4,6 +4,7 @@ import { CONFIG_DIR, CONFIG_FILE, IMAGES_DIR } from '../constants';
 import { prepareActions, PreparedActions } from '../actions/prepareActions';
 import Configuration from '../model/configuration/Configuration';
 import validateConfig from './validateConfig';
+import { isPreparedToggleAction } from '../actions/ToggleAction';
 
 const log = new Logger('configuration');
 
@@ -38,6 +39,15 @@ export async function setConfiguration(
   log.debug('Updating configuration');
 
   configuration = validateConfig(newConfig);
+
+  // Clear the current prepared actions, prepare the new ones.
+  if (preparedActions) {
+    for (const action of Object.values(preparedActions)) {
+      if (isPreparedToggleAction(action)) {
+        action.unPrepare();
+      }
+    }
+  }
   preparedActions = prepareActions(configuration.buttons);
 
   await saveConfiguration();
