@@ -60,7 +60,7 @@ const ConnectAgentPage: React.FC = () => {
       let agentInfo: AgentInfo;
       try {
         agentInfo = await newAgent.getInfo();
-        if (agentInfo.name !== 'pideck-agent') {
+        if (agentInfo.name !== 'touchdeck-agent') {
           dispatch({
             type: 'error',
             message: `Invalid agent name: ${agentInfo.name}`,

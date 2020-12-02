@@ -10,7 +10,7 @@ Ping the agent. This returns some agent info:
 
 ```json
 {
-  "name": "pideck-agent",
+  "name": "touchdeck-agent",
   "version": "0.1.0"
 }
 ```
@@ -51,8 +51,7 @@ Set the agent configuration.
 | Variable              | Default                        | Description |
 |-----------------------|--------------------------------|-------------|
 | LOG_LEVEL             | INFO                           | The log level (DEBUG, INFO, WARN, ERROR or OFF).
-| HTTP_PORT             | 4000                           | The port the HTTP server listens on.
 | PORT                  | 0                              | The port the server listens on.
-| CONFIG_DIR            | ~/.pideck                      | The directory to store configuration files in. This directory contains a `config.json` file containing the full agent configuration.
+| CONFIG_DIR            | ~/.touchdeck                      | The directory to store configuration files in. This directory contains a `config.json` file containing the full agent configuration.
 | DISCOVERY_SERVER      | https://discovery.scorpiac.com | The discovery server URL to register the agent on.
 | DISCOVERY_REPORT_TIME | 600                            | How often to report the agent to the discovery server (in seconds).

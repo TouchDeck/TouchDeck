@@ -1,5 +1,5 @@
 {
-  "name": "pideck",
+  "name": "touchdeck-web",
   "version": "0.1.0",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.14.0",

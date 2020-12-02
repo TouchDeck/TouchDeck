@@ -8,7 +8,7 @@ function envOrDefault(param: string, def: string): string {
 export const HTTP_PORT = parseInt(envOrDefault('HTTP_PORT', '4000'), 10);
 export const PORT = parseInt(envOrDefault('PORT', '0'), 10);
 
-export const CONFIG_DIR = envOrDefault('CONFIG_DIR', `${homedir()}/.pideck`);
+export const CONFIG_DIR = envOrDefault('CONFIG_DIR', `${homedir()}/.touchdeck`);
 export const CONFIG_FILE = `${CONFIG_DIR}/config.json`;
 export const IMAGES_DIR = `${CONFIG_DIR}/images`;
 

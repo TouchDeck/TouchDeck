@@ -1,16 +1,16 @@
 {
-  "name": "pideck",
+  "name": "touchdeck",
   "version": "0.1.0",
-  "description": "An alternative, open-source streamdeck.",
+  "description": "An alternative, open-source stream deck.",
   "scripts": {
     "model": "rimraf web/src/model agent/src/model && cpy model agent/src --parents && cpy model web/src --parents"
   },
-  "repository": "git+https://github.com/LucaScorpion/pideck.git",
+  "repository": "github:TouchDeck/TouchDeck",
   "author": "https://github.com/LucaScorpion",
   "bugs": {
-    "url": "https://github.com/LucaScorpion/pideck/issues"
+    "url": "https://github.com/TouchDeck/TouchDeck/issues"
   },
-  "homepage": "https://github.com/LucaScorpion/pideck#readme",
+  "homepage": "https://github.com/TouchDeck/TouchDeck#readme",
   "devDependencies": {
     "cpy-cli": "^3.1.1",
     "rimraf": "^3.0.2"
