@@ -55,6 +55,7 @@ async function bootstrap(): Promise<void> {
   server.registerHandler('press-button', pressButton(server));
 
   // When a new connection is established, send all button states.
+  // TODO: Make this not a broadcast, but only send to the newly connected client.
   server.server.addListener('connection', () => sendButtonStates(server));
 
   log.info(`Agent running on ${getAgentInfo(serverPort).address}`);
