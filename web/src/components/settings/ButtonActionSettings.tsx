@@ -51,29 +51,31 @@ const ButtonActionSettings: React.FC<Props> = ({ action, onChange }) => {
           onChange={(type) => onChange({ ...action, type })}
         />
       </div>
-      {actionParams.map((param) => (
-        <div key={param.name}>
-          <span>{capitalizeFirstLetter(param.name)}</span>
-          {param.type === 'string' && (
-            <TextInput
-              value={action.args[param.name]?.toString()}
-              onChange={(arg) => setActionArg(param.name, arg)}
-            />
-          )}
-          {param.type === 'boolean' && (
-            <CheckboxInput
-              checked={Boolean(action.args[param.name])}
-              onChange={(arg) => setActionArg(param.name, arg)}
-            />
-          )}
-          {param.type === 'number' && (
-            <FloatNumberInput
-              value={action.args[param.name]?.toString()}
-              onChange={(arg) => setActionArg(param.name, arg)}
-            />
-          )}
-        </div>
-      ))}
+      {actionParams
+        .filter((param) => !!param)
+        .map((param) => (
+          <div key={param.name}>
+            <span>{capitalizeFirstLetter(param.name)}</span>
+            {param.type === 'string' && (
+              <TextInput
+                value={action.args[param.name]?.toString()}
+                onChange={(arg) => setActionArg(param.name, arg)}
+              />
+            )}
+            {param.type === 'boolean' && (
+              <CheckboxInput
+                checked={Boolean(action.args[param.name])}
+                onChange={(arg) => setActionArg(param.name, arg)}
+              />
+            )}
+            {param.type === 'number' && (
+              <FloatNumberInput
+                value={action.args[param.name]?.toString()}
+                onChange={(arg) => setActionArg(param.name, arg)}
+              />
+            )}
+          </div>
+        ))}
     </Rows>
   );
 };

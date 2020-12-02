@@ -38,6 +38,10 @@ export default class ObsSocket {
     return this.obs;
   }
 
+  public getSocketRaw(): OBSWebSocket {
+    return this.obs;
+  }
+
   private async tryConnect(): Promise<void> {
     this.status = ConnectionStatus.CONNECTING;
     try {

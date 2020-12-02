@@ -30,7 +30,7 @@ export default class WebSocketServer {
     this.handlers[type] = handler as MessageHandler<unknown, unknown>;
   }
 
-  public send<T extends keyof MessageDataMap>(
+  public broadcast<T extends keyof MessageDataMap>(
     type: T,
     data: MessageDataMap[T],
     replyTo?: string
@@ -41,11 +41,10 @@ export default class WebSocketServer {
       messageId: uuidv4(),
       data,
     };
-    this.broadcast(JSON.stringify(msg));
-  }
+    const msgString = JSON.stringify(msg);
 
-  private broadcast(data: string): void {
-    this.server.clients.forEach((ws) => ws.send(data));
+    // Send the message to all clients.
+    this.server.clients.forEach((ws) => ws.send(msgString));
   }
 
   private handleConnection(ws: WebSocket): void {

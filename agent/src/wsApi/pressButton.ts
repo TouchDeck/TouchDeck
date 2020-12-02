@@ -41,7 +41,7 @@ export default function pressButton(
     // If it is a toggle action, broadcast the new state.
     if (isPreparedToggleAction(action)) {
       const newButtonState = await action.getState();
-      ws.send('button-state-changed', {
+      ws.broadcast('button-state-changed', {
         buttonId,
         buttonState: newButtonState,
       });

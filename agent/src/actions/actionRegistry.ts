@@ -7,11 +7,9 @@ import {
   actionParamsKey,
 } from './Action';
 import 'reflect-metadata';
-import ObsSetMuteAction from './obs/ObsSetMuteAction';
 import { ActionParameter } from '../model/ActionOption';
 import NoopAction from './NoopAction';
 import ObsSetVolumeAction from './obs/ObsSetVolumeAction';
-import ObsSetSceneItemRenderAction from './obs/ObsSetSceneItemRenderAction';
 import ObsToggleMuteAction from './obs/ObsToggleMuteAction';
 import { actionToggleableKey } from './ToggleAction';
 import ObsToggleSceneItemRenderAction from './obs/ObsToggleSceneItemRenderAction';
@@ -20,9 +18,7 @@ import ObsToggleSceneItemRenderAction from './obs/ObsToggleSceneItemRenderAction
 const actionClasses: Constructor<Action>[] = [
   NoopAction,
   // OBS
-  ObsSetMuteAction,
   ObsSetSceneAction,
-  ObsSetSceneItemRenderAction,
   ObsSetVolumeAction,
   ObsToggleMuteAction,
   ObsToggleSceneItemRenderAction,

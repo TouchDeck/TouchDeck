@@ -20,6 +20,7 @@ import pressButton from './wsApi/pressButton';
 import getAgentInfo from './util/getAgentInfo';
 import getImages from './wsApi/getImages';
 import sendButtonStates from './wsApi/sendButtonStates';
+import { setServerInstance } from './serverInstance';
 
 const log = new Logger('index');
 log.debug('Starting agent...');
@@ -41,6 +42,7 @@ async function bootstrap(): Promise<void> {
   // Start the websocket server.
   log.debug('Starting websocket server');
   const server = new WebSocketServer({ port: PORT, path: '/ws' });
+  setServerInstance(server);
   const serverPort = server.address().port;
 
   // Register all websocket server handlers.
@@ -55,6 +57,7 @@ async function bootstrap(): Promise<void> {
   server.registerHandler('press-button', pressButton(server));
 
   // When a new connection is established, send all button states.
+  // TODO: Make this not a broadcast, but only send to the newly connected client.
   server.server.addListener('connection', () => sendButtonStates(server));
 
   log.info(`Agent running on ${getAgentInfo(serverPort).address}`);

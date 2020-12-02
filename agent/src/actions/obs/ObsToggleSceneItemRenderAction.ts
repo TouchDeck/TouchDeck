@@ -9,10 +9,27 @@ import ToggleAction, {
 export default class ObsToggleSceneItemRenderAction implements ToggleAction {
   public constructor(private readonly obs: ObsSocket) {}
 
-  public prepare(@param('source') source: string): PreparedToggleAction {
+  public prepare(
+    onStateChange: (state: boolean) => void,
+    @param('source') source: string
+  ): PreparedToggleAction {
+    const handler = (event: {
+      'item-name': string;
+      'item-visible': boolean;
+    }): void => {
+      if (event['item-name'] === source) {
+        onStateChange(event['item-visible']);
+      }
+    };
+    this.obs.getSocketRaw().on('SceneItemVisibilityChanged', handler);
+
     return {
       invoke: () => this.invoke(source),
       getState: () => this.getState(source),
+      unPrepare: () =>
+        this.obs
+          .getSocketRaw()
+          .removeListener('SceneItemVisibilityChanged', handler),
     };
   }
 
