@@ -15,6 +15,11 @@ jobs:
         run: |
           npm i --prefix agent
           npm run build --prefix agent
+      - name: Read package.json
+        id: package
+        uses: myrotvorets/info-from-package-json-action@0.0.2
+        with:
+          workingdir: ./agent
       - name: Create release
         id: release
         uses: actions/create-release@v1
@@ -29,8 +34,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.release.outputs.upload_url }}
-          asset_path: ./agent/exe/touchdeck-agent-${{ github.ref }}-windows-x64.exe
-          asset_name: touchdeck-agent-${{ github.ref }}-windows-x64.exe
+          asset_path: ./agent/exe/${{ steps.package.outputs.packageName }}-v${{ steps.package.outputs.packageVersion }}-windows-x64.exe
+          asset_name: ${{ steps.package.outputs.packageName }}-v${{ steps.package.outputs.packageVersion }}-windows-x64.exe
           asset_content_type: application/vnd.microsoft.portable-executable
       - name: Upload Mac build
         uses: actions/upload-release-asset@v1
@@ -38,8 +43,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.release.outputs.upload_url }}
-          asset_path: ./agent/exe/touchdeck-agent-${{ github.ref }}-mac-x64
-          asset_name: touchdeck-agent-${{ github.ref }}-mac-x64
+          asset_path: ./agent/exe/${{ steps.package.outputs.packageName }}-v${{ steps.package.outputs.packageVersion }}-mac-x64
+          asset_name: ${{ steps.package.outputs.packageName }}-v${{ steps.package.outputs.packageVersion }}-mac-x64
           asset_content_type: application/octet-stream
       - name: Upload Linux build
         uses: actions/upload-release-asset@v1
@@ -47,8 +52,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.release.outputs.upload_url }}
-          asset_path: ./agent/exe/touchdeck-agent-${{ github.ref }}-linux-x64
-          asset_name: touchdeck-agent-${{ github.ref }}-linux-x64
+          asset_path: ./agent/exe/${{ steps.package.outputs.packageName }}-v${{ steps.package.outputs.packageVersion }}-linux-x64
+          asset_name: ${{ steps.package.outputs.packageName }}-v${{ steps.package.outputs.packageVersion }}-linux-x64
           asset_content_type: application/octet-stream
       - name: Trigger Netlify build
         run: curl -X POST -d {} https://api.netlify.com/build_hooks/${{ secrets.NETLIFY_BUILD_HOOK_ID }}
