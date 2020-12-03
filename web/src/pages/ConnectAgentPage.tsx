@@ -17,11 +17,14 @@ const ConnectAgentPage: React.FC = () => {
   const [agentList, setAgentList] = useState<AgentInfo[]>();
   const [agentListError, setAgentListError] = useState<string>();
 
-  useEffect(() => {
+  const refreshAgentList = useCallback(() => {
+    setAgentList(undefined);
     listDiscoveredAgents()
       .then(setAgentList)
       .catch((err) => setAgentListError(err.message));
   }, []);
+
+  useEffect(refreshAgentList, []);
 
   const connectToAgent = useCallback(
     async (address) => {
@@ -107,7 +110,10 @@ const ConnectAgentPage: React.FC = () => {
       <main>
         <h2>Connect to an agent</h2>
 
-        <h3>Select an agent from the list:</h3>
+        <h3>
+          Select an agent from the list:
+          <Button icon="redo" compact onClick={refreshAgentList} />
+        </h3>
         <AgentList
           agents={agentList}
           onClickAgent={(address) => connectToAgent(address)}

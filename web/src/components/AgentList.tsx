@@ -10,7 +10,7 @@ export interface Props {
 
 const AgentList: React.FC<Props> = ({ agents, error, onClickAgent }) => (
   <div className="agent-list">
-    {!agents && !error && <Icon icon="spinner" size={3} pulse />}
+    {!agents && !error && <Icon icon="spinner" size={2} pulse />}
     {error && (
       <div className="error">
         Failed to list agents from discovery server: {error}
