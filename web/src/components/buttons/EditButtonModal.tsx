@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   ActionButtonConfig,
   ButtonConfig,
@@ -22,6 +22,24 @@ const EditButtonModal: React.FC<Props> = ({ button, onClose }) => {
   const [, dispatch] = useGlobalState();
   const { agent, actionOptions } = useConnectedAgent();
   const [updates, setUpdates] = useState<ButtonConfig>({ ...button });
+
+  const [actionOption, setActionOption] = useState(() => {
+    if (button.type === 'folder') {
+      return undefined;
+    }
+    return actionOptions.find((o) => o.type === button.action.type);
+  });
+
+  const [trueStyleName, setTrueStyleName] = useState(() =>
+    actionOption && actionOption.toggleable
+      ? actionOption.toggleInfo.trueStateName
+      : ''
+  );
+  const [falseStyleName, setFalseStyleName] = useState(() =>
+    actionOption && actionOption.toggleable
+      ? actionOption.toggleInfo.falseStateName
+      : ''
+  );
 
   const onSave = useCallback(async () => {
     dispatch({ type: 'configLoading' });
@@ -54,19 +72,27 @@ const EditButtonModal: React.FC<Props> = ({ button, onClose }) => {
             <h3>Action</h3>
             <ButtonActionSettings
               action={updates.action}
-              onChange={(action) =>
+              onChange={(action) => {
+                // Find the new action option.
+                const newActionOption = actionOptions.find(
+                  (o) => o.type === action.type
+                )!;
+                setActionOption(newActionOption);
+
+                // Update the style names.
+                if (newActionOption.toggleable) {
+                  setTrueStyleName(newActionOption.toggleInfo.trueStateName);
+                  setFalseStyleName(newActionOption.toggleInfo.falseStateName);
+                }
+
+                // Update the button configuration.
                 setUpdates((prevState) => {
                   // It's safe to cast this to ActionButtonConfig, since we have an 'action' prop.
                   const newState = {
                     ...prevState,
                     action,
+                    type: newActionOption.toggleable ? 'toggle' : 'normal',
                   } as ActionButtonConfig;
-
-                  // Find the new action option, update the button type.
-                  const actionOption = actionOptions.find(
-                    (o) => o.type === action.type
-                  )!;
-                  newState.type = actionOption.toggleable ? 'toggle' : 'normal';
 
                   // If the action changed between normal and toggleable, update the styles.
                   if (
@@ -89,8 +115,8 @@ const EditButtonModal: React.FC<Props> = ({ button, onClose }) => {
                   }
 
                   return newState;
-                })
-              }
+                });
+              }}
             />
           </div>
         )}
@@ -107,7 +133,7 @@ const EditButtonModal: React.FC<Props> = ({ button, onClose }) => {
         )}
         {'trueStyle' in updates && (
           <div>
-            <h3>True style</h3>
+            <h3>Style: {trueStyleName}</h3>
             <ButtonStyleSettings
               buttonStyle={updates.trueStyle}
               onChange={(style) =>
@@ -121,7 +147,7 @@ const EditButtonModal: React.FC<Props> = ({ button, onClose }) => {
         )}
         {'falseStyle' in updates && (
           <div>
-            <h3>False style</h3>
+            <h3>Style: {falseStyleName}</h3>
             <ButtonStyleSettings
               buttonStyle={updates.falseStyle}
               onChange={(style) =>

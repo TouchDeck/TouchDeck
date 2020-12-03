@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useConnectedAgent } from '../../state/appState';
-import ActionOption from '../../model/ActionOption';
+import { ActionOption } from '../../model/ActionOption';
 
 export interface Props {
   actionType: string;

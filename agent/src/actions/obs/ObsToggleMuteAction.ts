@@ -5,7 +5,10 @@ import ToggleAction, {
   toggleAction,
 } from '../ToggleAction';
 
-@toggleAction('OBS', 'Toggle Mute')
+@toggleAction('OBS', 'Toggle Mute', {
+  trueStateName: 'muted',
+  falseStateName: 'unmuted',
+})
 export default class ObsToggleMuteAction implements ToggleAction {
   public constructor(private readonly obs: ObsSocket) {}
 

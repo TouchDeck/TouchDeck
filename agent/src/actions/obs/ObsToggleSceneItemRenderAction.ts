@@ -5,7 +5,10 @@ import ToggleAction, {
   toggleAction,
 } from '../ToggleAction';
 
-@toggleAction('OBS', 'Toggle Scene Item Render')
+@toggleAction('OBS', 'Toggle Scene Item Render', {
+  trueStateName: 'visible',
+  falseStateName: 'hidden',
+})
 export default class ObsToggleSceneItemRenderAction implements ToggleAction {
   public constructor(private readonly obs: ObsSocket) {}
 

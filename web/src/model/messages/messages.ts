@@ -1,7 +1,7 @@
 import AgentInfo from '../AgentInfo';
 import { ButtonConfig } from '../configuration/ButtonConfig';
 import Configuration, { ButtonLayout } from '../configuration/Configuration';
-import ActionOption from '../ActionOption';
+import { ActionOption } from '../ActionOption';
 import ButtonStateChanged from './ButtonStateChanged';
 import { ImageMap } from './ImageMap';
 import { PressButtonResult } from './PressButtonResult';

@@ -1,5 +1,6 @@
 import { action, PreparedAction } from './Action';
 import { Constructor } from '../util/Constructor';
+import { ToggleActionInfo } from '../model/ActionOption';
 
 export default interface ToggleAction {
   prepare(
@@ -14,11 +15,17 @@ export interface PreparedToggleAction extends PreparedAction {
 }
 
 export const actionToggleableKey = Symbol('action:toggleable');
+export const actionToggleInfoKey = Symbol('action:toggle-info');
 
-export function toggleAction(category: string, name: string) {
+export function toggleAction(
+  category: string,
+  name: string,
+  info: ToggleActionInfo
+) {
   return function defineAction<T extends Constructor>(ctor: T): void {
     action(category, name)(ctor);
     Reflect.defineMetadata(actionToggleableKey, true, ctor.prototype);
+    Reflect.defineMetadata(actionToggleInfoKey, info, ctor.prototype);
   };
 }
 

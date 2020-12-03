@@ -7,11 +7,11 @@ import {
   actionParamsKey,
 } from './Action';
 import 'reflect-metadata';
-import { ActionParameter } from '../model/ActionOption';
+import { ActionParameter, ToggleActionInfo } from '../model/ActionOption';
 import NoopAction from './NoopAction';
 import ObsSetVolumeAction from './obs/ObsSetVolumeAction';
 import ObsToggleMuteAction from './obs/ObsToggleMuteAction';
-import { actionToggleableKey } from './ToggleAction';
+import { actionToggleableKey, actionToggleInfoKey } from './ToggleAction';
 import ObsToggleSceneItemRenderAction from './obs/ObsToggleSceneItemRenderAction';
 
 // A list containing all available action classes.
@@ -24,12 +24,23 @@ const actionClasses: Constructor<Action>[] = [
   ObsToggleSceneItemRenderAction,
 ];
 
-export interface ActionMeta {
+export type ActionMeta = NormalActionMeta | ToggleActionMeta;
+
+export interface BaseActionMeta {
   category: string;
   name: string;
   constructor: Constructor<Action>;
   parameters: ActionParameter[];
   toggleable: boolean;
+}
+
+export interface NormalActionMeta extends BaseActionMeta {
+  toggleable: false;
+}
+
+export interface ToggleActionMeta extends BaseActionMeta {
+  toggleable: true;
+  toggleInfo: ToggleActionInfo;
 }
 
 // All action metadata by constructor name.
@@ -45,6 +56,7 @@ actionClasses.forEach((ActionCtor) => {
       Reflect.getMetadata(actionParamsKey, ActionCtor.prototype) || [],
     toggleable:
       Reflect.getMetadata(actionToggleableKey, ActionCtor.prototype) || false,
+    toggleInfo: Reflect.getMetadata(actionToggleInfoKey, ActionCtor.prototype),
   };
 });
 

@@ -1,7 +1,7 @@
 import Configuration, {
   ButtonLayout,
 } from '../model/configuration/Configuration';
-import ActionOption from '../model/ActionOption';
+import { ActionOption } from '../model/ActionOption';
 import AgentInfo from '../model/AgentInfo';
 import { ButtonConfig } from '../model/configuration/ButtonConfig';
 import WebSocketClient from '../WebSocketClient';

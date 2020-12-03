@@ -1,7 +1,7 @@
 import Agent from '../api/Agent';
 import { Reducer } from 'react';
 import AgentInfo from '../model/AgentInfo';
-import ActionOption from '../model/ActionOption';
+import { ActionOption } from '../model/ActionOption';
 import Configuration from '../model/configuration/Configuration';
 import { ButtonStates } from '../model/ButtonStates';
 import { ImageMap } from '../model/messages/ImageMap';
