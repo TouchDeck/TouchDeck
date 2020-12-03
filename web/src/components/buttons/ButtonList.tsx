@@ -8,10 +8,15 @@ import ButtonGroup from '../ButtonGroup';
 
 export interface Props {
   onClickButton: (button: ButtonConfig) => void;
-  onCreateButton: () => void;
+  onCreateActionButton: () => void;
+  onCreateFolder: () => void;
 }
 
-const ButtonList: React.FC<Props> = ({ onClickButton, onCreateButton }) => {
+const ButtonList: React.FC<Props> = ({
+  onClickButton,
+  onCreateActionButton,
+  onCreateFolder,
+}) => {
   const { config } = useConnectedAgent();
   const { buttons } = config;
 
@@ -35,10 +40,10 @@ const ButtonList: React.FC<Props> = ({ onClickButton, onCreateButton }) => {
         icon="search"
       />
       <ButtonGroup>
-        <Button onClick={onCreateButton} icon="plus" positive>
+        <Button onClick={onCreateActionButton} icon="plus" positive>
           Action
         </Button>
-        <Button onClick={onCreateButton} icon="folder-open">
+        <Button onClick={onCreateFolder} icon="folder-open">
           Folder
         </Button>
       </ButtonGroup>

@@ -24,7 +24,8 @@ const DeckPage: React.FC<Props> = ({ editing }) => {
         <div className="edit-panel">
           <ButtonList
             onClickButton={setSelectedButton}
-            onCreateButton={() => setSelectedButton(newButton('normal'))}
+            onCreateActionButton={() => setSelectedButton(newButton('normal'))}
+            onCreateFolder={() => setSelectedButton(newButton('folder'))}
           />
           {selectedButton && (
             <EditButtonModal
