@@ -1,17 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import {
-  ActionButtonConfig,
-  ButtonConfig,
-  NormalButtonConfig,
-  ToggleButtonConfig,
-} from '../../model/configuration/ButtonConfig';
+import React, { useCallback, useState } from 'react';
+import { ButtonConfig } from '../../model/configuration/ButtonConfig';
 import Modal from '../Modal';
 import Button from '../Button';
 import TextInput from '../input/TextInput';
-import ButtonStyleSettings from '../settings/ButtonStyleSettings';
-import ButtonActionSettings from '../settings/ButtonActionSettings';
 import { useConnectedAgent, useGlobalState } from '../../state/appState';
 import ButtonGroup from '../ButtonGroup';
+import { EditFolderButton } from './EditFolderButton';
+import { EditActionButton } from './EditActionButton';
 
 export interface Props {
   button: ButtonConfig;
@@ -20,26 +15,8 @@ export interface Props {
 
 const EditButtonModal: React.FC<Props> = ({ button, onClose }) => {
   const [, dispatch] = useGlobalState();
-  const { agent, actionOptions } = useConnectedAgent();
+  const { agent } = useConnectedAgent();
   const [updates, setUpdates] = useState<ButtonConfig>({ ...button });
-
-  const [actionOption, setActionOption] = useState(() => {
-    if (button.type === 'folder') {
-      return undefined;
-    }
-    return actionOptions.find((o) => o.type === button.action.type);
-  });
-
-  const [trueStyleName, setTrueStyleName] = useState(() =>
-    actionOption && actionOption.toggleable
-      ? actionOption.toggleInfo.trueStateName
-      : ''
-  );
-  const [falseStyleName, setFalseStyleName] = useState(() =>
-    actionOption && actionOption.toggleable
-      ? actionOption.toggleInfo.falseStateName
-      : ''
-  );
 
   const onSave = useCallback(async () => {
     dispatch({ type: 'configLoading' });
@@ -67,97 +44,16 @@ const EditButtonModal: React.FC<Props> = ({ button, onClose }) => {
         placeholder="Button name"
       />
       <div className="columns">
-        {'action' in updates && (
-          <div>
-            <h3>Action</h3>
-            <ButtonActionSettings
-              action={updates.action}
-              onChange={(action) => {
-                // Find the new action option.
-                const newActionOption = actionOptions.find(
-                  (o) => o.type === action.type
-                )!;
-                setActionOption(newActionOption);
-
-                // Update the style names.
-                if (newActionOption.toggleable) {
-                  setTrueStyleName(newActionOption.toggleInfo.trueStateName);
-                  setFalseStyleName(newActionOption.toggleInfo.falseStateName);
-                }
-
-                // Update the button configuration.
-                setUpdates((prevState) => {
-                  // It's safe to cast this to ActionButtonConfig, since we have an 'action' prop.
-                  const newState = {
-                    ...prevState,
-                    action,
-                    type: newActionOption.toggleable ? 'toggle' : 'normal',
-                  } as ActionButtonConfig;
-
-                  // If the action changed between normal and toggleable, update the styles.
-                  if (
-                    prevState.type === 'normal' &&
-                    newState.type === 'toggle'
-                  ) {
-                    newState.trueStyle = prevState.style;
-                    newState.falseStyle = prevState.style;
-                    delete ((newState as unknown) as NormalButtonConfig).style;
-                  }
-                  if (
-                    prevState.type === 'toggle' &&
-                    newState.type === 'normal'
-                  ) {
-                    newState.style = prevState.trueStyle;
-                    delete ((newState as unknown) as ToggleButtonConfig)
-                      .trueStyle;
-                    delete ((newState as unknown) as ToggleButtonConfig)
-                      .falseStyle;
-                  }
-
-                  return newState;
-                });
-              }}
-            />
-          </div>
+        {updates.type === 'folder' && (
+          <EditFolderButton
+            button={updates}
+            setButtonStyle={(style) =>
+              setUpdates((prevState) => ({ ...prevState, style }))
+            }
+          />
         )}
-        {'style' in updates && (
-          <div>
-            <h3>Style</h3>
-            <ButtonStyleSettings
-              buttonStyle={updates.style}
-              onChange={(style) =>
-                setUpdates((prevState) => ({ ...prevState, style }))
-              }
-            />
-          </div>
-        )}
-        {'trueStyle' in updates && (
-          <div>
-            <h3>Style: {trueStyleName}</h3>
-            <ButtonStyleSettings
-              buttonStyle={updates.trueStyle}
-              onChange={(style) =>
-                setUpdates((prevState) => ({
-                  ...prevState,
-                  trueStyle: style,
-                }))
-              }
-            />
-          </div>
-        )}
-        {'falseStyle' in updates && (
-          <div>
-            <h3>Style: {falseStyleName}</h3>
-            <ButtonStyleSettings
-              buttonStyle={updates.falseStyle}
-              onChange={(style) =>
-                setUpdates((prevState) => ({
-                  ...prevState,
-                  falseStyle: style,
-                }))
-              }
-            />
-          </div>
+        {(updates.type === 'normal' || updates.type === 'toggle') && (
+          <EditActionButton button={updates} setButton={setUpdates} />
         )}
       </div>
       <div className="actions">
