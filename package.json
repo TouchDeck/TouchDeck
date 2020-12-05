@@ -1,6 +1,6 @@
 {
   "name": "touchdeck",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "An alternative, open-source stream deck.",
   "scripts": {
     "model": "rimraf web/src/model agent/src/model && cpy model agent/src --parents && cpy model web/src --parents"
