@@ -44,7 +44,7 @@ export async function setConfiguration(
   if (preparedActions) {
     for (const action of Object.values(preparedActions)) {
       if (isPreparedToggleAction(action)) {
-        action.unPrepare();
+        action.removeChangeListener();
       }
     }
   }

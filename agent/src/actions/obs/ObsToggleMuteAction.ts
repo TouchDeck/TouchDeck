@@ -3,6 +3,7 @@ import param from '../Action';
 import ToggleAction, {
   PreparedToggleAction,
   toggleAction,
+  ToggleChangeListener,
 } from '../ToggleAction';
 
 @toggleAction('OBS', 'Toggle Mute', {
@@ -12,24 +13,32 @@ import ToggleAction, {
 export default class ObsToggleMuteAction implements ToggleAction {
   public constructor(private readonly obs: ObsSocket) {}
 
-  public prepare(
-    onStateChange: (state: boolean) => void,
-    @param('source') source: string
-  ): PreparedToggleAction {
-    const handler = (event: { sourceName: string; muted: boolean }): void => {
-      if (event.sourceName === source) {
-        onStateChange(event.muted);
-      }
-    };
-    this.obs.getSocketRaw().on('SourceMuteStateChanged', handler);
+  public prepare(@param('source') source: string): PreparedToggleAction {
+    let handler: (event: { sourceName: string; muted: boolean }) => void;
+    let connectHandler: () => void;
 
     return {
       invoke: () => this.invoke(source),
       getState: () => this.getState(source),
-      unPrepare: () =>
+      registerChangeListener: (listener: ToggleChangeListener) => {
+        handler = (event: { sourceName: string; muted: boolean }): void => {
+          if (event.sourceName === source) {
+            listener(event.muted);
+          }
+        };
+        connectHandler = () => listener();
+
+        this.obs.getSocketRaw().on('SourceMuteStateChanged', handler);
+        this.obs.getSocketRaw().on('ConnectionOpened', connectHandler);
+      },
+      removeChangeListener: () => {
         this.obs
           .getSocketRaw()
-          .removeListener('SourceMuteStateChanged', handler),
+          .removeListener('SourceMuteStateChanged', handler);
+        this.obs
+          .getSocketRaw()
+          .removeListener('ConnectionOpened', connectHandler);
+      },
     };
   }
 

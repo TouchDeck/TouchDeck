@@ -8,6 +8,7 @@ import {
   ToggleButtonConfig,
 } from '../model/configuration/ButtonConfig';
 import { getServerInstance } from '../serverInstance';
+import { isPreparedToggleAction } from './ToggleAction';
 
 export type PreparedActions = { [id: string]: PreparedAction };
 
@@ -25,18 +26,30 @@ function prepareAction(
     (param) => param && button.action.args[param.name]
   );
 
-  // If the button is a toggle button, pass a state change handler which when
-  // called updates the button state and broadcasts it.
-  if (button.type === 'toggle') {
-    prepareArgs[0] = (state: boolean) => {
-      getServerInstance().broadcast('button-state-changed', {
-        buttonId: button.id,
-        buttonState: state,
-      });
-    };
+  const prepared = actionInst.prepare(...prepareArgs);
+
+  // If the button is a toggle button, register a state change handler which
+  // updates the button state and broadcasts it.
+  if (isPreparedToggleAction(prepared)) {
+    prepared.registerChangeListener(
+      async (state?: boolean): Promise<void> => {
+        let buttonState = state;
+
+        // If no new state is given, get it from the action.
+        if (buttonState === undefined) {
+          buttonState = await prepared.getState();
+        }
+
+        // Broadcast the new button state.
+        getServerInstance().broadcast('button-state-changed', {
+          buttonId: button.id,
+          buttonState,
+        });
+      }
+    );
   }
 
-  return actionInst.prepare(...prepareArgs);
+  return prepared;
 }
 
 export function prepareActions(buttons: ButtonConfig[]): PreparedActions {

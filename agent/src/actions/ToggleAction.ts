@@ -3,15 +3,15 @@ import { Constructor } from '../util/Constructor';
 import { ToggleActionInfo } from '../model/ActionOption';
 
 export default interface ToggleAction {
-  prepare(
-    onStateChange: (state: boolean) => void,
-    ...args: unknown[]
-  ): PreparedToggleAction;
+  prepare(...args: unknown[]): PreparedToggleAction;
 }
+
+export type ToggleChangeListener = (newState?: boolean) => void;
 
 export interface PreparedToggleAction extends PreparedAction {
   getState(): boolean | Promise<boolean>;
-  unPrepare(): void;
+  registerChangeListener(listener: ToggleChangeListener): void;
+  removeChangeListener(): void;
 }
 
 export const actionToggleableKey = Symbol('action:toggleable');

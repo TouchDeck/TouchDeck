@@ -3,6 +3,7 @@ import param from '../Action';
 import ToggleAction, {
   PreparedToggleAction,
   toggleAction,
+  ToggleChangeListener,
 } from '../ToggleAction';
 
 @toggleAction('OBS', 'Toggle Scene Item Render', {
@@ -12,27 +13,38 @@ import ToggleAction, {
 export default class ObsToggleSceneItemRenderAction implements ToggleAction {
   public constructor(private readonly obs: ObsSocket) {}
 
-  public prepare(
-    onStateChange: (state: boolean) => void,
-    @param('source') source: string
-  ): PreparedToggleAction {
-    const handler = (event: {
+  public prepare(@param('source') source: string): PreparedToggleAction {
+    let handler: (event: {
       'item-name': string;
       'item-visible': boolean;
-    }): void => {
-      if (event['item-name'] === source) {
-        onStateChange(event['item-visible']);
-      }
-    };
-    this.obs.getSocketRaw().on('SceneItemVisibilityChanged', handler);
+    }) => void;
+    let connectHandler: () => void;
 
     return {
       invoke: () => this.invoke(source),
       getState: () => this.getState(source),
-      unPrepare: () =>
+      registerChangeListener: (listener: ToggleChangeListener) => {
+        handler = (event: {
+          'item-name': string;
+          'item-visible': boolean;
+        }): void => {
+          if (event['item-name'] === source) {
+            listener(event['item-visible']);
+          }
+        };
+        connectHandler = () => listener();
+
+        this.obs.getSocketRaw().on('SceneItemVisibilityChanged', handler);
+        this.obs.getSocketRaw().on('ConnectionOpened', connectHandler);
+      },
+      removeChangeListener: () => {
         this.obs
           .getSocketRaw()
-          .removeListener('SceneItemVisibilityChanged', handler),
+          .removeListener('SceneItemVisibilityChanged', handler);
+        this.obs
+          .getSocketRaw()
+          .removeListener('ConnectionOpened', connectHandler);
+      },
     };
   }
 
