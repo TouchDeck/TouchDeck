@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useConnectedAgent } from '../state/appState';
-import TextInput from './input/TextInput';
 import Button from './Button';
+import { List } from './List';
 
 export const ImagesList: React.FC = () => {
   const { images } = useConnectedAgent();
@@ -10,18 +10,16 @@ export const ImagesList: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   return (
-    <div className="images-list">
-      <TextInput
-        className="search"
-        placeholder="Search images..."
-        value={searchTerm}
-        onChange={setSearchTerm}
-        icon="search"
-      />
+    <List
+      className="images-list"
+      searchPlaceholder="Search images..."
+      searchTerm={searchTerm}
+      onSearchTermChange={setSearchTerm}
+    >
       <Button onClick={() => undefined} icon="upload" positive>
         Upload
       </Button>
-      <div className="list">
+      <div className="entries">
         {Object.entries(showImages).map(([path, data]) => {
           return (
             <div key={path} className="entry">
@@ -36,6 +34,6 @@ export const ImagesList: React.FC = () => {
           );
         })}
       </div>
-    </div>
+    </List>
   );
 };

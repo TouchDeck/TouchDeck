@@ -1,10 +1,10 @@
 import React, { ReactNode, useLayoutEffect, useState } from 'react';
 import { ButtonConfig } from '../../model/configuration/ButtonConfig';
 import { useConnectedAgent } from '../../state/appState';
-import TextInput from '../input/TextInput';
 import Button from '../Button';
 import GridButton from './GridButton';
 import ButtonGroup from '../ButtonGroup';
+import { List } from '../List';
 
 export interface Props {
   onClickButton: (button: ButtonConfig) => void;
@@ -31,14 +31,12 @@ const ButtonList: React.FC<Props> = ({
   }, [buttons, searchTerm]);
 
   return (
-    <div className="button-list">
-      <TextInput
-        className="search"
-        placeholder="Search actions..."
-        value={searchTerm}
-        onChange={setSearchTerm}
-        icon="search"
-      />
+    <List
+      className="button-list"
+      searchPlaceholder="Search actions..."
+      searchTerm={searchTerm}
+      onSearchTermChange={setSearchTerm}
+    >
       <ButtonGroup>
         <Button onClick={onCreateActionButton} icon="plus" positive>
           Action
@@ -47,12 +45,12 @@ const ButtonList: React.FC<Props> = ({
           Folder
         </Button>
       </ButtonGroup>
-      <div className="list">
+      <div className="entries">
         {showButtons
           .filter((b) => b != null)
           .map((b, i) => buttonToComponent(b, i, onClickButton))}
       </div>
-    </div>
+    </List>
   );
 };
 
