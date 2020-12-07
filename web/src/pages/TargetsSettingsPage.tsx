@@ -4,7 +4,7 @@ import TargetRow from '../components/settings/TargetRow';
 import ObsSettings from '../components/settings/ObsSettings';
 import Configuration from '../model/configuration/Configuration';
 
-const TargetsSettingsPage: React.FC = () => {
+export const TargetsSettingsPage: React.FC = () => {
   const [, dispatch] = useGlobalState();
   const { agent, config } = useConnectedAgent();
 
@@ -46,5 +46,3 @@ const TargetsSettingsPage: React.FC = () => {
     </main>
   );
 };
-
-export default TargetsSettingsPage;

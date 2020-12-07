@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Icon from './Icon';
-import Menu from './Menu';
+import { Menu } from './Menu';
 
-const Layout: React.FC = ({ children }) => {
+export const Layout: React.FC = ({ children }) => {
   const location = useLocation();
   // If the pathname is longer than 1 ('/'), default the menu to open.
   const [showMenu, setShowMenu] = useState(location.pathname.length > 1);
@@ -50,5 +50,3 @@ const Layout: React.FC = ({ children }) => {
     </div>
   );
 };
-
-export default Layout;
