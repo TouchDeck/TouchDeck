@@ -1,4 +1,4 @@
-.button-list {
+.images-list {
   height: 100%;
   width: 240px;
   display: flex;
@@ -8,14 +8,8 @@
     margin: 8px;
   }
 
-  .button-group {
-    margin-bottom: 8px;
-    padding: 0 8px;
-    width: 100%;
-
-    button {
-      width: 50%;
-    }
+  button {
+    margin: 0 8px 8px 8px;
   }
 
   .list {
@@ -35,6 +29,16 @@
       align-items: center;
 
       background-color: #555;
+
+      .preview {
+        width: 48px;
+        height: 48px;
+        border-radius: $border-radius;
+
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
 
       .name {
         margin-left: 8px;

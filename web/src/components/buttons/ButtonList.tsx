@@ -34,7 +34,7 @@ const ButtonList: React.FC<Props> = ({
     <div className="button-list">
       <TextInput
         className="search"
-        placeholder="Search..."
+        placeholder="Search actions..."
         value={searchTerm}
         onChange={setSearchTerm}
         icon="search"
