@@ -1,2 +1,16 @@
 .images-page {
+  display: flex;
+
+  .images-list {
+    background-color: #181818;
+  }
+
+  .properties {
+    margin: 8px;
+
+    img {
+      max-width: 320px;
+      max-height: 320px;
+    }
+  }
 }

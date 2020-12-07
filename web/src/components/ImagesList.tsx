@@ -3,7 +3,11 @@ import { useConnectedAgent } from '../state/appState';
 import Button from './Button';
 import { List } from './List';
 
-export const ImagesList: React.FC = () => {
+export interface Props {
+  onClickImage: (path: string, data: string) => void;
+}
+
+export const ImagesList: React.FC<Props> = ({ onClickImage }) => {
   const { images } = useConnectedAgent();
 
   const [showImages, setShowImages] = useState(images); // TODO
@@ -22,7 +26,11 @@ export const ImagesList: React.FC = () => {
       <div className="entries">
         {Object.entries(showImages).map(([path, data]) => {
           return (
-            <div key={path} className="entry">
+            <div
+              key={path}
+              className="entry"
+              onClick={() => onClickImage(path, data)}
+            >
               <div
                 className="preview"
                 style={{
