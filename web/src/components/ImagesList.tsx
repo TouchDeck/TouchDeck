@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useCallback, useRef, useState } from 'react';
 import { useConnectedAgent } from '../state/appState';
 import Button from './Button';
 import { List } from './List';
@@ -13,6 +13,25 @@ export const ImagesList: React.FC<Props> = ({ onClickImage }) => {
   const [showImages, setShowImages] = useState(images); // TODO
   const [searchTerm, setSearchTerm] = useState('');
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const uploadFile = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    // Check if a file is selected.
+    const file = e.currentTarget.files?.item(0);
+    if (!file) {
+      return;
+    }
+
+    // Read the file data.
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      if (typeof reader.result === 'string') {
+        // TODO
+        const imageData = reader.result;
+      }
+    });
+    reader.readAsDataURL(file);
+  }, []);
+
   return (
     <List
       className="images-list"
@@ -20,7 +39,18 @@ export const ImagesList: React.FC<Props> = ({ onClickImage }) => {
       searchTerm={searchTerm}
       onSearchTermChange={setSearchTerm}
     >
-      <Button onClick={() => undefined} icon="upload" positive>
+      <input
+        ref={fileInputRef}
+        className="hidden"
+        type="file"
+        accept="image/*"
+        onChange={uploadFile}
+      />
+      <Button
+        onClick={() => fileInputRef.current?.click()}
+        icon="upload"
+        positive
+      >
         Upload
       </Button>
       <div className="entries">
