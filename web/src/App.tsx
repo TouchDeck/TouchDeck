@@ -1,7 +1,7 @@
 import React from 'react';
-import DeckPage from './pages/DeckPage';
+import { DeckPage } from './pages/DeckPage';
 import { useGlobalState } from './state/appState';
-import ConnectAgentPage from './pages/ConnectAgentPage';
+import { ConnectAgentPage } from './pages/ConnectAgentPage';
 import { Route, Switch } from 'react-router-dom';
 import AgentInfoModal from './components/AgentInfoModal';
 import { Layout } from './components/Layout';
@@ -9,7 +9,7 @@ import { TargetsSettingsPage } from './pages/TargetsSettingsPage';
 import MessageDisplay from './components/MessageDisplay';
 import { ImagesPage } from './pages/ImagesPage';
 
-const App: React.FC = () => {
+export const App: React.FC = () => {
   const [{ agent }] = useGlobalState();
 
   // If we are not connected to an agent, show the connect page.
@@ -38,5 +38,3 @@ const App: React.FC = () => {
     </MessageDisplay>
   );
 };
-
-export default App;
