@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import GridButton from './GridButton';
+import { GridButton } from './GridButton';
 import Icon from '../Icon';
 import { ButtonConfig } from '../../model/configuration/ButtonConfig';
 import { useConnectedAgent, useGlobalState } from '../../state/appState';

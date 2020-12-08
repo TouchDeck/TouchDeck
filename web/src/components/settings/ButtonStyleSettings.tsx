@@ -3,7 +3,7 @@ import Rows from '../Rows';
 import TextInput from '../input/TextInput';
 import ColorInput from '../input/ColorInput';
 import { ButtonStyling } from '../../model/configuration/ButtonConfig';
-import GridButton from '../buttons/GridButton';
+import { GridButton } from '../buttons/GridButton';
 
 export interface Props {
   buttonStyle: ButtonStyling;

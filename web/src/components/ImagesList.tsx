@@ -2,9 +2,10 @@ import React, { ChangeEvent, useCallback, useRef, useState } from 'react';
 import { useConnectedAgent } from '../state/appState';
 import Button from './Button';
 import { List } from './List';
+import { ImageInfo } from '../model/messages/ImageInfo';
 
 export interface Props {
-  onClickImage: (path: string, data: string) => void;
+  onClickImage: (image: ImageInfo) => void;
 }
 
 export const ImagesList: React.FC<Props> = ({ onClickImage }) => {
@@ -24,10 +25,10 @@ export const ImagesList: React.FC<Props> = ({ onClickImage }) => {
 
       // Read the file data.
       const reader = new FileReader();
-      reader.addEventListener('load', () => {
+      reader.addEventListener('load', async () => {
         if (typeof reader.result === 'string') {
           const [, data] = reader.result.split(',', 2);
-          agent.uploadImage({
+          await agent.uploadImage({
             path: file.name,
             data,
           });
@@ -60,20 +61,20 @@ export const ImagesList: React.FC<Props> = ({ onClickImage }) => {
         Upload
       </Button>
       <div className="entries">
-        {Object.entries(showImages).map(([path, data]) => {
+        {showImages.map((image) => {
           return (
             <div
-              key={path}
+              key={image.path}
               className="entry"
-              onClick={() => onClickImage(path, data)}
+              onClick={() => onClickImage(image)}
             >
               <div
                 className="preview"
                 style={{
-                  backgroundImage: `url(${data})`,
+                  backgroundImage: `url(${image.data})`,
                 }}
               />
-              <span className="name">{path}</span>
+              <span className="name">{image.path}</span>
             </div>
           );
         })}

@@ -6,7 +6,6 @@ import AgentInfo from '../model/AgentInfo';
 import { ButtonConfig } from '../model/configuration/ButtonConfig';
 import WebSocketClient from '../WebSocketClient';
 import ButtonStateChanged from '../model/messages/ButtonStateChanged';
-import { ImageMap } from '../model/messages/ImageMap';
 import { PressButtonResult } from '../model/messages/PressButtonResult';
 import sanitizeWsAddress from '../util/sanitizeWsAddress';
 import { ImageInfo } from '../model/messages/ImageInfo';
@@ -66,7 +65,7 @@ export default class Agent {
     return this.socket.send('get-action-options');
   }
 
-  public async getImages(): Promise<ImageMap> {
+  public async getImages(): Promise<ImageInfo[]> {
     return this.socket.send('get-images');
   }
 

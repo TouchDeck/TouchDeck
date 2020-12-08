@@ -2,7 +2,7 @@ import React, { ReactNode, useLayoutEffect, useState } from 'react';
 import { ButtonConfig } from '../../model/configuration/ButtonConfig';
 import { useConnectedAgent } from '../../state/appState';
 import Button from '../Button';
-import GridButton from './GridButton';
+import { GridButton } from './GridButton';
 import ButtonGroup from '../ButtonGroup';
 import { List } from '../List';
 
