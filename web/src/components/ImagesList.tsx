@@ -14,26 +14,29 @@ export const ImagesList: React.FC<Props> = ({ onClickImage }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const uploadFile = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    // Check if a file is selected.
-    const file = e.currentTarget.files?.item(0);
-    if (!file) {
-      return;
-    }
-
-    // Read the file data.
-    const reader = new FileReader();
-    reader.addEventListener('load', () => {
-      if (typeof reader.result === 'string') {
-        const [, data] = reader.result.split(',', 2);
-        agent.uploadImage({
-          path: file.name,
-          data,
-        });
+  const uploadFile = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      // Check if a file is selected.
+      const file = e.currentTarget.files?.item(0);
+      if (!file) {
+        return;
       }
-    });
-    reader.readAsDataURL(file);
-  }, []);
+
+      // Read the file data.
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        if (typeof reader.result === 'string') {
+          const [, data] = reader.result.split(',', 2);
+          agent.uploadImage({
+            path: file.name,
+            data,
+          });
+        }
+      });
+      reader.readAsDataURL(file);
+    },
+    [agent]
+  );
 
   return (
     <List
