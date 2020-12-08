@@ -66,7 +66,7 @@ export const GridButton: React.FC<Props> = ({
         style={{
           backgroundColor: style.backgroundColor,
           color: style.textColor,
-          backgroundImage: imageData ? `url(${imageData})` : '',
+          backgroundImage: imageData && `url(${imageData})`,
           width: size,
           height: size,
           fontSize: size / 4,
