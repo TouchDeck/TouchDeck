@@ -3,8 +3,9 @@ import { resolve } from 'path';
 import { ImageMap } from '../model/messages/ImageMap';
 import { IMAGES_DIR } from '../constants';
 import listFiles from '../util/listFiles';
+import { ImageInfo } from '../model/messages/ImageInfo';
 
-export default async function getImages(): Promise<ImageMap> {
+export async function getImages(): Promise<ImageMap> {
   const images: ImageMap = {};
   const entries = await listFiles(IMAGES_DIR);
 
@@ -20,4 +21,10 @@ export default async function getImages(): Promise<ImageMap> {
   );
 
   return images;
+}
+
+export async function uploadImage(image: ImageInfo): Promise<void> {
+  await fs.writeFile(resolve(IMAGES_DIR, image.path), image.data, {
+    encoding: 'base64',
+  });
 }

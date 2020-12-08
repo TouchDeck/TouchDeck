@@ -5,6 +5,7 @@ import { ActionOption } from '../ActionOption';
 import ButtonStateChanged from './ButtonStateChanged';
 import { ImageMap } from './ImageMap';
 import { PressButtonResult } from './PressButtonResult';
+import { ImageInfo } from './ImageInfo';
 
 export interface MessageDataMap {
   'get-info': void;
@@ -17,6 +18,7 @@ export interface MessageDataMap {
   'press-button': string;
   'button-state-changed': ButtonStateChanged;
   'get-images': void;
+  'upload-image': ImageInfo;
 }
 
 export interface MessageResponseMap {
@@ -30,4 +32,5 @@ export interface MessageResponseMap {
   'press-button': PressButtonResult;
   'button-state-changed': void;
   'get-images': ImageMap;
+  'upload-image': void;
 }

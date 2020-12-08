@@ -8,7 +8,7 @@ export interface Props {
 }
 
 export const ImagesList: React.FC<Props> = ({ onClickImage }) => {
-  const { images } = useConnectedAgent();
+  const { agent, images } = useConnectedAgent();
 
   const [showImages, setShowImages] = useState(images); // TODO
   const [searchTerm, setSearchTerm] = useState('');
@@ -25,8 +25,11 @@ export const ImagesList: React.FC<Props> = ({ onClickImage }) => {
     const reader = new FileReader();
     reader.addEventListener('load', () => {
       if (typeof reader.result === 'string') {
-        // TODO
-        const imageData = reader.result;
+        const [, data] = reader.result.split(',', 2);
+        agent.uploadImage({
+          path: file.name,
+          data,
+        });
       }
     });
     reader.readAsDataURL(file);

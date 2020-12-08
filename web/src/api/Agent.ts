@@ -9,6 +9,7 @@ import ButtonStateChanged from '../model/messages/ButtonStateChanged';
 import { ImageMap } from '../model/messages/ImageMap';
 import { PressButtonResult } from '../model/messages/PressButtonResult';
 import sanitizeWsAddress from '../util/sanitizeWsAddress';
+import { ImageInfo } from '../model/messages/ImageInfo';
 
 export default class Agent {
   private readonly socket: WebSocketClient;
@@ -67,5 +68,9 @@ export default class Agent {
 
   public async getImages(): Promise<ImageMap> {
     return this.socket.send('get-images');
+  }
+
+  public async uploadImage(image: ImageInfo): Promise<void> {
+    return this.socket.send('upload-image', image);
   }
 }
