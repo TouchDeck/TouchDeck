@@ -24,7 +24,7 @@ export type State =
       config?: Configuration;
       actionOptions: undefined;
       buttonStates: {};
-      images: [];
+      images: ImageInfo[];
     }
   | ConnectedAgentState;
 
@@ -54,6 +54,10 @@ export type Action =
       type: 'buttonStateChanged';
       buttonId: string;
       buttonState: boolean;
+    }
+  | {
+      type: 'imagesLoaded';
+      images: ImageInfo[];
     };
 
 export const reducer: Reducer<State, Action> = (prevState, action) => {
@@ -102,6 +106,8 @@ export const reducer: Reducer<State, Action> = (prevState, action) => {
           [action.buttonId]: action.buttonState,
         },
       };
+    case 'imagesLoaded':
+      return { ...prevState, images: action.images };
     default:
       return prevState;
   }

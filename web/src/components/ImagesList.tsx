@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { useConnectedAgent } from '../state/appState';
+import { useConnectedAgent, useGlobalState } from '../state/appState';
 import Button from './Button';
 import { List } from './List';
 import { ImageInfo } from '../model/messages/ImageInfo';
@@ -15,6 +15,7 @@ export interface Props {
 }
 
 export const ImagesList: React.FC<Props> = ({ onClickImage }) => {
+  const [, dispatch] = useGlobalState();
   const { agent, images } = useConnectedAgent();
 
   const [showImages, setShowImages] = useState(images); // TODO
@@ -45,12 +46,16 @@ export const ImagesList: React.FC<Props> = ({ onClickImage }) => {
             path: file.name,
             data,
           });
-          agent.getImages();
+          const newImages = await agent.getImages();
+          dispatch({
+            type: 'imagesLoaded',
+            images: newImages,
+          });
         }
       });
       reader.readAsDataURL(file);
     },
-    [agent]
+    [agent, dispatch]
   );
 
   return (
