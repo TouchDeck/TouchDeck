@@ -10,6 +10,7 @@ export const ImagesPage: React.FC = () => {
       <ImagesList onClickImage={setSelectedImage} />
       {selectedImage && (
         <div className="properties">
+          <h3 className="name">{selectedImage.path}</h3>
           <img src={selectedImage.data} alt="" />
         </div>
       )}

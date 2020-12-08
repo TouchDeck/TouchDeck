@@ -10,7 +10,11 @@
   }
 
   .properties {
-    margin: 8px;
+    margin: 16px 32px;
+
+    .name {
+      margin-bottom: 8px;
+    }
 
     img {
       max-width: 320px;

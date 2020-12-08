@@ -20,7 +20,8 @@ export async function getImages(): Promise<ImageInfo[]> {
 }
 
 export async function uploadImage(image: ImageInfo): Promise<void> {
-  await fs.writeFile(resolve(IMAGES_DIR, image.path), image.data, {
+  const [, fileData] = image.data.split(',', 2);
+  await fs.writeFile(resolve(IMAGES_DIR, image.path), fileData, {
     encoding: 'base64',
   });
 }

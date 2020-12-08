@@ -41,21 +41,22 @@ export const ImagesList: React.FC<Props> = ({ onClickImage }) => {
       const reader = new FileReader();
       reader.addEventListener('load', async () => {
         if (typeof reader.result === 'string') {
-          const [, data] = reader.result.split(',', 2);
-          await agent.uploadImage({
+          const newImage = {
             path: file.name,
-            data,
-          });
+            data: reader.result,
+          };
+          await agent.uploadImage(newImage);
           const newImages = await agent.getImages();
           dispatch({
             type: 'imagesLoaded',
             images: newImages,
           });
+          onClickImage(newImage);
         }
       });
       reader.readAsDataURL(file);
     },
-    [agent, dispatch]
+    [agent, dispatch, onClickImage]
   );
 
   return (
