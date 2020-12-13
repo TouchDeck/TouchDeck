@@ -5,7 +5,7 @@ import { ConnectAgentPage } from './pages/ConnectAgentPage';
 import { Route, Switch } from 'react-router-dom';
 import AgentInfoModal from './components/AgentInfoModal';
 import { Layout } from './components/Layout';
-import { TargetsSettingsPage } from './pages/TargetsSettingsPage';
+import { TargetsPage } from './pages/TargetsPage';
 import MessageDisplay from './components/MessageDisplay';
 import { ImagesPage } from './pages/ImagesPage';
 
@@ -31,7 +31,7 @@ export const App: React.FC = () => {
             <DeckPage editing />
           </Route>
           <Route exact path="/images" component={ImagesPage} />
-          <Route exact path="/targets" component={TargetsSettingsPage} />
+          <Route exact path="/targets" component={TargetsPage} />
         </Switch>
       </Layout>
       <AgentInfoModal />

@@ -25,7 +25,7 @@ $border-radius: 4px;
 @import 'pages/ConnectAgentPage';
 @import 'pages/DeckPage';
 @import 'pages/ImagesPage';
-@import 'pages/TargetsSettingsPage';
+@import 'pages/TargetsPage';
 
 // Component styles
 @import 'components/AgentInfoModal';
@@ -47,7 +47,6 @@ $border-radius: 4px;
 @import 'components/input/ColorInput';
 @import 'components/input/Input';
 @import 'components/settings/ButtonStyleSettings';
-@import 'components/settings/TargetRow';
 
 // Styling
 

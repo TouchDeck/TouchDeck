@@ -4,9 +4,9 @@ import TextInput from './input/TextInput';
 
 export interface Props {
   className?: string;
-  searchPlaceholder: string;
-  searchTerm: string;
-  onSearchTermChange: (search: string) => void;
+  searchPlaceholder?: string;
+  searchTerm?: string;
+  onSearchTermChange?: (search: string) => void;
 }
 
 export const List: React.FC<Props> = ({
@@ -17,13 +17,15 @@ export const List: React.FC<Props> = ({
   onSearchTermChange,
 }) => (
   <div className={classNames(['list', className])}>
-    <TextInput
-      className="search"
-      placeholder={searchPlaceholder}
-      value={searchTerm}
-      onChange={onSearchTermChange}
-      icon="search"
-    />
+    {onSearchTermChange && (
+      <TextInput
+        className="search"
+        placeholder={searchPlaceholder}
+        value={searchTerm}
+        onChange={onSearchTermChange}
+        icon="search"
+      />
+    )}
     {children}
   </div>
 );

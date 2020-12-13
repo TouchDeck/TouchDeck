@@ -3,6 +3,7 @@
   width: 240px;
   display: flex;
   flex-direction: column;
+  background-color: #181818;
 
   .search {
     margin: 8px;
@@ -34,6 +35,11 @@
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
+      }
+
+      img.preview {
+        padding: 4px;
+        border-radius: 0;
       }
 
       .name {
