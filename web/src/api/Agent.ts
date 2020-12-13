@@ -72,4 +72,8 @@ export default class Agent {
   public async uploadImage(image: ImageInfo): Promise<void> {
     return this.socket.send('upload-image', image);
   }
+
+  public async deleteImage(path: string): Promise<void> {
+    return this.socket.send('delete-image', { path });
+  }
 }
