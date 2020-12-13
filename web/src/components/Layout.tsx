@@ -13,10 +13,12 @@ export const Layout: React.FC = ({ children }) => {
   );
 
   useEffect(() => {
+    const handler = () => setIsFullscreen(!!document.fullscreenElement);
+
     // Subscribe to the fullscreen change event, so we can change the icon.
-    document.addEventListener('fullscreenchange', () =>
-      setIsFullscreen(!!document.fullscreenElement)
-    );
+    document.addEventListener('fullscreenchange', handler);
+
+    return () => document.removeEventListener('fullscreenchange', handler);
   }, []);
 
   return (
