@@ -1,6 +1,6 @@
 {
   "name": "touchdeck-agent",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "main": "src/index.ts",
   "scripts": {
     "start": "ts-node-dev --respawn src/index.ts",
