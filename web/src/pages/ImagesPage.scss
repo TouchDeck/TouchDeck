@@ -1,0 +1,28 @@
+.images-page {
+  display: flex;
+
+  .images-list {
+    .hidden {
+      display: none;
+    }
+  }
+
+  .properties {
+    margin: 16px 32px;
+    display: flex;
+    flex-direction: column;
+
+    .name {
+      margin-bottom: 8px;
+    }
+
+    img {
+      max-width: 320px;
+      max-height: 320px;
+    }
+
+    .actions {
+      margin-top: 8px;
+    }
+  }
+}

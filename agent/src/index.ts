@@ -18,7 +18,7 @@ import {
 } from './wsApi/config';
 import pressButton from './wsApi/pressButton';
 import getAgentInfo from './util/getAgentInfo';
-import getImages from './wsApi/getImages';
+import { deleteImage, getImages, uploadImage } from './wsApi/images';
 import sendButtonStates from './wsApi/sendButtonStates';
 import { setServerInstance } from './serverInstance';
 
@@ -55,6 +55,8 @@ async function bootstrap(): Promise<void> {
   server.registerHandler('get-action-options', getActionOptions);
   server.registerHandler('get-images', getImages);
   server.registerHandler('press-button', pressButton(server));
+  server.registerHandler('upload-image', uploadImage);
+  server.registerHandler('delete-image', deleteImage);
 
   // When a new connection is established, send all button states.
   // TODO: Make this not a broadcast, but only send to the newly connected client.

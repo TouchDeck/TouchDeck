@@ -10,7 +10,7 @@ import Modal from '../components/Modal';
 import Button from '../components/Button';
 import { errorId } from '../util/errorId';
 
-const ConnectAgentPage: React.FC = () => {
+export const ConnectAgentPage: React.FC = () => {
   const [{ agent }, dispatch] = useGlobalState();
 
   const [connectInput, setConnectInput] = useState('');
@@ -144,5 +144,3 @@ const ConnectAgentPage: React.FC = () => {
     </div>
   );
 };
-
-export default ConnectAgentPage;

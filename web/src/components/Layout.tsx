@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Icon from './Icon';
-import Menu from './Menu';
+import { Menu } from './Menu';
 
-const Layout: React.FC = ({ children }) => {
+export const Layout: React.FC = ({ children }) => {
   const location = useLocation();
   // If the pathname is longer than 1 ('/'), default the menu to open.
   const [showMenu, setShowMenu] = useState(location.pathname.length > 1);
@@ -13,10 +13,12 @@ const Layout: React.FC = ({ children }) => {
   );
 
   useEffect(() => {
+    const handler = () => setIsFullscreen(!!document.fullscreenElement);
+
     // Subscribe to the fullscreen change event, so we can change the icon.
-    document.addEventListener('fullscreenchange', () =>
-      setIsFullscreen(!!document.fullscreenElement)
-    );
+    document.addEventListener('fullscreenchange', handler);
+
+    return () => document.removeEventListener('fullscreenchange', handler);
   }, []);
 
   return (
@@ -50,5 +52,3 @@ const Layout: React.FC = ({ children }) => {
     </div>
   );
 };
-
-export default Layout;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from '../../util/classNames';
 import { ButtonStyling } from '../../model/configuration/ButtonConfig';
 import { useConnectedAgent } from '../../state/appState';
@@ -22,7 +22,7 @@ export interface Props extends ButtonProps {
   style: ButtonStyling;
 }
 
-const GridButton: React.FC<Props> = ({
+export const GridButton: React.FC<Props> = ({
   children,
   disabled,
   onClick,
@@ -44,6 +44,15 @@ const GridButton: React.FC<Props> = ({
 
   const { images } = useConnectedAgent();
 
+  const [imageData, setImageData] = useState<string>();
+  useEffect(
+    () =>
+      setImageData(
+        style.image && images.find((i) => i.path === style.image)?.data
+      ),
+    [images, style.image]
+  );
+
   return (
     <div
       className="grid-button-wrapper"
@@ -57,7 +66,7 @@ const GridButton: React.FC<Props> = ({
         style={{
           backgroundColor: style.backgroundColor,
           color: style.textColor,
-          backgroundImage: style.image ? `url(${images[style.image]})` : '',
+          backgroundImage: imageData && `url(${imageData})`,
           width: size,
           height: size,
           fontSize: size / 4,
@@ -83,5 +92,3 @@ const GridButton: React.FC<Props> = ({
     </div>
   );
 };
-
-export default GridButton;

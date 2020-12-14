@@ -9,7 +9,7 @@ export interface Props {
   editing?: boolean;
 }
 
-const DeckPage: React.FC<Props> = ({ editing }) => {
+export const DeckPage: React.FC<Props> = ({ editing }) => {
   const [selectedButton, setSelectedButton] = useState<ButtonConfig>();
 
   useEffect(() => {
@@ -39,5 +39,3 @@ const DeckPage: React.FC<Props> = ({ editing }) => {
     </main>
   );
 };
-
-export default DeckPage;

@@ -1,14 +1,15 @@
 import React from 'react';
-import DeckPage from './pages/DeckPage';
+import { DeckPage } from './pages/DeckPage';
 import { useGlobalState } from './state/appState';
-import ConnectAgentPage from './pages/ConnectAgentPage';
+import { ConnectAgentPage } from './pages/ConnectAgentPage';
 import { Route, Switch } from 'react-router-dom';
 import AgentInfoModal from './components/AgentInfoModal';
-import Layout from './components/Layout';
-import TargetsSettingsPage from './pages/TargetsSettingsPage';
+import { Layout } from './components/Layout';
+import { TargetsPage } from './pages/TargetsPage';
 import MessageDisplay from './components/MessageDisplay';
+import { ImagesPage } from './pages/ImagesPage';
 
-const App: React.FC = () => {
+export const App: React.FC = () => {
   const [{ agent }] = useGlobalState();
 
   // If we are not connected to an agent, show the connect page.
@@ -29,12 +30,11 @@ const App: React.FC = () => {
           <Route exact path="/buttons">
             <DeckPage editing />
           </Route>
-          <Route exact path="/targets" component={TargetsSettingsPage} />
+          <Route exact path="/images" component={ImagesPage} />
+          <Route exact path="/targets" component={TargetsPage} />
         </Switch>
       </Layout>
       <AgentInfoModal />
     </MessageDisplay>
   );
 };
-
-export default App;
