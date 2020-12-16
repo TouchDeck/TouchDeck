@@ -24,7 +24,7 @@ export const ConnectAgentPage: React.FC = () => {
       .catch((err) => setAgentListError(err.message));
   }, []);
 
-  useEffect(refreshAgentList, []);
+  useEffect(refreshAgentList, [refreshAgentList]);
 
   const connectToAgent = useCallback(
     async (address) => {
