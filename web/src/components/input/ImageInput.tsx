@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useConnectedAgent } from '../../state/appState';
 import TextInput from './TextInput';
 import { ImageInfo } from '../../model/messages/ImageInfo';
+import removeExtension from '../../util/removeExtension';
 
 export interface Props {
   value: string;
@@ -22,7 +23,7 @@ export const ImageInput: React.FC<Props> = ({ value, onChange }) => {
       <TextInput
         onChange={setSearchTerm}
         value={searchTerm}
-        placeholder={value}
+        placeholder={removeExtension(value)}
       />
       <div className="image-list">
         {displayImages.map((img) => (
@@ -37,7 +38,7 @@ export const ImageInput: React.FC<Props> = ({ value, onChange }) => {
                 backgroundImage: `url(${img.data})`,
               }}
             />
-            <span className="name">{img.path}</span>
+            <span className="name">{removeExtension(img.path)}</span>
           </div>
         ))}
       </div>
