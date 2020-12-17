@@ -4,6 +4,8 @@
     background-color: #181818;
     border-radius: $border-radius;
     overflow-y: auto;
+    max-height: 10rem;
+    min-width: 200px;
 
     .image-entry {
       display: flex;
