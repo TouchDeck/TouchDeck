@@ -13,35 +13,56 @@ export const ImageInput: React.FC<Props> = ({ value, onChange }) => {
   const { images } = useConnectedAgent();
   const [searchTerm, setSearchTerm] = useState('');
   const [displayImages, setDisplayImages] = useState(images);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
     setDisplayImages(images.filter((img) => filterImage(searchTerm, img)));
   }, [images, searchTerm]);
 
   return (
-    <div className="image-input">
+    <div
+      className="image-input"
+      onFocus={() => setShowDropdown(true)}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+          setShowDropdown(false);
+        }
+      }}
+    >
       <TextInput
         onChange={setSearchTerm}
         value={searchTerm}
         placeholder={removeExtension(value)}
       />
-      <div className="image-list">
-        {displayImages.map((img) => (
-          <div
-            key={img.path}
-            className="image-entry"
-            onClick={() => onChange(img.path)}
-          >
+      {showDropdown && (
+        <div className="image-list">
+          {displayImages.map((img) => (
             <div
-              className="preview"
-              style={{
-                backgroundImage: `url(${img.data})`,
+              key={img.path}
+              className="image-entry"
+              onClick={() => {
+                onChange(img.path);
+                setShowDropdown(false);
               }}
-            />
-            <span className="name">{removeExtension(img.path)}</span>
-          </div>
-        ))}
-      </div>
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  onChange(img.path);
+                  setShowDropdown(false);
+                }
+              }}
+            >
+              <div
+                className="preview"
+                style={{
+                  backgroundImage: `url(${img.data})`,
+                }}
+              />
+              <span className="name">{removeExtension(img.path)}</span>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

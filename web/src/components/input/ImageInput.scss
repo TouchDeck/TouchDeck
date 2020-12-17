@@ -10,7 +10,8 @@
       cursor: pointer;
       border-radius: $border-radius;
 
-      &:hover {
+      &:hover,
+      &:focus {
         background-color: #333333;
       }
 
