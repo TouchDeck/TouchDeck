@@ -1,0 +1,33 @@
+.image-input {
+  .image-list {
+    position: absolute;
+    background-color: #181818;
+    border-radius: $border-radius;
+
+    .image-entry {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      border-radius: $border-radius;
+
+      &:hover {
+        background-color: #333333;
+      }
+
+      .preview {
+        width: 32px;
+        height: 32px;
+        border-radius: $border-radius;
+        margin: 4px;
+
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+
+      .name {
+        margin-right: 8px;
+      }
+    }
+  }
+}
