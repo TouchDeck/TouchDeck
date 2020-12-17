@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useConnectedAgent } from '../../state/appState';
 import TextInput from './TextInput';
 import { ImageInfo } from '../../model/messages/ImageInfo';
@@ -18,6 +18,15 @@ export const ImageInput: React.FC<Props> = ({ value, onChange }) => {
   useEffect(() => {
     setDisplayImages(images.filter((img) => filterImage(searchTerm, img)));
   }, [images, searchTerm]);
+
+  const selectImage = useCallback(
+    (image: ImageInfo) => {
+      onChange(image.path);
+      setShowDropdown(false);
+      setSearchTerm('');
+    },
+    [onChange]
+  );
 
   return (
     <div
@@ -40,15 +49,11 @@ export const ImageInput: React.FC<Props> = ({ value, onChange }) => {
             <div
               key={img.path}
               className="image-entry"
-              onClick={() => {
-                onChange(img.path);
-                setShowDropdown(false);
-              }}
+              onClick={() => selectImage(img)}
               tabIndex={0}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
-                  onChange(img.path);
-                  setShowDropdown(false);
+                  selectImage(img);
                 }
               }}
             >
