@@ -3,7 +3,7 @@
   width: 240px;
   display: flex;
   flex-direction: column;
-  background-color: #181818;
+  background-color: $elevation-1;
 
   .search {
     margin: 8px;
@@ -25,7 +25,15 @@
       display: flex;
       align-items: center;
 
-      background-color: #555;
+      background-color: $list-item-bg;
+
+      &:hover {
+        background-color: mix(white, $list-item-bg, 4%);
+      }
+
+      &:active {
+        background-color: mix(white, $list-item-bg, 10%);
+      }
 
       .preview {
         width: 48px;
