@@ -2,13 +2,13 @@ import { Logger } from '@luca_scorpion/tinylogger';
 import { v4 as uuidv4 } from 'uuid';
 import { getPreparedActions } from '../configuration/config';
 import { PressButtonResult } from '../model/messages/PressButtonResult';
-import WebSocketServer from '../WebSocketServer';
 import { isPreparedToggleAction } from '../actions/ToggleAction';
+import WebSocketClient from '../WebSocketClient';
 
 const log = new Logger('pressButton');
 
 export default function pressButton(
-  ws: WebSocketServer
+  ws: WebSocketClient
 ): (buttonId: string) => Promise<PressButtonResult> {
   return async (buttonId) => {
     const actions = getPreparedActions();
@@ -41,7 +41,7 @@ export default function pressButton(
     // If it is a toggle action, broadcast the new state.
     if (isPreparedToggleAction(action)) {
       const newButtonState = await action.getState();
-      ws.broadcast('button-state-changed', {
+      ws.send('button-state-changed', {
         buttonId,
         buttonState: newButtonState,
       });

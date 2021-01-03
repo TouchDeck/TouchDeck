@@ -7,7 +7,7 @@ import {
   NormalButtonConfig,
   ToggleButtonConfig,
 } from '../model/configuration/ButtonConfig';
-import { getServerInstance } from '../serverInstance';
+import { getClientInstance } from '../serverInstance';
 import { isPreparedToggleAction } from './ToggleAction';
 
 export type PreparedActions = { [id: string]: PreparedAction };
@@ -41,7 +41,7 @@ function prepareAction(
         }
 
         // Broadcast the new button state.
-        getServerInstance().broadcast('button-state-changed', {
+        getClientInstance().send('button-state-changed', {
           buttonId: button.id,
           buttonState,
         });

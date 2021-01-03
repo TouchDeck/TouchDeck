@@ -96,6 +96,8 @@ export const ConnectAgentPage: React.FC = () => {
         actionOptions,
         images,
       });
+
+      // TODO: Get button states message.
     },
     [dispatch]
   );

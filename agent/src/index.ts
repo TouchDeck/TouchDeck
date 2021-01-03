@@ -1,13 +1,11 @@
 import 'reflect-metadata';
 import { Logger } from '@luca_scorpion/tinylogger';
 import { getAvailableActions } from './actions/actionRegistry';
-import { PORT } from './constants';
 import {
   getConfiguration,
   readConfiguration,
   setConfiguration,
 } from './configuration/config';
-import WebSocketServer from './WebSocketServer';
 import getActionOptions from './wsApi/getActionOptions';
 import {
   deleteButton,
@@ -18,8 +16,7 @@ import {
 import pressButton from './wsApi/pressButton';
 import getAgentMeta from './util/getAgentMeta';
 import { deleteImage, getImages, uploadImage } from './wsApi/images';
-import sendButtonStates from './wsApi/sendButtonStates';
-import { setServerInstance } from './serverInstance';
+import { setClientInstance } from './serverInstance';
 import WebSocketClient from './WebSocketClient';
 
 const log = new Logger('index');
@@ -40,29 +37,22 @@ async function bootstrap(): Promise<void> {
   await readConfiguration().then(setConfiguration);
 
   // Connect to the WS proxy.
+  log.debug('Connecting to websocket proxy');
   const client = new WebSocketClient();
-
-  // Start the websocket server.
-  log.debug('Starting websocket server');
-  const server = new WebSocketServer({ port: PORT, path: '/ws' });
-  setServerInstance(server);
+  setClientInstance(client);
 
   // Register all websocket server handlers.
-  server.registerHandler('get-info', getAgentMeta);
-  server.registerHandler('get-configuration', getConfiguration);
-  server.registerHandler('set-configuration', updateConfig);
-  server.registerHandler('upsert-configuration-button', upsertButton);
-  server.registerHandler('delete-configuration-button', deleteButton);
-  server.registerHandler('set-layout', updateLayout);
-  server.registerHandler('get-action-options', getActionOptions);
-  server.registerHandler('get-images', getImages);
-  server.registerHandler('press-button', pressButton(server));
-  server.registerHandler('upload-image', uploadImage);
-  server.registerHandler('delete-image', deleteImage);
-
-  // When a new connection is established, send all button states.
-  // TODO: Make this not a broadcast, but only send to the newly connected client.
-  server.server.addListener('connection', () => sendButtonStates(server));
+  client.registerHandler('get-info', getAgentMeta);
+  client.registerHandler('get-configuration', getConfiguration);
+  client.registerHandler('set-configuration', updateConfig);
+  client.registerHandler('upsert-configuration-button', upsertButton);
+  client.registerHandler('delete-configuration-button', deleteButton);
+  client.registerHandler('set-layout', updateLayout);
+  client.registerHandler('get-action-options', getActionOptions);
+  client.registerHandler('get-images', getImages);
+  client.registerHandler('press-button', pressButton(client));
+  client.registerHandler('upload-image', uploadImage);
+  client.registerHandler('delete-image', deleteImage);
 
   log.info(`Agent running on ${getAgentMeta().address}`);
 }
