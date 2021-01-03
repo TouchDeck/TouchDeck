@@ -18,9 +18,17 @@ export default class WebSocketClient {
   public constructor() {
     this.client = new WebSocket('wss://wsproxy.touchdeck.app/ws/agent');
 
-    this.client.addEventListener('message', ({ target, data }) =>
-      this.handleMessage(target, data)
-    );
+    let registered = false;
+    this.client.addEventListener('message', ({ target, data }) => {
+      if (!registered) {
+        registered = true;
+        const { id } = JSON.parse(data.toString());
+        WebSocketClient.log.info(`Registered agent: ${id}`);
+        return;
+      }
+
+      this.handleMessage(target, data);
+    });
 
     this.client.addEventListener('open', () => {
       WebSocketClient.log.debug('Connected to WS proxy');
