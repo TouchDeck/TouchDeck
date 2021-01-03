@@ -48,6 +48,14 @@ export default class WebSocketClient {
     >;
   }
 
+  public sendRaw(msg: string): void {
+    if (!this.socket) {
+      throw new Error('No agent socket connection available.');
+    }
+
+    this.socket.send(msg);
+  }
+
   public send<T extends keyof MessageDataMap>(
     type: T,
     ...args: MessageDataMap[T] extends void ? [undefined?] : [MessageDataMap[T]]

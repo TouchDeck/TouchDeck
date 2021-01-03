@@ -1,5 +1,5 @@
-import AgentInfo from '../model/AgentInfo';
+import { AgentInfo } from '../model/AgentInfo';
 
 export default async function listDiscoveredAgents(): Promise<AgentInfo[]> {
-  return (await fetch('https://discovery.scorpiac.com/api/agents')).json();
+  return (await fetch('https://wsproxy.touchdeck.app/agents')).json();
 }

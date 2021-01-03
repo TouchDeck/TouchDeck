@@ -3,8 +3,8 @@ import { useGlobalState } from '../state/appState';
 import Icon from '../components/Icon';
 import Agent from '../api/Agent';
 import listDiscoveredAgents from '../api/listDiscoveredAgents';
-import AgentInfo from '../model/AgentInfo';
-import AgentList from '../components/AgentList';
+import { AgentInfo, AgentMeta } from '../model/AgentInfo';
+import { AgentList } from '../components/AgentList';
 import TextInput from '../components/input/TextInput';
 import Modal from '../components/Modal';
 import Button from '../components/Button';
@@ -27,19 +27,19 @@ export const ConnectAgentPage: React.FC = () => {
   useEffect(refreshAgentList, [refreshAgentList]);
 
   const connectToAgent = useCallback(
-    async (address) => {
+    async (id) => {
       // Connect to the agent.
       dispatch({ type: 'dismissError' });
       dispatch({ type: 'agentConnecting' });
-      const newAgent = new Agent(address);
+      const newAgent = new Agent();
 
       try {
-        await newAgent.connect();
+        await newAgent.connect(id);
       } catch {
         dispatch({ type: 'agentDisconnected' });
         dispatch({
           type: 'error',
-          message: `Failed to connect to agent at ${address}`,
+          message: `Failed to connect to agent at ${id}`,
           id: errorId(),
         });
         return;
@@ -60,13 +60,13 @@ export const ConnectAgentPage: React.FC = () => {
       );
 
       // Test if the agent is valid.
-      let agentInfo: AgentInfo;
+      let agentMeta: AgentMeta;
       try {
-        agentInfo = await newAgent.getInfo();
-        if (agentInfo.name !== 'touchdeck-agent') {
+        agentMeta = await newAgent.getMeta();
+        if (agentMeta.name !== 'touchdeck-agent') {
           dispatch({
             type: 'error',
-            message: `Invalid agent name: ${agentInfo.name}`,
+            message: `Invalid agent name: ${agentMeta.name}`,
             id: errorId(),
           });
           dispatch({ type: 'agentDisconnected' });
@@ -91,7 +91,7 @@ export const ConnectAgentPage: React.FC = () => {
       dispatch({
         type: 'agentConnected',
         agent: newAgent,
-        info: agentInfo,
+        info: agentMeta,
         config: agentConfig,
         actionOptions,
         images,
@@ -116,7 +116,7 @@ export const ConnectAgentPage: React.FC = () => {
         </h3>
         <AgentList
           agents={agentList}
-          onClickAgent={(address) => connectToAgent(address)}
+          onClickAgent={(id) => connectToAgent(id)}
           error={agentListError}
         />
 

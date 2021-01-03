@@ -1,13 +1,12 @@
 import 'reflect-metadata';
 import { Logger } from '@luca_scorpion/tinylogger';
 import { getAvailableActions } from './actions/actionRegistry';
-import { DISCOVERY_REPORT_TIME, PORT } from './constants';
+import { PORT } from './constants';
 import {
   getConfiguration,
   readConfiguration,
   setConfiguration,
 } from './configuration/config';
-import reportAgentDiscovery from './util/reportAgentDiscovery';
 import WebSocketServer from './WebSocketServer';
 import getActionOptions from './wsApi/getActionOptions';
 import {
@@ -17,10 +16,11 @@ import {
   upsertButton,
 } from './wsApi/config';
 import pressButton from './wsApi/pressButton';
-import getAgentInfo from './util/getAgentInfo';
+import getAgentMeta from './util/getAgentMeta';
 import { deleteImage, getImages, uploadImage } from './wsApi/images';
 import sendButtonStates from './wsApi/sendButtonStates';
 import { setServerInstance } from './serverInstance';
+import WebSocketClient from './WebSocketClient';
 
 const log = new Logger('index');
 log.debug('Starting agent...');
@@ -39,14 +39,16 @@ async function bootstrap(): Promise<void> {
   // Doing it this way allows us to validate on boot.
   await readConfiguration().then(setConfiguration);
 
+  // Connect to the WS proxy.
+  const client = new WebSocketClient();
+
   // Start the websocket server.
   log.debug('Starting websocket server');
   const server = new WebSocketServer({ port: PORT, path: '/ws' });
   setServerInstance(server);
-  const serverPort = server.address().port;
 
   // Register all websocket server handlers.
-  server.registerHandler('get-info', () => getAgentInfo(serverPort));
+  server.registerHandler('get-info', getAgentMeta);
   server.registerHandler('get-configuration', getConfiguration);
   server.registerHandler('set-configuration', updateConfig);
   server.registerHandler('upsert-configuration-button', upsertButton);
@@ -62,16 +64,7 @@ async function bootstrap(): Promise<void> {
   // TODO: Make this not a broadcast, but only send to the newly connected client.
   server.server.addListener('connection', () => sendButtonStates(server));
 
-  log.info(`Agent running on ${getAgentInfo(serverPort).address}`);
-
-  // Report the agent info to the discovery server.
-  // No need to await this, since we don't care whether it succeeds or fails.
-  // noinspection ES6MissingAwait
-  reportAgentDiscovery(serverPort);
-  setInterval(
-    () => reportAgentDiscovery(serverPort),
-    DISCOVERY_REPORT_TIME * 1000
-  );
+  log.info(`Agent running on ${getAgentMeta().address}`);
 }
 
 bootstrap().catch((err) => {
