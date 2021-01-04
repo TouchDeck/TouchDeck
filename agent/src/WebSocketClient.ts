@@ -31,7 +31,7 @@ export default class WebSocketClient {
     });
 
     this.client.addEventListener('open', () => {
-      WebSocketClient.log.debug('Connected to WS proxy');
+      WebSocketClient.log.debug('Connected to websocket proxy');
       this.client.send(
         JSON.stringify({
           meta: getAgentMeta(),

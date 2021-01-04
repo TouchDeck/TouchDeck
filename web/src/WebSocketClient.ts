@@ -35,7 +35,7 @@ export default class WebSocketClient {
   }
 
   public onDisconnect(handler: () => void): void {
-    this.socket?.addEventListener('error', handler);
+    this.socket?.addEventListener('close', handler);
   }
 
   public registerHandler<T extends keyof MessageDataMap>(

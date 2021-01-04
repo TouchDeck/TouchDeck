@@ -19,6 +19,7 @@ export const ConnectAgentPage: React.FC = () => {
 
   const refreshAgentList = useCallback(() => {
     setAgentList(undefined);
+    setAgentListError(undefined);
     listDiscoveredAgents()
       .then(setAgentList)
       .catch((err) => setAgentListError(err.message));
