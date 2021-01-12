@@ -18,6 +18,8 @@ import getAgentMeta from './util/getAgentMeta';
 import { deleteImage, getImages, uploadImage } from './wsApi/images';
 import { setClientInstance } from './serverInstance';
 import WebSocketClient from './WebSocketClient';
+import Configuration from './model/configuration/Configuration';
+import sendButtonStates from './wsApi/sendButtonStates';
 
 const log = new Logger('index');
 log.debug('Starting agent...');
@@ -43,7 +45,15 @@ async function bootstrap(): Promise<void> {
 
   // Register all websocket server handlers.
   client.registerHandler('get-info', getAgentMeta);
-  client.registerHandler('get-configuration', getConfiguration);
+  client.registerHandler(
+    'get-configuration',
+    (): Configuration => {
+      // When a get-configuration message is received, this means a new client is connected.
+      // So we broadcast all the current button states.
+      sendButtonStates(client);
+      return getConfiguration();
+    }
+  );
   client.registerHandler('set-configuration', updateConfig);
   client.registerHandler('upsert-configuration-button', upsertButton);
   client.registerHandler('delete-configuration-button', deleteButton);

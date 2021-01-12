@@ -94,7 +94,8 @@ export default class WebSocketClient {
           console.error(`Error while handling "${message.type}" message:`, err)
         );
       } else {
-        console.error(
+        // This happens when multiple remotes are connected to a single agent.
+        console.debug(
           `No handler found for message reply "${message.replyTo}", dropping.`
         );
       }
