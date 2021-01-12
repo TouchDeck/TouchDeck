@@ -1,6 +1,6 @@
 import Agent from '../api/Agent';
 import { Reducer } from 'react';
-import AgentInfo from '../model/AgentInfo';
+import { AgentMeta } from '../model/AgentInfo';
 import { ActionOption } from '../model/ActionOption';
 import Configuration from '../model/configuration/Configuration';
 import { ButtonStates } from '../model/ButtonStates';
@@ -9,7 +9,7 @@ import { ImageInfo } from '../model/messages/ImageInfo';
 export interface ConnectedAgentState {
   connecting: false;
   agent: Agent;
-  info: AgentInfo;
+  info: AgentMeta;
   config: Configuration;
   actionOptions: ActionOption[];
   buttonStates: ButtonStates;
@@ -35,7 +35,7 @@ export type Action =
   | {
       type: 'agentConnected';
       agent: Agent;
-      info: AgentInfo;
+      info: AgentMeta;
       config: Configuration;
       actionOptions: ActionOption[];
       images: ImageInfo[];

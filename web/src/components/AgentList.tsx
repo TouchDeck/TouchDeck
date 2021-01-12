@@ -1,14 +1,14 @@
 import React from 'react';
-import AgentInfo from '../model/AgentInfo';
+import { AgentInfo } from '../model/AgentInfo';
 import Icon from './Icon';
 
 export interface Props {
   agents?: AgentInfo[];
   error?: string;
-  onClickAgent: (address: string) => void;
+  onClickAgent: (id: string) => void;
 }
 
-const AgentList: React.FC<Props> = ({ agents, error, onClickAgent }) => (
+export const AgentList: React.FC<Props> = ({ agents, error, onClickAgent }) => (
   <div className="agent-list">
     {!agents && !error && <Icon icon="spinner" size={2} pulse />}
     {error && (
@@ -23,17 +23,15 @@ const AgentList: React.FC<Props> = ({ agents, error, onClickAgent }) => (
       agents.map((agent) => (
         <div
           className="agent"
-          key={agent.address}
-          onClick={() => onClickAgent(agent.address)}
+          key={agent.meta.address}
+          onClick={() => onClickAgent(agent.id)}
         >
-          <Icon icon={agent.platform} iconStyle="brands" size={2} />{' '}
+          <Icon icon={agent.meta.platform} iconStyle="brands" size={2} />{' '}
           <div className="details">
-            <span className="hostname">{agent.hostname}</span>
-            <span className="address">{agent.address}</span>
+            <span className="hostname">{agent.meta.hostname}</span>
+            <span className="address">{agent.meta.address}</span>
           </div>
         </div>
       ))}
   </div>
 );
-
-export default AgentList;

@@ -1,6 +1,6 @@
 import os from 'os';
 
-export default function getLocalAddress(): string | undefined {
+export default function getLocalAddress(): string {
   const interfaces = os.networkInterfaces();
   for (const interfaceInfo of Object.values(interfaces)) {
     if (interfaceInfo) {
@@ -11,5 +11,5 @@ export default function getLocalAddress(): string | undefined {
       }
     }
   }
-  return undefined;
+  return '';
 }

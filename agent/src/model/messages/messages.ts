@@ -1,4 +1,4 @@
-import AgentInfo from '../AgentInfo';
+import { AgentMeta } from '../AgentInfo';
 import { ButtonConfig } from '../configuration/ButtonConfig';
 import Configuration, { ButtonLayout } from '../configuration/Configuration';
 import { ActionOption } from '../ActionOption';
@@ -23,7 +23,7 @@ export interface MessageDataMap {
 }
 
 export interface MessageResponseMap {
-  'get-info': AgentInfo;
+  'get-info': AgentMeta;
   'get-configuration': Configuration;
   'set-configuration': Configuration;
   'upsert-configuration-button': Configuration;

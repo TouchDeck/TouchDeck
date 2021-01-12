@@ -1,11 +1,11 @@
-import WebSocketServer from './WebSocketServer';
+import WebSocketClient from './WebSocketClient';
 
-let serverInstance: WebSocketServer;
+let clientInstance: WebSocketClient;
 
-export function setServerInstance(server: WebSocketServer): void {
-  serverInstance = server;
+export function setClientInstance(client: WebSocketClient): void {
+  clientInstance = client;
 }
 
-export function getServerInstance(): WebSocketServer {
-  return serverInstance;
+export function getClientInstance(): WebSocketClient {
+  return clientInstance;
 }
