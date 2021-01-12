@@ -20,6 +20,7 @@ import { setClientInstance } from './serverInstance';
 import WebSocketClient from './WebSocketClient';
 import Configuration from './model/configuration/Configuration';
 import sendButtonStates from './wsApi/sendButtonStates';
+import { WS_PROXY_SERVER } from './constants';
 
 const log = new Logger('index');
 log.debug('Starting agent...');
@@ -39,8 +40,8 @@ async function bootstrap(): Promise<void> {
   await readConfiguration().then(setConfiguration);
 
   // Connect to the WS proxy.
-  log.debug('Connecting to websocket proxy');
-  const client = new WebSocketClient();
+  log.debug(`Connecting to websocket proxy at ${WS_PROXY_SERVER}`);
+  const client = new WebSocketClient(WS_PROXY_SERVER);
   setClientInstance(client);
 
   // Register all websocket server handlers.

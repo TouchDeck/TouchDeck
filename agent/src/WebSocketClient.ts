@@ -15,8 +15,8 @@ export default class WebSocketClient {
     [type: string]: MessageHandler<unknown, unknown>;
   } = {};
 
-  public constructor() {
-    this.client = new WebSocket('wss://wsproxy.touchdeck.app/ws/agent');
+  public constructor(wsProxy: string) {
+    this.client = new WebSocket(`${wsProxy}/ws/agent`);
 
     let registered = false;
     this.client.addEventListener('message', ({ target, data }) => {
