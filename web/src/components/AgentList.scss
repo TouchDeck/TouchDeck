@@ -11,10 +11,19 @@
     border: 1px solid #000;
     border-radius: $border-radius;
     margin-bottom: 4px;
-    background-color: #555;
 
     display: flex;
     align-items: center;
+
+    background-color: $list-item-bg;
+
+    &:hover {
+      background-color: mix(white, $list-item-bg, 4%);
+    }
+
+    &:active {
+      background-color: mix(white, $list-item-bg, 10%);
+    }
 
     i {
       margin-right: 16px;

@@ -1,14 +1,11 @@
 import 'reflect-metadata';
 import { Logger } from '@luca_scorpion/tinylogger';
 import { getAvailableActions } from './actions/actionRegistry';
-import { DISCOVERY_REPORT_TIME, PORT } from './constants';
 import {
   getConfiguration,
   readConfiguration,
   setConfiguration,
 } from './configuration/config';
-import reportAgentDiscovery from './util/reportAgentDiscovery';
-import WebSocketServer from './WebSocketServer';
 import getActionOptions from './wsApi/getActionOptions';
 import {
   deleteButton,
@@ -17,10 +14,13 @@ import {
   upsertButton,
 } from './wsApi/config';
 import pressButton from './wsApi/pressButton';
-import getAgentInfo from './util/getAgentInfo';
+import getAgentMeta from './util/getAgentMeta';
 import { deleteImage, getImages, uploadImage } from './wsApi/images';
+import { setClientInstance } from './serverInstance';
+import WebSocketClient from './WebSocketClient';
+import Configuration from './model/configuration/Configuration';
 import sendButtonStates from './wsApi/sendButtonStates';
-import { setServerInstance } from './serverInstance';
+import { WS_PROXY_SERVER } from './constants';
 
 const log = new Logger('index');
 log.debug('Starting agent...');
@@ -39,39 +39,33 @@ async function bootstrap(): Promise<void> {
   // Doing it this way allows us to validate on boot.
   await readConfiguration().then(setConfiguration);
 
-  // Start the websocket server.
-  log.debug('Starting websocket server');
-  const server = new WebSocketServer({ port: PORT, path: '/ws' });
-  setServerInstance(server);
-  const serverPort = server.address().port;
+  // Connect to the WS proxy.
+  log.debug(`Connecting to websocket proxy at ${WS_PROXY_SERVER}`);
+  const client = new WebSocketClient(WS_PROXY_SERVER);
+  setClientInstance(client);
 
   // Register all websocket server handlers.
-  server.registerHandler('get-info', () => getAgentInfo(serverPort));
-  server.registerHandler('get-configuration', getConfiguration);
-  server.registerHandler('set-configuration', updateConfig);
-  server.registerHandler('upsert-configuration-button', upsertButton);
-  server.registerHandler('delete-configuration-button', deleteButton);
-  server.registerHandler('set-layout', updateLayout);
-  server.registerHandler('get-action-options', getActionOptions);
-  server.registerHandler('get-images', getImages);
-  server.registerHandler('press-button', pressButton(server));
-  server.registerHandler('upload-image', uploadImage);
-  server.registerHandler('delete-image', deleteImage);
-
-  // When a new connection is established, send all button states.
-  // TODO: Make this not a broadcast, but only send to the newly connected client.
-  server.server.addListener('connection', () => sendButtonStates(server));
-
-  log.info(`Agent running on ${getAgentInfo(serverPort).address}`);
-
-  // Report the agent info to the discovery server.
-  // No need to await this, since we don't care whether it succeeds or fails.
-  // noinspection ES6MissingAwait
-  reportAgentDiscovery(serverPort);
-  setInterval(
-    () => reportAgentDiscovery(serverPort),
-    DISCOVERY_REPORT_TIME * 1000
+  client.registerHandler('get-info', getAgentMeta);
+  client.registerHandler(
+    'get-configuration',
+    (): Configuration => {
+      // When a get-configuration message is received, this means a new client is connected.
+      // So we broadcast all the current button states.
+      sendButtonStates(client);
+      return getConfiguration();
+    }
   );
+  client.registerHandler('set-configuration', updateConfig);
+  client.registerHandler('upsert-configuration-button', upsertButton);
+  client.registerHandler('delete-configuration-button', deleteButton);
+  client.registerHandler('set-layout', updateLayout);
+  client.registerHandler('get-action-options', getActionOptions);
+  client.registerHandler('get-images', getImages);
+  client.registerHandler('press-button', pressButton(client));
+  client.registerHandler('upload-image', uploadImage);
+  client.registerHandler('delete-image', deleteImage);
+
+  log.info(`Agent running on ${getAgentMeta().address}`);
 }
 
 bootstrap().catch((err) => {

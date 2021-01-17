@@ -2,23 +2,23 @@ import Configuration, {
   ButtonLayout,
 } from '../model/configuration/Configuration';
 import { ActionOption } from '../model/ActionOption';
-import AgentInfo from '../model/AgentInfo';
+import { AgentMeta } from '../model/AgentInfo';
 import { ButtonConfig } from '../model/configuration/ButtonConfig';
 import WebSocketClient from '../WebSocketClient';
 import ButtonStateChanged from '../model/messages/ButtonStateChanged';
 import { PressButtonResult } from '../model/messages/PressButtonResult';
-import sanitizeWsAddress from '../util/sanitizeWsAddress';
 import { ImageInfo } from '../model/messages/ImageInfo';
 
 export default class Agent {
   private readonly socket: WebSocketClient;
 
-  public constructor(address: string) {
-    this.socket = new WebSocketClient(`${sanitizeWsAddress(address)}/ws`);
+  public constructor() {
+    this.socket = new WebSocketClient('wss://wsproxy.touchdeck.app/ws/remote');
   }
 
-  public connect(): Promise<void> {
-    return this.socket.connect();
+  public async connect(id: string): Promise<void> {
+    await this.socket.connect();
+    this.socket.sendRaw(JSON.stringify({ id }));
   }
 
   public onDisconnect(handler: () => void): void {
@@ -31,7 +31,7 @@ export default class Agent {
     this.socket.registerHandler('button-state-changed', handler);
   }
 
-  public async getInfo(): Promise<AgentInfo> {
+  public async getMeta(): Promise<AgentMeta> {
     return this.socket.send('get-info');
   }
 

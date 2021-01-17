@@ -1,5 +1,16 @@
 // Variables
 
+$elevation-0: #121212;
+$elevation-1: mix(white, $elevation-0, 5%);
+$elevation-2: mix(white, $elevation-0, 7%);
+$elevation-3: mix(white, $elevation-0, 8%);
+$elevation-4: mix(white, $elevation-0, 9%);
+$elevation-6: mix(white, $elevation-0, 11%);
+$elevation-8: mix(white, $elevation-0, 12%);
+$elevation-12: mix(white, $elevation-0, 14%);
+$elevation-16: mix(white, $elevation-0, 15%);
+$elevation-24: mix(white, $elevation-0, 16%);
+
 $grey: #e0e1e2;
 $grey-dark: #cacbcd;
 $grey-darker: #babbbc;
@@ -11,6 +22,8 @@ $red-dark: #d01919;
 $red-darker: #b21e1e;
 
 $border-radius: 4px;
+
+$list-item-bg: $elevation-24;
 
 // CSS reset
 @import 'reset';
@@ -56,6 +69,6 @@ $border-radius: 4px;
 }
 
 body {
-  background-color: #222;
+  background-color: $elevation-0;
   color: #ddd;
 }

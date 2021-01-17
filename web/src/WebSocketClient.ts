@@ -35,7 +35,7 @@ export default class WebSocketClient {
   }
 
   public onDisconnect(handler: () => void): void {
-    this.socket?.addEventListener('error', handler);
+    this.socket?.addEventListener('close', handler);
   }
 
   public registerHandler<T extends keyof MessageDataMap>(
@@ -46,6 +46,14 @@ export default class WebSocketClient {
       unknown,
       unknown
     >;
+  }
+
+  public sendRaw(msg: string): void {
+    if (!this.socket) {
+      throw new Error('No agent socket connection available.');
+    }
+
+    this.socket.send(msg);
   }
 
   public send<T extends keyof MessageDataMap>(
@@ -86,7 +94,8 @@ export default class WebSocketClient {
           console.error(`Error while handling "${message.type}" message:`, err)
         );
       } else {
-        console.error(
+        // This happens when multiple remotes are connected to a single agent.
+        console.debug(
           `No handler found for message reply "${message.replyTo}", dropping.`
         );
       }
