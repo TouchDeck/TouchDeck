@@ -13,7 +13,7 @@ export interface Props {
 
 const ButtonStyleSettings: React.FC<Props> = ({ buttonStyle, onChange }) => {
   const setStyleProp = useCallback(
-    (prop: keyof ButtonStyling) => (value: string) =>
+    (prop: keyof ButtonStyling) => (value: string | null) =>
       onChange({ ...buttonStyle, [prop]: value }),
     [buttonStyle, onChange]
   );

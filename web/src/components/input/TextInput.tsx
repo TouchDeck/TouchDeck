@@ -8,6 +8,7 @@ export interface Props
   type?: 'text' | 'password';
   value?: string;
   icon?: string;
+  onClickIcon?: () => void;
 }
 
 const TextInput: React.FC<Props> = (props) => (
@@ -18,7 +19,7 @@ const TextInput: React.FC<Props> = (props) => (
       value={props.value || ''}
       onChange={(e) => props.onChange(e.currentTarget.value)}
     />
-    {props.icon && <Icon icon={props.icon} />}
+    {props.icon && <Icon icon={props.icon} onClick={props.onClickIcon} />}
   </div>
 );
 

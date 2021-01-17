@@ -6,7 +6,7 @@ import removeExtension from '../../util/removeExtension';
 
 export interface Props {
   value: string;
-  onChange: (image: string) => void;
+  onChange: (image: string | null) => void;
 }
 
 export const ImageInput: React.FC<Props> = ({ value, onChange }) => {
@@ -28,6 +28,8 @@ export const ImageInput: React.FC<Props> = ({ value, onChange }) => {
     [onChange]
   );
 
+  const valueString = value ? removeExtension(value) : '';
+
   return (
     <div
       className="image-input"
@@ -40,8 +42,10 @@ export const ImageInput: React.FC<Props> = ({ value, onChange }) => {
     >
       <TextInput
         onChange={setSearchTerm}
-        value={showDropdown ? searchTerm : removeExtension(value)}
-        placeholder={removeExtension(value)}
+        value={showDropdown ? searchTerm : valueString}
+        placeholder={valueString}
+        icon={value ? 'times' : undefined}
+        onClickIcon={() => onChange(null)}
       />
       {showDropdown && (
         <div className="image-list">
