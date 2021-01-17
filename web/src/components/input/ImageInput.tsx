@@ -40,7 +40,7 @@ export const ImageInput: React.FC<Props> = ({ value, onChange }) => {
     >
       <TextInput
         onChange={setSearchTerm}
-        value={searchTerm}
+        value={showDropdown ? searchTerm : removeExtension(value)}
         placeholder={removeExtension(value)}
       />
       {showDropdown && (
