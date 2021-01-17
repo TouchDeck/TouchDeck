@@ -4,6 +4,7 @@ import TextInput from '../input/TextInput';
 import ColorInput from '../input/ColorInput';
 import { ButtonStyling } from '../../model/configuration/ButtonConfig';
 import { GridButton } from '../buttons/GridButton';
+import { ImageInput } from '../input/ImageInput';
 
 export interface Props {
   buttonStyle: ButtonStyling;
@@ -12,7 +13,7 @@ export interface Props {
 
 const ButtonStyleSettings: React.FC<Props> = ({ buttonStyle, onChange }) => {
   const setStyleProp = useCallback(
-    (prop: keyof ButtonStyling) => (value: string) =>
+    (prop: keyof ButtonStyling) => (value: string | null) =>
       onChange({ ...buttonStyle, [prop]: value }),
     [buttonStyle, onChange]
   );
@@ -29,7 +30,7 @@ const ButtonStyleSettings: React.FC<Props> = ({ buttonStyle, onChange }) => {
         </div>
         <div>
           <span>Image</span>
-          <TextInput
+          <ImageInput
             value={buttonStyle.image}
             onChange={setStyleProp('image')}
           />

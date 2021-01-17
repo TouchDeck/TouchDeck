@@ -9,6 +9,7 @@ import { useConnectedAgent, useGlobalState } from '../state/appState';
 import Button from './Button';
 import { List } from './List';
 import { ImageInfo } from '../model/messages/ImageInfo';
+import removeExtension from '../util/removeExtension';
 
 export interface Props {
   onClickImage: (image: ImageInfo) => void;
@@ -94,7 +95,7 @@ export const ImagesList: React.FC<Props> = ({ onClickImage }) => {
                   backgroundImage: `url(${image.data})`,
                 }}
               />
-              <span className="name">{image.path}</span>
+              <span className="name">{removeExtension(image.path)}</span>
             </div>
           );
         })}
