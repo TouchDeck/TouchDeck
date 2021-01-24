@@ -19,7 +19,7 @@
     "nexe_target_version": "12.16.2"
   },
   "dependencies": {
-    "@luca_scorpion/tinylogger": "^0.1.1",
+    "@luca_scorpion/tinylogger": "^1.0.0",
     "node-fetch": "^2.6.1",
     "obs-websocket-js": "^4.0.2",
     "reflect-metadata": "^0.1.13",
