@@ -5,7 +5,6 @@ import Agent from '../api/Agent';
 import listDiscoveredAgents from '../api/listDiscoveredAgents';
 import { AgentInfo, AgentMeta } from '../model/AgentInfo';
 import { AgentList } from '../components/AgentList';
-import TextInput from '../components/input/TextInput';
 import Modal from '../components/Modal';
 import Button from '../components/Button';
 import { errorId } from '../util/errorId';
@@ -13,7 +12,6 @@ import { errorId } from '../util/errorId';
 export const ConnectAgentPage: React.FC = () => {
   const [{ agent }, dispatch] = useGlobalState();
 
-  const [connectInput, setConnectInput] = useState('');
   const [agentList, setAgentList] = useState<AgentInfo[]>();
   const [agentListError, setAgentListError] = useState<string>();
 
@@ -97,8 +95,6 @@ export const ConnectAgentPage: React.FC = () => {
         actionOptions,
         images,
       });
-
-      // TODO: Get button states message.
     },
     [dispatch]
   );
@@ -122,27 +118,6 @@ export const ConnectAgentPage: React.FC = () => {
           onClickAgent={(id) => connectToAgent(id)}
           error={agentListError}
         />
-
-        <h3>Or enter the IP address:</h3>
-        <div className="manual-address">
-          <TextInput
-            placeholder="localhost:3000"
-            value={connectInput}
-            onChange={setConnectInput}
-            onKeyDown={(e) => {
-              if (connectInput && e.key === 'Enter') {
-                connectToAgent(connectInput);
-              }
-            }}
-          />
-          <Button
-            disabled={!connectInput}
-            onClick={() => connectToAgent(connectInput)}
-            compact
-          >
-            Connect
-          </Button>
-        </div>
       </main>
     </div>
   );
