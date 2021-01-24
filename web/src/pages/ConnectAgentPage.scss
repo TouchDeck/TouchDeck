@@ -20,19 +20,5 @@
       justify-content: space-between;
       align-items: center;
     }
-
-    .agent-list {
-      margin-bottom: 32px;
-    }
-
-    .manual-address {
-      display: flex;
-
-      .input {
-        flex: 1 1 auto;
-        margin-right: 16px;
-        min-width: 0;
-      }
-    }
   }
 }
