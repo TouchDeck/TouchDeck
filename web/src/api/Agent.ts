@@ -76,4 +76,8 @@ export default class Agent {
   public async deleteImage(path: string): Promise<void> {
     return this.socket.send('delete-image', { path });
   }
+
+  public async renameImage(oldPath: string, newPath: string): Promise<void> {
+    return this.socket.send('rename-image', { oldPath, newPath });
+  }
 }

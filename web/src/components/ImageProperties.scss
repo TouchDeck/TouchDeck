@@ -3,7 +3,9 @@
   display: flex;
   flex-direction: column;
 
-  .name {
+  .name input {
+    font-size: 1.5rem;
+    height: auto;
     margin-bottom: 8px;
   }
 
@@ -14,5 +16,7 @@
 
   .actions {
     margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
   }
 }

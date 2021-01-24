@@ -29,6 +29,7 @@ export const ImagesPage: React.FC = () => {
         <ImageProperties
           image={selectedImage}
           onDelete={() => deleteImage(selectedImage)}
+          onClose={() => setSelectedImage(undefined)}
         />
       )}
     </main>
