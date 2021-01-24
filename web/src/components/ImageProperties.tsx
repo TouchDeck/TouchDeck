@@ -1,10 +1,11 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import removeExtension from '../util/removeExtension';
 import Button from './Button';
 import { ImageInfo } from '../model/messages/ImageInfo';
 import TextInput from './input/TextInput';
 import ButtonGroup from './ButtonGroup';
 import { useConnectedAgent, useGlobalState } from '../state/appState';
+import getExtension from '../util/getExtension';
 
 export interface Props {
   image: ImageInfo;
@@ -17,18 +18,29 @@ export const ImageProperties: React.FC<Props> = ({
   onDelete,
   onClose,
 }) => {
-  const [name, setName] = useState(removeExtension(image.path));
   const [, dispatch] = useGlobalState();
   const { agent } = useConnectedAgent();
+  const [path, setPath] = useState('');
+  const [name, setName] = useState('');
+  const [extension, setExtension] = useState('');
+
+  useEffect(() => {
+    setPath(image.path);
+    setName(removeExtension(image.path));
+    setExtension(getExtension(image.path));
+  }, [image.path]);
 
   const renameImage = useCallback(async () => {
-    await agent.renameImage(image.path, name);
+    const newPath = `${name}.${extension}`;
+    await agent.renameImage(path, newPath);
+    setPath(newPath);
+
     const newImages = await agent.getImages();
     dispatch({
       type: 'imagesLoaded',
       images: newImages,
     });
-  }, [agent, dispatch, image.path, name]);
+  }, [name, extension, agent, path, dispatch]);
 
   return (
     <div className="image-properties">

@@ -78,6 +78,7 @@ export default class Agent {
   }
 
   public async renameImage(oldPath: string, newPath: string): Promise<void> {
+    console.log(oldPath, newPath);
     return this.socket.send('rename-image', { oldPath, newPath });
   }
 }
