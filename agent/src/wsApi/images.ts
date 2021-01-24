@@ -4,6 +4,7 @@ import { IMAGES_DIR } from '../constants';
 import listFiles from '../util/listFiles';
 import { ImageInfo } from '../model/messages/ImageInfo';
 import { Path } from '../model/messages/Path';
+import { RenameImage } from '../model/messages/RenameImage';
 
 export async function getImages(): Promise<ImageInfo[]> {
   const entries = await listFiles(IMAGES_DIR);
@@ -31,4 +32,12 @@ export async function uploadImage(image: ImageInfo): Promise<void> {
 export async function deleteImage({ path }: Path): Promise<void> {
   // TODO: check if resolved path is file in images dir.
   await fs.unlink(resolve(IMAGES_DIR, path));
+}
+
+export async function renameImage({
+  oldPath,
+  newPath,
+}: RenameImage): Promise<void> {
+  // TODO: check if resolved path is file in images dir.
+  await fs.rename(resolve(IMAGES_DIR, oldPath), resolve(IMAGES_DIR, newPath));
 }
