@@ -5,6 +5,7 @@ import listFiles from '../util/listFiles';
 import { ImageInfo } from '../model/messages/ImageInfo';
 import { Path } from '../model/messages/Path';
 import { RenameImage } from '../model/messages/RenameImage';
+import { getConfiguration } from '../configuration/config';
 
 export async function getImages(): Promise<ImageInfo[]> {
   const entries = await listFiles(IMAGES_DIR);
