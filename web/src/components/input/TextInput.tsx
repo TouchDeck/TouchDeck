@@ -11,7 +11,7 @@ export interface Props
   onClickIcon?: () => void;
 }
 
-const TextInput: React.FC<Props> = (props) => {
+export const TextInput: React.FC<Props> = (props) => {
   const inputProps = { ...props };
   delete inputProps.onClickIcon;
 
@@ -27,5 +27,3 @@ const TextInput: React.FC<Props> = (props) => {
     </div>
   );
 };
-
-export default TextInput;

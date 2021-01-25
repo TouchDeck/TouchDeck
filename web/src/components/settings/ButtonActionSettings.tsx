@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import ActionConfig from '../../model/configuration/ActionConfig';
 import ActionOptions from './ActionOptions';
 import capitalizeFirstLetter from '../../util/capitalizeFirstLetter';
-import TextInput from '../input/TextInput';
+import { TextInput } from '../input/TextInput';
 import CheckboxInput from '../input/CheckboxInput';
 import Rows from '../Rows';
 import { ActionParameter } from '../../model/ActionOption';

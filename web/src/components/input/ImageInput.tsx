@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useConnectedAgent } from '../../state/appState';
-import TextInput from './TextInput';
+import { TextInput } from './TextInput';
 import { ImageInfo } from '../../model/messages/ImageInfo';
 import removeExtension from '../../util/removeExtension';
 

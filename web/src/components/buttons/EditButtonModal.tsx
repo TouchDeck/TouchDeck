@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { ButtonConfig } from '../../model/configuration/ButtonConfig';
 import Modal from '../Modal';
 import Button from '../Button';
-import TextInput from '../input/TextInput';
+import { TextInput } from '../input/TextInput';
 import { useConnectedAgent, useGlobalState } from '../../state/appState';
 import ButtonGroup from '../ButtonGroup';
 import { EditFolderButton } from './EditFolderButton';

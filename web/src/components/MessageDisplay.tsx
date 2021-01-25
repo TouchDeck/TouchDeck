@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useGlobalState, useMessages } from '../state/appState';
 import classNames from '../util/classNames';
 
-const MessageDisplay: React.FC = ({ children }) => {
+export const MessageDisplay: React.FC = ({ children }) => {
   const [, dispatch] = useGlobalState();
   const [message] = useMessages();
 
@@ -23,5 +23,3 @@ const MessageDisplay: React.FC = ({ children }) => {
     </>
   );
 };
-
-export default MessageDisplay;

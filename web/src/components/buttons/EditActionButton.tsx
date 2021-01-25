@@ -7,7 +7,7 @@ import {
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import ButtonActionSettings from '../settings/ButtonActionSettings';
 import { useConnectedAgent } from '../../state/appState';
-import ButtonStyleSettings from '../settings/ButtonStyleSettings';
+import { ButtonStyleSettings } from '../settings/ButtonStyleSettings';
 
 export interface Props {
   button: ActionButtonConfig;
