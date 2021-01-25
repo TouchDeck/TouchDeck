@@ -5,7 +5,7 @@ import listFiles from '../util/listFiles';
 import { ImageInfo } from '../model/messages/ImageInfo';
 import { Path } from '../model/messages/Path';
 import { RenameImage } from '../model/messages/RenameImage';
-import { getConfiguration } from '../configuration/config';
+import { assertInImagesDir } from '../util/assertInImagesDir';
 
 export async function getImages(): Promise<ImageInfo[]> {
   const entries = await listFiles(IMAGES_DIR);
@@ -23,22 +23,19 @@ export async function getImages(): Promise<ImageInfo[]> {
 }
 
 export async function uploadImage(image: ImageInfo): Promise<void> {
-  // TODO: Check if resolved path in images dir.
   const [, fileData] = image.data.split(',', 2);
-  await fs.writeFile(resolve(IMAGES_DIR, image.path), fileData, {
+  await fs.writeFile(assertInImagesDir(image.path), fileData, {
     encoding: 'base64',
   });
 }
 
 export async function deleteImage({ path }: Path): Promise<void> {
-  // TODO: check if resolved path is file in images dir.
-  await fs.unlink(resolve(IMAGES_DIR, path));
+  await fs.unlink(assertInImagesDir(path));
 }
 
 export async function renameImage({
   oldPath,
   newPath,
 }: RenameImage): Promise<void> {
-  // TODO: check if resolved path is file in images dir.
-  await fs.rename(resolve(IMAGES_DIR, oldPath), resolve(IMAGES_DIR, newPath));
+  await fs.rename(assertInImagesDir(oldPath), assertInImagesDir(newPath));
 }
