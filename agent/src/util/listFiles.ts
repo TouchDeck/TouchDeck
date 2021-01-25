@@ -21,6 +21,12 @@ async function listFilesRecursive(dir: string): Promise<string[]> {
   return files;
 }
 
+/**
+ * List all files in a directory, recursively.
+ * This also normalizes slashes by replacing all `\` with `/`.
+ *
+ * @param dir The directory to read.
+ */
 export default async function listFiles(dir: string): Promise<string[]> {
   const files = await listFilesRecursive(dir);
   return files.map((f) => relative(dir, f).replace(/\\/g, '/'));
