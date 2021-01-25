@@ -7,7 +7,7 @@ import {
   NormalButtonConfig,
   ToggleButtonConfig,
 } from '../model/configuration/ButtonConfig';
-import { getClientInstance } from '../serverInstance';
+import { getClientInstance } from '../clientInstance';
 import { isPreparedToggleAction } from './ToggleAction';
 
 export type PreparedActions = { [id: string]: PreparedAction };

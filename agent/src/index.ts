@@ -21,7 +21,7 @@ import {
   renameImage,
   uploadImage,
 } from './wsApi/images';
-import { setClientInstance } from './serverInstance';
+import { setClientInstance } from './clientInstance';
 import WebSocketClient from './WebSocketClient';
 import Configuration from './model/configuration/Configuration';
 import sendButtonStates from './wsApi/sendButtonStates';

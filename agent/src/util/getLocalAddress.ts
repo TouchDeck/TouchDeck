@@ -1,5 +1,8 @@
 import os from 'os';
 
+/**
+ * Get the local IPv4 network address.
+ */
 export default function getLocalAddress(): string {
   const interfaces = os.networkInterfaces();
   for (const interfaceInfo of Object.values(interfaces)) {
