@@ -3,10 +3,10 @@ import { DeckPage } from './pages/DeckPage';
 import { useGlobalState } from './state/appState';
 import { ConnectAgentPage } from './pages/ConnectAgentPage';
 import { Route, Switch } from 'react-router-dom';
-import AgentInfoModal from './components/AgentInfoModal';
+import { AgentInfoModal } from './components/AgentInfoModal';
 import { Layout } from './components/Layout';
 import { TargetsPage } from './pages/TargetsPage';
-import MessageDisplay from './components/MessageDisplay';
+import { MessageDisplay } from './components/MessageDisplay';
 import { ImagesPage } from './pages/ImagesPage';
 
 export const App: React.FC = () => {

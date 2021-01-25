@@ -15,7 +15,12 @@ import {
 } from './wsApi/config';
 import pressButton from './wsApi/pressButton';
 import getAgentMeta from './util/getAgentMeta';
-import { deleteImage, getImages, uploadImage } from './wsApi/images';
+import {
+  deleteImage,
+  getImages,
+  renameImage,
+  uploadImage,
+} from './wsApi/images';
 import { setClientInstance } from './serverInstance';
 import WebSocketClient from './WebSocketClient';
 import Configuration from './model/configuration/Configuration';
@@ -64,6 +69,7 @@ async function bootstrap(): Promise<void> {
   client.registerHandler('press-button', pressButton(client));
   client.registerHandler('upload-image', uploadImage);
   client.registerHandler('delete-image', deleteImage);
+  client.registerHandler('rename-image', renameImage);
 
   log.info(`Agent running on ${getAgentMeta().address}`);
 }

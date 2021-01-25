@@ -6,7 +6,7 @@ import { useConnectedAgent, useGlobalState } from '../state/appState';
 import Button from './Button';
 import Modal from './Modal';
 
-const AgentInfoModal: React.FC = () => {
+export const AgentInfoModal: React.FC = () => {
   const [, dispatch] = useGlobalState();
   const { info } = useConnectedAgent();
   const location = useLocation();
@@ -48,5 +48,3 @@ const AgentInfoModal: React.FC = () => {
     </Modal>
   );
 };
-
-export default AgentInfoModal;

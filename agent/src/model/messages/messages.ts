@@ -6,6 +6,7 @@ import ButtonStateChanged from './ButtonStateChanged';
 import { PressButtonResult } from './PressButtonResult';
 import { ImageInfo } from './ImageInfo';
 import { Path } from './Path';
+import { RenameImage } from './RenameImage';
 
 export interface MessageDataMap {
   'get-info': void;
@@ -20,6 +21,7 @@ export interface MessageDataMap {
   'get-images': void;
   'upload-image': ImageInfo;
   'delete-image': Path;
+  'rename-image': RenameImage;
 }
 
 export interface MessageResponseMap {
@@ -35,4 +37,5 @@ export interface MessageResponseMap {
   'get-images': ImageInfo[];
   'upload-image': void;
   'delete-image': void;
+  'rename-image': void;
 }

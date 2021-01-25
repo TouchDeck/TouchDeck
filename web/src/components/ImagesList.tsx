@@ -19,7 +19,7 @@ export const ImagesList: React.FC<Props> = ({ onClickImage }) => {
   const [, dispatch] = useGlobalState();
   const { agent, images } = useConnectedAgent();
 
-  const [showImages, setShowImages] = useState(images); // TODO
+  const [showImages, setShowImages] = useState(images);
   const [searchTerm, setSearchTerm] = useState('');
   useLayoutEffect(() => {
     setShowImages(

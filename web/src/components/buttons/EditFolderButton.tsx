@@ -1,5 +1,5 @@
 import React from 'react';
-import ButtonStyleSettings from '../settings/ButtonStyleSettings';
+import { ButtonStyleSettings } from '../settings/ButtonStyleSettings';
 import {
   ButtonStyling,
   FolderButtonConfig,

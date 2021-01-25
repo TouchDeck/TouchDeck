@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import Rows from '../Rows';
-import TextInput from '../input/TextInput';
+import { TextInput } from '../input/TextInput';
 import ColorInput from '../input/ColorInput';
 import { ButtonStyling } from '../../model/configuration/ButtonConfig';
 import { GridButton } from '../buttons/GridButton';
@@ -11,7 +11,10 @@ export interface Props {
   onChange: (style: ButtonStyling) => void;
 }
 
-const ButtonStyleSettings: React.FC<Props> = ({ buttonStyle, onChange }) => {
+export const ButtonStyleSettings: React.FC<Props> = ({
+  buttonStyle,
+  onChange,
+}) => {
   const setStyleProp = useCallback(
     (prop: keyof ButtonStyling) => (value: string | null) =>
       onChange({ ...buttonStyle, [prop]: value }),
@@ -53,5 +56,3 @@ const ButtonStyleSettings: React.FC<Props> = ({ buttonStyle, onChange }) => {
     </div>
   );
 };
-
-export default ButtonStyleSettings;
