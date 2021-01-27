@@ -1,4 +1,14 @@
 {
   "name": "touchdeck-model",
-  "main": "index.ts"
+  "main": "src/index.ts",
+  "scripts": {
+    "format": "prettier --write \"src/**/*.(ts)\""
+  },
+  "devDependencies": {
+    "prettier": "^2.2.1"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "endOfLine": "auto"
+  }
 }
