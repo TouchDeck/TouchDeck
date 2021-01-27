@@ -1,9 +1,6 @@
 import React from 'react';
 import { ButtonStyleSettings } from '../settings/ButtonStyleSettings';
-import {
-  ButtonStyling,
-  FolderButtonConfig,
-} from '../../model/configuration/ButtonConfig';
+import { ButtonStyling, FolderButtonConfig } from 'touchdeck-model';
 
 export interface Props {
   button: FolderButtonConfig;

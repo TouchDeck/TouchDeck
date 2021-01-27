@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import ActionConfig from '../../model/configuration/ActionConfig';
 import ActionOptions from './ActionOptions';
 import capitalizeFirstLetter from '../../util/capitalizeFirstLetter';
 import { TextInput } from '../input/TextInput';
 import CheckboxInput from '../input/CheckboxInput';
 import Rows from '../Rows';
-import { ActionParameter } from '../../model/ActionOption';
+import { ActionConfig, ActionParameter } from 'touchdeck-model';
 import { useConnectedAgent } from '../../state/appState';
 import FloatNumberInput from '../input/FloatNumberInput';
 

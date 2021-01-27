@@ -1,5 +1,8 @@
-import { MessageDataMap, MessageResponseMap } from './model/messages/messages';
-import { MessageHandler } from './model/messages/MessageHandler';
+import {
+  MessageDataMap,
+  MessageHandler,
+  MessageResponseMap,
+} from 'touchdeck-model';
 
 export interface WebSocketMessage {
   type: string;

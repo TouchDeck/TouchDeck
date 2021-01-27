@@ -8,7 +8,7 @@ import React, {
 import { useConnectedAgent, useGlobalState } from '../state/appState';
 import Button from './Button';
 import { List } from './List';
-import { ImageInfo } from '../model/messages/ImageInfo';
+import { ImageInfo } from 'touchdeck-model';
 import removeExtension from '../util/removeExtension';
 
 export interface Props {

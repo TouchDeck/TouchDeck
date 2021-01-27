@@ -1,10 +1,8 @@
 import { promises as fs } from 'fs';
 import { resolve } from 'path';
+import { ImageInfo, Path, RenameImage } from 'touchdeck-model';
 import { IMAGES_DIR } from '../constants';
 import listFiles from '../util/listFiles';
-import { ImageInfo } from '../model/messages/ImageInfo';
-import { Path } from '../model/messages/Path';
-import { RenameImage } from '../model/messages/RenameImage';
 import { assertInImagesDir } from '../util/assertInImagesDir';
 
 export async function getImages(): Promise<ImageInfo[]> {

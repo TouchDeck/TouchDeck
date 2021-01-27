@@ -1,8 +1,8 @@
 import { AgentMeta } from '../AgentInfo';
 import { ButtonConfig } from '../configuration/ButtonConfig';
-import Configuration, { ButtonLayout } from '../configuration/Configuration';
+import { ButtonLayout, Configuration } from '../configuration/Configuration';
 import { ActionOption } from '../ActionOption';
-import ButtonStateChanged from './ButtonStateChanged';
+import { ButtonStateChanged } from './ButtonStateChanged';
 import { PressButtonResult } from './PressButtonResult';
 import { ImageInfo } from './ImageInfo';
 import { Path } from './Path';

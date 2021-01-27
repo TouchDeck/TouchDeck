@@ -1,4 +1,4 @@
-import ActionConfig from './ActionConfig';
+import { ActionConfig } from './ActionConfig';
 
 export type ButtonConfig = ActionButtonConfig | FolderButtonConfig;
 

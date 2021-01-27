@@ -1,4 +1,4 @@
-export default interface TargetConfig {
+export interface TargetConfig {
   obs: ObsTargetConfig;
 }
 

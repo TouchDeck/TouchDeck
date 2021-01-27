@@ -1,4 +1,4 @@
-export default interface ButtonStateChanged {
+export interface ButtonStateChanged {
   buttonId: string;
   buttonState: boolean;
 }

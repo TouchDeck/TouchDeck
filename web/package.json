@@ -18,6 +18,7 @@
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.1",
+    "touchdeck-model": "file:../model",
     "typescript": "^3.9.7"
   },
   "scripts": {

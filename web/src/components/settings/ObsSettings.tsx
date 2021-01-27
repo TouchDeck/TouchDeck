@@ -4,7 +4,7 @@ import { TextInput } from '../input/TextInput';
 import CheckboxInput from '../input/CheckboxInput';
 import NumberInput from '../input/NumberInput';
 import { useConnectedAgent } from '../../state/appState';
-import { ObsTargetConfig } from '../../model/configuration/TargetConfig';
+import { ObsTargetConfig } from 'touchdeck-model';
 import Button from '../Button';
 
 export interface Props {

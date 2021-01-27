@@ -1,10 +1,12 @@
 import Agent from '../api/Agent';
 import { Reducer } from 'react';
-import { AgentMeta } from '../model/AgentInfo';
-import { ActionOption } from '../model/ActionOption';
-import Configuration from '../model/configuration/Configuration';
-import { ButtonStates } from '../model/ButtonStates';
-import { ImageInfo } from '../model/messages/ImageInfo';
+import {
+  ActionOption,
+  AgentMeta,
+  ButtonStates,
+  Configuration,
+  ImageInfo,
+} from 'touchdeck-model';
 
 export interface ConnectedAgentState {
   connecting: false;

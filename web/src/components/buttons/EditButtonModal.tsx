@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { ButtonConfig } from '../../model/configuration/ButtonConfig';
+import { ButtonConfig } from 'touchdeck-model';
 import Modal from '../Modal';
 import Button from '../Button';
 import { TextInput } from '../input/TextInput';

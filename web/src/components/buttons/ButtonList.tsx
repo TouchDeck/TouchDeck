@@ -1,5 +1,5 @@
 import React, { ReactNode, useLayoutEffect, useState } from 'react';
-import { ButtonConfig } from '../../model/configuration/ButtonConfig';
+import { ButtonConfig } from 'touchdeck-model';
 import { useConnectedAgent } from '../../state/appState';
 import Button from '../Button';
 import { GridButton } from './GridButton';

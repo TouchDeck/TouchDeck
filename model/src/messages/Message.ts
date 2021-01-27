@@ -1,4 +1,4 @@
-export default interface Message<T = unknown> {
+export interface Message<T = unknown> {
   type: string;
   messageId: string;
   replyTo?: string;
