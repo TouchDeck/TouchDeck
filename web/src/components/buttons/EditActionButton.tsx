@@ -3,7 +3,7 @@ import {
   ButtonConfig,
   NormalButtonConfig,
   ToggleButtonConfig,
-} from '../../model/configuration/ButtonConfig';
+} from 'touchdeck-model';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import ButtonActionSettings from '../settings/ButtonActionSettings';
 import { useConnectedAgent } from '../../state/appState';
@@ -64,10 +64,12 @@ export const EditActionButton: React.FC<Props> = ({ button, setButton }) => {
               if (prevState.type === 'normal' && newState.type === 'toggle') {
                 newState.trueStyle = prevState.style;
                 newState.falseStyle = prevState.style;
+                // TODO
                 delete ((newState as unknown) as NormalButtonConfig).style;
               }
               if (prevState.type === 'toggle' && newState.type === 'normal') {
                 newState.style = prevState.trueStyle;
+                // TODO
                 delete ((newState as unknown) as ToggleButtonConfig).trueStyle;
                 delete ((newState as unknown) as ToggleButtonConfig).falseStyle;
               }

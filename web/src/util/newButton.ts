@@ -1,9 +1,9 @@
 import {
+  ActionConfig,
   ButtonConfig,
   ButtonStyling,
   ButtonType,
-} from '../model/configuration/ButtonConfig';
-import ActionConfig from '../model/configuration/ActionConfig';
+} from 'touchdeck-model';
 
 export default function newButton(
   type: ButtonType,

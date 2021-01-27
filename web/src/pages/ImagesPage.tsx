@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { ImagesList } from '../components/ImagesList';
-import { ImageInfo } from '../model/messages/ImageInfo';
+import { ImageInfo } from 'touchdeck-model';
 import { useConnectedAgent, useGlobalState } from '../state/appState';
 import { ImageProperties } from '../components/ImageProperties';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { AgentInfo } from '../model/AgentInfo';
+import { AgentInfo } from 'touchdeck-model';
 import Icon from './Icon';
 
 export interface Props {

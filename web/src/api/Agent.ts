@@ -1,13 +1,14 @@
-import Configuration, {
+import {
+  ActionOption,
+  AgentMeta,
+  ButtonConfig,
+  ButtonStateChanged,
   ButtonLayout,
-} from '../model/configuration/Configuration';
-import { ActionOption } from '../model/ActionOption';
-import { AgentMeta } from '../model/AgentInfo';
-import { ButtonConfig } from '../model/configuration/ButtonConfig';
+  Configuration,
+  ImageInfo,
+  PressButtonResult,
+} from 'touchdeck-model';
 import WebSocketClient from '../WebSocketClient';
-import ButtonStateChanged from '../model/messages/ButtonStateChanged';
-import { PressButtonResult } from '../model/messages/PressButtonResult';
-import { ImageInfo } from '../model/messages/ImageInfo';
 
 export default class Agent {
   private readonly socket: WebSocketClient;

@@ -1,7 +1,7 @@
 import React, { ReactElement, useCallback, useState } from 'react';
 import { useConnectedAgent, useGlobalState } from '../state/appState';
 import ObsSettings from '../components/settings/ObsSettings';
-import Configuration from '../model/configuration/Configuration';
+import { Configuration } from 'touchdeck-model';
 import { List } from '../components/List';
 
 export const TargetsPage: React.FC = () => {

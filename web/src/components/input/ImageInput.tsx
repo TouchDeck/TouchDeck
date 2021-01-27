@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useConnectedAgent } from '../../state/appState';
 import { TextInput } from './TextInput';
-import { ImageInfo } from '../../model/messages/ImageInfo';
+import { ImageInfo } from 'touchdeck-model';
 import removeExtension from '../../util/removeExtension';
 
 export interface Props {

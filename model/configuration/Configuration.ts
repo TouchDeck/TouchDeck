@@ -1,7 +1,7 @@
 import { ButtonConfig } from './ButtonConfig';
 import TargetConfig from './TargetConfig';
 
-export default interface Configuration {
+export interface Configuration {
   targets: TargetConfig;
   buttons: ButtonConfig[];
   layouts: ButtonLayout[];

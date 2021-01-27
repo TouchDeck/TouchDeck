@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import classNames from '../../util/classNames';
-import { ButtonStyling } from '../../model/configuration/ButtonConfig';
+import { ButtonStyling } from 'touchdeck-model';
 import { useConnectedAgent } from '../../state/appState';
 import Icon from '../Icon';
 
