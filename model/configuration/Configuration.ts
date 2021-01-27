@@ -1,5 +1,5 @@
 import { ButtonConfig } from './ButtonConfig';
-import TargetConfig from './TargetConfig';
+import { TargetConfig } from './TargetConfig';
 
 export interface Configuration {
   targets: TargetConfig;
