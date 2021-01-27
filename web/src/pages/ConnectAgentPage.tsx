@@ -3,7 +3,7 @@ import { useGlobalState } from '../state/appState';
 import Icon from '../components/Icon';
 import Agent from '../api/Agent';
 import listDiscoveredAgents from '../api/listDiscoveredAgents';
-import { AgentInfo, AgentMeta } from '../model/AgentInfo';
+import { AgentInfo, AgentMeta } from 'touchdeck-model';
 import { AgentList } from '../components/AgentList';
 import Modal from '../components/Modal';
 import Button from '../components/Button';
