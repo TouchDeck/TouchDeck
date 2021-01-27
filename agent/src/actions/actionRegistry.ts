@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+import { ActionParameter, ToggleActionInfo } from 'touchdeck-model';
 import { Constructor } from '../util/Constructor';
 import ObsSetSceneAction from './obs/ObsSetSceneAction';
 import {
@@ -6,8 +8,6 @@ import {
   actionNameKey,
   actionParamsKey,
 } from './Action';
-import 'reflect-metadata';
-import { ActionParameter, ToggleActionInfo } from '../model/ActionOption';
 import NoopAction from './NoopAction';
 import ObsSetVolumeAction from './obs/ObsSetVolumeAction';
 import ObsToggleMuteAction from './obs/ObsToggleMuteAction';

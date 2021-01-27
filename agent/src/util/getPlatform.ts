@@ -1,5 +1,5 @@
 import os from 'os';
-import { Platform } from '../model/AgentInfo';
+import { Platform } from 'touchdeck-model';
 
 const platformMapping: { [key: string]: Platform } = {
   win32: 'windows',

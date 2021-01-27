@@ -1,4 +1,4 @@
-import { ActionOption } from '../model/ActionOption';
+import { ActionOption } from 'touchdeck-model';
 import { getAvailableActions } from '../actions/actionRegistry';
 
 export default function getActionOptions(): ActionOption[] {

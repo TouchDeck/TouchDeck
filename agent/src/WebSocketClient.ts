@@ -1,10 +1,13 @@
 import { Logger } from '@luca_scorpion/tinylogger';
 import WebSocket, { Data } from 'ws';
 import { v4 as uuidv4 } from 'uuid';
+import {
+  Message,
+  MessageDataMap,
+  MessageHandler,
+  MessageResponseMap,
+} from 'touchdeck-model';
 import getAgentMeta from './util/getAgentMeta';
-import { MessageHandler } from './model/messages/MessageHandler';
-import { MessageDataMap, MessageResponseMap } from './model/messages/messages';
-import Message from './model/messages/Message';
 
 export default class WebSocketClient {
   private static log = new Logger(WebSocketClient.name);

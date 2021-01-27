@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import { Logger } from '@luca_scorpion/tinylogger';
+import { Configuration } from 'touchdeck-model';
 import { getAvailableActions } from './actions/actionRegistry';
 import {
   getConfiguration,
@@ -23,7 +24,6 @@ import {
 } from './wsApi/images';
 import { setClientInstance } from './clientInstance';
 import WebSocketClient from './WebSocketClient';
-import Configuration from './model/configuration/Configuration';
 import sendButtonStates from './wsApi/sendButtonStates';
 import { WS_PROXY_SERVER } from './constants';
 

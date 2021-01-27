@@ -23,6 +23,7 @@
     "node-fetch": "^2.6.1",
     "obs-websocket-js": "^4.0.2",
     "reflect-metadata": "^0.1.13",
+    "touchdeck-model": "file:../model",
     "uuid": "^8.3.2",
     "ws": "^7.4.1"
   },

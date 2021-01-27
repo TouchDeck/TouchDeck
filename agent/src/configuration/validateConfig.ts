@@ -1,15 +1,13 @@
 import { v4 as uuidv4, validate as validateUuid } from 'uuid';
-import Configuration, {
-  ButtonLayout,
-} from '../model/configuration/Configuration';
 import {
+  Configuration,
+  ActionConfig,
+  TargetConfig,
   ButtonConfig,
+  ButtonLayout,
   ButtonStyling,
-} from '../model/configuration/ButtonConfig';
-import ActionConfig from '../model/configuration/ActionConfig';
-import TargetConfig, {
   ObsTargetConfig,
-} from '../model/configuration/TargetConfig';
+} from 'touchdeck-model';
 import NoopAction from '../actions/NoopAction';
 
 const colorRegex = /^#[\da-f]{6}$/i;

@@ -1,8 +1,5 @@
-import Configuration, {
-  ButtonLayout,
-} from '../model/configuration/Configuration';
+import { ButtonConfig, ButtonLayout, Configuration } from 'touchdeck-model';
 import { getConfiguration, setConfiguration } from '../configuration/config';
-import { ButtonConfig } from '../model/configuration/ButtonConfig';
 
 export async function updateConfig(
   newConfig: Configuration

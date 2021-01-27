@@ -1,12 +1,12 @@
-import { getActionRegistry } from './actionRegistry';
-import inject from '../inject';
-import { ActionParameter } from '../model/ActionOption';
-import { actionParamsKey, PreparedAction } from './Action';
 import {
+  ActionParameter,
   ButtonConfig,
   NormalButtonConfig,
   ToggleButtonConfig,
-} from '../model/configuration/ButtonConfig';
+} from 'touchdeck-model';
+import { getActionRegistry } from './actionRegistry';
+import inject from '../inject';
+import { actionParamsKey, PreparedAction } from './Action';
 import { getClientInstance } from '../clientInstance';
 import { isPreparedToggleAction } from './ToggleAction';
 

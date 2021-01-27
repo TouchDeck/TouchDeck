@@ -1,6 +1,6 @@
-import { Constructor } from '../util/Constructor';
 import 'reflect-metadata';
-import { ActionParameter } from '../model/ActionOption';
+import { ActionParameter } from 'touchdeck-model';
+import { Constructor } from '../util/Constructor';
 
 export interface Action {
   prepare(...args: unknown[]): PreparedAction;
