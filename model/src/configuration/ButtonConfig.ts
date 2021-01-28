@@ -37,4 +37,5 @@ export interface ToggleButtonConfig extends BaseButtonConfig {
 
 export interface FolderButtonConfig extends StyledButtonConfig {
   type: 'folder';
+  layout: string;
 }
