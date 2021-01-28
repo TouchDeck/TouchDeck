@@ -9,11 +9,17 @@ export interface Props {
   rowCount: number;
   columnCount: number;
   editing?: boolean;
+  rootLayout: string;
 }
 
 type DisplayButton = ButtonConfig | { type: 'empty' } | { type: 'up' };
 
-const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
+export const ButtonGrid: React.FC<Props> = ({
+  rowCount,
+  columnCount,
+  editing,
+  rootLayout,
+}) => {
   const [, dispatch] = useGlobalState();
   const { agent, config, buttonStates } = useConnectedAgent();
   const { buttons, layouts } = config;
@@ -35,7 +41,7 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
   useResizeObserver(gridRef, updateButtonSize);
 
   // The current button layout (id), button view, and folder stack.
-  const [currentLayout, setCurrentLayout] = useState('root');
+  const [currentLayout, setCurrentLayout] = useState(rootLayout);
   const [buttonView, setButtonView] = useState<DisplayButton[]>(buttons);
   const [folderStack, setFolderStack] = useState<string[]>([]);
 
@@ -202,7 +208,7 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
               <GridButton
                 key={i}
                 {...button}
-                onClick={() => enterFolder(button.id)}
+                onClick={() => enterFolder(button.layout)}
                 size={buttonSize}
                 buttonsPerRow={columnCount}
                 draggable={editing}
@@ -260,5 +266,3 @@ const ButtonGrid: React.FC<Props> = ({ rowCount, columnCount, editing }) => {
     </div>
   );
 };
-
-export default ButtonGrid;

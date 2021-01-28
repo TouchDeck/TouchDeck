@@ -16,6 +16,7 @@ export interface ConnectedAgentState {
   actionOptions: ActionOption[];
   buttonStates: ButtonStates;
   images: ImageInfo[];
+  activeProfileId: string;
 }
 
 export type State =
@@ -27,6 +28,7 @@ export type State =
       actionOptions: undefined;
       buttonStates: {};
       images: ImageInfo[];
+      activeProfileId: undefined;
     }
   | ConnectedAgentState;
 
@@ -74,6 +76,7 @@ export const reducer: Reducer<State, Action> = (prevState, action) => {
         actionOptions: undefined,
         buttonStates: {},
         images: [],
+        activeProfileId: undefined,
       };
     case 'agentConnected':
       return {
@@ -84,6 +87,7 @@ export const reducer: Reducer<State, Action> = (prevState, action) => {
         config: action.config,
         actionOptions: action.actionOptions,
         images: action.images,
+        activeProfileId: action.config.defaultProfile,
         // Don't overwrite the button states here,
         // this event might occur after first button state changed messages.
       };
@@ -97,6 +101,7 @@ export const reducer: Reducer<State, Action> = (prevState, action) => {
         actionOptions: undefined,
         buttonStates: {},
         images: [],
+        activeProfileId: undefined,
       };
     case 'configLoaded':
       return { ...prevState, config: action.config };
@@ -123,4 +128,5 @@ export const getInitialState = (): State => ({
   actionOptions: undefined,
   buttonStates: {},
   images: [],
+  activeProfileId: undefined,
 });

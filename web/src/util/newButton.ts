@@ -51,6 +51,7 @@ export default function newButton(
           ...getDefaultStyle(),
           ...(from && 'style' in from && from.style),
         },
+        layout: '',
       };
     default:
       throw new Error(`Unknown button type: ${type}`);
