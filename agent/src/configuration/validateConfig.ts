@@ -10,6 +10,8 @@ import {
 } from 'touchdeck-model';
 import NoopAction from '../actions/NoopAction';
 
+const currentVersion = '1';
+
 const colorRegex = /^#[\da-f]{6}$/i;
 
 type ButtonMap = { [id: string]: ButtonConfig };
@@ -156,6 +158,7 @@ export default function validateConfig(
   });
 
   return {
+    version: config.version || currentVersion,
     targets: validateTargets(config.targets),
     buttons: validButtons,
     layouts: validateLayouts(config.layouts || [], buttonMap),
