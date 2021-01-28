@@ -6,9 +6,17 @@ export interface Configuration {
   targets: TargetConfig;
   buttons: ButtonConfig[];
   layouts: ButtonLayout[];
+  defaultProfile: string;
+  profiles: Profile[];
 }
 
-export type ButtonLayout = {
+export interface ButtonLayout {
   id: string;
   layout: (string | null)[];
-};
+}
+
+export interface Profile {
+  id: string;
+  name: string;
+  rootLayout: string;
+}

@@ -7,14 +7,13 @@ import {
   ButtonLayout,
   ButtonStyling,
   ObsTargetConfig,
+  Profile,
 } from 'touchdeck-model';
 import NoopAction from '../actions/NoopAction';
 
 const currentVersion = '1';
 
 const colorRegex = /^#[\da-f]{6}$/i;
-
-type ButtonMap = { [id: string]: ButtonConfig };
 
 function validateOrGetUuid(uuid?: string): string {
   return !uuid || !validateUuid(uuid) ? uuidv4() : uuid;
@@ -65,6 +64,7 @@ function validateButton(button: Partial<ButtonConfig>): ButtonConfig {
         name: button.name || '',
         type: button.type,
         style: validateButtonStyle(button.style),
+        layout: validateOrGetUuid(button.layout),
       };
     case 'toggle':
       return {
@@ -97,11 +97,13 @@ function validateTargets(targets?: Partial<TargetConfig>): TargetConfig {
 
 function validateLayout(
   layout: ButtonLayout,
-  buttons: ButtonMap
+  buttons: ButtonConfig[]
 ): ButtonLayout {
-  // Replace all buttons that don't exist in the button map with null.
+  const buttonIds = new Set<string>(buttons.map((button) => button.id));
+
+  // Replace all buttons that don't exist with null.
   const validatedLayout = layout.layout.map((b) =>
-    b && buttons[b] ? b : null
+    b && buttonIds.has(b) ? b : null
   );
 
   // Remove any trailing nulls.
@@ -121,46 +123,101 @@ function validateLayout(
 
 function validateLayouts(
   layouts: ButtonLayout[],
-  buttons: ButtonMap
+  buttons: ButtonConfig[]
 ): ButtonLayout[] {
-  const layoutIds = new Set<string>();
-
-  // Ensure that all layouts correspond to a folder button.
-  const validated = layouts.filter((layout) => {
-    layoutIds.add(layout.id);
-    const button = buttons[layout.id];
-    return layout.id === 'root' || (button && button.type === 'folder');
-  });
-
-  // Ensure that there is a root layout.
-  if (!layoutIds.has('root')) {
-    validated.push({ id: 'root', layout: [] });
-  }
+  const layoutIds = new Set<string>(layouts.map((layout) => layout.id));
+  const result = [...layouts];
 
   // Ensure that all folder buttons have a layout.
-  Object.values(buttons).forEach((button) => {
-    if (button.type === 'folder' && !layoutIds.has(button.id)) {
-      validated.push({ id: button.id, layout: [] });
+  buttons.forEach((button) => {
+    if (button.type === 'folder' && !layoutIds.has(button.layout)) {
+      result.push({ id: button.layout, layout: [] });
     }
   });
 
   // Validate all the layouts.
-  return validated.map((layout) => validateLayout(layout, buttons));
+  return result.map((layout) => validateLayout(layout, buttons));
+}
+
+function validateProfile(profile: Profile): Profile {
+  return {
+    id: validateOrGetUuid(profile.id),
+    name: profile.name,
+    rootLayout: validateOrGetUuid(profile.rootLayout),
+  };
+}
+
+function validateProfiles(
+  profiles: Profile[],
+  defaultProfile: string,
+  layouts: ButtonLayout[]
+): Profile[] {
+  const profileIds = new Set<string>();
+
+  // Validate all profiles.
+  const validated = profiles.map((profile) => {
+    profileIds.add(profile.id);
+    return validateProfile(profile);
+  });
+
+  // Ensure that there is a default profile.
+  if (!profileIds.has(defaultProfile)) {
+    const defaultLayout: ButtonLayout = {
+      id: uuidv4(),
+      layout: [],
+    };
+    layouts.push(defaultLayout);
+
+    validated.push({
+      id: defaultProfile,
+      name: 'Default',
+      rootLayout: defaultLayout.id,
+    });
+  }
+
+  return validated;
+}
+
+function validateLayoutIds(
+  layouts: ButtonLayout[],
+  buttons: ButtonConfig[],
+  profiles: Profile[]
+): ButtonLayout[] {
+  const validLayoutsIds = new Set<string>();
+
+  // Ensure that all layouts correspond to a folder button or profile.
+  buttons.forEach((button) => {
+    if (button.type === 'folder') {
+      validLayoutsIds.add(button.layout);
+    }
+  });
+  profiles.forEach((profile) => validLayoutsIds.add(profile.rootLayout));
+
+  return layouts.filter((layout) => validLayoutsIds.has(layout.id));
 }
 
 export default function validateConfig(
   config: Partial<Configuration>
 ): Configuration {
+  if (config.version && config.version !== currentVersion) {
+    throw new Error(`Unsupported configuration version: ${config.version}`);
+  }
+
   const validButtons = (config.buttons || []).map(validateButton);
-  const buttonMap: ButtonMap = {};
-  validButtons.forEach((b) => {
-    buttonMap[b.id] = b;
-  });
+  const layouts = validateLayouts(config.layouts || [], validButtons);
+  const defaultProfile = validateOrGetUuid(config.defaultProfile);
+  const validProfiles = validateProfiles(
+    config.profiles || [],
+    defaultProfile,
+    layouts
+  );
 
   return {
     version: config.version || currentVersion,
     targets: validateTargets(config.targets),
     buttons: validButtons,
-    layouts: validateLayouts(config.layouts || [], buttonMap),
+    layouts: validateLayoutIds(layouts, validButtons, validProfiles),
+    defaultProfile,
+    profiles: validProfiles,
   };
 }
