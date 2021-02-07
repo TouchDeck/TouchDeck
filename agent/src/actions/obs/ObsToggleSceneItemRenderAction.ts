@@ -1,5 +1,5 @@
 import ObsSocket from './ObsSocket';
-import param from '../Action';
+import { param } from '../Action';
 import ToggleAction, {
   PreparedToggleAction,
   toggleAction,

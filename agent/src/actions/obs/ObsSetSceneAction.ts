@@ -1,5 +1,5 @@
 import ObsSocket from './ObsSocket';
-import param, { Action, action, PreparedAction } from '../Action';
+import { Action, action, param, PreparedAction } from '../Action';
 
 @action('OBS', 'Set Scene')
 export default class ObsSetSceneAction implements Action {

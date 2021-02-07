@@ -1,5 +1,5 @@
 import ObsSocket from './ObsSocket';
-import param, { Action, action, PreparedAction } from '../Action';
+import { Action, action, param, PreparedAction } from '../Action';
 
 @action('OBS', 'Set Volume')
 export default class ObsSetVolumeAction implements Action {

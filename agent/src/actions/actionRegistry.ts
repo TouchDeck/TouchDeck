@@ -13,6 +13,7 @@ import ObsSetVolumeAction from './obs/ObsSetVolumeAction';
 import ObsToggleMuteAction from './obs/ObsToggleMuteAction';
 import { actionToggleableKey, actionToggleInfoKey } from './ToggleAction';
 import ObsToggleSceneItemRenderAction from './obs/ObsToggleSceneItemRenderAction';
+import TemplateSetValueAction from './template/TemplateSetValueAction';
 
 // A list containing all available action classes.
 const actionClasses: Constructor<Action>[] = [
@@ -22,6 +23,8 @@ const actionClasses: Constructor<Action>[] = [
   ObsSetVolumeAction,
   ObsToggleMuteAction,
   ObsToggleSceneItemRenderAction,
+  // Template
+  TemplateSetValueAction,
 ];
 
 export type ActionMeta = NormalActionMeta | ToggleActionMeta;

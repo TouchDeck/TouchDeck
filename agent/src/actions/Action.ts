@@ -34,7 +34,7 @@ export function action(category: string, name: string) {
  *
  * @param name The name of the parameter.
  */
-export default function param(name: string) {
+export function param(name: string) {
   return function defineParam(
     // eslint-disable-next-line @typescript-eslint/ban-types
     target: Object,
