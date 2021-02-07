@@ -23,7 +23,7 @@ export const AgentList: React.FC<Props> = ({ agents, error, onClickAgent }) => (
       agents.map((agent) => (
         <div
           className="agent"
-          key={agent.meta.address}
+          key={agent.id}
           onClick={() => onClickAgent(agent.id)}
         >
           <Icon icon={agent.meta.platform} iconStyle="brands" size={2} />{' '}
