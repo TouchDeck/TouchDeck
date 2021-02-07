@@ -7,6 +7,7 @@ import {
   Configuration,
   ImageInfo,
   PressButtonResult,
+  TemplateInfo,
 } from 'touchdeck-model';
 import WebSocketClient from '../WebSocketClient';
 
@@ -80,5 +81,13 @@ export default class Agent {
 
   public async renameImage(oldPath: string, newPath: string): Promise<void> {
     return this.socket.send('rename-image', { oldPath, newPath });
+  }
+
+  public async getTemplates(): Promise<TemplateInfo[]> {
+    return this.socket.send('get-templates');
+  }
+
+  public async deleteTemplate(path: string): Promise<void> {
+    return this.socket.send('delete-template', { path });
   }
 }

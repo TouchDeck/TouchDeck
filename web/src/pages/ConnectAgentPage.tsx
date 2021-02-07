@@ -86,6 +86,7 @@ export const ConnectAgentPage: React.FC = () => {
       const agentConfig = await newAgent.getConfiguration();
       const actionOptions = await newAgent.getActionOptions();
       const images = await newAgent.getImages();
+      const templates = await newAgent.getTemplates();
 
       // Dispatch the connected event.
       dispatch({
@@ -95,6 +96,7 @@ export const ConnectAgentPage: React.FC = () => {
         config: agentConfig,
         actionOptions,
         images,
+        templates,
       });
     },
     [dispatch]

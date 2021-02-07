@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs';
 import { Logger } from '@luca_scorpion/tinylogger';
 import { Configuration } from 'touchdeck-model';
-import { CONFIG_DIR, CONFIG_FILE, IMAGES_DIR } from '../constants';
+import { CONFIG_DIR, CONFIG_FILE, IMAGES_DIR, TEMPLATES_DIR } from '../constants';
 import { prepareActions, PreparedActions } from '../actions/prepareActions';
 import validateConfig from './validateConfig';
 import { isPreparedToggleAction } from '../actions/ToggleAction';
@@ -19,7 +19,10 @@ export async function readConfiguration(): Promise<Configuration> {
   // Check if the config directory and file exist.
   await fs.stat(CONFIG_DIR).catch(() => fs.mkdir(CONFIG_DIR));
   await fs.stat(CONFIG_FILE).catch(() => fs.writeFile(CONFIG_FILE, '{}'));
+
+  // Ensure all expected subdirectories exist.
   await fs.stat(IMAGES_DIR).catch(() => fs.mkdir(IMAGES_DIR));
+  await fs.stat(TEMPLATES_DIR).catch(() => fs.mkdir(TEMPLATES_DIR));
 
   // Read the config file.
   const configJson = (

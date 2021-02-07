@@ -26,6 +26,7 @@ import { setClientInstance } from './clientInstance';
 import WebSocketClient from './WebSocketClient';
 import sendButtonStates from './wsApi/sendButtonStates';
 import { WS_PROXY_SERVER } from './constants';
+import { deleteTemplate, getTemplates } from './wsApi/templates';
 
 const log = new Logger('index');
 log.debug('Starting agent...');
@@ -70,6 +71,8 @@ async function bootstrap(): Promise<void> {
   client.registerHandler('upload-image', uploadImage);
   client.registerHandler('delete-image', deleteImage);
   client.registerHandler('rename-image', renameImage);
+  client.registerHandler('get-templates', getTemplates);
+  client.registerHandler('delete-template', deleteTemplate);
 
   log.info(`Agent running on ${getAgentMeta().address}`);
 }

@@ -7,6 +7,7 @@ import { PressButtonResult } from './PressButtonResult';
 import { ImageInfo } from './ImageInfo';
 import { Path } from './Path';
 import { RenameImage } from './RenameImage';
+import { TemplateInfo } from './TemplateInfo';
 
 export interface MessageDataMap {
   'get-info': void;
@@ -22,6 +23,8 @@ export interface MessageDataMap {
   'upload-image': ImageInfo;
   'delete-image': Path;
   'rename-image': RenameImage;
+  'get-templates': void;
+  'delete-template': Path;
 }
 
 export interface MessageResponseMap {
@@ -38,4 +41,6 @@ export interface MessageResponseMap {
   'upload-image': void;
   'delete-image': void;
   'rename-image': void;
+  'get-templates': TemplateInfo[];
+  'delete-template': void;
 }
