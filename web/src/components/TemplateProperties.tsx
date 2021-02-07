@@ -5,6 +5,7 @@ import { TemplateInfo } from 'touchdeck-model';
 import { TextInput } from './input/TextInput';
 import removeExtension from '../util/removeExtension';
 import { useConnectedAgent, useGlobalState } from '../state/appState';
+import { TextAreaInput } from './input/TextAreaInput';
 
 export interface Props {
   template: TemplateInfo;
@@ -43,7 +44,7 @@ export const TemplateProperties: React.FC<Props> = ({
   return (
     <div className="template-properties properties">
       <TextInput className="name" value={name} onChange={setName} />
-      <textarea rows={8} cols={40} value={text} />
+      <TextAreaInput rows={8} cols={40} value={text} onChange={setText} />
       <div className="actions">
         <Button icon="trash" negative onClick={onDelete}>
           Delete
