@@ -2,19 +2,25 @@ import { Path, TemplateInfo } from 'touchdeck-model';
 import { promises as fs } from 'fs';
 import { resolve } from 'path';
 import listFiles from '../util/listFiles';
-import { IMAGES_DIR, TEMPLATES_DIR } from '../constants';
+import { TEMPLATES_DIR } from '../constants';
 import { assertInDir } from '../util/assertInDir';
+
+interface Template {
+  text: string;
+  values: Record<string, unknown>
+}
 
 export async function getTemplates(): Promise<TemplateInfo[]> {
   const entries = await listFiles(TEMPLATES_DIR);
 
   return Promise.all(
     entries.map(async (path) => {
-      const fileBuffer = await fs.readFile(resolve(IMAGES_DIR, path));
+      const contentString = (await fs.readFile(resolve(TEMPLATES_DIR, path))).toString();
+      const parsed: Template = JSON.parse(contentString);
       return {
         path,
-        text: fileBuffer.toString(),
-        values: {}, // TODO
+        text: parsed.text,
+        values: parsed.values,
       };
     })
   );
