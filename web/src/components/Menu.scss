@@ -11,8 +11,9 @@
   }
 
   .close {
-    padding: 16px 16px 8px 16px;
+    padding: 8px 16px;
     color: $grey;
+    display: block;
 
     &:hover {
       color: $grey-dark;
@@ -20,6 +21,11 @@
 
     &:active {
       color: $grey-darker;
+    }
+
+    i {
+      width: 32px;
+      text-align: center;
     }
   }
 
@@ -41,7 +47,9 @@
     }
 
     i {
-      margin-right: 16px;
+      margin-right: 12px;
+      width: 32px;
+      text-align: center;
     }
 
     h2 {
