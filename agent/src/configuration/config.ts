@@ -1,7 +1,12 @@
 import { promises as fs } from 'fs';
 import { Logger } from '@luca_scorpion/tinylogger';
 import { Configuration } from 'touchdeck-model';
-import { CONFIG_DIR, CONFIG_FILE, IMAGES_DIR, TEMPLATES_DIR } from '../constants';
+import {
+  CONFIG_DIR,
+  CONFIG_FILE,
+  IMAGES_DIR,
+  TEMPLATES_DIR,
+} from '../constants';
 import { prepareActions, PreparedActions } from '../actions/prepareActions';
 import validateConfig from './validateConfig';
 import { isPreparedToggleAction } from '../actions/ToggleAction';

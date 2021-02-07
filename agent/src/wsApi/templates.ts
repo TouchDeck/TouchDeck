@@ -7,7 +7,7 @@ import { assertInDir } from '../util/assertInDir';
 
 interface Template {
   text: string;
-  values: Record<string, unknown>
+  values: Record<string, unknown>;
 }
 
 export async function getTemplates(): Promise<TemplateInfo[]> {
@@ -15,7 +15,9 @@ export async function getTemplates(): Promise<TemplateInfo[]> {
 
   return Promise.all(
     entries.map(async (path) => {
-      const contentString = (await fs.readFile(resolve(TEMPLATES_DIR, path))).toString();
+      const contentString = (
+        await fs.readFile(resolve(TEMPLATES_DIR, path))
+      ).toString();
       const parsed: Template = JSON.parse(contentString);
       return {
         path,

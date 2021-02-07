@@ -24,7 +24,7 @@ export const TargetsPage: React.FC = () => {
   );
 
   return (
-    <main className="targets-page">
+    <main className="targets-page config-page">
       <List className="targets-list">
         <div className="entries">
           <div
@@ -51,7 +51,7 @@ export const TargetsPage: React.FC = () => {
           </div>
         </div>
       </List>
-      <div className="target-settings">{settingsPane}</div>
+      <div className="target-settings properties">{settingsPane}</div>
     </main>
   );
 };

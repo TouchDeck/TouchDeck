@@ -23,7 +23,7 @@ export const ImagesPage: React.FC = () => {
   );
 
   return (
-    <main className="images-page">
+    <main className="images-page config-page">
       <ImagesList onClickImage={setSelectedImage} />
       {selectedImage && (
         <ImageProperties

@@ -90,4 +90,11 @@ export default class Agent {
   public async deleteTemplate(path: string): Promise<void> {
     return this.socket.send('delete-template', { path });
   }
+
+  public async upsertTemplate(
+    path: string | null,
+    template: TemplateInfo
+  ): Promise<void> {
+    return this.socket.send('upsert-template', { path, template });
+  }
 }

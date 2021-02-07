@@ -23,7 +23,7 @@ export const TemplatesPage: React.FC = () => {
   );
 
   return (
-    <main className="templates-page">
+    <main className="templates-page config-page">
       <TemplatesList onClickTemplate={setSelectedTemplate} />
       {selectedTemplate && (
         <TemplateProperties

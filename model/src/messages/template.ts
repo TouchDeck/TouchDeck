@@ -3,3 +3,8 @@ export interface TemplateInfo {
   text: string;
   values: Record<string, unknown>;
 }
+
+export interface UpsertTemplate {
+  path: string | null;
+  template: TemplateInfo;
+}
