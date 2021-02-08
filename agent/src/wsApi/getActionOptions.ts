@@ -1,11 +1,11 @@
 import { ActionOption } from 'touchdeck-model';
-import { ActionRegistry, getAvailableActions } from '../actions/ActionRegistry';
+import { ActionRegistry } from '../actions/ActionRegistry';
 
-export default function getActionOptions(
+export function getActionOptions(
   registry: ActionRegistry
 ): () => ActionOption[] {
   return () =>
-    getAvailableActions().map((action) => {
+    registry.getAvailableActions().map((action) => {
       const option: Partial<ActionOption> = {
         type: action.constructor.name,
         category: action.category,

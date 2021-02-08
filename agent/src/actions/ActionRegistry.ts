@@ -89,7 +89,3 @@ export interface ToggleActionMeta extends BaseActionMeta {
 export function getActionRegistry(): { [ctorName: string]: ActionMeta } {
   return {}; // TODO actionRegistry;
 }
-
-export function getAvailableActions(): ActionMeta[] {
-  return []; // TODO Object.values(actionRegistry);
-}
