@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import { Logger } from '@luca_scorpion/tinylogger';
 import { Configuration } from 'touchdeck-model';
+import { promises as fs } from 'fs';
 import {
   getConfiguration,
   readConfiguration,
@@ -23,16 +24,25 @@ import {
 import { setClientInstance } from './clientInstance';
 import WebSocketClient from './WebSocketClient';
 import sendButtonStates from './wsApi/sendButtonStates';
-import { WS_PROXY_SERVER } from './constants';
+import { CONFIG_DIR, IMAGES_DIR, WS_PROXY_SERVER } from './constants';
 import { Injector } from './Injector';
 import { getActionOptions } from './wsApi/getActionOptions';
 import { ActionRegistry } from './actions/ActionRegistry';
+import { ConfigManager } from './ConfigManager';
 
 const log = new Logger('index');
 log.debug('Starting agent...');
 
 async function bootstrap(): Promise<void> {
   const injector = new Injector();
+
+  // Assert that all required directories exist.
+  await fs.stat(CONFIG_DIR).catch(() => fs.mkdir(CONFIG_DIR));
+  await fs.stat(IMAGES_DIR).catch(() => fs.mkdir(IMAGES_DIR));
+
+  // Load the configuration and store the ConfigManager instance in the injector.
+  const configManager = await ConfigManager.load();
+  injector.storeSingleton(configManager);
 
   // Read and set the configuration.
   // Doing it this way allows us to validate on boot.

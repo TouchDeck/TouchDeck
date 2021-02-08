@@ -47,6 +47,14 @@ export class Injector {
     return this.inject(Target);
   }
 
+  public storeSingleton(instance: unknown): void {
+    if (instance && typeof instance === 'object' && 'constructor' in instance) {
+      this.singletonInstances[instance.constructor.toString()] = instance;
+    } else {
+      throw new Error(`Cannot store singleton of instance: ${typeof instance}`);
+    }
+  }
+
   /**
    * Create a new instance of a class, injecting all necessary arguments in the constructor.
    *
