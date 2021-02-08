@@ -2,9 +2,7 @@ import { promises as fs } from 'fs';
 import { Logger } from '@luca_scorpion/tinylogger';
 import { Configuration } from 'touchdeck-model';
 import { CONFIG_DIR, CONFIG_FILE, IMAGES_DIR } from '../constants';
-import { prepareActions, PreparedActions } from '../actions/prepareActions';
-import validateConfig from './validateConfig';
-import { isPreparedToggleAction } from '../actions/ToggleAction';
+import { PreparedActions } from '../actions/prepareActions';
 
 const log = new Logger('configuration');
 
@@ -31,30 +29,6 @@ export async function readConfiguration(): Promise<Configuration> {
 export async function saveConfiguration(): Promise<void> {
   log.debug('Writing configuration to disk');
   await fs.writeFile(CONFIG_FILE, JSON.stringify(configuration, null, 2));
-}
-
-export async function setConfiguration(
-  newConfig: Configuration
-): Promise<void> {
-  log.debug('Updating configuration');
-
-  configuration = validateConfig(newConfig);
-
-  // Clear the current prepared actions, prepare the new ones.
-  if (preparedActions) {
-    for (const action of Object.values(preparedActions)) {
-      if (isPreparedToggleAction(action)) {
-        action.removeChangeListener();
-      }
-    }
-  }
-  preparedActions = prepareActions(configuration.buttons);
-
-  await saveConfiguration();
-}
-
-export function getConfiguration(): Configuration {
-  return configuration;
 }
 
 export function getPreparedActions(): PreparedActions {

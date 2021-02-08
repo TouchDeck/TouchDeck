@@ -14,6 +14,11 @@ export class ConfigManager {
     return this.configuration;
   }
 
+  /**
+   * Read the configuration from disk and load the configuration manager.
+   * This also validates the loaded configuration,
+   * and writes it back to disk to ensure proper file formatting.
+   */
   public static async load(): Promise<ConfigManager> {
     ConfigManager.log.debug('Loading configuration from disk');
 
@@ -26,7 +31,12 @@ export class ConfigManager {
     ).toString();
     const parsed = validateConfig(JSON.parse(configJson));
 
-    return new ConfigManager(parsed);
+    const manager = new ConfigManager(parsed);
+
+    // Save the configuration to ensure proper formatting.
+    await manager.saveConfiguration();
+
+    return manager;
   }
 
   public async setConfiguration(newConfig: Configuration): Promise<void> {

@@ -2,17 +2,6 @@ import 'reflect-metadata';
 import { Logger } from '@luca_scorpion/tinylogger';
 import { Configuration } from 'touchdeck-model';
 import { promises as fs } from 'fs';
-import {
-  getConfiguration,
-  readConfiguration,
-  setConfiguration,
-} from './configuration/config';
-import {
-  deleteButton,
-  updateConfig,
-  updateLayout,
-  upsertButton,
-} from './wsApi/config';
 import pressButton from './wsApi/pressButton';
 import getAgentMeta from './util/getAgentMeta';
 import {
@@ -29,6 +18,7 @@ import { Injector } from './Injector';
 import { getActionOptions } from './wsApi/getActionOptions';
 import { ActionRegistry } from './actions/ActionRegistry';
 import { ConfigManager } from './ConfigManager';
+import { ConfigApi } from './wsApi/ConfigApi';
 
 const log = new Logger('index');
 log.debug('Starting agent...');
@@ -44,10 +34,6 @@ async function bootstrap(): Promise<void> {
   const configManager = await ConfigManager.load();
   injector.storeSingleton(configManager);
 
-  // Read and set the configuration.
-  // Doing it this way allows us to validate on boot.
-  await readConfiguration().then(setConfiguration);
-
   // Connect to the WS proxy.
   log.debug(`Connecting to websocket proxy at ${WS_PROXY_SERVER}`);
   const client = new WebSocketClient(WS_PROXY_SERVER);
@@ -61,19 +47,23 @@ async function bootstrap(): Promise<void> {
       // When a get-configuration message is received, this means a new client is connected.
       // So we broadcast all the current button states.
       sendButtonStates(client);
-      return getConfiguration();
+      return configManager.config;
     }
   );
-  client.registerHandler('set-configuration', updateConfig);
-  client.registerHandler('upsert-configuration-button', upsertButton);
-  client.registerHandler('delete-configuration-button', deleteButton);
-  client.registerHandler('set-layout', updateLayout);
+
+  const configApi = injector.getInstance(ConfigApi);
+  client.registerHandler('set-configuration', configApi.updateConfig);
+  client.registerHandler('upsert-configuration-button', configApi.upsertButton);
+  client.registerHandler('delete-configuration-button', configApi.deleteButton);
+  client.registerHandler('set-layout', configApi.updateLayout);
+
   client.registerHandler(
     'get-action-options',
     getActionOptions(injector.getInstance(ActionRegistry))
   );
-  client.registerHandler('get-images', getImages);
   client.registerHandler('press-button', pressButton(client));
+
+  client.registerHandler('get-images', getImages);
   client.registerHandler('upload-image', uploadImage);
   client.registerHandler('delete-image', deleteImage);
   client.registerHandler('rename-image', renameImage);
