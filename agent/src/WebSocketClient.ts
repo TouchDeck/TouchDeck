@@ -10,7 +10,7 @@ import {
 import getAgentMeta from './util/getAgentMeta';
 
 export default class WebSocketClient {
-  private static log = new Logger(WebSocketClient.name);
+  private static readonly log = new Logger(WebSocketClient.name);
 
   private readonly client: WebSocket;
 

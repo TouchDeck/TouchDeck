@@ -4,8 +4,7 @@ import {
   NormalButtonConfig,
   ToggleButtonConfig,
 } from 'touchdeck-model';
-import { getActionRegistry } from './actionRegistry';
-import inject from '../inject';
+import { getActionRegistry } from './ActionRegistry';
 import { actionParamsKey, PreparedAction } from './Action';
 import { getClientInstance } from '../clientInstance';
 import { isPreparedToggleAction } from './ToggleAction';
@@ -17,7 +16,7 @@ function prepareAction(
 ): PreparedAction {
   // Get an instance of the action.
   const ActionCtor = getActionRegistry()[button.action.type].constructor;
-  const actionInst = inject(ActionCtor);
+  const actionInst = null as any; // TODO inject(ActionCtor);
 
   // Match the given arguments to the parameters.
   const params: ActionParameter[] =

@@ -1,13 +1,11 @@
 import 'reflect-metadata';
 import { Logger } from '@luca_scorpion/tinylogger';
 import { Configuration } from 'touchdeck-model';
-import { getAvailableActions } from './actions/actionRegistry';
 import {
   getConfiguration,
   readConfiguration,
   setConfiguration,
 } from './configuration/config';
-import getActionOptions from './wsApi/getActionOptions';
 import {
   deleteButton,
   updateConfig,
@@ -26,19 +24,14 @@ import { setClientInstance } from './clientInstance';
 import WebSocketClient from './WebSocketClient';
 import sendButtonStates from './wsApi/sendButtonStates';
 import { WS_PROXY_SERVER } from './constants';
+import { Injector } from './Injector';
 
 const log = new Logger('index');
 log.debug('Starting agent...');
 
 async function bootstrap(): Promise<void> {
-  // Load and log all the action classes.
-  const availableActionClasses = getAvailableActions();
-  log.debug(`Found ${availableActionClasses.length} action classes:`);
-  availableActionClasses.forEach((action) =>
-    log.debug(
-      `  - ${action.category}/${action.name} (${action.constructor.name})`
-    )
-  );
+  const injector = new Injector();
+  return; // TODO
 
   // Read and set the configuration.
   // Doing it this way allows us to validate on boot.
@@ -64,7 +57,7 @@ async function bootstrap(): Promise<void> {
   client.registerHandler('upsert-configuration-button', upsertButton);
   client.registerHandler('delete-configuration-button', deleteButton);
   client.registerHandler('set-layout', updateLayout);
-  client.registerHandler('get-action-options', getActionOptions);
+  // client.registerHandler('get-action-options', injector.inject(getActionOptions));
   client.registerHandler('get-images', getImages);
   client.registerHandler('press-button', pressButton(client));
   client.registerHandler('upload-image', uploadImage);
