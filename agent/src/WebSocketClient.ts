@@ -7,7 +7,8 @@ import {
   MessageHandler,
   MessageResponseMap,
 } from 'touchdeck-model';
-import getAgentMeta from './util/getAgentMeta';
+import { getAgentMeta } from './util/getAgentMeta';
+import { WS_PROXY_SERVER } from './constants';
 
 export default class WebSocketClient {
   private static readonly log = new Logger(WebSocketClient.name);
@@ -18,8 +19,11 @@ export default class WebSocketClient {
     [type: string]: MessageHandler<unknown, unknown>;
   } = {};
 
-  public constructor(wsProxy: string) {
-    this.client = new WebSocket(`${wsProxy}/ws/agent`);
+  public constructor() {
+    WebSocketClient.log.debug(
+      `Connecting to websocket proxy at ${WS_PROXY_SERVER}`
+    );
+    this.client = new WebSocket(`${WS_PROXY_SERVER}/ws/agent`);
 
     let registered = false;
     this.client.addEventListener('message', ({ target, data }) => {

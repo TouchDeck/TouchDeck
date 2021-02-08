@@ -1,6 +1,8 @@
 import { ButtonConfig, ButtonLayout, Configuration } from 'touchdeck-model';
 import { ConfigManager } from '../ConfigManager';
+import { singleton } from '../Injector';
 
+@singleton
 export class ConfigApi {
   public constructor(private readonly manager: ConfigManager) {
     this.updateConfig = this.updateConfig.bind(this);
