@@ -3,7 +3,6 @@ import { promises as fs } from 'fs';
 import { Logger } from '@luca_scorpion/tinylogger';
 import { CONFIG_FILE } from './constants';
 import validateConfig from './configuration/validateConfig';
-import { saveConfiguration } from './configuration/config';
 
 export class ConfigManager {
   private static readonly log = new Logger(ConfigManager.name);
@@ -55,7 +54,7 @@ export class ConfigManager {
     // }
     // preparedActions = prepareActions(configuration.buttons);
 
-    await saveConfiguration();
+    await this.saveConfiguration();
   }
 
   private async saveConfiguration(): Promise<void> {
