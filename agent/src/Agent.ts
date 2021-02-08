@@ -4,11 +4,10 @@ import WebSocketClient from './WebSocketClient';
 import { ConfigApi } from './wsApi/ConfigApi';
 import { getAgentMeta } from './util/getAgentMeta';
 import { Configuration } from '../../model';
-import sendButtonStates from './wsApi/sendButtonStates';
 import { ConfigManager } from './ConfigManager';
-import pressButton from './wsApi/pressButton';
 import { ActionsApi } from './wsApi/ActionsApi';
 import { ImagesApi } from './wsApi/ImagesApi';
+import { ButtonsApi } from './wsApi/ButtonsApi';
 
 @singleton
 export class Agent {
@@ -19,6 +18,7 @@ export class Agent {
     configManager: ConfigManager,
     configApi: ConfigApi,
     actionsApi: ActionsApi,
+    buttonsApi: ButtonsApi,
     imagesApi: ImagesApi
   ) {
     Agent.log.debug('Registering client handlers');
@@ -29,7 +29,7 @@ export class Agent {
       (): Configuration => {
         // When a get-configuration message is received, this means a new client is connected.
         // So we broadcast all the current button states.
-        sendButtonStates(client);
+        buttonsApi.sendButtonStates();
         return configManager.config;
       }
     );
@@ -46,7 +46,7 @@ export class Agent {
     client.registerHandler('set-layout', configApi.updateLayout);
 
     client.registerHandler('get-action-options', actionsApi.getActionOptions);
-    client.registerHandler('press-button', pressButton(client));
+    client.registerHandler('press-button', buttonsApi.pressButton);
 
     client.registerHandler('get-images', imagesApi.getImages);
     client.registerHandler('upload-image', imagesApi.uploadImage);

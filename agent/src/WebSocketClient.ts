@@ -9,7 +9,9 @@ import {
 } from 'touchdeck-model';
 import { getAgentMeta } from './util/getAgentMeta';
 import { WS_PROXY_SERVER } from './constants';
+import { singleton } from './Injector';
 
+@singleton
 export default class WebSocketClient {
   private static readonly log = new Logger(WebSocketClient.name);
 

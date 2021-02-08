@@ -3,11 +3,13 @@ import { promises as fs } from 'fs';
 import { Logger } from '@luca_scorpion/tinylogger';
 import { CONFIG_FILE } from './constants';
 import validateConfig from './configuration/validateConfig';
+import { singleton } from './Injector';
 
+@singleton
 export class ConfigManager {
   private static readonly log = new Logger(ConfigManager.name);
 
-  private constructor(private configuration: Configuration) {}
+  public constructor(private configuration: Configuration) {}
 
   public get config(): Configuration {
     return this.configuration;
