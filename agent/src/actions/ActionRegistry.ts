@@ -87,17 +87,22 @@ export class ActionRegistry {
     return Object.values(this.actionRegistry);
   }
 
-  private prepareActions(buttons: ButtonConfig[]): void {
-    const newPreparedActions: PreparedActions = {};
-
-    for (let i = 0; i < buttons.length; i++) {
-      const button = buttons[i];
-      if (button.type === 'normal' || button.type === 'toggle') {
-        newPreparedActions[button.id] = this.prepareAction(button);
+  public prepareActions(buttons: ButtonConfig[]): void {
+    // Clear the current prepared actions.
+    for (const action of Object.values(this.prepared)) {
+      if (isPreparedToggleAction(action)) {
+        action.removeChangeListener();
       }
     }
 
-    this.prepared = newPreparedActions;
+    // Prepare all the new actions.
+    this.prepared = {};
+    for (let i = 0; i < buttons.length; i++) {
+      const button = buttons[i];
+      if (button.type === 'normal' || button.type === 'toggle') {
+        this.prepared[button.id] = this.prepareAction(button);
+      }
+    }
   }
 
   private prepareAction(

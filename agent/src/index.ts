@@ -17,9 +17,9 @@ async function bootstrap(): Promise<void> {
   await fs.stat(CONFIG_DIR).catch(() => fs.mkdir(CONFIG_DIR));
   await fs.stat(IMAGES_DIR).catch(() => fs.mkdir(IMAGES_DIR));
 
-  // Load the configuration and store the ConfigManager instance in the injector.
-  const configManager = await ConfigManager.load();
-  injector.storeSingleton(configManager);
+  // Load the configuration.
+  const configManager = injector.getInstance(ConfigManager);
+  await configManager.load();
 
   // Inject the agent, and we're off!
   injector.getInstance(Agent);

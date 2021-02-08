@@ -4,40 +4,46 @@ import { Logger } from '@luca_scorpion/tinylogger';
 import { CONFIG_FILE } from './constants';
 import validateConfig from './validateConfig';
 import { singleton } from './Injector';
+import { ActionRegistry } from './actions/ActionRegistry';
 
 @singleton
 export class ConfigManager {
   private static readonly log = new Logger(ConfigManager.name);
 
-  public constructor(private configuration: Configuration) {}
+  private configuration?: Configuration;
+
+  public constructor(private readonly actionRegistry: ActionRegistry) {}
 
   public get config(): Configuration {
+    if (!this.configuration) {
+      throw new Error('Configuration is not loaded');
+    }
+
     return this.configuration;
   }
 
   /**
-   * Read the configuration from disk and load the configuration manager.
+   * Load the configuration from disk.
    * This also validates the loaded configuration,
    * and writes it back to disk to ensure proper file formatting.
    */
-  public static async load(): Promise<ConfigManager> {
+  public async load(): Promise<void> {
     ConfigManager.log.debug('Loading configuration from disk');
 
     // Assert that the config file exists.
     await fs.stat(CONFIG_FILE).catch(() => fs.writeFile(CONFIG_FILE, '{}'));
 
-    // Read, parse, and validate the config file.
+    // Read the config file.
     const configJson = (
       await fs.readFile(CONFIG_FILE, { encoding: 'utf-8' })
     ).toString();
-    const parsed = validateConfig(JSON.parse(configJson));
 
-    const manager = new ConfigManager(parsed);
+    // Parse and validate the configuration.
+    const loadedConfig = validateConfig(JSON.parse(configJson));
 
-    // Save the configuration to ensure proper formatting.
-    await manager.saveConfiguration();
-
-    return manager;
+    // Save the configuration to prepare the actions.
+    // This also writes it back to disk to ensure proper formatting.
+    await this.setConfiguration(loadedConfig);
   }
 
   public async setConfiguration(newConfig: Configuration): Promise<void> {
@@ -45,25 +51,17 @@ export class ConfigManager {
 
     this.configuration = validateConfig(newConfig);
 
-    // TODO
-    // Clear the current prepared actions, prepare the new ones.
-    // if (preparedActions) {
-    //   for (const action of Object.values(preparedActions)) {
-    //     if (isPreparedToggleAction(action)) {
-    //       action.removeChangeListener();
-    //     }
-    //   }
-    // }
-    // preparedActions = prepareActions(configuration.buttons);
+    // Prepare the new actions.
+    this.actionRegistry.prepareActions(this.config.buttons);
 
-    await this.saveConfiguration();
+    await this.save();
   }
 
-  private async saveConfiguration(): Promise<void> {
+  /**
+   * Save the current configuration to disk.
+   */
+  private async save(): Promise<void> {
     ConfigManager.log.debug('Writing configuration to disk');
-    await fs.writeFile(
-      CONFIG_FILE,
-      JSON.stringify(this.configuration, null, 2)
-    );
+    await fs.writeFile(CONFIG_FILE, JSON.stringify(this.config, null, 2));
   }
 }
