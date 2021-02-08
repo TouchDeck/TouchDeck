@@ -7,23 +7,19 @@ import { Configuration } from '../../model';
 import sendButtonStates from './wsApi/sendButtonStates';
 import { ConfigManager } from './ConfigManager';
 import pressButton from './wsApi/pressButton';
-import {
-  deleteImage,
-  getImages,
-  renameImage,
-  uploadImage,
-} from './wsApi/images';
 import { ActionsApi } from './wsApi/ActionsApi';
+import { ImagesApi } from './wsApi/ImagesApi';
 
 @singleton
 export class Agent {
   private static readonly log = new Logger(Agent.name);
 
   public constructor(
-    private readonly client: WebSocketClient,
+    client: WebSocketClient,
     configManager: ConfigManager,
     configApi: ConfigApi,
-    actionsApi: ActionsApi
+    actionsApi: ActionsApi,
+    imagesApi: ImagesApi
   ) {
     Agent.log.debug('Registering client handlers');
 
@@ -52,9 +48,9 @@ export class Agent {
     client.registerHandler('get-action-options', actionsApi.getActionOptions);
     client.registerHandler('press-button', pressButton(client));
 
-    client.registerHandler('get-images', getImages);
-    client.registerHandler('upload-image', uploadImage);
-    client.registerHandler('delete-image', deleteImage);
-    client.registerHandler('rename-image', renameImage);
+    client.registerHandler('get-images', imagesApi.getImages);
+    client.registerHandler('upload-image', imagesApi.uploadImage);
+    client.registerHandler('delete-image', imagesApi.deleteImage);
+    client.registerHandler('rename-image', imagesApi.renameImage);
   }
 }
