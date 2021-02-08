@@ -3,20 +3,22 @@ import { Logger } from '@luca_scorpion/tinylogger';
 import { singleton } from '../Injector';
 import WebSocketClient from '../WebSocketClient';
 import { PressButtonResult } from '../../../model';
-import { getPreparedActions } from '../configuration/config';
 import { isPreparedToggleAction } from '../actions/ToggleAction';
+import { ActionRegistry } from '../actions/ActionRegistry';
 
 @singleton
 export class ButtonsApi {
   private static readonly log = new Logger(ButtonsApi.name);
 
-  public constructor(private readonly client: WebSocketClient) {
+  public constructor(
+    private readonly client: WebSocketClient,
+    private readonly actionRegistry: ActionRegistry
+  ) {
     this.pressButton = this.pressButton.bind(this);
   }
 
   public async pressButton(buttonId: string): Promise<PressButtonResult> {
-    const actions = getPreparedActions();
-    const action = actions[buttonId];
+    const action = this.actionRegistry.preparedActions[buttonId];
 
     // Check if the action exists.
     if (!action) {
@@ -56,11 +58,13 @@ export class ButtonsApi {
 
   public sendButtonStates(): void {
     ButtonsApi.log.debug('Sending all button states');
-    Object.entries(getPreparedActions()).forEach(async ([buttonId, action]) => {
-      if (isPreparedToggleAction(action)) {
-        const buttonState = await action.getState();
-        this.client.send('button-state-changed', { buttonId, buttonState });
+    Object.entries(this.actionRegistry.preparedActions).forEach(
+      async ([buttonId, action]) => {
+        if (isPreparedToggleAction(action)) {
+          const buttonState = await action.getState();
+          this.client.send('button-state-changed', { buttonId, buttonState });
+        }
       }
-    });
+    );
   }
 }

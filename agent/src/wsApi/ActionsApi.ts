@@ -9,7 +9,7 @@ export class ActionsApi {
   }
 
   public getActionOptions(): ActionOption[] {
-    return this.registry.getAvailableActions().map((action) => {
+    return this.registry.availableActions.map((action) => {
       const option: Partial<ActionOption> = {
         type: action.constructor.name,
         category: action.category,

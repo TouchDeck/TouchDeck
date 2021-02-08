@@ -1,5 +1,11 @@
 import 'reflect-metadata';
-import { ActionParameter, ToggleActionInfo } from 'touchdeck-model';
+import {
+  ActionParameter,
+  ButtonConfig,
+  NormalButtonConfig,
+  ToggleActionInfo,
+  ToggleButtonConfig,
+} from 'touchdeck-model';
 import { Logger } from '@luca_scorpion/tinylogger';
 import { Constructor } from '../util/Constructor';
 import ObsSetSceneAction from './obs/ObsSetSceneAction';
@@ -8,13 +14,19 @@ import {
   actionCategoryKey,
   actionNameKey,
   actionParamsKey,
+  PreparedAction,
 } from './Action';
 import NoopAction from './NoopAction';
 import ObsSetVolumeAction from './obs/ObsSetVolumeAction';
 import ObsToggleMuteAction from './obs/ObsToggleMuteAction';
-import { actionToggleableKey, actionToggleInfoKey } from './ToggleAction';
+import {
+  actionToggleableKey,
+  actionToggleInfoKey,
+  isPreparedToggleAction,
+} from './ToggleAction';
 import ObsToggleSceneItemRenderAction from './obs/ObsToggleSceneItemRenderAction';
-import { singleton } from '../Injector';
+import { Injector, singleton } from '../Injector';
+import WebSocketClient from '../WebSocketClient';
 
 // A list containing all available action classes.
 const actionClasses: Constructor<Action>[] = [
@@ -33,7 +45,12 @@ export class ActionRegistry {
   // All action metadata by constructor name.
   private readonly actionRegistry: { [ctorName: string]: ActionMeta } = {};
 
-  public constructor() {
+  private prepared: PreparedActions = {};
+
+  public constructor(
+    private readonly injector: Injector,
+    private readonly client: WebSocketClient
+  ) {
     // Put all action classes in the registry.
     actionClasses.forEach((ActionCtor) => {
       this.actionRegistry[ActionCtor.name] = {
@@ -53,7 +70,7 @@ export class ActionRegistry {
     });
 
     // Log some debug information.
-    const actions = this.getAvailableActions();
+    const actions = this.availableActions;
     ActionRegistry.log.debug(`Found ${actions.length} action classes:`);
     actions.forEach((action) =>
       ActionRegistry.log.debug(
@@ -62,14 +79,74 @@ export class ActionRegistry {
     );
   }
 
-  public getAvailableActions(): ActionMeta[] {
+  public get preparedActions(): PreparedActions {
+    return this.prepared;
+  }
+
+  public get availableActions(): ActionMeta[] {
     return Object.values(this.actionRegistry);
+  }
+
+  private prepareActions(buttons: ButtonConfig[]): void {
+    const newPreparedActions: PreparedActions = {};
+
+    for (let i = 0; i < buttons.length; i++) {
+      const button = buttons[i];
+      if (button.type === 'normal' || button.type === 'toggle') {
+        newPreparedActions[button.id] = this.prepareAction(button);
+      }
+    }
+
+    this.prepared = newPreparedActions;
+  }
+
+  private prepareAction(
+    button: NormalButtonConfig | ToggleButtonConfig
+  ): PreparedAction {
+    // Get an instance of the action.
+    // TODO: Cache action instances, no need to get a new instance every time.
+    const ActionCtor = this.actionRegistry[button.action.type].constructor;
+    const actionInst = this.injector.getInstance(ActionCtor);
+
+    // Match the given arguments to the parameters.
+    const params: ActionParameter[] =
+      Reflect.getMetadata(actionParamsKey, ActionCtor.prototype) || [];
+    const prepareArgs: unknown[] = params.map(
+      (param) => param && button.action.args[param.name]
+    );
+
+    const prepared = actionInst.prepare(...prepareArgs);
+
+    // If the button is a toggle button, register a state change handler which
+    // updates the button state and broadcasts it.
+    if (isPreparedToggleAction(prepared)) {
+      prepared.registerChangeListener(
+        async (state?: boolean): Promise<void> => {
+          let buttonState = state;
+
+          // If no new state is given, get it from the action.
+          if (buttonState === undefined) {
+            buttonState = await prepared.getState();
+          }
+
+          // Broadcast the new button state.
+          this.client.send('button-state-changed', {
+            buttonId: button.id,
+            buttonState,
+          });
+        }
+      );
+    }
+
+    return prepared;
   }
 }
 
-export type ActionMeta = NormalActionMeta | ToggleActionMeta;
+type PreparedActions = { [id: string]: PreparedAction };
 
-export interface BaseActionMeta {
+type ActionMeta = NormalActionMeta | ToggleActionMeta;
+
+interface BaseActionMeta {
   category: string;
   name: string;
   constructor: Constructor<Action>;
@@ -77,15 +154,11 @@ export interface BaseActionMeta {
   toggleable: boolean;
 }
 
-export interface NormalActionMeta extends BaseActionMeta {
+interface NormalActionMeta extends BaseActionMeta {
   toggleable: false;
 }
 
-export interface ToggleActionMeta extends BaseActionMeta {
+interface ToggleActionMeta extends BaseActionMeta {
   toggleable: true;
   toggleInfo: ToggleActionInfo;
-}
-
-export function getActionRegistry(): { [ctorName: string]: ActionMeta } {
-  return {}; // TODO actionRegistry;
 }
