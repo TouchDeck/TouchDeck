@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs';
 import { resolve } from 'path';
+import { ImageInfo, Path, RenameImage } from 'touchdeck-model';
 import { singleton } from '../Injector';
-import { ImageInfo, Path, RenameImage } from '../../../model';
 import listFiles from '../util/listFiles';
 import { IMAGES_DIR } from '../constants';
 import { assertInImagesDir } from '../util/assertInImagesDir';

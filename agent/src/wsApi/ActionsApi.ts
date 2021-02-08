@@ -1,5 +1,5 @@
+import { ActionOption } from 'touchdeck-model';
 import { singleton } from '../Injector';
-import { ActionOption } from '../../../model';
 import { ActionRegistry } from '../actions/ActionRegistry';
 
 @singleton

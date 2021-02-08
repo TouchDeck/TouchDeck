@@ -2,7 +2,7 @@ import { Configuration } from 'touchdeck-model';
 import { promises as fs } from 'fs';
 import { Logger } from '@luca_scorpion/tinylogger';
 import { CONFIG_FILE } from './constants';
-import validateConfig from './configuration/validateConfig';
+import validateConfig from './validateConfig';
 import { singleton } from './Injector';
 
 @singleton

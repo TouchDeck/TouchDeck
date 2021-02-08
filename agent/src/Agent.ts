@@ -1,9 +1,9 @@
 import { Logger } from '@luca_scorpion/tinylogger';
+import { Configuration } from 'touchdeck-model';
 import { singleton } from './Injector';
 import WebSocketClient from './WebSocketClient';
 import { ConfigApi } from './wsApi/ConfigApi';
 import { getAgentMeta } from './util/getAgentMeta';
-import { Configuration } from '../../model';
 import { ConfigManager } from './ConfigManager';
 import { ActionsApi } from './wsApi/ActionsApi';
 import { ImagesApi } from './wsApi/ImagesApi';

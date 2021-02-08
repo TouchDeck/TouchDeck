@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Logger } from '@luca_scorpion/tinylogger';
+import { PressButtonResult } from 'touchdeck-model';
 import { singleton } from '../Injector';
 import WebSocketClient from '../WebSocketClient';
-import { PressButtonResult } from '../../../model';
 import { isPreparedToggleAction } from '../actions/ToggleAction';
 import { ActionRegistry } from '../actions/ActionRegistry';
 
