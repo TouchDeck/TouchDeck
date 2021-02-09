@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import { ActionParameter } from 'touchdeck-model';
 import { Constructor } from '../util/Constructor';
+import { singleton } from '../Injector';
 
 export interface Action {
   prepare(...args: unknown[]): PreparedAction;
@@ -25,6 +26,9 @@ export function action(category: string, name: string) {
     // Store the category and name as metadata on the prototype.
     Reflect.defineMetadata(actionCategoryKey, category, ctor.prototype);
     Reflect.defineMetadata(actionNameKey, name, ctor.prototype);
+
+    // All actions are singletons.
+    singleton(ctor);
   };
 }
 

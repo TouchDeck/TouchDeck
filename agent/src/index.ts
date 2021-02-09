@@ -1,76 +1,28 @@
 import 'reflect-metadata';
 import { Logger } from '@luca_scorpion/tinylogger';
-import { Configuration } from 'touchdeck-model';
-import { getAvailableActions } from './actions/actionRegistry';
-import {
-  getConfiguration,
-  readConfiguration,
-  setConfiguration,
-} from './configuration/config';
-import getActionOptions from './wsApi/getActionOptions';
-import {
-  deleteButton,
-  updateConfig,
-  updateLayout,
-  upsertButton,
-} from './wsApi/config';
-import pressButton from './wsApi/pressButton';
-import getAgentMeta from './util/getAgentMeta';
-import {
-  deleteImage,
-  getImages,
-  renameImage,
-  uploadImage,
-} from './wsApi/images';
-import { setClientInstance } from './clientInstance';
-import WebSocketClient from './WebSocketClient';
-import sendButtonStates from './wsApi/sendButtonStates';
-import { WS_PROXY_SERVER } from './constants';
+import { promises as fs } from 'fs';
+import { CONFIG_DIR, IMAGES_DIR } from './constants';
+import { Injector } from './Injector';
+import { ConfigManager } from './ConfigManager';
+import { Agent } from './Agent';
+import { getAgentMeta } from './util/getAgentMeta';
 
 const log = new Logger('index');
 log.debug('Starting agent...');
 
 async function bootstrap(): Promise<void> {
-  // Load and log all the action classes.
-  const availableActionClasses = getAvailableActions();
-  log.debug(`Found ${availableActionClasses.length} action classes:`);
-  availableActionClasses.forEach((action) =>
-    log.debug(
-      `  - ${action.category}/${action.name} (${action.constructor.name})`
-    )
-  );
+  const injector = new Injector();
 
-  // Read and set the configuration.
-  // Doing it this way allows us to validate on boot.
-  await readConfiguration().then(setConfiguration);
+  // Assert that all required directories exist.
+  await fs.stat(CONFIG_DIR).catch(() => fs.mkdir(CONFIG_DIR));
+  await fs.stat(IMAGES_DIR).catch(() => fs.mkdir(IMAGES_DIR));
 
-  // Connect to the WS proxy.
-  log.debug(`Connecting to websocket proxy at ${WS_PROXY_SERVER}`);
-  const client = new WebSocketClient(WS_PROXY_SERVER);
-  setClientInstance(client);
+  // Load the configuration.
+  const configManager = injector.getInstance(ConfigManager);
+  await configManager.load();
 
-  // Register all websocket server handlers.
-  client.registerHandler('get-info', getAgentMeta);
-  client.registerHandler(
-    'get-configuration',
-    (): Configuration => {
-      // When a get-configuration message is received, this means a new client is connected.
-      // So we broadcast all the current button states.
-      sendButtonStates(client);
-      return getConfiguration();
-    }
-  );
-  client.registerHandler('set-configuration', updateConfig);
-  client.registerHandler('upsert-configuration-button', upsertButton);
-  client.registerHandler('delete-configuration-button', deleteButton);
-  client.registerHandler('set-layout', updateLayout);
-  client.registerHandler('get-action-options', getActionOptions);
-  client.registerHandler('get-images', getImages);
-  client.registerHandler('press-button', pressButton(client));
-  client.registerHandler('upload-image', uploadImage);
-  client.registerHandler('delete-image', deleteImage);
-  client.registerHandler('rename-image', renameImage);
-
+  // Inject the agent, and we're off!
+  injector.getInstance(Agent);
   log.info(`Agent running on ${getAgentMeta().address}`);
 }
 
