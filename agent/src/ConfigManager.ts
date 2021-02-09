@@ -14,6 +14,10 @@ export class ConfigManager {
 
   public constructor(private readonly actionRegistry: ActionRegistry) {}
 
+  /**
+   * Get the current configuration.
+   * If this is called before {@link load} is called, an error is thrown.
+   */
   public get config(): Configuration {
     if (!this.configuration) {
       throw new Error('Configuration is not loaded');
@@ -46,6 +50,12 @@ export class ConfigManager {
     await this.setConfiguration(loadedConfig);
   }
 
+  /**
+   * Update the configuration.
+   * This stores it and writes it back to disk.
+   *
+   * @param newConfig The new configuration.
+   */
   public async setConfiguration(newConfig: Configuration): Promise<void> {
     ConfigManager.log.debug('Updating configuration');
 
