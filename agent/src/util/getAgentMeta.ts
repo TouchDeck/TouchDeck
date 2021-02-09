@@ -10,7 +10,7 @@ const packageJson = require('../../package.json');
 /**
  * Get agent metadata from the package.json and some computer info.
  */
-export default function getAgentMeta(): AgentMeta {
+export function getAgentMeta(): AgentMeta {
   return {
     name: packageJson.name,
     version: packageJson.version,

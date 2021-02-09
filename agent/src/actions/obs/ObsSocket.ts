@@ -1,6 +1,6 @@
 import OBSWebSocket from 'obs-websocket-js';
 import { Logger } from '@luca_scorpion/tinylogger';
-import { singleton } from '../../inject';
+import { singleton } from '../../Injector';
 
 enum ConnectionStatus {
   DISCONNECTED,
