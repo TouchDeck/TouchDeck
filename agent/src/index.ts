@@ -22,9 +22,6 @@ async function bootstrap(): Promise<void> {
   const configManager = injector.getInstance(ConfigManager);
   await configManager.load();
 
-  // client.registerHandler('get-templates', getTemplates);
-  // client.registerHandler('delete-template', deleteTemplate);
-
   // Inject the agent, and we're off!
   injector.getInstance(Agent);
   log.info(`Agent running on ${getAgentMeta().address}`);
