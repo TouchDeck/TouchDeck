@@ -27,6 +27,7 @@ import {
 import ObsToggleSceneItemRenderAction from './obs/ObsToggleSceneItemRenderAction';
 import { Injector, singleton } from '../Injector';
 import WebSocketClient from '../WebSocketClient';
+import TemplateSetValueAction from './template/TemplateSetValueAction';
 
 // A list containing all available action classes.
 const actionClasses: Constructor<Action>[] = [
@@ -36,6 +37,8 @@ const actionClasses: Constructor<Action>[] = [
   ObsSetVolumeAction,
   ObsToggleMuteAction,
   ObsToggleSceneItemRenderAction,
+  // Template
+  TemplateSetValueAction,
 ];
 
 @singleton
