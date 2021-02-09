@@ -6,6 +6,7 @@ import { Injector } from './Injector';
 import { ConfigManager } from './ConfigManager';
 import { Agent } from './Agent';
 import { getAgentMeta } from './util/getAgentMeta';
+import { TemplateManager } from './actions/template/TemplateManager';
 
 const log = new Logger('index');
 log.debug('Starting agent...');
@@ -21,6 +22,10 @@ async function bootstrap(): Promise<void> {
   // Load the configuration.
   const configManager = injector.getInstance(ConfigManager);
   await configManager.load();
+
+  // Load the templates.
+  const templateManager = injector.getInstance(TemplateManager);
+  await templateManager.load();
 
   // Inject the agent, and we're off!
   injector.getInstance(Agent);

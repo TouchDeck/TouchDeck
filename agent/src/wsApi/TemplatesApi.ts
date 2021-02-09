@@ -1,32 +1,22 @@
 import { Path, TemplateInfo } from 'touchdeck-model';
 import { promises as fs } from 'fs';
-import { resolve } from 'path';
-import listFiles from '../util/listFiles';
 import { TEMPLATES_DIR } from '../constants';
 import { assertInDir } from '../util/assertInDir';
+import { TemplateManager } from '../actions/template/TemplateManager';
+import { singleton } from '../Injector';
 
-interface Template {
-  text: string;
-  values: Record<string, unknown>;
-}
-
+@singleton
 export class TemplatesApi {
-  public async getTemplates(): Promise<TemplateInfo[]> {
-    const entries = await listFiles(TEMPLATES_DIR);
+  public constructor(private readonly templates: TemplateManager) {
+    this.getTemplates = this.getTemplates.bind(this);
+    this.deleteTemplate = this.deleteTemplate.bind(this);
+  }
 
-    return Promise.all(
-      entries.map(async (path) => {
-        const contentString = (
-          await fs.readFile(resolve(TEMPLATES_DIR, path))
-        ).toString();
-        const parsed: Template = JSON.parse(contentString);
-        return {
-          path,
-          text: parsed.text,
-          values: parsed.values,
-        };
-      })
-    );
+  public async getTemplates(): Promise<TemplateInfo[]> {
+    return Object.entries(this.templates.templates).map(([path, template]) => ({
+      path,
+      ...template,
+    }));
   }
 
   public async deleteTemplate({ path }: Path): Promise<void> {
