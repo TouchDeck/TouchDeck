@@ -2,7 +2,7 @@ import { action, Action, param, PreparedAction } from '../Action';
 import { TemplateManager } from './TemplateManager';
 
 @action('Template', 'Change Value')
-export default class TemplateChangeValueAction implements Action {
+export class TemplateChangeValueAction implements Action {
   public constructor(private readonly templates: TemplateManager) {}
 
   public prepare(
