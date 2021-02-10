@@ -48,28 +48,68 @@ export class TemplateManager {
 
     // Render all templates.
     await Promise.all(
-      Object.keys(this.templates).map((path) => this.render(path))
+      Object.entries(this.templates).map(([path, template]) =>
+        this.render(path, template)
+      )
     );
+  }
+
+  /**
+   * Set a view value for a template.
+   *
+   * @param path The template path.
+   * @param key The view key.
+   * @param value The view value to set.
+   */
+  public async setValue(
+    path: string,
+    key: string,
+    value: string
+  ): Promise<void> {
+    const template = this.getTemplate(path);
+    template.values[key] = value;
+
+    // Render and save the template.
+    await Promise.all([this.render(path, template), this.save(path, template)]);
   }
 
   /**
    * Render a template to {@link TEMPLATES_OUTPUT_DIR}.
    *
-   * @param templatePath The path of the template to render.
+   * @param path The path of the template to render.
+   * @param template The template value.
    */
-  public async render(templatePath: string): Promise<void> {
-    TemplateManager.log.debug(`Rendering: ${templatePath}`);
-    const template = this.getTemplate(templatePath);
+  private async render(path: string, template: Template): Promise<void> {
+    TemplateManager.log.debug(`Rendering: ${path}`);
     const rendered = Mustache.render(template.text, template.values);
-    const outputPath = `${removeExtension(templatePath)}.txt`;
+    const outputPath = `${removeExtension(path)}.txt`;
     await fs.writeFile(assertInDir(TEMPLATES_OUTPUT_DIR, outputPath), rendered);
   }
 
+  /**
+   * Get a template.
+   * This throws an error if the template does not exist.
+   *
+   * @param path The template path.
+   */
   private getTemplate(path: string): Template {
     const template = this.templates[path];
     if (!template) {
       throw new Error(`No template found with path: ${path}`);
     }
     return template;
+  }
+
+  /**
+   * Save a template to {@link TEMPLATES_DIR}.
+   *
+   * @param path The template path.
+   * @param template The template value.
+   */
+  private async save(path: string, template: Template): Promise<void> {
+    await fs.writeFile(
+      assertInDir(TEMPLATES_DIR, path),
+      JSON.stringify(template, null, 2)
+    );
   }
 }
