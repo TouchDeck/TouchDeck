@@ -1,8 +1,8 @@
-import ObsSocket from './ObsSocket';
+import { ObsSocket } from './ObsSocket';
 import { Action, action, param, PreparedAction } from '../Action';
 
 @action('OBS', 'Set Volume')
-export default class ObsSetVolumeAction implements Action {
+export class ObsSetVolumeAction implements Action {
   public constructor(private readonly obs: ObsSocket) {}
 
   public prepare(

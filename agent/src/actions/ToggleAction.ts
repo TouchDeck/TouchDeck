@@ -2,7 +2,7 @@ import { ToggleActionInfo } from 'touchdeck-model';
 import { action, PreparedAction } from './Action';
 import { Constructor } from '../util/Constructor';
 
-export default interface ToggleAction {
+export interface ToggleAction {
   prepare(...args: unknown[]): PreparedToggleAction;
 }
 
