@@ -20,6 +20,20 @@ export class TemplateManager {
   }
 
   /**
+   * Get a template.
+   * This throws an error if the template does not exist.
+   *
+   * @param path The template path.
+   */
+  public getTemplate(path: string): Template {
+    const template = this.templates[path];
+    if (!template) {
+      throw new Error(`No template found with path: ${path}`);
+    }
+    return template;
+  }
+
+  /**
    * Load all templates from the {@link TEMPLATES_DIR}.
    * This will also {@link render} all of them.
    */
@@ -64,7 +78,7 @@ export class TemplateManager {
   public async setValue(
     path: string,
     key: string,
-    value: string
+    value: string | number
   ): Promise<void> {
     const template = this.getTemplate(path);
     template.values[key] = value;
@@ -84,20 +98,6 @@ export class TemplateManager {
     const rendered = Mustache.render(template.text, template.values);
     const outputPath = `${removeExtension(path)}.txt`;
     await fs.writeFile(assertInDir(TEMPLATES_OUTPUT_DIR, outputPath), rendered);
-  }
-
-  /**
-   * Get a template.
-   * This throws an error if the template does not exist.
-   *
-   * @param path The template path.
-   */
-  private getTemplate(path: string): Template {
-    const template = this.templates[path];
-    if (!template) {
-      throw new Error(`No template found with path: ${path}`);
-    }
-    return template;
   }
 
   /**
