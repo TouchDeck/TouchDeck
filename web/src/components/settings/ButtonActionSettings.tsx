@@ -4,10 +4,11 @@ import { capitalizeFirstLetter } from '../../util/capitalizeFirstLetter';
 import { TextInput } from '../input/TextInput';
 import { CheckboxInput } from '../input/CheckboxInput';
 import { Rows } from '../Rows';
-import { ActionConfig, ActionParameter } from 'touchdeck-model';
+import { ActionConfig, ActionParameter, TemplateInfo } from 'touchdeck-model';
 import { useConnectedAgent } from '../../state/appState';
 import { FloatNumberInput } from '../input/FloatNumberInput';
-import { TemplateInput } from '../input/TemplateInput';
+import { DropdownInput } from '../input/DropdownInput';
+import { removeExtension } from '../../util/removeExtension';
 
 export interface Props {
   action: ActionConfig;
@@ -15,7 +16,7 @@ export interface Props {
 }
 
 export const ButtonActionSettings: React.FC<Props> = ({ action, onChange }) => {
-  const { actionOptions } = useConnectedAgent();
+  const { actionOptions, templates } = useConnectedAgent();
 
   // The parameter info for the current action.
   const [actionParams, setActionParams] = useState<ActionParameter[]>(
@@ -75,9 +76,11 @@ export const ButtonActionSettings: React.FC<Props> = ({ action, onChange }) => {
               />
             )}
             {param.type === 'template' && (
-              <TemplateInput
+              <DropdownInput<TemplateInfo>
                 value={action.args[param.name]?.toString()}
-                onChange={(arg) => setActionArg(param.name, arg)}
+                options={templates}
+                onChange={(t) => setActionArg(param.name, t?.path)}
+                displayValue={(t) => removeExtension(t.path)}
               />
             )}
           </div>

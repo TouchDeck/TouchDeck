@@ -1,36 +1,37 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useConnectedAgent } from '../../state/appState';
 import { TextInput } from './TextInput';
-import { TemplateInfo } from 'touchdeck-model';
-import { removeExtension } from '../../util/removeExtension';
-import { searchEntries } from '../../util/searchEntries';
 import { classNames } from '../../util/classNames';
+import { searchEntries } from '../../util/searchEntries';
 
-export interface Props {
+export interface Props<T> {
   value: string;
-  onChange: (template: string | null) => void;
+  options: T[];
+  onChange: (value: T | null) => void;
+  displayValue: (val: T) => string;
 }
 
-export const TemplateInput: React.FC<Props> = ({ value, onChange }) => {
-  const { templates } = useConnectedAgent();
+export function DropdownInput<T>({
+  value,
+  options,
+  onChange,
+  displayValue,
+}: Props<T>) {
   const [searchTerm, setSearchTerm] = useState('');
-  const [displayTemplates, setDisplayTemplates] = useState(templates);
+  const [displayOptions, setDisplayOptions] = useState(options);
   const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
-    setDisplayTemplates(searchEntries(templates, searchTerm, (t) => t.path));
-  }, [templates, searchTerm]);
+    setDisplayOptions(searchEntries(options, searchTerm, displayValue));
+  }, [options, searchTerm, displayValue]);
 
-  const selectTemplate = useCallback(
-    (template: TemplateInfo) => {
-      onChange(template.path);
+  const selectValue = useCallback(
+    (newValue: T) => {
+      onChange(newValue);
       setShowDropdown(false);
       setSearchTerm('');
     },
     [onChange]
   );
-
-  const valueString = value ? removeExtension(value) : '';
 
   return (
     <div
@@ -45,30 +46,30 @@ export const TemplateInput: React.FC<Props> = ({ value, onChange }) => {
       <TextInput
         className={classNames([value ? 'has-value' : 'no-value'])}
         onChange={setSearchTerm}
-        value={showDropdown ? searchTerm : valueString}
-        placeholder={valueString}
+        value={showDropdown ? searchTerm : value}
+        placeholder={value}
         icon={value ? 'times' : 'chevron-down'}
         onClickIcon={value ? () => onChange(null) : undefined}
       />
       {showDropdown && (
         <div className="dropdown-list">
-          {displayTemplates.map((t) => (
+          {displayOptions.map((option, i) => (
             <div
-              key={t.path}
+              key={i}
               className="dropdown-entry"
-              onClick={() => selectTemplate(t)}
+              onClick={() => selectValue(option)}
               tabIndex={0}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
-                  selectTemplate(t);
+                  selectValue(option);
                 }
               }}
             >
-              <span className="name">{removeExtension(t.path)}</span>
+              <span className="name">{displayValue(option)}</span>
             </div>
           ))}
         </div>
       )}
     </div>
   );
-};
+}
