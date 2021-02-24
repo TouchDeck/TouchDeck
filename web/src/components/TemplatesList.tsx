@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useState } from 'react';
-import { useConnectedAgent, useGlobalState } from '../state/appState';
+import { useConnectedAgent } from '../state/appState';
 import Button from './Button';
 import { List } from './List';
 import { TemplateInfo } from 'touchdeck-model';
@@ -7,11 +7,14 @@ import removeExtension from '../util/removeExtension';
 
 export interface Props {
   onClickTemplate: (template: TemplateInfo) => void;
+  onCreateTemplate: () => void;
 }
 
-export const TemplatesList: React.FC<Props> = ({ onClickTemplate }) => {
-  const [, dispatch] = useGlobalState();
-  const { agent, templates } = useConnectedAgent();
+export const TemplatesList: React.FC<Props> = ({
+  onClickTemplate,
+  onCreateTemplate,
+}) => {
+  const { templates } = useConnectedAgent();
 
   const [showTemplates, setShowTemplates] = useState(templates);
   const [searchTerm, setSearchTerm] = useState('');
@@ -31,7 +34,7 @@ export const TemplatesList: React.FC<Props> = ({ onClickTemplate }) => {
       searchTerm={searchTerm}
       onSearchTermChange={setSearchTerm}
     >
-      <Button icon="plus" positive>
+      <Button icon="plus" positive onClick={onCreateTemplate}>
         Template
       </Button>
       <div className="entries">

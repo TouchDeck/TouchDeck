@@ -11,12 +11,14 @@ export interface Props {
   template: TemplateInfo;
   onDelete: () => void;
   onClose: () => void;
+  onUpdate: (template: TemplateInfo) => void;
 }
 
 export const TemplateProperties: React.FC<Props> = ({
   template,
   onDelete,
   onClose,
+  onUpdate,
 }) => {
   const [, dispatch] = useGlobalState();
   const { agent } = useConnectedAgent();
@@ -32,19 +34,21 @@ export const TemplateProperties: React.FC<Props> = ({
 
   const upsertTemplate = useCallback(async () => {
     const newPath = `${name}.json`;
-    await agent.upsertTemplate(path, {
+    const updatedTemplate = {
       path: newPath,
       text,
       values: {},
-    });
-    setPath(newPath);
+    };
+    await agent.upsertTemplate(path, updatedTemplate);
 
     const newTemplates = await agent.getTemplates();
     dispatch({
       type: 'templatesLoaded',
       templates: newTemplates,
     });
-  }, [agent, dispatch, name, path, text]);
+
+    onUpdate(updatedTemplate);
+  }, [agent, dispatch, name, path, text, onUpdate]);
 
   return (
     <div className="template-properties properties">
@@ -56,7 +60,12 @@ export const TemplateProperties: React.FC<Props> = ({
         </Button>
         <ButtonGroup>
           <Button onClick={onClose}>Cancel</Button>
-          <Button onClick={upsertTemplate} positive icon="save">
+          <Button
+            onClick={upsertTemplate}
+            positive
+            icon="save"
+            disabled={!name}
+          >
             Save
           </Button>
         </ButtonGroup>

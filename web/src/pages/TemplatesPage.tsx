@@ -24,12 +24,23 @@ export const TemplatesPage: React.FC = () => {
 
   return (
     <main className="templates-page config-page">
-      <TemplatesList onClickTemplate={setSelectedTemplate} />
+      <TemplatesList
+        onClickTemplate={setSelectedTemplate}
+        onCreateTemplate={() =>
+          setSelectedTemplate({
+            path: '',
+            text:
+              'This is a template!\nPut values in here like so: {{ counter }}\nGive it a name, and press save to store it.',
+            values: {},
+          })
+        }
+      />
       {selectedTemplate && (
         <TemplateProperties
           template={selectedTemplate}
           onDelete={() => deleteTemplate(selectedTemplate)}
           onClose={() => setSelectedTemplate(undefined)}
+          onUpdate={setSelectedTemplate}
         />
       )}
     </main>
