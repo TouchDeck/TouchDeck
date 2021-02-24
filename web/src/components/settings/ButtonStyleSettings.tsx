@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react';
-import { Rows } from '../Rows';
 import { TextInput } from '../input/TextInput';
 import { ColorInput } from '../input/ColorInput';
 import { ButtonStyling, ImageInfo } from 'touchdeck-model';
@@ -7,6 +6,7 @@ import { GridButton } from '../buttons/GridButton';
 import { useConnectedAgent } from '../../state/appState';
 import { DropdownInput } from '../input/DropdownInput';
 import { removeExtension } from '../../util/removeExtension';
+import { Columns } from '../Columns';
 
 export interface Props {
   buttonStyle: ButtonStyling;
@@ -30,13 +30,15 @@ export const ButtonStyleSettings: React.FC<Props> = ({
       <div className="preview-wrapper">
         <GridButton style={buttonStyle} size={64} />
       </div>
-      <Rows>
+      <Columns>
         <div>
           <span>Text</span>
-          <TextInput value={buttonStyle.text} onChange={setStyleProp('text')} />
+          <span>Image</span>
+          <span>Text color</span>
+          <span>Background color</span>
         </div>
         <div>
-          <span>Image</span>
+          <TextInput value={buttonStyle.text} onChange={setStyleProp('text')} />
           <DropdownInput<ImageInfo>
             value={removeExtension(buttonStyle.image)}
             options={images}
@@ -44,22 +46,16 @@ export const ButtonStyleSettings: React.FC<Props> = ({
             displayValue={(img) => removeExtension(img.path)}
             previewImageUrl={(img) => img.data}
           />
-        </div>
-        <div>
-          <span>Text color</span>
           <ColorInput
             value={buttonStyle.textColor}
             onChange={setStyleProp('textColor')}
           />
-        </div>
-        <div>
-          <span>Background color</span>
           <ColorInput
             value={buttonStyle.backgroundColor}
             onChange={setStyleProp('backgroundColor')}
           />
         </div>
-      </Rows>
+      </Columns>
     </div>
   );
 };
