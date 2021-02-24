@@ -2,9 +2,11 @@ import React, { useCallback } from 'react';
 import { Rows } from '../Rows';
 import { TextInput } from '../input/TextInput';
 import { ColorInput } from '../input/ColorInput';
-import { ButtonStyling } from 'touchdeck-model';
+import { ButtonStyling, ImageInfo } from 'touchdeck-model';
 import { GridButton } from '../buttons/GridButton';
-import { ImageInput } from '../input/ImageInput';
+import { useConnectedAgent } from '../../state/appState';
+import { DropdownInput } from '../input/DropdownInput';
+import { removeExtension } from '../../util/removeExtension';
 
 export interface Props {
   buttonStyle: ButtonStyling;
@@ -15,6 +17,8 @@ export const ButtonStyleSettings: React.FC<Props> = ({
   buttonStyle,
   onChange,
 }) => {
+  const { images } = useConnectedAgent();
+
   const setStyleProp = useCallback(
     (prop: keyof ButtonStyling) => (value: string | null) =>
       onChange({ ...buttonStyle, [prop]: value }),
@@ -33,9 +37,12 @@ export const ButtonStyleSettings: React.FC<Props> = ({
         </div>
         <div>
           <span>Image</span>
-          <ImageInput
-            value={buttonStyle.image}
-            onChange={setStyleProp('image')}
+          <DropdownInput<ImageInfo>
+            value={removeExtension(buttonStyle.image)}
+            options={images}
+            onChange={(img) => setStyleProp('image')(img?.path || null)}
+            displayValue={(img) => removeExtension(img.path)}
+            previewImageUrl={(img) => img.data}
           />
         </div>
         <div>
