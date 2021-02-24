@@ -10,7 +10,7 @@ export const MessageDisplay: React.FC = ({ children }) => {
   useEffect(() => {
     if (message) {
       // Automatically clear the message.
-      setTimeout(() => dispatch({ type: 'dismissError' }), 10000);
+      setTimeout(() => dispatch({ type: 'dismissError' }), 5000);
     }
   }, [message, messageId, dispatch]);
 
