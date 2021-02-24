@@ -25,10 +25,7 @@ export class ObsToggleSceneItemRenderAction implements ToggleAction {
       invoke: () => this.invoke(source),
       getState: () => this.getState(source),
       registerChangeListener: (listener: ToggleChangeListener) => {
-        handler = (event: {
-          'item-name': string;
-          'item-visible': boolean;
-        }): void => {
+        handler = (event) => {
           if (event['item-name'] === source) {
             listener(event['item-visible']);
           }

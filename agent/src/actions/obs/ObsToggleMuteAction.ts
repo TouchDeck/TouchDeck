@@ -22,7 +22,7 @@ export class ObsToggleMuteAction implements ToggleAction {
       invoke: () => this.invoke(source),
       getState: () => this.getState(source),
       registerChangeListener: (listener: ToggleChangeListener) => {
-        handler = (event: { sourceName: string; muted: boolean }): void => {
+        handler = (event) => {
           if (event.sourceName === source) {
             listener(event.muted);
           }
