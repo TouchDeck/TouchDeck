@@ -1,13 +1,13 @@
 import React, { useRef, useState } from 'react';
 import { CompactPicker } from 'react-color';
-import useClickOutside from '../../util/useClickOutside';
+import { useClickOutside } from '../../hooks/useClickOutside';
 
 export interface Props {
   value: string;
   onChange: (color: string) => void;
 }
 
-const ColorInput: React.FC<Props> = ({ value, onChange }) => {
+export const ColorInput: React.FC<Props> = ({ value, onChange }) => {
   const [displayPicker, setDisplayPicker] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   useClickOutside(ref, () => setDisplayPicker(false));
@@ -31,5 +31,3 @@ const ColorInput: React.FC<Props> = ({ value, onChange }) => {
     </div>
   );
 };
-
-export default ColorInput;

@@ -1,6 +1,6 @@
 import React, { ReactElement, useCallback, useState } from 'react';
 import { useConnectedAgent, useGlobalState } from '../state/appState';
-import ObsSettings from '../components/settings/ObsSettings';
+import { ObsSettings } from '../components/settings/ObsSettings';
 import { Configuration } from 'touchdeck-model';
 import { List } from '../components/List';
 
@@ -25,7 +25,7 @@ export const TargetsPage: React.FC = () => {
 
   return (
     <main className="targets-page config-page">
-      <List className="targets-list">
+      <List>
         <div className="entries">
           <div
             className="entry"

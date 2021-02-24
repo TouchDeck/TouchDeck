@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
-import Rows from '../Rows';
+import { Rows } from '../Rows';
 import { TextInput } from '../input/TextInput';
-import ColorInput from '../input/ColorInput';
+import { ColorInput } from '../input/ColorInput';
 import { ButtonStyling } from 'touchdeck-model';
 import { GridButton } from '../buttons/GridButton';
 import { ImageInput } from '../input/ImageInput';

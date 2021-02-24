@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useGlobalState, useMessages } from '../state/appState';
-import classNames from '../util/classNames';
+import { classNames } from '../util/classNames';
 
 export const MessageDisplay: React.FC = ({ children }) => {
   const [, dispatch] = useGlobalState();
@@ -10,7 +10,7 @@ export const MessageDisplay: React.FC = ({ children }) => {
   useEffect(() => {
     if (message) {
       // Automatically clear the message.
-      setTimeout(() => dispatch({ type: 'dismissError' }), 10000);
+      setTimeout(() => dispatch({ type: 'dismissError' }), 5000);
     }
   }, [message, messageId, dispatch]);
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import classNames from '../util/classNames';
+import { classNames } from '../util/classNames';
 
 export interface Props {
   icon: string;
@@ -10,7 +10,7 @@ export interface Props {
   className?: string;
 }
 
-const Icon: React.FC<Props> = ({
+export const Icon: React.FC<Props> = ({
   icon,
   iconStyle,
   size,
@@ -32,5 +32,3 @@ const Icon: React.FC<Props> = ({
     }}
   />
 );
-
-export default Icon;

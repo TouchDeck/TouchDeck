@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useGlobalState } from '../state/appState';
-import Icon from '../components/Icon';
-import Agent from '../api/Agent';
-import listDiscoveredAgents from '../api/listDiscoveredAgents';
+import { Icon } from '../components/Icon';
+import { Agent } from '../api/Agent';
+import { listDiscoveredAgents } from '../api/listDiscoveredAgents';
 import { AgentInfo, AgentMeta } from 'touchdeck-model';
 import { AgentList } from '../components/AgentList';
-import Modal from '../components/Modal';
-import Button from '../components/Button';
-import { errorId } from '../util/errorId';
+import { Modal } from '../components/Modal';
+import { Button } from '../components/Button';
+import { randomId } from '../util/randomId';
 
 export const ConnectAgentPage: React.FC = () => {
   const [{ agent }, dispatch] = useGlobalState();
@@ -36,11 +36,10 @@ export const ConnectAgentPage: React.FC = () => {
         await newAgent.connect(id);
       } catch {
         dispatch({ type: 'agentDisconnected' });
-        // TODO: Update message, refresh list.
         dispatch({
           type: 'error',
-          message: `Failed to connect to agent at ${id}`,
-          id: errorId(),
+          message: 'Failed to connect to agent',
+          id: randomId(),
         });
         return;
       }
@@ -67,7 +66,7 @@ export const ConnectAgentPage: React.FC = () => {
           dispatch({
             type: 'error',
             message: `Invalid agent name: ${agentMeta.name}`,
-            id: errorId(),
+            id: randomId(),
           });
           dispatch({ type: 'agentDisconnected' });
           return;
@@ -76,7 +75,7 @@ export const ConnectAgentPage: React.FC = () => {
         dispatch({
           type: 'error',
           message: `Could not connect to agent: ${err.message}`,
-          id: errorId(),
+          id: randomId(),
         });
         dispatch({ type: 'agentDisconnected' });
         return;

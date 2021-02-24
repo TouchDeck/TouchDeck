@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import Rows from '../Rows';
+import { Rows } from '../Rows';
 import { TextInput } from '../input/TextInput';
-import CheckboxInput from '../input/CheckboxInput';
-import NumberInput from '../input/NumberInput';
+import { CheckboxInput } from '../input/CheckboxInput';
+import { NumberInput } from '../input/NumberInput';
 import { useConnectedAgent } from '../../state/appState';
 import { ObsTargetConfig } from 'touchdeck-model';
-import Button from '../Button';
+import { Button } from '../Button';
 
 export interface Props {
   onSaveConfig: (config: ObsTargetConfig) => void;
 }
 
-const ObsSettings: React.FC<Props> = ({ onSaveConfig }) => {
+export const ObsSettings: React.FC<Props> = ({ onSaveConfig }) => {
   const { config } = useConnectedAgent();
   const [ip, setIp] = useState(config.targets.obs.ip);
   const [port, setPort] = useState(config.targets.obs.port);
@@ -78,5 +78,3 @@ const ObsSettings: React.FC<Props> = ({ onSaveConfig }) => {
     </>
   );
 };
-
-export default ObsSettings;

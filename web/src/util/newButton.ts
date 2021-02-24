@@ -5,10 +5,7 @@ import {
   ButtonType,
 } from 'touchdeck-model';
 
-export default function newButton(
-  type: ButtonType,
-  from?: ButtonConfig
-): ButtonConfig {
+export function newButton(type: ButtonType, from?: ButtonConfig): ButtonConfig {
   switch (type) {
     case 'normal':
       return {

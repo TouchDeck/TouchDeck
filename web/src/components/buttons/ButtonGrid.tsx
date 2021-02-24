@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { GridButton } from './GridButton';
-import Icon from '../Icon';
+import { Icon } from '../Icon';
 import { ButtonConfig, ButtonLayout } from 'touchdeck-model';
 import { useConnectedAgent, useGlobalState } from '../../state/appState';
-import useResizeObserver from '../../util/useResizeObserver';
+import { useResizeObserver } from '../../hooks/useResizeObserver';
 
 export interface Props {
   rowCount: number;
@@ -13,6 +13,8 @@ export interface Props {
 }
 
 type DisplayButton = ButtonConfig | { type: 'empty' } | { type: 'up' };
+
+const buttonMargin = 16;
 
 export const ButtonGrid: React.FC<Props> = ({
   rowCount,
@@ -29,8 +31,8 @@ export const ButtonGrid: React.FC<Props> = ({
   // A callback to update the button size based on a content rect.
   const updateButtonSize = useCallback(
     (rect: DOMRectReadOnly) => {
-      const columnWidth = rect.width / columnCount - 64;
-      const rowHeight = rect.height / rowCount - 64;
+      const columnWidth = rect.width / columnCount - buttonMargin;
+      const rowHeight = rect.height / rowCount - buttonMargin;
       const minSize = Math.min(columnWidth, rowHeight);
       setButtonSize(minSize);
     },

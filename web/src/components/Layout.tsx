@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import Icon from './Icon';
+import { Icon } from './Icon';
 import { Menu } from './Menu';
 
 export const Layout: React.FC = ({ children }) => {

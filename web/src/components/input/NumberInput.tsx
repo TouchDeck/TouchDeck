@@ -6,7 +6,7 @@ export interface Props
   value?: number;
 }
 
-const NumberInput: React.FC<Props> = (props) => (
+export const NumberInput: React.FC<Props> = (props) => (
   <input
     {...props}
     type="number"
@@ -14,5 +14,3 @@ const NumberInput: React.FC<Props> = (props) => (
     onChange={(e) => props.onChange(parseInt(e.currentTarget.value, 10))}
   />
 );
-
-export default NumberInput;

@@ -1,6 +1,6 @@
 import React, { ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
-import classNames from '../util/classNames';
-import Icon from './Icon';
+import { classNames } from '../util/classNames';
+import { Icon } from './Icon';
 
 export interface Props
   extends DetailedHTMLProps<
@@ -13,7 +13,7 @@ export interface Props
   icon?: string;
 }
 
-const Button: React.FC<Props> = ({
+export const Button: React.FC<Props> = ({
   children,
   positive,
   negative,
@@ -36,5 +36,3 @@ const Button: React.FC<Props> = ({
     {children}
   </button>
 );
-
-export default Button;

@@ -1,6 +1,6 @@
 import React, { InputHTMLAttributes } from 'react';
-import Icon from '../Icon';
-import classNames from '../../util/classNames';
+import { Icon } from '../Icon';
+import { classNames } from '../../util/classNames';
 
 export interface Props
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> {

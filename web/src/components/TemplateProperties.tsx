@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import Button from './Button';
-import ButtonGroup from './ButtonGroup';
+import { Button } from './Button';
+import { ButtonGroup } from './ButtonGroup';
 import { TemplateInfo } from 'touchdeck-model';
 import { TextInput } from './input/TextInput';
-import removeExtension from '../util/removeExtension';
+import { removeExtension } from '../util/removeExtension';
 import { useConnectedAgent, useGlobalState } from '../state/appState';
 import { TextAreaInput } from './input/TextAreaInput';
 

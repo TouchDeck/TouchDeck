@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useConnectedAgent } from '../../state/appState';
 import { TextInput } from './TextInput';
 import { TemplateInfo } from 'touchdeck-model';
-import removeExtension from '../../util/removeExtension';
+import { removeExtension } from '../../util/removeExtension';
+import { searchEntries } from '../../util/searchEntries';
 
 export interface Props {
   value: string;
@@ -16,7 +17,7 @@ export const TemplateInput: React.FC<Props> = ({ value, onChange }) => {
   const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
-    setDisplayTemplates(templates.filter((t) => filterTemplate(searchTerm, t)));
+    setDisplayTemplates(searchEntries(templates, searchTerm, (t) => t.path));
   }, [templates, searchTerm]);
 
   const selectTemplate = useCallback(
@@ -69,20 +70,3 @@ export const TemplateInput: React.FC<Props> = ({ value, onChange }) => {
     </div>
   );
 };
-
-function filterTemplate(searchTerm: string, template: TemplateInfo): boolean {
-  // Split and sanitize the search term.
-  const searchTerms = searchTerm
-    .toLowerCase()
-    .split(' ')
-    .filter((t) => !!t);
-
-  // Check if all search terms match the template.
-  for (let searchI = 0; searchI < searchTerms.length; searchI++) {
-    if (!template.path.toLowerCase().includes(searchTerms[searchI])) {
-      return false;
-    }
-  }
-
-  return true;
-}
