@@ -36,10 +36,9 @@ export const ConnectAgentPage: React.FC = () => {
         await newAgent.connect(id);
       } catch {
         dispatch({ type: 'agentDisconnected' });
-        // TODO: Update message, refresh list.
         dispatch({
           type: 'error',
-          message: `Failed to connect to agent at ${id}`,
+          message: `Failed to connect to agent`,
           id: errorId(),
         });
         return;
