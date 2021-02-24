@@ -2,17 +2,10 @@
   "name": "touchdeck",
   "version": "0.5.0",
   "description": "An alternative, open-source stream deck.",
-  "scripts": {
-    "model": "rimraf web/src/model agent/src/model && cpy model agent/src --parents && cpy model web/src --parents"
-  },
   "repository": "github:TouchDeck/TouchDeck",
   "author": "https://github.com/LucaScorpion",
   "bugs": {
     "url": "https://github.com/TouchDeck/TouchDeck/issues"
   },
-  "homepage": "https://github.com/TouchDeck/TouchDeck#readme",
-  "devDependencies": {
-    "cpy-cli": "^3.1.1",
-    "rimraf": "^3.0.2"
-  }
+  "homepage": "https://touchdeck.app"
 }
