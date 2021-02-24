@@ -20,26 +20,31 @@ export const TemplateProperties: React.FC<Props> = ({
 }) => {
   const [, dispatch] = useGlobalState();
   const { agent } = useConnectedAgent();
+  const [path, setPath] = useState('');
   const [name, setName] = useState('');
   const [text, setText] = useState('');
 
-  useEffect(() => setName(removeExtension(template.path)), [template.path]);
+  useEffect(() => {
+    setPath(template.path);
+    setName(removeExtension(template.path));
+  }, [template.path]);
   useEffect(() => setText(template.text), [template.text]);
 
   const upsertTemplate = useCallback(async () => {
     const newPath = `${name}.json`;
-    await agent.upsertTemplate(template.path, {
+    await agent.upsertTemplate(path, {
       path: newPath,
       text,
       values: {},
     });
+    setPath(newPath);
 
     const newTemplates = await agent.getTemplates();
     dispatch({
       type: 'templatesLoaded',
       templates: newTemplates,
     });
-  }, [agent, dispatch, name, template.path, text]);
+  }, [agent, dispatch, name, path, text]);
 
   return (
     <div className="template-properties properties">

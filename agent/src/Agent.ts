@@ -57,5 +57,6 @@ export class Agent {
 
     client.registerHandler('get-templates', templatesApi.getTemplates);
     client.registerHandler('delete-template', templatesApi.deleteTemplate);
+    client.registerHandler('upsert-template', templatesApi.upsertTemplate);
   }
 }

@@ -82,8 +82,31 @@ export class TemplateManager {
   ): Promise<void> {
     const template = this.getTemplate(path);
     template.values[key] = value;
+    await this.store(path, template);
+  }
 
-    // Render and save the template.
+  /**
+   * Delete a template.
+   * This also deletes the rendered file.
+   *
+   * @param path The path of the template to delete.
+   */
+  public async delete(path: string): Promise<void> {
+    await fs.unlink(assertInDir(TEMPLATES_DIR, path));
+    const outputPath = `${removeExtension(path)}.txt`;
+    await fs.unlink(assertInDir(TEMPLATES_OUTPUT_DIR, outputPath));
+    delete this.templatesByPath[path];
+  }
+
+  /**
+   * Store a template.
+   * This will store it in the templates registry, write it to disk, and render it.
+   *
+   * @param path The template path.
+   * @param template The template value.
+   */
+  public async store(path: string, template: Template): Promise<void> {
+    this.templatesByPath[path] = template;
     await Promise.all([this.render(path, template), this.save(path, template)]);
   }
 
