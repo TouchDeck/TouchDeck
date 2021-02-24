@@ -13,7 +13,7 @@ export interface Props {
   onChange: (action: ActionConfig) => void;
 }
 
-const ButtonActionSettings: React.FC<Props> = ({ action, onChange }) => {
+export const ButtonActionSettings: React.FC<Props> = ({ action, onChange }) => {
   const { actionOptions } = useConnectedAgent();
 
   // The parameter info for the current action.
@@ -78,5 +78,3 @@ const ButtonActionSettings: React.FC<Props> = ({ action, onChange }) => {
     </Rows>
   );
 };
-
-export default ButtonActionSettings;

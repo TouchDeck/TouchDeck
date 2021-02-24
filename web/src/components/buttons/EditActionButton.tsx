@@ -5,7 +5,7 @@ import {
   ToggleButtonConfig,
 } from 'touchdeck-model';
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import ButtonActionSettings from '../settings/ButtonActionSettings';
+import { ButtonActionSettings } from '../settings/ButtonActionSettings';
 import { useConnectedAgent } from '../../state/appState';
 import { ButtonStyleSettings } from '../settings/ButtonStyleSettings';
 
