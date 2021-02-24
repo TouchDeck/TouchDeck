@@ -28,14 +28,19 @@ a {
 }
 
 input,
-select {
+select,
+textarea {
   padding: 0 4px;
   border: 2px solid transparent;
   border-radius: $border-radius;
   outline: none;
-  height: 30px;
 
   &:focus {
     border-color: #4a92ff;
   }
+}
+
+input,
+select {
+  height: 30px;
 }

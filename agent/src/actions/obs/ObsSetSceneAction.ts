@@ -1,8 +1,8 @@
-import ObsSocket from './ObsSocket';
-import param, { Action, action, PreparedAction } from '../Action';
+import { ObsSocket } from './ObsSocket';
+import { Action, action, param, PreparedAction } from '../Action';
 
 @action('OBS', 'Set Scene')
-export default class ObsSetSceneAction implements Action {
+export class ObsSetSceneAction implements Action {
   public constructor(private readonly obs: ObsSocket) {}
 
   public prepare(@param('scene') scene: string): PreparedAction {

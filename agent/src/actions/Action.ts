@@ -36,9 +36,14 @@ export function action(category: string, name: string) {
  * Define a parameter for an action.
  * This should be used on all parameters on the `invoke` function.
  *
+ * The second parameter of the decorator can be a custom type for the parameter.
+ * This can be used to display a specific control in the frontend.
+ * The underlying type used for this will always be a string.
+ *
  * @param name The name of the parameter.
+ * @param customType The (optional) type of the parameter.
  */
-export default function param(name: string) {
+export function param(name: string, customType?: ActionParameter['type']) {
   return function defineParam(
     // eslint-disable-next-line @typescript-eslint/ban-types
     target: Object,
@@ -55,7 +60,7 @@ export default function param(name: string) {
       target,
       propertyKey
     );
-    const type = paramTypes[parameterIndex].name.toLowerCase();
+    const type = customType || paramTypes[parameterIndex].name.toLowerCase();
 
     // Add the parameter info for this parameter.
     params[parameterIndex] = {

@@ -9,7 +9,7 @@ enum ConnectionStatus {
 }
 
 @singleton
-export default class ObsSocket {
+export class ObsSocket {
   private static readonly log = new Logger(ObsSocket.name);
 
   private readonly obs: OBSWebSocket;

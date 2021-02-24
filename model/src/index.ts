@@ -13,3 +13,4 @@ export * from './messages/messages';
 export * from './messages/Path';
 export * from './messages/PressButtonResult';
 export * from './messages/RenameImage';
+export * from './messages/template';

@@ -8,7 +8,7 @@ import {
 } from 'touchdeck-model';
 import { Logger } from '@luca_scorpion/tinylogger';
 import { Constructor } from '../util/Constructor';
-import ObsSetSceneAction from './obs/ObsSetSceneAction';
+import { ObsSetSceneAction } from './obs/ObsSetSceneAction';
 import {
   Action,
   actionCategoryKey,
@@ -16,17 +16,19 @@ import {
   actionParamsKey,
   PreparedAction,
 } from './Action';
-import NoopAction from './NoopAction';
-import ObsSetVolumeAction from './obs/ObsSetVolumeAction';
-import ObsToggleMuteAction from './obs/ObsToggleMuteAction';
+import { NoopAction } from './NoopAction';
+import { ObsSetVolumeAction } from './obs/ObsSetVolumeAction';
+import { ObsToggleMuteAction } from './obs/ObsToggleMuteAction';
 import {
   actionToggleableKey,
   actionToggleInfoKey,
   isPreparedToggleAction,
 } from './ToggleAction';
-import ObsToggleSceneItemRenderAction from './obs/ObsToggleSceneItemRenderAction';
+import { ObsToggleSceneItemRenderAction } from './obs/ObsToggleSceneItemRenderAction';
 import { Injector, singleton } from '../Injector';
 import WebSocketClient from '../WebSocketClient';
+import { TemplateSetValueAction } from './template/TemplateSetValueAction';
+import { TemplateChangeValueAction } from './template/TemplateChangeValueAction';
 
 // A list containing all available action classes.
 const actionClasses: Constructor<Action>[] = [
@@ -36,6 +38,9 @@ const actionClasses: Constructor<Action>[] = [
   ObsSetVolumeAction,
   ObsToggleMuteAction,
   ObsToggleSceneItemRenderAction,
+  // Template
+  TemplateChangeValueAction,
+  TemplateSetValueAction,
 ];
 
 @singleton

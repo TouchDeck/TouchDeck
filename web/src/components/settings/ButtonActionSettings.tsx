@@ -7,13 +7,14 @@ import Rows from '../Rows';
 import { ActionConfig, ActionParameter } from 'touchdeck-model';
 import { useConnectedAgent } from '../../state/appState';
 import FloatNumberInput from '../input/FloatNumberInput';
+import { TemplateInput } from '../input/TemplateInput';
 
 export interface Props {
   action: ActionConfig;
   onChange: (action: ActionConfig) => void;
 }
 
-const ButtonActionSettings: React.FC<Props> = ({ action, onChange }) => {
+export const ButtonActionSettings: React.FC<Props> = ({ action, onChange }) => {
   const { actionOptions } = useConnectedAgent();
 
   // The parameter info for the current action.
@@ -73,10 +74,14 @@ const ButtonActionSettings: React.FC<Props> = ({ action, onChange }) => {
                 onChange={(arg) => setActionArg(param.name, arg)}
               />
             )}
+            {param.type === 'template' && (
+              <TemplateInput
+                value={action.args[param.name]?.toString()}
+                onChange={(arg) => setActionArg(param.name, arg)}
+              />
+            )}
           </div>
         ))}
     </Rows>
   );
 };
-
-export default ButtonActionSettings;

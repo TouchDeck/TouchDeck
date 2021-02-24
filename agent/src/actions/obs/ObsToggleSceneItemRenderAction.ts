@@ -1,6 +1,7 @@
-import ObsSocket from './ObsSocket';
-import param from '../Action';
-import ToggleAction, {
+import { ObsSocket } from './ObsSocket';
+import { param } from '../Action';
+import {
+  ToggleAction,
   PreparedToggleAction,
   toggleAction,
   ToggleChangeListener,
@@ -10,7 +11,7 @@ import ToggleAction, {
   trueStateName: 'visible',
   falseStateName: 'hidden',
 })
-export default class ObsToggleSceneItemRenderAction implements ToggleAction {
+export class ObsToggleSceneItemRenderAction implements ToggleAction {
   public constructor(private readonly obs: ObsSocket) {}
 
   public prepare(@param('source') source: string): PreparedToggleAction {

@@ -6,6 +6,7 @@ import {
   ButtonStates,
   Configuration,
   ImageInfo,
+  TemplateInfo,
 } from 'touchdeck-model';
 
 export interface ConnectedAgentState {
@@ -16,6 +17,7 @@ export interface ConnectedAgentState {
   actionOptions: ActionOption[];
   buttonStates: ButtonStates;
   images: ImageInfo[];
+  templates: TemplateInfo[];
   activeProfileId: string;
 }
 
@@ -28,6 +30,7 @@ export type State =
       actionOptions: undefined;
       buttonStates: {};
       images: ImageInfo[];
+      templates: TemplateInfo[];
       activeProfileId: undefined;
     }
   | ConnectedAgentState;
@@ -43,6 +46,7 @@ export type Action =
       config: Configuration;
       actionOptions: ActionOption[];
       images: ImageInfo[];
+      templates: TemplateInfo[];
     }
   | {
       type: 'agentDisconnected';
@@ -62,6 +66,10 @@ export type Action =
   | {
       type: 'imagesLoaded';
       images: ImageInfo[];
+    }
+  | {
+      type: 'templatesLoaded';
+      templates: TemplateInfo[];
     };
 
 export const reducer: Reducer<State, Action> = (prevState, action) => {
@@ -76,6 +84,7 @@ export const reducer: Reducer<State, Action> = (prevState, action) => {
         actionOptions: undefined,
         buttonStates: {},
         images: [],
+        templates: [],
         activeProfileId: undefined,
       };
     case 'agentConnected':
@@ -87,6 +96,7 @@ export const reducer: Reducer<State, Action> = (prevState, action) => {
         config: action.config,
         actionOptions: action.actionOptions,
         images: action.images,
+        templates: action.templates,
         activeProfileId: action.config.defaultProfile,
         // Don't overwrite the button states here,
         // this event might occur after first button state changed messages.
@@ -101,6 +111,7 @@ export const reducer: Reducer<State, Action> = (prevState, action) => {
         actionOptions: undefined,
         buttonStates: {},
         images: [],
+        templates: [],
         activeProfileId: undefined,
       };
     case 'configLoaded':
@@ -115,6 +126,8 @@ export const reducer: Reducer<State, Action> = (prevState, action) => {
       };
     case 'imagesLoaded':
       return { ...prevState, images: action.images };
+    case 'templatesLoaded':
+      return { ...prevState, templates: action.templates };
     default:
       return prevState;
   }
@@ -128,5 +141,6 @@ export const getInitialState = (): State => ({
   actionOptions: undefined,
   buttonStates: {},
   images: [],
+  templates: [],
   activeProfileId: undefined,
 });

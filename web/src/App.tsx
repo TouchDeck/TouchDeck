@@ -8,6 +8,7 @@ import { Layout } from './components/Layout';
 import { TargetsPage } from './pages/TargetsPage';
 import { MessageDisplay } from './components/MessageDisplay';
 import { ImagesPage } from './pages/ImagesPage';
+import { TemplatesPage } from './pages/TemplatesPage';
 
 export const App: React.FC = () => {
   const [{ agent }] = useGlobalState();
@@ -31,6 +32,7 @@ export const App: React.FC = () => {
             <DeckPage editing />
           </Route>
           <Route exact path="/images" component={ImagesPage} />
+          <Route exact path="/templates" component={TemplatesPage} />
           <Route exact path="/targets" component={TargetsPage} />
         </Switch>
       </Layout>

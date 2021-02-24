@@ -34,10 +34,12 @@ $list-item-bg: $elevation-24;
 // Font awesome
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
 
+// Global page style
+@import 'pages/ConfigPage';
+
 // Page styles
 @import 'pages/ConnectAgentPage';
 @import 'pages/DeckPage';
-@import 'pages/ImagesPage';
 @import 'pages/TargetsPage';
 
 // Component styles
@@ -54,12 +56,13 @@ $list-item-bg: $elevation-24;
 @import 'components/MessageDisplay';
 @import 'components/Modal';
 @import 'components/Rows';
+@import 'components/TemplateProperties';
 @import 'components/buttons/ButtonGrid';
 @import 'components/buttons/ButtonList';
 @import 'components/buttons/EditButtonModal';
 @import 'components/buttons/GridButton';
 @import 'components/input/ColorInput';
-@import 'components/input/ImageInput';
+@import 'components/input/DropdownInput';
 @import 'components/input/Input';
 @import 'components/settings/ButtonStyleSettings';
 

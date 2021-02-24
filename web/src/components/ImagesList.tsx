@@ -69,7 +69,7 @@ export const ImagesList: React.FC<Props> = ({ onClickImage }) => {
     >
       <input
         ref={fileInputRef}
-        className="hidden"
+        hidden
         type="file"
         accept="image/*"
         onChange={uploadFile}

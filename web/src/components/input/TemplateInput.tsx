@@ -1,27 +1,27 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useConnectedAgent } from '../../state/appState';
 import { TextInput } from './TextInput';
-import { ImageInfo } from 'touchdeck-model';
+import { TemplateInfo } from 'touchdeck-model';
 import removeExtension from '../../util/removeExtension';
 
 export interface Props {
   value: string;
-  onChange: (image: string | null) => void;
+  onChange: (template: string | null) => void;
 }
 
-export const ImageInput: React.FC<Props> = ({ value, onChange }) => {
-  const { images } = useConnectedAgent();
+export const TemplateInput: React.FC<Props> = ({ value, onChange }) => {
+  const { templates } = useConnectedAgent();
   const [searchTerm, setSearchTerm] = useState('');
-  const [displayImages, setDisplayImages] = useState(images);
+  const [displayTemplates, setDisplayTemplates] = useState(templates);
   const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
-    setDisplayImages(images.filter((img) => filterImage(searchTerm, img)));
-  }, [images, searchTerm]);
+    setDisplayTemplates(templates.filter((t) => filterTemplate(searchTerm, t)));
+  }, [templates, searchTerm]);
 
-  const selectImage = useCallback(
-    (image: ImageInfo) => {
-      onChange(image.path);
+  const selectTemplate = useCallback(
+    (template: TemplateInfo) => {
+      onChange(template.path);
       setShowDropdown(false);
       setSearchTerm('');
     },
@@ -49,25 +49,19 @@ export const ImageInput: React.FC<Props> = ({ value, onChange }) => {
       />
       {showDropdown && (
         <div className="dropdown-list">
-          {displayImages.map((img) => (
+          {displayTemplates.map((t) => (
             <div
-              key={img.path}
+              key={t.path}
               className="dropdown-entry"
-              onClick={() => selectImage(img)}
+              onClick={() => selectTemplate(t)}
               tabIndex={0}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
-                  selectImage(img);
+                  selectTemplate(t);
                 }
               }}
             >
-              <div
-                className="preview"
-                style={{
-                  backgroundImage: `url(${img.data})`,
-                }}
-              />
-              <span className="name">{removeExtension(img.path)}</span>
+              <span className="name">{removeExtension(t.path)}</span>
             </div>
           ))}
         </div>
@@ -76,16 +70,16 @@ export const ImageInput: React.FC<Props> = ({ value, onChange }) => {
   );
 };
 
-function filterImage(searchTerm: string, image: ImageInfo): boolean {
+function filterTemplate(searchTerm: string, template: TemplateInfo): boolean {
   // Split and sanitize the search term.
   const searchTerms = searchTerm
     .toLowerCase()
     .split(' ')
     .filter((t) => !!t);
 
-  // Check if all search terms match the image.
+  // Check if all search terms match the template.
   for (let searchI = 0; searchI < searchTerms.length; searchI++) {
-    if (!image.path.toLowerCase().includes(searchTerms[searchI])) {
+    if (!template.path.toLowerCase().includes(searchTerms[searchI])) {
       return false;
     }
   }

@@ -43,7 +43,7 @@ export const ImageProperties: React.FC<Props> = ({
   }, [name, extension, agent, path, dispatch]);
 
   return (
-    <div className="image-properties">
+    <div className="image-properties properties">
       <TextInput className="name" value={name} onChange={setName} />
       <img src={image.data} alt="" />
       <div className="actions">

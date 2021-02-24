@@ -4,7 +4,7 @@ import { ImageInfo, Path, RenameImage } from 'touchdeck-model';
 import { singleton } from '../Injector';
 import listFiles from '../util/listFiles';
 import { IMAGES_DIR } from '../constants';
-import { assertInImagesDir } from '../util/assertInImagesDir';
+import { assertInDir } from '../util/assertInDir';
 
 @singleton
 export class ImagesApi {
@@ -34,16 +34,19 @@ export class ImagesApi {
 
   public async uploadImage(image: ImageInfo): Promise<void> {
     const [, fileData] = image.data.split(',', 2);
-    await fs.writeFile(assertInImagesDir(image.path), fileData, {
+    await fs.writeFile(assertInDir(IMAGES_DIR, image.path), fileData, {
       encoding: 'base64',
     });
   }
 
   public async deleteImage({ path }: Path): Promise<void> {
-    await fs.unlink(assertInImagesDir(path));
+    await fs.unlink(assertInDir(IMAGES_DIR, path));
   }
 
   public async renameImage({ oldPath, newPath }: RenameImage): Promise<void> {
-    await fs.rename(assertInImagesDir(oldPath), assertInImagesDir(newPath));
+    await fs.rename(
+      assertInDir(IMAGES_DIR, oldPath),
+      assertInDir(IMAGES_DIR, newPath)
+    );
   }
 }

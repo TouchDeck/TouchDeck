@@ -9,7 +9,7 @@ import {
   ObsTargetConfig,
   Profile,
 } from 'touchdeck-model';
-import NoopAction from './actions/NoopAction';
+import { NoopAction } from './actions/NoopAction';
 
 const currentVersion = '1';
 
