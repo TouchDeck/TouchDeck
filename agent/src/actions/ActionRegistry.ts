@@ -30,10 +30,12 @@ import WebSocketClient from '../WebSocketClient';
 import { TemplateSetValueAction } from './template/TemplateSetValueAction';
 import { TemplateChangeValueAction } from './template/TemplateChangeValueAction';
 import { ObsToggleSourceFilterAction } from './obs/ObsToggleSourceFilterAction';
+import { RunScriptAction } from './RunScriptAction';
 
 // A list containing all available action classes.
 const actionClasses: Constructor<Action>[] = [
   NoopAction,
+  RunScriptAction,
   // OBS
   ObsSetSceneAction,
   ObsSetVolumeAction,
