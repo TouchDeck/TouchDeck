@@ -5,8 +5,6 @@ export interface Props {
   compact?: boolean;
 }
 
-const Rows: React.FC<Props> = ({ children, compact }) => (
+export const Rows: React.FC<Props> = ({ children, compact }) => (
   <div className={classNames(['rows', compact && 'compact'])}>{children}</div>
 );
-
-export default Rows;

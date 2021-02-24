@@ -1,6 +1,6 @@
 import React, { ReactElement, useCallback, useState } from 'react';
 import { useConnectedAgent, useGlobalState } from '../state/appState';
-import ObsSettings from '../components/settings/ObsSettings';
+import { ObsSettings } from '../components/settings/ObsSettings';
 import { Configuration } from 'touchdeck-model';
 import { List } from '../components/List';
 

@@ -6,10 +6,8 @@ export interface Props {
   className?: string;
 }
 
-const Dimmer: React.FC<Props> = ({ children, active, className }) => (
+export const Dimmer: React.FC<Props> = ({ children, active, className }) => (
   <div className={classNames(['dimmer', active && 'active', className])}>
     {children}
   </div>
 );
-
-export default Dimmer;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { classNames } from '../../util/classNames';
 import { ButtonStyling } from 'touchdeck-model';
 import { useConnectedAgent } from '../../state/appState';
-import Icon from '../Icon';
+import { Icon } from '../Icon';
 
 export interface ButtonProps {
   size: number;

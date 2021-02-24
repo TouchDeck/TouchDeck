@@ -10,7 +10,7 @@ export interface Props {
   className?: string;
 }
 
-const Icon: React.FC<Props> = ({
+export const Icon: React.FC<Props> = ({
   icon,
   iconStyle,
   size,
@@ -32,5 +32,3 @@ const Icon: React.FC<Props> = ({
     }}
   />
 );
-
-export default Icon;

@@ -1,9 +1,9 @@
 import React, { ReactNode, useLayoutEffect, useState } from 'react';
 import { ButtonConfig } from 'touchdeck-model';
 import { useConnectedAgent } from '../../state/appState';
-import Button from '../Button';
+import { Button } from '../Button';
 import { GridButton } from './GridButton';
-import ButtonGroup from '../ButtonGroup';
+import { ButtonGroup } from '../ButtonGroup';
 import { List } from '../List';
 import { searchEntries } from '../../util/searchEntries';
 
@@ -13,7 +13,7 @@ export interface Props {
   onCreateFolder: () => void;
 }
 
-const ButtonList: React.FC<Props> = ({
+export const ButtonList: React.FC<Props> = ({
   onClickButton,
   onCreateActionButton,
   onCreateFolder,
@@ -49,8 +49,6 @@ const ButtonList: React.FC<Props> = ({
     </List>
   );
 };
-
-export default ButtonList;
 
 function buttonToComponent(
   button: ButtonConfig,

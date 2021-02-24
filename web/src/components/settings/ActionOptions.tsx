@@ -7,7 +7,7 @@ export interface Props {
   onChange: (type: string) => void;
 }
 
-const ActionOptions: React.FC<Props> = ({ actionType, onChange }) => {
+export const ActionOptions: React.FC<Props> = ({ actionType, onChange }) => {
   const { actionOptions } = useConnectedAgent();
 
   const [optionGroups, setOptionGroups] = useState<{
@@ -45,5 +45,3 @@ const ActionOptions: React.FC<Props> = ({ actionType, onChange }) => {
     </select>
   );
 };
-
-export default ActionOptions;

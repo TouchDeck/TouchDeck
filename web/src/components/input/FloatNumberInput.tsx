@@ -6,7 +6,7 @@ export interface Props
   value?: number | string;
 }
 
-const FloatNumberInput: React.FC<Props> = (props) => {
+export const FloatNumberInput: React.FC<Props> = (props) => {
   const [stringValue, setStringValue] = useState<string>();
   useEffect(() => setStringValue(props.value?.toString()), [props.value]);
 
@@ -27,5 +27,3 @@ const FloatNumberInput: React.FC<Props> = (props) => {
     />
   );
 };
-
-export default FloatNumberInput;

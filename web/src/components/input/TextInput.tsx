@@ -1,5 +1,5 @@
 import React, { InputHTMLAttributes } from 'react';
-import Icon from '../Icon';
+import { Icon } from '../Icon';
 import { classNames } from '../../util/classNames';
 
 export interface Props

@@ -1,10 +1,10 @@
 import React from 'react';
-import Rows from './Rows';
+import { Rows } from './Rows';
 import { capitalizeFirstLetter } from '../util/capitalizeFirstLetter';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useConnectedAgent, useGlobalState } from '../state/appState';
-import Button from './Button';
-import Modal from './Modal';
+import { Button } from './Button';
+import { Modal } from './Modal';
 
 export const AgentInfoModal: React.FC = () => {
   const [, dispatch] = useGlobalState();

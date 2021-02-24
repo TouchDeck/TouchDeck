@@ -1,10 +1,10 @@
 import React, { useCallback, useState } from 'react';
 import { ButtonConfig } from 'touchdeck-model';
-import Modal from '../Modal';
-import Button from '../Button';
+import { Modal } from '../Modal';
+import { Button } from '../Button';
 import { TextInput } from '../input/TextInput';
 import { useConnectedAgent, useGlobalState } from '../../state/appState';
-import ButtonGroup from '../ButtonGroup';
+import { ButtonGroup } from '../ButtonGroup';
 import { EditFolderButton } from './EditFolderButton';
 import { EditActionButton } from './EditActionButton';
 
@@ -13,7 +13,7 @@ export interface Props {
   onClose: () => void;
 }
 
-const EditButtonModal: React.FC<Props> = ({ button, onClose }) => {
+export const EditButtonModal: React.FC<Props> = ({ button, onClose }) => {
   const [, dispatch] = useGlobalState();
   const { agent } = useConnectedAgent();
   const [updates, setUpdates] = useState<ButtonConfig>({ ...button });
@@ -75,5 +75,3 @@ const EditButtonModal: React.FC<Props> = ({ button, onClose }) => {
     </Modal>
   );
 };
-
-export default EditButtonModal;

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import Dimmer from './Dimmer';
+import { Dimmer } from './Dimmer';
 import { classNames } from '../util/classNames';
 import { useClickOutside } from '../hooks/useClickOutside';
 
@@ -9,7 +9,12 @@ export interface Props {
   onClose?: () => void;
 }
 
-const Modal: React.FC<Props> = ({ active, className, onClose, children }) => {
+export const Modal: React.FC<Props> = ({
+  active,
+  className,
+  onClose,
+  children,
+}) => {
   const ref = useRef(null);
   useClickOutside(ref, onClose || (() => undefined));
 
@@ -19,5 +24,3 @@ const Modal: React.FC<Props> = ({ active, className, onClose, children }) => {
     </Dimmer>
   );
 };
-
-export default Modal;

@@ -8,12 +8,10 @@ export interface Props
   onChange: (checked: boolean) => void;
 }
 
-const CheckboxInput: React.FC<Props> = (props) => (
+export const CheckboxInput: React.FC<Props> = (props) => (
   <input
     {...props}
     type="checkbox"
     onChange={(e) => props.onChange(e.currentTarget.checked)}
   />
 );
-
-export default CheckboxInput;

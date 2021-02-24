@@ -6,7 +6,7 @@ import React, {
   useState,
 } from 'react';
 import { useConnectedAgent, useGlobalState } from '../state/appState';
-import Button from './Button';
+import { Button } from './Button';
 import { List } from './List';
 import { ImageInfo } from 'touchdeck-model';
 import { removeExtension } from '../util/removeExtension';

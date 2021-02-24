@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { GridButton } from './GridButton';
-import Icon from '../Icon';
+import { Icon } from '../Icon';
 import { ButtonConfig, ButtonLayout } from 'touchdeck-model';
 import { useConnectedAgent, useGlobalState } from '../../state/appState';
 import { useResizeObserver } from '../../hooks/useResizeObserver';

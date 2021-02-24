@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useState } from 'react';
 import { useConnectedAgent } from '../state/appState';
-import Button from './Button';
+import { Button } from './Button';
 import { List } from './List';
 import { TemplateInfo } from 'touchdeck-model';
 import { removeExtension } from '../util/removeExtension';
