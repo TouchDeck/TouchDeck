@@ -1,0 +1,33 @@
+.columns {
+  display: flex;
+
+  &.compact {
+    // When compact, set the row height to 22px.
+    > div > * {
+      flex: 0 0 22px;
+    }
+  }
+
+  > div {
+    display: flex;
+    flex-direction: column;
+
+    &:not(:last-child) {
+      margin-right: 32px;
+    }
+
+    > * {
+      flex: 0 0 30px;
+      margin-bottom: 4px;
+    }
+
+    > span {
+      display: flex;
+      align-items: center;
+    }
+
+    input {
+      width: 100%;
+    }
+  }
+}

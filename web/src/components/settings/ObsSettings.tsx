@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Rows } from '../Rows';
 import { TextInput } from '../input/TextInput';
 import { CheckboxInput } from '../input/CheckboxInput';
 import { NumberInput } from '../input/NumberInput';
 import { useConnectedAgent } from '../../state/appState';
 import { ObsTargetConfig } from 'touchdeck-model';
 import { Button } from '../Button';
+import { Columns } from '../Columns';
 
 export interface Props {
   onSaveConfig: (config: ObsTargetConfig) => void;
@@ -29,22 +29,21 @@ export const ObsSettings: React.FC<Props> = ({ onSaveConfig }) => {
 
   return (
     <>
-      <Rows>
+      <Columns>
         <div>
           <span>IP Address</span>
-          <TextInput placeholder="localhost" value={ip} onChange={setIp} />
+          <span>Port</span>
+          <span>Authenticated</span>
+          {authenticated && <span>Password</span>}
         </div>
         <div>
-          <span>Port</span>
+          <TextInput placeholder="localhost" value={ip} onChange={setIp} />
           <NumberInput
             placeholder="4444"
             value={port}
             onChange={setPort}
             min={0}
           />
-        </div>
-        <div>
-          <span>Authenticated</span>
           <CheckboxInput
             checked={authenticated}
             onChange={(newAuth) => {
@@ -55,19 +54,16 @@ export const ObsSettings: React.FC<Props> = ({ onSaveConfig }) => {
               setAuthenticated(newAuth);
             }}
           />
-        </div>
-        {authenticated && (
-          <div>
-            <span>Password</span>
+          {authenticated && (
             <TextInput
               type="password"
               placeholder="p455w0rd"
               value={password}
               onChange={setPassword}
             />
-          </div>
-        )}
-      </Rows>
+          )}
+        </div>
+      </Columns>
       <Button
         onClick={() => onSaveConfig({ ip, port, authenticated, password })}
         positive
