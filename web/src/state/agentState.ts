@@ -1,4 +1,4 @@
-import Agent from '../api/Agent';
+import { Agent } from '../api/Agent';
 import { Reducer } from 'react';
 import {
   ActionOption,

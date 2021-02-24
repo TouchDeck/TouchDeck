@@ -9,9 +9,9 @@ import {
   PressButtonResult,
   TemplateInfo,
 } from 'touchdeck-model';
-import WebSocketClient from '../WebSocketClient';
+import { WebSocketClient } from './WebSocketClient';
 
-export default class Agent {
+export class Agent {
   private readonly socket: WebSocketClient;
 
   public constructor() {

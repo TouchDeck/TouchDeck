@@ -11,7 +11,7 @@ export interface WebSocketMessage {
   data?: unknown;
 }
 
-export default class WebSocketClient {
+export class WebSocketClient {
   private socket?: WebSocket;
 
   private messageIdCounter = 0;
