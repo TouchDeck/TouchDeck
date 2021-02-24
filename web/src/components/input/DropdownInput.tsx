@@ -4,10 +4,11 @@ import { classNames } from '../../util/classNames';
 import { searchEntries } from '../../util/searchEntries';
 
 export interface Props<T> {
-  value: string;
+  value?: string;
   options: T[];
   onChange: (value: T | null) => void;
   displayValue: (val: T) => string;
+  previewImageUrl?: (val: T) => string;
 }
 
 export function DropdownInput<T>({
@@ -15,6 +16,7 @@ export function DropdownInput<T>({
   options,
   onChange,
   displayValue,
+  previewImageUrl,
 }: Props<T>) {
   const [searchTerm, setSearchTerm] = useState('');
   const [displayOptions, setDisplayOptions] = useState(options);
@@ -65,6 +67,14 @@ export function DropdownInput<T>({
                 }
               }}
             >
+              {previewImageUrl && (
+                <div
+                  className="preview"
+                  style={{
+                    backgroundImage: `url(${previewImageUrl(option)})`,
+                  }}
+                />
+              )}
               <span className="name">{displayValue(option)}</span>
             </div>
           ))}
