@@ -4,6 +4,7 @@ import { TextInput } from './TextInput';
 import { TemplateInfo } from 'touchdeck-model';
 import { removeExtension } from '../../util/removeExtension';
 import { searchEntries } from '../../util/searchEntries';
+import { classNames } from '../../util/classNames';
 
 export interface Props {
   value: string;
@@ -42,11 +43,12 @@ export const TemplateInput: React.FC<Props> = ({ value, onChange }) => {
       }}
     >
       <TextInput
+        className={classNames([value ? 'has-value' : 'no-value'])}
         onChange={setSearchTerm}
         value={showDropdown ? searchTerm : valueString}
         placeholder={valueString}
-        icon={value ? 'times' : undefined}
-        onClickIcon={() => onChange(null)}
+        icon={value ? 'times' : 'chevron-down'}
+        onClickIcon={value ? () => onChange(null) : undefined}
       />
       {showDropdown && (
         <div className="dropdown-list">
