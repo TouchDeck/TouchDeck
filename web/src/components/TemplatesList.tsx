@@ -3,7 +3,7 @@ import { useConnectedAgent } from '../state/appState';
 import Button from './Button';
 import { List } from './List';
 import { TemplateInfo } from 'touchdeck-model';
-import removeExtension from '../util/removeExtension';
+import { removeExtension } from '../util/removeExtension';
 import { searchEntries } from '../util/searchEntries';
 
 export interface Props {

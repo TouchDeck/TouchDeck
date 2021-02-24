@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import Dimmer from './Dimmer';
-import classNames from '../util/classNames';
-import useClickOutside from '../util/useClickOutside';
+import { classNames } from '../util/classNames';
+import { useClickOutside } from '../hooks/useClickOutside';
 
 export interface Props {
   active: boolean;

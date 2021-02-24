@@ -1,6 +1,6 @@
 import React from 'react';
 import Rows from './Rows';
-import capitalizeFirstLetter from '../util/capitalizeFirstLetter';
+import { capitalizeFirstLetter } from '../util/capitalizeFirstLetter';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useConnectedAgent, useGlobalState } from '../state/appState';
 import Button from './Button';

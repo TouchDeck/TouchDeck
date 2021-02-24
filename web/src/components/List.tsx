@@ -1,5 +1,5 @@
 import React from 'react';
-import classNames from '../util/classNames';
+import { classNames } from '../util/classNames';
 import { TextInput } from './input/TextInput';
 
 export interface Props {

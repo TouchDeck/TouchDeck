@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { ButtonGrid } from '../components/buttons/ButtonGrid';
 import ButtonList from '../components/buttons/ButtonList';
 import { ButtonConfig } from 'touchdeck-model';
-import newButton from '../util/newButton';
+import { newButton } from '../util/newButton';
 import EditButtonModal from '../components/buttons/EditButtonModal';
 import { useConnectedAgent } from '../state/appState';
 

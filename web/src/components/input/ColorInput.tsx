@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { CompactPicker } from 'react-color';
-import useClickOutside from '../../util/useClickOutside';
+import { useClickOutside } from '../../hooks/useClickOutside';
 
 export interface Props {
   value: string;

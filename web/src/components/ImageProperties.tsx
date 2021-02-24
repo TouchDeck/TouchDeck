@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import removeExtension from '../util/removeExtension';
+import { removeExtension } from '../util/removeExtension';
 import Button from './Button';
 import { ImageInfo } from 'touchdeck-model';
 import { TextInput } from './input/TextInput';
 import ButtonGroup from './ButtonGroup';
 import { useConnectedAgent, useGlobalState } from '../state/appState';
-import getExtension from '../util/getExtension';
+import { getExtension } from '../util/getExtension';
 
 export interface Props {
   image: ImageInfo;

@@ -7,7 +7,7 @@ import { AgentInfo, AgentMeta } from 'touchdeck-model';
 import { AgentList } from '../components/AgentList';
 import Modal from '../components/Modal';
 import Button from '../components/Button';
-import { errorId } from '../util/errorId';
+import { randomId } from '../util/randomId';
 
 export const ConnectAgentPage: React.FC = () => {
   const [{ agent }, dispatch] = useGlobalState();
@@ -38,8 +38,8 @@ export const ConnectAgentPage: React.FC = () => {
         dispatch({ type: 'agentDisconnected' });
         dispatch({
           type: 'error',
-          message: `Failed to connect to agent`,
-          id: errorId(),
+          message: 'Failed to connect to agent',
+          id: randomId(),
         });
         return;
       }
@@ -66,7 +66,7 @@ export const ConnectAgentPage: React.FC = () => {
           dispatch({
             type: 'error',
             message: `Invalid agent name: ${agentMeta.name}`,
-            id: errorId(),
+            id: randomId(),
           });
           dispatch({ type: 'agentDisconnected' });
           return;
@@ -75,7 +75,7 @@ export const ConnectAgentPage: React.FC = () => {
         dispatch({
           type: 'error',
           message: `Could not connect to agent: ${err.message}`,
-          id: errorId(),
+          id: randomId(),
         });
         dispatch({ type: 'agentDisconnected' });
         return;

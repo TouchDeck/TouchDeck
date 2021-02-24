@@ -1,5 +1,5 @@
 import React, { ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
-import classNames from '../util/classNames';
+import { classNames } from '../util/classNames';
 import Icon from './Icon';
 
 export interface Props

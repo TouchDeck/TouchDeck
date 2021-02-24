@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useGlobalState, useMessages } from '../state/appState';
-import classNames from '../util/classNames';
+import { classNames } from '../util/classNames';
 
 export const MessageDisplay: React.FC = ({ children }) => {
   const [, dispatch] = useGlobalState();

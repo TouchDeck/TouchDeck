@@ -1,5 +1,5 @@
 import React from 'react';
-import classNames from '../util/classNames';
+import { classNames } from '../util/classNames';
 import Icon from './Icon';
 import { Link, NavLink } from 'react-router-dom';
 

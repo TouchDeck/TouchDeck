@@ -3,7 +3,7 @@ import { GridButton } from './GridButton';
 import Icon from '../Icon';
 import { ButtonConfig, ButtonLayout } from 'touchdeck-model';
 import { useConnectedAgent, useGlobalState } from '../../state/appState';
-import useResizeObserver from '../../util/useResizeObserver';
+import { useResizeObserver } from '../../hooks/useResizeObserver';
 
 export interface Props {
   rowCount: number;
