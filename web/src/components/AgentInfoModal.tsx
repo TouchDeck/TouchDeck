@@ -5,6 +5,7 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useConnectedAgent, useGlobalState } from '../state/appState';
 import { Button } from './Button';
 import { Modal } from './Modal';
+import { Columns } from './Columns';
 
 export const AgentInfoModal: React.FC = () => {
   const [, dispatch] = useGlobalState();
@@ -20,24 +21,20 @@ export const AgentInfoModal: React.FC = () => {
       onClose={() => history.push('#')}
     >
       <h3>Connected agent:</h3>
-      <Rows compact>
+      <Columns compact>
         <div>
           <span>Address:</span>
-          <span>{info.address}</span>
-        </div>
-        <div>
           <span>Version:</span>
-          <span>{info.version}</span>
-        </div>
-        <div>
           <span>Platform:</span>
-          <span>{capitalizeFirstLetter(info.platform)}</span>
+          <span>Hostname:</span>
         </div>
         <div>
-          <span>Hostname:</span>
+          <span>{info.address}</span>
+          <span>{info.version}</span>
+          <span>{capitalizeFirstLetter(info.platform)}</span>
           <span>{info.hostname}</span>
         </div>
-      </Rows>
+      </Columns>
       <div className="disconnect">
         <Link to="/" onClick={() => dispatch({ type: 'agentDisconnected' })}>
           <Button negative icon="power-off">

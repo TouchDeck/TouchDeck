@@ -1,0 +1,19 @@
+.columns {
+  display: flex;
+
+  &.compact {
+    // When compact, set the row height to 22px.
+    > div > * {
+      height: 22px;
+    }
+  }
+
+  > div {
+    display: flex;
+    flex-direction: column;
+
+    &:not(:last-child) {
+      margin-right: 32px;
+    }
+  }
+}
