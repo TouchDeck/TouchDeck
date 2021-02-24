@@ -52,7 +52,7 @@ export const ImageProperties: React.FC<Props> = ({
         </Button>
         <ButtonGroup>
           <Button onClick={onClose}>Cancel</Button>
-          <Button onClick={renameImage} positive icon="save">
+          <Button onClick={renameImage} positive icon="save" disabled={!name}>
             Save
           </Button>
         </ButtonGroup>
