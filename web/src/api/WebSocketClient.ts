@@ -3,6 +3,7 @@ import {
   MessageHandler,
   MessageResponseMap,
 } from 'touchdeck-model';
+import { randomId } from '../util/randomId';
 
 export interface WebSocketMessage {
   type: string;
@@ -14,7 +15,6 @@ export interface WebSocketMessage {
 export class WebSocketClient {
   private socket?: WebSocket;
 
-  private messageIdCounter = 0;
   private responsePromises: {
     [messageId: string]: MessageHandler;
   } = {};
@@ -69,7 +69,7 @@ export class WebSocketClient {
 
     const message: WebSocketMessage = {
       type: type.toString(),
-      messageId: (this.messageIdCounter++).toString(),
+      messageId: randomId(),
       data: args[0],
     };
 
