@@ -21,6 +21,11 @@
       margin-bottom: 4px;
     }
 
+    > span {
+      display: flex;
+      align-items: center;
+    }
+
     input {
       width: 100%;
     }
