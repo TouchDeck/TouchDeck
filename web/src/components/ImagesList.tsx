@@ -10,6 +10,7 @@ import Button from './Button';
 import { List } from './List';
 import { ImageInfo } from 'touchdeck-model';
 import removeExtension from '../util/removeExtension';
+import { searchEntries } from '../util/searchEntries';
 
 export interface Props {
   onClickImage: (image: ImageInfo) => void;
@@ -22,11 +23,7 @@ export const ImagesList: React.FC<Props> = ({ onClickImage }) => {
   const [showImages, setShowImages] = useState(images);
   const [searchTerm, setSearchTerm] = useState('');
   useLayoutEffect(() => {
-    setShowImages(
-      images
-        .filter((i) => filterImage(searchTerm, i))
-        .sort((a, b) => a.path.localeCompare(b.path))
-    );
+    setShowImages(searchEntries(images, searchTerm, (i) => i.path));
   }, [images, searchTerm]);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -103,20 +100,3 @@ export const ImagesList: React.FC<Props> = ({ onClickImage }) => {
     </List>
   );
 };
-
-function filterImage(searchTerm: string, image: ImageInfo): boolean {
-  // Split and sanitize the search term.
-  const searchTerms = searchTerm
-    .toLowerCase()
-    .split(' ')
-    .filter((t) => !!t);
-
-  // Check if all search terms match the image.
-  for (let searchI = 0; searchI < searchTerms.length; searchI++) {
-    if (!image.path.toLowerCase().includes(searchTerms[searchI])) {
-      return false;
-    }
-  }
-
-  return true;
-}

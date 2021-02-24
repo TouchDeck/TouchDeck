@@ -4,6 +4,7 @@ import Button from './Button';
 import { List } from './List';
 import { TemplateInfo } from 'touchdeck-model';
 import removeExtension from '../util/removeExtension';
+import { searchEntries } from '../util/searchEntries';
 
 export interface Props {
   onClickTemplate: (template: TemplateInfo) => void;
@@ -19,11 +20,7 @@ export const TemplatesList: React.FC<Props> = ({
   const [showTemplates, setShowTemplates] = useState(templates);
   const [searchTerm, setSearchTerm] = useState('');
   useLayoutEffect(() => {
-    setShowTemplates(
-      templates
-        .filter((t) => filterTemplate(searchTerm, t))
-        .sort((a, b) => a.path.localeCompare(b.path))
-    );
+    setShowTemplates(searchEntries(templates, searchTerm, (t) => t.path));
   }, [templates, searchTerm]);
 
   // TODO: Refactor lists (images-list, this) to a generic component.
@@ -53,20 +50,3 @@ export const TemplatesList: React.FC<Props> = ({
     </List>
   );
 };
-
-function filterTemplate(searchTerm: string, template: TemplateInfo): boolean {
-  // Split and sanitize the search term.
-  const searchTerms = searchTerm
-    .toLowerCase()
-    .split(' ')
-    .filter((t) => !!t);
-
-  // Check if all search terms match the template.
-  for (let searchI = 0; searchI < searchTerms.length; searchI++) {
-    if (!template.path.toLowerCase().includes(searchTerms[searchI])) {
-      return false;
-    }
-  }
-
-  return true;
-}

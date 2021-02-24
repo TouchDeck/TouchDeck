@@ -3,6 +3,7 @@ import { useConnectedAgent } from '../../state/appState';
 import { TextInput } from './TextInput';
 import { ImageInfo } from 'touchdeck-model';
 import removeExtension from '../../util/removeExtension';
+import { searchEntries } from '../../util/searchEntries';
 
 export interface Props {
   value: string;
@@ -16,7 +17,7 @@ export const ImageInput: React.FC<Props> = ({ value, onChange }) => {
   const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
-    setDisplayImages(images.filter((img) => filterImage(searchTerm, img)));
+    setDisplayImages(searchEntries(images, searchTerm, (i) => i.path));
   }, [images, searchTerm]);
 
   const selectImage = useCallback(
@@ -75,20 +76,3 @@ export const ImageInput: React.FC<Props> = ({ value, onChange }) => {
     </div>
   );
 };
-
-function filterImage(searchTerm: string, image: ImageInfo): boolean {
-  // Split and sanitize the search term.
-  const searchTerms = searchTerm
-    .toLowerCase()
-    .split(' ')
-    .filter((t) => !!t);
-
-  // Check if all search terms match the image.
-  for (let searchI = 0; searchI < searchTerms.length; searchI++) {
-    if (!image.path.toLowerCase().includes(searchTerms[searchI])) {
-      return false;
-    }
-  }
-
-  return true;
-}

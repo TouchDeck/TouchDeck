@@ -5,6 +5,7 @@ import Button from '../Button';
 import { GridButton } from './GridButton';
 import ButtonGroup from '../ButtonGroup';
 import { List } from '../List';
+import { searchEntries } from '../../util/searchEntries';
 
 export interface Props {
   onClickButton: (button: ButtonConfig) => void;
@@ -23,11 +24,7 @@ const ButtonList: React.FC<Props> = ({
   const [showButtons, setShowButtons] = useState(buttons);
   const [searchTerm, setSearchTerm] = useState('');
   useLayoutEffect(() => {
-    setShowButtons(
-      buttons
-        .filter((b) => filterButton(searchTerm, b))
-        .sort((a, b) => a.name.localeCompare(b.name))
-    );
+    setShowButtons(searchEntries(buttons, searchTerm, (b) => b.name));
   }, [buttons, searchTerm]);
 
   return (
@@ -93,40 +90,4 @@ function getButtonNameOrText(button: ButtonConfig): string {
   }
 
   return text;
-}
-
-function filterButton(searchTerm: string, button: ButtonConfig): boolean {
-  // Split and sanitize the search term.
-  const searchTerms = searchTerm
-    .toLowerCase()
-    .split(' ')
-    .filter((t) => !!t);
-
-  if (searchTerms.length === 0) {
-    return true;
-  }
-
-  // Get all terms to check from the button.
-  const checkTerms = [button.name.toLowerCase()];
-  if ('style' in button) {
-    checkTerms.push(button.style.text.toLowerCase());
-  }
-
-  // Check if all search terms match the button.
-  for (let searchI = 0; searchI < searchTerms.length; searchI++) {
-    // Check all check terms to see if the search term matches anything.
-    let matched = false;
-    for (let checkI = 0; checkI < checkTerms.length; checkI++) {
-      if (checkTerms[checkI].includes(searchTerms[searchI])) {
-        matched = true;
-      }
-    }
-
-    // If this search term matched nothing, return.
-    if (!matched) {
-      return false;
-    }
-  }
-
-  return true;
 }
