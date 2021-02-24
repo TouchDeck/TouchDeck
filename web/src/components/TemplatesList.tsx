@@ -23,10 +23,8 @@ export const TemplatesList: React.FC<Props> = ({
     setShowTemplates(searchEntries(templates, searchTerm, (t) => t.path));
   }, [templates, searchTerm]);
 
-  // TODO: Refactor lists (images-list, this) to a generic component.
   return (
     <List
-      className="images-list"
       searchPlaceholder="Search templates..."
       searchTerm={searchTerm}
       onSearchTermChange={setSearchTerm}

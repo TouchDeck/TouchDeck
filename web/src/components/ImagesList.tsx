@@ -59,7 +59,6 @@ export const ImagesList: React.FC<Props> = ({ onClickImage }) => {
 
   return (
     <List
-      className="images-list"
       searchPlaceholder="Search images..."
       searchTerm={searchTerm}
       onSearchTermChange={setSearchTerm}

@@ -29,7 +29,6 @@ const ButtonList: React.FC<Props> = ({
 
   return (
     <List
-      className="button-list"
       searchPlaceholder="Search actions..."
       searchTerm={searchTerm}
       onSearchTermChange={setSearchTerm}
