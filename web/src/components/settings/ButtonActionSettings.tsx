@@ -7,6 +7,7 @@ import Rows from '../Rows';
 import { ActionConfig, ActionParameter } from 'touchdeck-model';
 import { useConnectedAgent } from '../../state/appState';
 import FloatNumberInput from '../input/FloatNumberInput';
+import { TemplateInput } from '../input/TemplateInput';
 
 export interface Props {
   action: ActionConfig;
@@ -69,6 +70,12 @@ export const ButtonActionSettings: React.FC<Props> = ({ action, onChange }) => {
             )}
             {param.type === 'number' && (
               <FloatNumberInput
+                value={action.args[param.name]?.toString()}
+                onChange={(arg) => setActionArg(param.name, arg)}
+              />
+            )}
+            {param.type === 'template' && (
+              <TemplateInput
                 value={action.args[param.name]?.toString()}
                 onChange={(arg) => setActionArg(param.name, arg)}
               />

@@ -48,11 +48,11 @@ export const TemplateInput: React.FC<Props> = ({ value, onChange }) => {
         onClickIcon={() => onChange(null)}
       />
       {showDropdown && (
-        <div className="list">
+        <div className="dropdown-list">
           {displayTemplates.map((t) => (
             <div
               key={t.path}
-              className="entry"
+              className="dropdown-entry"
               onClick={() => selectTemplate(t)}
               tabIndex={0}
               onKeyDown={(e) => {

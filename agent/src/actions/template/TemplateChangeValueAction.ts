@@ -6,7 +6,7 @@ export class TemplateChangeValueAction implements Action {
   public constructor(private readonly templates: TemplateManager) {}
 
   public prepare(
-    @param('template') template: string,
+    @param('template', 'template') template: string,
     @param('key') key: string,
     @param('change') change: number
   ): PreparedAction {
