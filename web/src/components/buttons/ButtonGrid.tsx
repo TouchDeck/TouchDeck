@@ -14,6 +14,8 @@ export interface Props {
 
 type DisplayButton = ButtonConfig | { type: 'empty' } | { type: 'up' };
 
+const buttonMargin = 16;
+
 export const ButtonGrid: React.FC<Props> = ({
   rowCount,
   columnCount,
@@ -29,8 +31,8 @@ export const ButtonGrid: React.FC<Props> = ({
   // A callback to update the button size based on a content rect.
   const updateButtonSize = useCallback(
     (rect: DOMRectReadOnly) => {
-      const columnWidth = rect.width / columnCount - 64;
-      const rowHeight = rect.height / rowCount - 64;
+      const columnWidth = rect.width / columnCount - buttonMargin;
+      const rowHeight = rect.height / rowCount - buttonMargin;
       const minSize = Math.min(columnWidth, rowHeight);
       setButtonSize(minSize);
     },
