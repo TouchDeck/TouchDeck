@@ -38,9 +38,7 @@ export const ButtonStyleSettings: React.FC<Props> = ({
         <div>
           <span>Image</span>
           <DropdownInput<ImageInfo>
-            value={
-              buttonStyle.image ? removeExtension(buttonStyle.image) : undefined
-            }
+            value={removeExtension(buttonStyle.image)}
             options={images}
             onChange={(img) => setStyleProp('image')(img?.path || null)}
             displayValue={(img) => removeExtension(img.path)}

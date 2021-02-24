@@ -77,7 +77,7 @@ export const ButtonActionSettings: React.FC<Props> = ({ action, onChange }) => {
             )}
             {param.type === 'template' && (
               <DropdownInput<TemplateInfo>
-                value={action.args[param.name]?.toString()}
+                value={removeExtension(action.args[param.name]?.toString())}
                 options={templates}
                 onChange={(t) => setActionArg(param.name, t?.path)}
                 displayValue={(t) => removeExtension(t.path)}
