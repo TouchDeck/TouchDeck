@@ -19,6 +19,7 @@ export interface ConnectedAgentState {
   images: ImageInfo[];
   templates: TemplateInfo[];
   activeProfileId: string;
+  scripts: string[];
 }
 
 export type State =
@@ -32,6 +33,7 @@ export type State =
       images: ImageInfo[];
       templates: TemplateInfo[];
       activeProfileId: undefined;
+      scripts: string[];
     }
   | ConnectedAgentState;
 
@@ -47,6 +49,7 @@ export type Action =
       actionOptions: ActionOption[];
       images: ImageInfo[];
       templates: TemplateInfo[];
+      scripts: string[];
     }
   | {
       type: 'agentDisconnected';
@@ -86,6 +89,7 @@ export const reducer: Reducer<State, Action> = (prevState, action) => {
         images: [],
         templates: [],
         activeProfileId: undefined,
+        scripts: [],
       };
     case 'agentConnected':
       return {
@@ -98,6 +102,7 @@ export const reducer: Reducer<State, Action> = (prevState, action) => {
         images: action.images,
         templates: action.templates,
         activeProfileId: action.config.defaultProfile,
+        scripts: action.scripts,
         // Don't overwrite the button states here,
         // this event might occur after first button state changed messages.
       };
@@ -113,6 +118,7 @@ export const reducer: Reducer<State, Action> = (prevState, action) => {
         images: [],
         templates: [],
         activeProfileId: undefined,
+        scripts: [],
       };
     case 'configLoaded':
       return { ...prevState, config: action.config };
@@ -143,4 +149,5 @@ export const getInitialState = (): State => ({
   images: [],
   templates: [],
   activeProfileId: undefined,
+  scripts: [],
 });

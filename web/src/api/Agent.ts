@@ -97,4 +97,8 @@ export class Agent {
   ): Promise<void> {
     return this.socket.send('upsert-template', { path, template });
   }
+
+  public async getScripts(): Promise<string[]> {
+    return this.socket.send('get-scripts');
+  }
 }

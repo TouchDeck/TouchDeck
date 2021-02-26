@@ -16,7 +16,7 @@ export interface Props {
 }
 
 export const ButtonActionSettings: React.FC<Props> = ({ action, onChange }) => {
-  const { actionOptions, templates } = useConnectedAgent();
+  const { actionOptions, templates, scripts } = useConnectedAgent();
 
   // The parameter info for the current action.
   const [actionParams, setActionParams] = useState<ActionParameter[]>(
@@ -86,6 +86,14 @@ export const ButtonActionSettings: React.FC<Props> = ({ action, onChange }) => {
                   options={templates}
                   onChange={(t) => setActionArg(param.name, t?.path)}
                   displayValue={(t) => removeExtension(t.path)}
+                />
+              )}
+              {param.type === 'script' && (
+                <DropdownInput<string>
+                  value={removeExtension(action.args[param.name]?.toString())}
+                  options={scripts}
+                  onChange={(s) => setActionArg(param.name, s)}
+                  displayValue={removeExtension}
                 />
               )}
             </div>
