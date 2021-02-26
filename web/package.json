@@ -1,6 +1,6 @@
 {
   "name": "touchdeck-web",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.1",
     "@types/node": "^14.14.14",
