@@ -9,6 +9,7 @@ import { ActionsApi } from './wsApi/ActionsApi';
 import { ImagesApi } from './wsApi/ImagesApi';
 import { ButtonsApi } from './wsApi/ButtonsApi';
 import { TemplatesApi } from './wsApi/TemplatesApi';
+import { ScriptsApi } from './wsApi/ScriptsApi';
 
 @singleton
 export class Agent {
@@ -21,7 +22,8 @@ export class Agent {
     actionsApi: ActionsApi,
     buttonsApi: ButtonsApi,
     imagesApi: ImagesApi,
-    templatesApi: TemplatesApi
+    templatesApi: TemplatesApi,
+    scriptsApi: ScriptsApi
   ) {
     Agent.log.debug('Registering client handlers');
 
@@ -58,5 +60,7 @@ export class Agent {
     client.registerHandler('get-templates', templatesApi.getTemplates);
     client.registerHandler('delete-template', templatesApi.deleteTemplate);
     client.registerHandler('upsert-template', templatesApi.upsertTemplate);
+
+    client.registerHandler('get-scripts', scriptsApi.getScripts);
   }
 }

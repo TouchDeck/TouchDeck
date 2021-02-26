@@ -24,5 +24,5 @@ export interface ToggleActionInfo {
 
 export interface ActionParameter {
   name: string;
-  type: 'string' | 'boolean' | 'number' | 'template';
+  type: 'string' | 'boolean' | 'number' | 'template' | 'script';
 }

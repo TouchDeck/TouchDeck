@@ -5,7 +5,7 @@ import { SCRIPTS_DIR } from '../constants';
 
 @action('', 'Run Script')
 export class RunScriptAction implements Action {
-  public prepare(@param('script') script: string): PreparedAction {
+  public prepare(@param('script', 'script') script: string): PreparedAction {
     return {
       invoke: () => this.invoke(script),
     };

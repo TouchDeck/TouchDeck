@@ -26,6 +26,7 @@ export interface MessageDataMap {
   'get-templates': void;
   'delete-template': Path;
   'upsert-template': UpsertTemplate;
+  'get-scripts': void;
 }
 
 export interface MessageResponseMap {
@@ -45,4 +46,5 @@ export interface MessageResponseMap {
   'get-templates': TemplateInfo[];
   'delete-template': void;
   'upsert-template': void;
+  'get-scripts': string[];
 }
