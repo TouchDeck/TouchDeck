@@ -10,8 +10,8 @@ export interface Props {
 
 export const Menu: React.FC<Props> = ({ open, onClose }) => (
   <nav className={classNames(['menu', !open && 'closed'])}>
-    <Link className="close" to="/">
-      <Icon icon="times" size={2} onClick={onClose} />
+    <Link className="close" to="/" onClick={onClose}>
+      <Icon icon="times" size={2} />
     </Link>
     <NavLink className="entry" to="/buttons">
       <h2>

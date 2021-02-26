@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { CompactPicker } from 'react-color';
 import { useClickOutside } from '../../hooks/useClickOutside';
+import { classNames } from '../../util/classNames';
 
 export interface Props {
   value: string;
@@ -15,7 +16,7 @@ export const ColorInput: React.FC<Props> = ({ value, onChange }) => {
   return (
     <div className="color-input" ref={ref}>
       <div
-        className="swatch"
+        className={classNames(['swatch', displayPicker && 'focus'])}
         onClick={() => setDisplayPicker((prev) => !prev)}
         style={{
           backgroundColor: value,
