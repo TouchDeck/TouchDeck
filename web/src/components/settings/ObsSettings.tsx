@@ -6,12 +6,14 @@ import { useConnectedAgent } from '../../state/appState';
 import { ObsTargetConfig } from 'touchdeck-model';
 import { Button } from '../Button';
 import { Columns } from '../Columns';
+import { ButtonGroup } from '../ButtonGroup';
 
 export interface Props {
   onSaveConfig: (config: ObsTargetConfig) => void;
+  onClose: () => void;
 }
 
-export const ObsSettings: React.FC<Props> = ({ onSaveConfig }) => {
+export const ObsSettings: React.FC<Props> = ({ onSaveConfig, onClose }) => {
   const { config } = useConnectedAgent();
   const [ip, setIp] = useState(config.targets.obs.ip);
   const [port, setPort] = useState(config.targets.obs.port);
@@ -64,13 +66,19 @@ export const ObsSettings: React.FC<Props> = ({ onSaveConfig }) => {
           )}
         </div>
       </Columns>
-      <Button
-        onClick={() => onSaveConfig({ ip, port, authenticated, password })}
-        positive
-        icon="save"
-      >
-        Save
-      </Button>
+      <div className="actions">
+        <div />
+        <ButtonGroup>
+          <Button onClick={onClose}>Cancel</Button>
+          <Button
+            onClick={() => onSaveConfig({ ip, port, authenticated, password })}
+            positive
+            icon="save"
+          >
+            Save
+          </Button>
+        </ButtonGroup>
+      </div>
     </>
   );
 };

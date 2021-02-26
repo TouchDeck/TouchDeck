@@ -44,7 +44,12 @@ export const ImageProperties: React.FC<Props> = ({
 
   return (
     <div className="image-properties properties">
-      <TextInput className="name" value={name} onChange={setName} />
+      <TextInput
+        className="name"
+        value={name}
+        onChange={setName}
+        placeholder="Image name"
+      />
       <img src={image.data} alt="" />
       <div className="actions">
         <Button icon="trash" negative onClick={onDelete}>

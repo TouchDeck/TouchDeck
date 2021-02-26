@@ -52,8 +52,19 @@ export const TemplateProperties: React.FC<Props> = ({
 
   return (
     <div className="template-properties properties">
-      <TextInput className="name" value={name} onChange={setName} />
-      <TextAreaInput rows={8} cols={40} value={text} onChange={setText} />
+      <TextInput
+        className="name"
+        value={name}
+        onChange={setName}
+        placeholder="Template name"
+      />
+      <TextAreaInput
+        rows={8}
+        cols={40}
+        value={text}
+        onChange={setText}
+        placeholder="Template value: {{ variable }}"
+      />
       <div className="actions">
         <Button icon="trash" negative onClick={onDelete}>
           Delete
