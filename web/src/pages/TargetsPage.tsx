@@ -38,6 +38,7 @@ export const TargetsPage: React.FC = () => {
                       targets: { ...config.targets, obs: newConfig },
                     })
                   }
+                  onClose={() => setSettingsPane(undefined)}
                 />
               )
             }
