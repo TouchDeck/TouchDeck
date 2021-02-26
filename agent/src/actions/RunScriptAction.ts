@@ -5,16 +5,13 @@ import { SCRIPTS_DIR } from '../constants';
 
 @action('', 'Run Script')
 export class RunScriptAction implements Action {
-  public prepare(
-    @param('script') script: string,
-    @param('arguments') args: string
-  ): PreparedAction {
+  public prepare(@param('script') script: string): PreparedAction {
     return {
-      invoke: () => this.invoke(script, args),
+      invoke: () => this.invoke(script),
     };
   }
 
-  private async invoke(script: string, args: string): Promise<void> {
+  private async invoke(script: string): Promise<void> {
     const path = assertInDir(SCRIPTS_DIR, script);
     const child = execFile(path);
 
