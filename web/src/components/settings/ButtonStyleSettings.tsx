@@ -40,6 +40,7 @@ export const ButtonStyleSettings: React.FC<Props> = ({
         <div>
           <TextInput value={buttonStyle.text} onChange={setStyleProp('text')} />
           <DropdownInput<ImageInfo>
+            clearable
             value={removeExtension(buttonStyle.image)}
             options={images}
             onChange={(img) => setStyleProp('image')(img?.path || null)}

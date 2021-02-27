@@ -1,7 +1,9 @@
 .dropdown-input {
-  .input.no-value {
-    i {
-      // If the dropdown has no value, the chevron should not be clickable.
+  &.no-value,
+  &:not(.clearable) {
+    .input i {
+      // If the dropdown has no value or is clearable,
+      // the chevron should not be clickable.
       pointer-events: none;
     }
   }
@@ -10,9 +12,10 @@
     position: absolute;
     background-color: #181818;
     border-radius: $border-radius;
-    overflow-y: auto;
+    overflow-y: scroll;
     max-height: 10rem;
     min-width: 200px;
+    z-index: 2;
 
     .dropdown-entry {
       display: flex;
@@ -37,7 +40,7 @@
       }
 
       .name {
-        margin: 2px 8px;
+        margin: 6px 8px;
       }
     }
   }
