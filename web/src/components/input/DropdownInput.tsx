@@ -27,7 +27,7 @@ export function DropdownInput<T>({
   }, [options, searchTerm, displayValue]);
 
   const selectValue = useCallback(
-    (newValue: T) => {
+    (newValue: T | null) => {
       onChange(newValue);
       setShowDropdown(false);
       setSearchTerm('');
@@ -52,6 +52,11 @@ export function DropdownInput<T>({
         placeholder={value}
         icon={value ? 'times' : 'chevron-down'}
         onClickIcon={value ? () => onChange(null) : undefined}
+        onKeyDown={(e) => {
+          if (e.key === 'Escape') {
+            selectValue(null);
+          }
+        }}
       />
       {showDropdown && (
         <div className="dropdown-list">
