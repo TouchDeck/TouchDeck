@@ -10,7 +10,7 @@ button.button {
   background-color: $grey;
 
   &:focus {
-    border-color: #4a92ff;
+    border-color: $focus-color;
   }
 
   // Compact buttons are 30px high, the same as other input elements.

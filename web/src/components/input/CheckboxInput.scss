@@ -28,7 +28,7 @@
     transition: background-color 0.3s ease;
 
     &:focus {
-      border-color: #4a92ff;
+      border-color: $focus-color;
     }
 
     &::after {
