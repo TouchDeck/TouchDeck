@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useConnectedAgent } from '../../state/appState';
 import { ActionOption } from 'touchdeck-model';
+import { DropdownInput } from '../input/DropdownInput';
 
 export interface Props {
   actionType: string;
@@ -29,19 +30,29 @@ export const ActionOptions: React.FC<Props> = ({ actionType, onChange }) => {
   }, [actionOptions]);
 
   return (
-    <select
+    <DropdownInput<ActionOption>
       value={actionType}
-      onChange={(e) => onChange(e.currentTarget.value)}
-    >
-      {Object.entries(optionGroups).map(([category, options]) => (
-        <optgroup key={category} label={category}>
-          {options.map((option) => (
-            <option key={option.type} value={option.type}>
-              {option.name}
-            </option>
-          ))}
-        </optgroup>
-      ))}
-    </select>
+      options={actionOptions}
+      onChange={(a) => onChange(a!.type)} // TODO: Should not be nullable
+      displayValue={(a) => `${a.category ? `${a.category}: ` : ' '}${a.name}`}
+    />
   );
+
+  // TODO: Remove old code
+  // return (
+  //   <select
+  //     value={actionType}
+  //     onChange={(e) => onChange(e.currentTarget.value)}
+  //   >
+  //     {Object.entries(optionGroups).map(([category, options]) => (
+  //       <optgroup key={category} label={category}>
+  //         {options.map((option) => (
+  //           <option key={option.type} value={option.type}>
+  //             {option.name}
+  //           </option>
+  //         ))}
+  //       </optgroup>
+  //     ))}
+  //   </select>
+  // );
 };
