@@ -3,12 +3,21 @@ import { TextInput } from './TextInput';
 import { classNames } from '../../util/classNames';
 import { searchEntries } from '../../util/searchEntries';
 
-export interface Props<T> {
+export type Props<T> = {
   value?: string;
   options: T[];
-  onChange: (value: T | null) => void;
   displayValue: (val: T) => string;
   previewImageUrl?: (val: T) => string;
+} & (ClearableProps<T> | NonClearableProps<T>);
+
+interface ClearableProps<T> {
+  clearable: true;
+  onChange: (value: T | null) => void;
+}
+
+interface NonClearableProps<T> {
+  clearable?: false;
+  onChange: (value: T) => void;
 }
 
 export function DropdownInput<T>({
@@ -17,6 +26,7 @@ export function DropdownInput<T>({
   onChange,
   displayValue,
   previewImageUrl,
+  clearable,
 }: Props<T>) {
   const [searchTerm, setSearchTerm] = useState('');
   const [displayOptions, setDisplayOptions] = useState(options);
@@ -28,16 +38,23 @@ export function DropdownInput<T>({
 
   const selectValue = useCallback(
     (newValue: T | null) => {
-      onChange(newValue);
+      if (clearable || newValue != null) {
+        onChange(newValue as T);
+      }
+
       setShowDropdown(false);
       setSearchTerm('');
     },
-    [onChange]
+    [clearable, onChange]
   );
 
   return (
     <div
-      className="dropdown-input"
+      className={classNames([
+        'dropdown-input',
+        value ? 'has-value' : 'no-value',
+        clearable && 'clearable',
+      ])}
       onFocus={() => setShowDropdown(true)}
       onBlur={(e) => {
         if (!e.currentTarget.contains(e.relatedTarget as Node)) {
@@ -46,12 +63,11 @@ export function DropdownInput<T>({
       }}
     >
       <TextInput
-        className={classNames([value ? 'has-value' : 'no-value'])}
         onChange={setSearchTerm}
         value={showDropdown ? searchTerm : value}
         placeholder={value}
-        icon={value ? 'times' : 'chevron-down'}
-        onClickIcon={value ? () => onChange(null) : undefined}
+        icon={clearable && value ? 'times' : 'chevron-down'}
+        onClickIcon={clearable && value ? () => selectValue(null) : undefined}
         onKeyDown={(e) => {
           if (e.key === 'Escape') {
             selectValue(null);

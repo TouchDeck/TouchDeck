@@ -1,7 +1,9 @@
 .dropdown-input {
-  .input.no-value {
-    i {
-      // If the dropdown has no value, the chevron should not be clickable.
+  &.no-value,
+  &:not(.clearable) {
+    .input i {
+      // If the dropdown has no value or is clearable,
+      // the chevron should not be clickable.
       pointer-events: none;
     }
   }

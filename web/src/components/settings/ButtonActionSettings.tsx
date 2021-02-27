@@ -65,11 +65,12 @@ export const ButtonActionSettings: React.FC<Props> = ({ action, onChange }) => {
       </div>
       <div>
         <DropdownInput<ActionOption>
+          clearable={false}
           value={`${actionOption.category ? `${actionOption.category}: ` : ''}${
             actionOption.name
           }`}
           options={actionOptions}
-          onChange={(a) => onChange({ ...action, type: a!.type })} // TODO: Should not be nullable
+          onChange={(a) => onChange({ ...action, type: a.type })}
           displayValue={(a) =>
             `${a.category ? `${a.category}: ` : ' '}${a.name}`
           }
@@ -98,6 +99,7 @@ export const ButtonActionSettings: React.FC<Props> = ({ action, onChange }) => {
               )}
               {param.type === 'template' && (
                 <DropdownInput<TemplateInfo>
+                  clearable
                   value={removeExtension(action.args[param.name]?.toString())}
                   options={templates}
                   onChange={(t) => setActionArg(param.name, t?.path)}
@@ -106,6 +108,7 @@ export const ButtonActionSettings: React.FC<Props> = ({ action, onChange }) => {
               )}
               {param.type === 'script' && (
                 <DropdownInput<string>
+                  clearable
                   value={removeExtension(action.args[param.name]?.toString())}
                   options={scripts}
                   onChange={(s) => setActionArg(param.name, s)}
