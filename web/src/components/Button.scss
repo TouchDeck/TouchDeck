@@ -1,7 +1,7 @@
 button.button {
-  padding: 8px 12px;
+  padding: 6px 10px;
   outline: none;
-  border: none;
+  border: 2px solid transparent;
   border-radius: $border-radius;
   font-weight: 600;
   font-size: 15px;
@@ -9,10 +9,14 @@ button.button {
 
   background-color: $grey;
 
+  &:focus {
+    border-color: #4a92ff;
+  }
+
   // Compact buttons are 30px high, the same as other input elements.
   &.compact {
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
   }
 
   &.has-text {
