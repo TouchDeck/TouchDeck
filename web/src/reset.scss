@@ -36,7 +36,7 @@ textarea {
   outline: none;
 
   &:focus {
-    border-color: #4a92ff;
+    border-color: $focus-color;
   }
 }
 
