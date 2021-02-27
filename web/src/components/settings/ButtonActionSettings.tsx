@@ -1,9 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { ActionOptions } from './ActionOptions';
 import { capitalizeFirstLetter } from '../../util/capitalizeFirstLetter';
 import { TextInput } from '../input/TextInput';
 import { CheckboxInput } from '../input/CheckboxInput';
-import { ActionConfig, ActionParameter, TemplateInfo } from 'touchdeck-model';
+import {
+  ActionConfig,
+  ActionOption,
+  ActionParameter,
+  TemplateInfo,
+} from 'touchdeck-model';
 import { useConnectedAgent } from '../../state/appState';
 import { FloatNumberInput } from '../input/FloatNumberInput';
 import { DropdownInput } from '../input/DropdownInput';
@@ -18,20 +22,26 @@ export interface Props {
 export const ButtonActionSettings: React.FC<Props> = ({ action, onChange }) => {
   const { actionOptions, templates, scripts } = useConnectedAgent();
 
-  // The parameter info for the current action.
-  const [actionParams, setActionParams] = useState<ActionParameter[]>(
-    actionOptions.find((option) => option.type === action.type)?.parameters ||
-      []
+  // The currently selected action option.
+  const [actionOption, setActionOption] = useState(
+    actionOptions.find((option) => option.type === action.type)!
   );
-
   useEffect(
     () =>
-      setActionParams(
-        actionOptions.find((option) => option.type === action.type)
-          ?.parameters || []
+      setActionOption(
+        actionOptions.find((option) => option.type === action.type)!
       ),
     [actionOptions, action.type]
   );
+
+  // The parameter info for the current action.
+  const [actionParams, setActionParams] = useState<ActionParameter[]>(
+    actionOption?.parameters || []
+  );
+  useEffect(() => setActionParams(actionOption?.parameters || []), [
+    actionOptions,
+    actionOption,
+  ]);
 
   const setActionArg = useCallback(
     (paramName, arg) => {
@@ -54,9 +64,15 @@ export const ButtonActionSettings: React.FC<Props> = ({ action, onChange }) => {
           ))}
       </div>
       <div>
-        <ActionOptions
-          actionType={action.type}
-          onChange={(type) => onChange({ ...action, type })}
+        <DropdownInput<ActionOption>
+          value={`${actionOption.category ? `${actionOption.category}: ` : ''}${
+            actionOption.name
+          }`}
+          options={actionOptions}
+          onChange={(a) => onChange({ ...action, type: a!.type })} // TODO: Should not be nullable
+          displayValue={(a) =>
+            `${a.category ? `${a.category}: ` : ' '}${a.name}`
+          }
         />
         {actionParams
           .filter((param) => !!param)
