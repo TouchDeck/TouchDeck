@@ -1,0 +1,46 @@
+.checkbox {
+  height: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+
+  &.checked span {
+    background-color: $green;
+
+    &::after {
+      margin-left: 26px;
+    }
+  }
+
+  input {
+    display: none;
+  }
+
+  span {
+    display: inline-block;
+    width: 48px;
+    height: 22px;
+    border-radius: 11px;
+    border: 2px solid transparent;
+    outline: none;
+
+    background-color: $grey-dark;
+    transition: background-color 0.3s ease;
+
+    &:focus {
+      border-color: #4a92ff;
+    }
+
+    &::after {
+      width: 18px;
+      height: 18px;
+      content: '';
+      border-radius: 9px;
+      background-color: #fff;
+      display: inline-block;
+
+      margin-left: 0;
+      transition: margin-left 0.3s ease;
+    }
+  }
+}
