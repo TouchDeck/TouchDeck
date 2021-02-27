@@ -1,0 +1,39 @@
+.checkbox {
+  height: 30px;
+  cursor: pointer;
+
+  &.checked span {
+    background-color: $green;
+
+    &::after {
+      margin-left: 26px;
+    }
+  }
+
+  input {
+    display: none;
+  }
+
+  span {
+    display: inline-block;
+    width: 48px;
+    height: 22px;
+    margin-top: 4px;
+    border-radius: 11px;
+
+    background-color: $grey-dark;
+    transition: background-color 0.3s ease;
+
+    &::after {
+      width: 22px;
+      height: 22px;
+      content: '';
+      border-radius: 11px;
+      background-color: #fff;
+      display: inline-block;
+
+      margin-left: 0;
+      transition: margin-left 0.3s ease;
+    }
+  }
+}

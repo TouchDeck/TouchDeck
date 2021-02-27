@@ -1,4 +1,5 @@
 import React, { InputHTMLAttributes } from 'react';
+import { classNames } from '../../util/classNames';
 
 export interface Props
   extends Omit<
@@ -9,9 +10,15 @@ export interface Props
 }
 
 export const CheckboxInput: React.FC<Props> = (props) => (
-  <input
-    {...props}
-    type="checkbox"
-    onChange={(e) => props.onChange(e.currentTarget.checked)}
-  />
+  <div
+    className={classNames(['checkbox', props.checked && 'checked'])}
+    onClick={() => props.onChange(!props.checked)}
+  >
+    <input
+      {...props}
+      type="checkbox"
+      onChange={(e) => props.onChange(e.currentTarget.checked)}
+    />
+    <span />
+  </div>
 );
