@@ -13,6 +13,7 @@
     overflow-y: scroll;
     max-height: 10rem;
     min-width: 200px;
+    z-index: 2;
 
     .dropdown-entry {
       display: flex;
