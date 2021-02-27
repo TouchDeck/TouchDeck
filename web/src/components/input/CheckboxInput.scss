@@ -21,15 +21,21 @@
     width: 48px;
     height: 22px;
     border-radius: 11px;
+    border: 2px solid transparent;
+    outline: none;
 
     background-color: $grey-dark;
     transition: background-color 0.3s ease;
 
+    &:focus {
+      border-color: #4a92ff;
+    }
+
     &::after {
-      width: 22px;
-      height: 22px;
+      width: 18px;
+      height: 18px;
       content: '';
-      border-radius: 11px;
+      border-radius: 9px;
       background-color: #fff;
       display: inline-block;
 
