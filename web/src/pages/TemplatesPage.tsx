@@ -1,13 +1,15 @@
 import React, { useCallback, useState } from 'react';
 import { TemplateInfo } from 'touchdeck-model';
 import { useConnectedAgent, useGlobalState } from '../state/appState';
-import { TemplatesList } from '../components/TemplatesList';
 import { TemplateProperties } from '../components/TemplateProperties';
+import { SimpleList } from '../components/SimpleList';
+import { Button } from '../components/Button';
+import { removeExtension } from '../util/removeExtension';
 
 export const TemplatesPage: React.FC = () => {
   const [selectedTemplate, setSelectedTemplate] = useState<TemplateInfo>();
   const [, dispatch] = useGlobalState();
-  const { agent } = useConnectedAgent();
+  const { agent, templates } = useConnectedAgent();
 
   const deleteTemplate = useCallback(
     async (template: TemplateInfo) => {
@@ -24,17 +26,27 @@ export const TemplatesPage: React.FC = () => {
 
   return (
     <main className="templates-page config-page">
-      <TemplatesList
-        onClickTemplate={setSelectedTemplate}
-        onCreateTemplate={() =>
-          setSelectedTemplate({
-            path: '',
-            text:
-              'This is a template!\nPut values in here like so: {{ counter }}\nGive it a name, and press save to store it.',
-            values: {},
-          })
-        }
-      />
+      <SimpleList<TemplateInfo>
+        searchPlaceholder="Search templates..."
+        entries={templates}
+        entryName={(t) => removeExtension(t.path)}
+        onClickEntry={setSelectedTemplate}
+      >
+        <Button
+          icon="plus"
+          positive
+          onClick={() =>
+            setSelectedTemplate({
+              path: '',
+              text:
+                'This is a template!\nPut values in here like so: {{ counter }}\nGive it a name, and press save to store it.',
+              values: {},
+            })
+          }
+        >
+          Template
+        </Button>
+      </SimpleList>
       {selectedTemplate && (
         <TemplateProperties
           template={selectedTemplate}
