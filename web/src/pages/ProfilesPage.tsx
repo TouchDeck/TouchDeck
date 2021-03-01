@@ -3,6 +3,7 @@ import { useConnectedAgent } from '../state/appState';
 import { SimpleList } from '../components/SimpleList';
 import { Profile } from 'touchdeck-model';
 import { ProfileProperties } from '../components/ProfileProperties';
+import { Button } from '../components/Button';
 
 export const ProfilesPage: React.FC = () => {
   const { config } = useConnectedAgent();
@@ -20,7 +21,17 @@ export const ProfilesPage: React.FC = () => {
         entries={config.profiles}
         entryName={(p) => p.name}
         onClickEntry={setSelectedProfile}
-      />
+      >
+        <Button
+          icon="plus"
+          positive
+          onClick={() =>
+            setSelectedProfile({ name: '', id: '', rootLayout: '' })
+          }
+        >
+          Profile
+        </Button>
+      </SimpleList>
       {selectedProfile && (
         <ProfileProperties
           profile={selectedProfile}

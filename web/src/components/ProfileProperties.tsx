@@ -30,8 +30,10 @@ export const ProfileProperties: React.FC<Props> = ({
         placeholder="Profile name"
       />
       <div className="default">
-        <Button disabled={isDefaultProfile}>Set as default</Button>
-        <span>This is the default profile.</span>
+        <Button disabled={isDefaultProfile || !profile.id}>
+          Set as default
+        </Button>
+        {isDefaultProfile && <span>This is the default profile.</span>}
       </div>
       <div className="actions">
         <Button
