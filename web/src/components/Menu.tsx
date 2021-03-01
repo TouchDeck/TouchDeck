@@ -31,6 +31,12 @@ export const Menu: React.FC<Props> = ({ open, onClose }) => (
         Templates
       </h2>
     </NavLink>
+    <NavLink className="entry" to="/profiles">
+      <h2>
+        <Icon icon="clone" />
+        Profiles
+      </h2>
+    </NavLink>
     <NavLink className="entry" to="/targets">
       <h2>
         <Icon icon="link" />
