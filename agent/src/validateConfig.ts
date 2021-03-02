@@ -1,13 +1,13 @@
 import { v4 as uuidv4, validate as validateUuid } from 'uuid';
 import {
-  Configuration,
   ActionConfig,
-  TargetConfig,
   ButtonConfig,
   ButtonLayout,
   ButtonStyling,
+  Configuration,
   ObsTargetConfig,
   Profile,
+  TargetConfig,
 } from 'touchdeck-model';
 import { NoopAction } from './actions/NoopAction';
 
@@ -183,6 +183,7 @@ function validateLayoutIds(
   buttons: ButtonConfig[],
   profiles: Profile[]
 ): ButtonLayout[] {
+  const validated = [...layouts];
   const validLayoutsIds = new Set<string>();
 
   // Ensure that all layouts correspond to a folder button or profile.
@@ -193,7 +194,17 @@ function validateLayoutIds(
   });
   profiles.forEach((profile) => validLayoutsIds.add(profile.rootLayout));
 
-  return layouts.filter((layout) => validLayoutsIds.has(layout.id));
+  // Ensure that all profiles have a layout.
+  profiles.forEach((p) => {
+    if (!validated.find((l) => l.id === p.rootLayout)) {
+      validated.push({
+        id: p.rootLayout,
+        layout: [],
+      });
+    }
+  });
+
+  return validated.filter((layout) => validLayoutsIds.has(layout.id));
 }
 
 export default function validateConfig(

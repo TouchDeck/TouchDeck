@@ -9,6 +9,7 @@ exe/
 # IDEs
 *.iml
 .idea/
+.run/
 
 # Misc
 .DS_Store

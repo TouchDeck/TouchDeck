@@ -1,14 +1,17 @@
 import React from 'react';
-import { DeckPage } from './pages/DeckPage';
+import {
+  ConnectAgentPage,
+  DeckPage,
+  ImagesPage,
+  ProfilesPage,
+  TargetsPage,
+  TemplatesPage,
+} from './pages';
 import { useGlobalState } from './state/appState';
-import { ConnectAgentPage } from './pages/ConnectAgentPage';
 import { Route, Switch } from 'react-router-dom';
 import { AgentInfoModal } from './components/AgentInfoModal';
 import { Layout } from './components/Layout';
-import { TargetsPage } from './pages/TargetsPage';
 import { MessageDisplay } from './components/MessageDisplay';
-import { ImagesPage } from './pages/ImagesPage';
-import { TemplatesPage } from './pages/TemplatesPage';
 
 export const App: React.FC = () => {
   const [{ agent }] = useGlobalState();
@@ -33,6 +36,7 @@ export const App: React.FC = () => {
           </Route>
           <Route exact path="/images" component={ImagesPage} />
           <Route exact path="/templates" component={TemplatesPage} />
+          <Route exact path="/profiles" component={ProfilesPage} />
           <Route exact path="/targets" component={TargetsPage} />
         </Switch>
       </Layout>
